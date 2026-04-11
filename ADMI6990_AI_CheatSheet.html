@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheat Sheet: Cuándo usar cada IA — ADMI 6990</title>
+<meta name="description" content="Guía rápida de herramientas de IA para investigación y estrategia empresarial. ADMI 6990 - Prof. Mariluz Serrano Ortiz.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',sans-serif;background:#f5f5f0;color:#2d2d2d;line-height:1.7}
+
+  .header{background:linear-gradient(135deg,#1a3a5c 0%,#2e5a8c 50%,#1a4a6c 100%);color:#fff;padding:36px 24px 28px;text-align:center;position:relative}
+  .header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#f9a825,#e8c97a,#f9a825)}
+  .header h1{font-size:1.6em;font-weight:900;letter-spacing:-0.5px;margin-bottom:4px}
+  .header .sub{font-size:0.88em;font-weight:300;opacity:0.85}
+  .header .badge{display:inline-block;background:#f9a825;color:#1a3a5c;padding:3px 14px;border-radius:20px;font-size:0.68em;font-weight:700;margin-top:8px;text-transform:uppercase;letter-spacing:1px}
+
+  .content{max-width:900px;margin:0 auto;padding:24px 16px 50px}
+
+  /* NAV TABS */
+  .nav-tabs{display:flex;flex-wrap:wrap;background:#fff;border-bottom:2px solid #e0ddd5;padding:0 8px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+  .nav-tab{padding:12px 14px;cursor:pointer;font-size:0.78em;font-weight:600;color:#888;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap}
+  .nav-tab:hover{color:#1a3a5c}
+  .nav-tab.active{color:#1a3a5c;border-bottom-color:#f9a825}
+
+  .section{display:none}
+  .section.active{display:block}
+
+  /* TOOL CARDS */
+  .tool-card{background:#fff;border-radius:14px;margin-bottom:16px;overflow:hidden;border:1px solid #e8e6e0;transition:transform .15s,box-shadow .15s}
+  .tool-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.07)}
+  .tool-header{display:flex;align-items:center;gap:14px;padding:18px 20px;cursor:pointer}
+  .tool-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5em;flex-shrink:0}
+  .tool-meta{flex:1}
+  .tool-meta h3{font-size:1.05em;font-weight:700;margin-bottom:1px}
+  .tool-meta .maker{font-size:0.75em;color:#999}
+  .tool-arrow{font-size:1.2em;color:#ccc;transition:transform .2s}
+  .tool-card.open .tool-arrow{transform:rotate(180deg)}
+
+  .tool-body{padding:0 20px 20px;display:none}
+  .tool-card.open .tool-body{display:block}
+
+  .pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .pill{padding:3px 12px;border-radius:20px;font-size:0.72em;font-weight:600}
+
+  .superpower{font-size:0.95em;font-weight:600;margin-bottom:8px;padding:10px 14px;border-radius:8px}
+  .use-cases{font-size:0.85em;color:#444;line-height:1.7;margin-bottom:10px}
+  .use-cases li{margin-bottom:4px}
+  .limitation{font-size:0.8em;color:#999;font-style:italic;padding:8px 12px;background:#fafafa;border-radius:6px;margin-bottom:10px}
+  .tool-link{display:inline-block;padding:8px 20px;border-radius:8px;font-size:0.82em;font-weight:700;text-decoration:none;transition:all .15s}
+  .tool-link:hover{transform:translateY(-1px)}
+
+  /* TOOL COLORS */
+  .tc-claude .tool-icon{background:#EEEDFE}
+  .tc-claude .pill{background:#CECBF6;color:#3C3489}
+  .tc-claude .superpower{background:#EEEDFE;color:#3C3489}
+  .tc-claude .tool-link{background:#AFA9EC;color:#26215C}
+
+  .tc-chatgpt .tool-icon{background:#EAF3DE}
+  .tc-chatgpt .pill{background:#C0DD97;color:#27500A}
+  .tc-chatgpt .superpower{background:#EAF3DE;color:#27500A}
+  .tc-chatgpt .tool-link{background:#97C459;color:#173404}
+
+  .tc-perplexity .tool-icon{background:#E6F1FB}
+  .tc-perplexity .pill{background:#B5D4F4;color:#0C447C}
+  .tc-perplexity .superpower{background:#E6F1FB;color:#0C447C}
+  .tc-perplexity .tool-link{background:#85B7EB;color:#042C53}
+
+  .tc-notebook .tool-icon{background:#FAEEDA}
+  .tc-notebook .pill{background:#FAC775;color:#633806}
+  .tc-notebook .superpower{background:#FAEEDA;color:#633806}
+  .tc-notebook .tool-link{background:#EF9F27;color:#412402}
+
+  .tc-gemini .tool-icon{background:#E1F5EE}
+  .tc-gemini .pill{background:#9FE1CB;color:#085041}
+  .tc-gemini .superpower{background:#E1F5EE;color:#085041}
+  .tc-gemini .tool-link{background:#5DCAA5;color:#04342C}
+
+  .tc-scispace .tool-icon{background:#FBEAF0}
+  .tc-scispace .pill{background:#F4C0D1;color:#72243E}
+  .tc-scispace .superpower{background:#FBEAF0;color:#72243E}
+  .tc-scispace .tool-link{background:#ED93B1;color:#4B1528}
+
+  .tc-elicit .tool-icon{background:#FAECE7}
+  .tc-elicit .pill{background:#F5C4B3;color:#712B13}
+  .tc-elicit .superpower{background:#FAECE7;color:#712B13}
+  .tc-elicit .tool-link{background:#F0997B;color:#4A1B0C}
+
+  .tc-tiha .tool-icon{background:#FCEBEB}
+  .tc-tiha .pill{background:#F7C1C1;color:#791F1F}
+  .tc-tiha .superpower{background:#FCEBEB;color:#791F1F}
+  .tc-tiha .tool-link{background:#F09595;color:#501313}
+
+  /* QUICK REFERENCE TABLE */
+  .ref-table{width:100%;border-collapse:collapse;font-size:0.82em;margin:16px 0}
+  .ref-table th{background:#1a3a5c;color:#fff;padding:10px 12px;text-align:left;font-weight:600;font-size:0.85em}
+  .ref-table td{padding:10px 12px;border-bottom:1px solid #e8e6e0;vertical-align:top}
+  .ref-table tr:nth-child(even){background:#faf9f6}
+  .ref-table .task{font-weight:600;color:#1a3a5c}
+
+  /* WORKFLOW */
+  .workflow{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0;justify-content:center}
+  .wf-step{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 10px;background:#fff;border-radius:10px;border:1px solid #e8e6e0;min-width:100px;flex:1;max-width:140px;text-align:center}
+  .wf-step .num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8em;color:#fff}
+  .wf-step .label{font-size:0.72em;font-weight:600;color:#1a3a5c}
+  .wf-step .tool-name{font-size:0.68em;color:#999}
+  .wf-arrow{display:flex;align-items:center;color:#ccc;font-size:1.2em;padding:0 2px}
+
+  /* DECISION TREE */
+  .decision{background:#fff;border-radius:12px;padding:20px;margin:16px 0;border:1px solid #e8e6e0}
+  .decision h3{font-size:0.95em;font-weight:700;color:#1a3a5c;margin-bottom:12px}
+  .d-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;font-size:0.85em}
+  .d-q{font-weight:600;color:#6a1b9a;min-width:200px}
+  .d-a{color:#444}
+  .d-tool{font-weight:700}
+
+  /* FOOTER */
+  .footer-section{text-align:center;padding:30px 16px;margin-top:20px}
+  .footer-section p{font-size:0.95em;font-style:italic;font-weight:600;color:#6a1b9a}
+  .footer-section .author{font-size:0.8em;color:#999;font-style:normal;margin-top:6px}
+  .footer-sm{text-align:center;padding:16px;color:#bbb;font-size:0.68em}
+
+  .card{background:#fff;border-radius:12px;padding:24px;margin-bottom:20px;border:1px solid #e8e6e0}
+  .card h2{font-size:1.15em;font-weight:700;color:#1a3a5c;margin-bottom:12px}
+
+  .highlight{background:#f8f6f0;border-left:4px solid #f9a825;padding:14px 18px;border-radius:0 8px 8px 0;margin:16px 0;font-size:0.88em}
+  .highlight.purple{border-left-color:#6a1b9a;background:#faf0fc}
+  .highlight.blue{border-left-color:#2e75b6;background:#f0f6fc}
+
+  @media(max-width:520px){
+    .header h1{font-size:1.2em}
+    .nav-tab{padding:10px 8px;font-size:0.7em}
+    .d-row{flex-direction:column;gap:2px}
+    .d-q{min-width:auto}
+    .wf-step{min-width:70px}
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Cheat Sheet: Cuándo usar cada IA</h1>
+  <div class="sub">Ecosistema de Herramientas de Inteligencia Artificial</div>
+  <div class="sub">ADMI 6990 — Prof. Mariluz Serrano Ortiz, Ed.D.</div>
+  <div class="badge">Guía de referencia rápida 2026</div>
+</div>
+
+<div class="nav-tabs">
+  <div class="nav-tab active" onclick="showSection('tools')">🔧 Herramientas</div>
+  <div class="nav-tab" onclick="showSection('quick')">⚡ Referencia rápida</div>
+  <div class="nav-tab" onclick="showSection('workflow')">🔄 Flujo de trabajo</div>
+  <div class="nav-tab" onclick="showSection('decide')">🧭 Decisor</div>
+</div>
+
+<div class="content">
+
+<!-- ===== TAB 1: TOOLS ===== -->
+<div id="tools" class="section active">
+
+  <!-- CLAUDE -->
+  <div class="tool-card tc-claude open" onclick="toggleCard(this)">
+    <div class="tool-header">
+      <div class="tool-icon">🧠</div>
+      <div class="tool-meta"><h3>Claude</h3><span class="maker">Anthropic</span></div>
+      <span class="tool-arrow">▾</span>
+    </div>
+    <div class="tool-body" onclick="event.stopPropagation()">
+      <div class="pills">
+        <span class="pill">Razonamiento</span><span class="pill">Redacción</span><span class="pill">Estrategia</span><span class="pill">Ética</span>
+      </div>
+      <div class="superpower">Superpoder: pensamiento profundo y prosa natural</div>
+      <ul class="use-cases">
+        <li>Análisis estratégico complejo con matices</li>
+        <li>Redacción ejecutiva de nivel profesional</li>
+        <li>Evaluación de pros/contras y razonamiento ético</li>
+        <li>Diseño de propuestas y prompts integradores</li>
+        <li>Contexto largo (200K tokens) para documentos extensos</li>
+      </ul>
+      <div class="limitation">Limitación: no busca en internet en tiempo real por defecto.</div>
+      <a href="https://claude.ai" target="_blank" class="tool-link">claude.ai</a>
+    </div>
+  </div>
+
+  <!-- CHATGPT -->
+  <div class="tool-card tc-chatgpt" onclick="toggleCard(this)">
+    <div class="tool-header">
+      <div class="tool-icon">💬</div>
+      <div class="tool-meta"><h3>ChatGPT</h3><span class="maker">OpenAI</span></div>
+      <span class="tool-arrow">▾</span>
+    </div>
+    <div class="tool-body" onclick="event.stopPropagation()">
+      <div class="pills">
+        <span class="pill">Versatilidad</span><span class="pill">Creatividad</span><span class="pill">Código</span><span class="pill">Voz</span>
+      </div>
+      <div class="superpower">Superpoder: todoterreno creativo con el mayor ecosistema</div>
+      <ul class="use-cases">
+        <li>Brainstorming e iteración creativa con Canvas</li>
+        <li>Generación de contenido variado y prototipado rápido</li>
+        <li>GPTs personalizados (TIHA Bot vive aquí)</li>
+        <li>Modo voz para práctica oral y dictado</li>
+        <li>Comparar respuestas con Claude y Gemini</li>
+      </ul>
+      <div class="limitation">Limitación: puede sonar confiado incluso cuando se equivoca (rendición cognitiva).</div>
+      <a href="https://chatgpt.com" target="_blank" class="tool-link">chatgpt.com</a>
+    </div>
+  </div>
+
+  <!-- PERPLEXITY -->
+  <div class="tool-card tc-perplexity" onclick="toggleCard(this)">
+    <div class="tool-header">
+      <div class="tool-icon">🔍</div>
+      <div class="tool-meta"><h3>Perplexity</h3><span class="maker">Perplexity AI</span></div>
+      <span class="tool-arrow">▾</span>
+    </div>
+    <div class="tool-body" onclick="event.stopPropagation()">
+      <div class="pills">
+        <span class="pill">Investigación</span><span class="pill">Fuentes citadas</span><span class="pill">Tiempo real</span>
+      </div>
+      <div class="superpower">Superpoder: investigación con citas automáticas verificables</div>
+      <ul class="use-cases">
+        <li>Investigación empresarial con fuentes citadas al instante</li>
+        <li>Verificación de datos y fact-checking</li>
+        <li>Exploración de tendencias y noticias actuales</li>
+        <li>Follow-up questions para profundizar</li>
+        <li>Reemplaza a Google Search con contexto inteligente</li>
+      </ul>
+      <div class="limitation">Limitación: reporta lo que encuentra, no genera análisis original ni profundo.</div>
+      <a href="https://www.perplexity.ai" target="_blank" class="tool-link">perplexity.ai</a>
+    </div>
+  </div>
+
+  <!-- NOTEBOOKLM -->
+  <div class="tool-card tc-notebook" onclick="toggleCard(this)">
+    <div class="tool-header">
+      <div class="tool-icon">📓</div>
+      <div class="tool-meta"><h3>NotebookLM</h3><span class="maker">Google</span></div>
+      <span class="tool-arrow">▾</span>
+    </div>
+    <div class="tool-body" onclick="event.stopPropagation()">
+      <div class="pills">
+        <span class="pill">Síntesis</span><span class="pill">Audio</span><span class="pill">Reports</span><span class="pill">Infografías</span>
+      </div>
+      <div class="superpower">Superpoder: convierte TUS documentos en conocimiento accionable</div>
+      <ul class="use-cases">
+        <li>Síntesis de lecturas y documentos académicos</li>
+        <li>Audio Overview interactivo (podcast + botón "Join" para interrumpir)</li>
+        <li>Executive Briefings y Reports automatizados</li>
+        <li>Flashcards con progreso guardado + Quizzes</li>
+        <li>Infografías (10 estilos: Professional, Bento Grid, Sketch...)</li>
+        <li>Video Overviews cinematográficos</li>
+        <li>Data Tables para comparaciones estructuradas</li>
+      </ul>
+      <div class="limitation">Limitación: solo responde basado en lo que subes. Calidad = calidad de tus fuentes.</div>
+      <a href="https://notebooklm.google.com" target="_blank" class="tool-link">notebooklm.google.com</a>
+    </div>
+  </div>
+
+  <!-- GEMINI -->
+  <div class="tool-card tc-gemini" onclick="toggleCard(this)">
+    <div class="tool-header">
+      <div class="tool-icon">✨</div>
+      <div class="tool-meta"><h3>Gemini</h3><span class="maker">Google</span></div>
+      <span class="tool-arrow">▾</span>
+    </div>
+    <div class="tool-body" onclick="event.stopPropagation()">
+      <div class="pills">
+        <span class="pill">Multimodal</span><span class="pill">Google Suite</span><span class="pill">1M tokens</span>
+      </div>
+      <div class="superpower">Superpoder: integración con Google Workspace + contexto masivo</div>
+      <ul class="use-cases">
+        <li>Análisis visual de imágenes, gráficos y documentos</li>
+        <li>Integración directa con Docs, Sheets y Slides</li>
+        <li>Procesamiento de documentos muy largos (1M tokens)</li>
+        <li>Acceso a Notebooks de NotebookLM desde Gemini</li>
+        <li>Comparación de modelos (benchmark cruzado)</li>
+      </ul>
+      <div class="limitation">Limitación: puede alucinar detalles específicos con confianza.</div>
+      <a href="https://gemini.google.com" target="_blank" class="tool-link">gemini.google.com</a>
+    </div>
+  </div>
+
+  <!-- SCISPACE -->
+  <div class="tool-card tc-scispace" onclick="toggleCard(this)">
+    <div class="tool-header">
+      <div class="tool-icon">🎓</div>
+      <div class="tool-meta"><h3>SciSpace</h3><span class="maker">SciSpace</span></div>
+      <span class="tool-arrow">▾</span>
+    </div>
+    <div class="tool-body" onclick="event.stopPropagation()">
+      <div class="pills">
+        <span class="pill">Papers</span><span class="pill">Peer-review</span><span class="pill">APA</span>
+      </div>
+      <div class="superpower">Superpoder: análisis de papers académicos con IA</div>
+      <ul class="use-cases">
+        <li>Búsqueda de artículos peer-reviewed por tema</li>
+        <li>Resumen automático de papers complejos</li>
+        <li>Extracción de tablas, datos y metodologías</li>
+        <li>"Ask a question" sobre un paper específico</li>
+        <li>Fundamentar el Proyecto Final con rigor académico</li>
+      </ul>
+      <div class="limitation">Limitación: cobertura variable por campo; siempre verificar formato APA manualmente.</div>
+      <a href="https://scispace.com" target="_blank" class="tool-link">scispace.com</a>
+    </div>
+  </div>
+
+  <!-- ELICIT -->
+  <div class="tool-card tc-elicit" onclick="toggleCard(this)">
+    <div class="tool-header">
+      <div class="tool-icon">🔬</div>
+      <div class="tool-meta"><h3>Elicit</h3><span class="maker">Elicit Inc.</span></div>
+      <span class="tool-arrow">▾</span>
+    </div>
+    <div class="tool-body" onclick="event.stopPropagation()">
+      <div class="pills">
+        <span class="pill">Investigación</span><span class="pill">Papers reales</span><span class="pill">Datos</span>
+      </div>
+      <div class="superpower">Superpoder: encuentra papers reales (no inventa referencias)</div>
+      <ul class="use-cases">
+        <li>Búsqueda de literatura científica verificada</li>
+        <li>Extracción de hallazgos clave de múltiples papers</li>
+        <li>Comparación de estudios lado a lado</li>
+        <li>Complementa a SciSpace con enfoque en datos empíricos</li>
+      </ul>
+      <div class="limitation">Limitación: orientado a investigación; no genera contenido creativo.</div>
+      <a href="https://elicit.com" target="_blank" class="tool-link">elicit.com</a>
+    </div>
+  </div>
+
+  <!-- TIHA BOT -->
+  <div class="tool-card tc-tiha" onclick="toggleCard(this)">
+    <div class="tool-header">
+      <div class="tool-icon">💜</div>
+      <div class="tool-meta"><h3>TIHA Bot</h3><span class="maker">GPT Personalizado</span></div>
+      <span class="tool-arrow">▾</span>
+    </div>
+    <div class="tool-body" onclick="event.stopPropagation()">
+      <div class="pills">
+        <span class="pill">Metodología</span><span class="pill">Reflexión</span><span class="pill">Humanización</span>
+      </div>
+      <div class="superpower">Superpoder: asesora virtual metodológica TIHA</div>
+      <ul class="use-cases">
+        <li>Consultas estratégicas con enfoque de humanización</li>
+        <li>Reflexión pedagógica y metacognitiva</li>
+        <li>Orientación para integrar criterio humano con IA</li>
+        <li>Diseñado específicamente para este curso</li>
+      </ul>
+      <div class="limitation">Acceso: chatgpt.com/g/g-689929d1a1e08191807582efd7e37947-tiha</div>
+      <a href="https://chatgpt.com/g/g-689929d1a1e08191807582efd7e37947-tiha" target="_blank" class="tool-link">Abrir TIHA Bot</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== TAB 2: QUICK REFERENCE ===== -->
+<div id="quick" class="section">
+  <div class="card">
+    <h2>Referencia rápida: necesito hacer X, ¿qué IA uso?</h2>
+    <table class="ref-table">
+      <thead><tr><th>Necesito...</th><th>Usa esto</th><th>¿Por qué?</th></tr></thead>
+      <tbody>
+        <tr><td class="task">Investigar un tema con fuentes</td><td><strong>Perplexity</strong></td><td>Citas automáticas y verificables en tiempo real</td></tr>
+        <tr><td class="task">Sintetizar lecturas del curso</td><td><strong>NotebookLM</strong></td><td>Sube los PDFs y genera briefings, audio, flashcards</td></tr>
+        <tr><td class="task">Encontrar papers académicos</td><td><strong>SciSpace + Elicit</strong></td><td>Papers reales peer-reviewed, no referencias inventadas</td></tr>
+        <tr><td class="task">Escribir un análisis estratégico</td><td><strong>Claude</strong></td><td>Razonamiento profundo, prosa natural, matices</td></tr>
+        <tr><td class="task">Hacer brainstorming creativo</td><td><strong>ChatGPT</strong></td><td>Versatilidad, Canvas para iterar, modo voz</td></tr>
+        <tr><td class="task">Analizar una imagen o gráfico</td><td><strong>Gemini</strong></td><td>Capacidad multimodal + integración Google</td></tr>
+        <tr><td class="task">Crear un prompt estratégico</td><td><strong>Claude + ChatGPT</strong></td><td>Compara ambas respuestas para mayor rigor</td></tr>
+        <tr><td class="task">Preparar un examen o quiz</td><td><strong>NotebookLM</strong></td><td>Flashcards + Quiz con progreso guardado</td></tr>
+        <tr><td class="task">Escuchar un resumen mientras caminas</td><td><strong>NotebookLM</strong></td><td>Audio Overview + "Join" para interrumpir y preguntar</td></tr>
+        <tr><td class="task">Verificar si algo es verdadero</td><td><strong>Perplexity</strong></td><td>Muestra las fuentes, tú decides si son confiables</td></tr>
+        <tr><td class="task">Reflexionar con metodología TIHA</td><td><strong>TIHA Bot</strong></td><td>Diseñado para humanizar tu proceso de aprendizaje</td></tr>
+        <tr><td class="task">Comparar 3 IAs sobre el mismo caso</td><td><strong>Claude + ChatGPT + Gemini</strong></td><td>Mismo prompt, 3 perspectivas: así se forma criterio</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="highlight purple">
+    <strong>La regla de oro:</strong> Perplexity para encontrar. NotebookLM para sintetizar. SciSpace/Elicit para fundamentar. Claude para pensar. ChatGPT para crear. Gemini para integrar. TIHA Bot para reflexionar.
+  </div>
+</div>
+
+<!-- ===== TAB 3: WORKFLOW ===== -->
+<div id="workflow" class="section">
+  <div class="card">
+    <h2>Flujo de investigación estratégica con IA</h2>
+    <p style="font-size:0.88em;color:#666;margin-bottom:16px;">Este es el flujo recomendado para tareas y el Proyecto Final del curso.</p>
+
+    <div class="workflow">
+      <div class="wf-step"><div class="num" style="background:#6a1b9a">1</div><div class="label">Criterio humano</div><div class="tool-name">Tu cerebro</div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step"><div class="num" style="background:#2e75b6">2</div><div class="label">Explorar</div><div class="tool-name">Perplexity</div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step"><div class="num" style="background:#f9a825">3</div><div class="label">Sintetizar</div><div class="tool-name">NotebookLM</div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step"><div class="num" style="background:#d4537e">4</div><div class="label">Fundamentar</div><div class="tool-name">SciSpace</div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step"><div class="num" style="background:#534ab7">5</div><div class="label">Analizar</div><div class="tool-name">Claude</div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step"><div class="num" style="background:#e65100">6</div><div class="label">Evaluar</div><div class="tool-name">Tu criterio</div></div>
+    </div>
+
+    <div class="highlight">
+      <strong>Paso 1 y Paso 6 son HUMANOS.</strong> El protocolo anti-rendición cognitiva: empiezas pensando tú, terminas evaluando tú. La IA está en el medio, no en el volante.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Flujo para el Proyecto Final</h2>
+    <div class="workflow">
+      <div class="wf-step"><div class="num" style="background:#1a3a5c">1</div><div class="label">Define problema</div><div class="tool-name">Equipo + Huang & Rust</div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step"><div class="num" style="background:#2e75b6">2</div><div class="label">Investiga</div><div class="tool-name">Perplexity + SciSpace</div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step"><div class="num" style="background:#f9a825">3</div><div class="label">Canvas + IA</div><div class="tool-name">NotebookLM + Claude</div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step"><div class="num" style="background:#2e7d32">4</div><div class="label">Prototipa</div><div class="tool-name">Claude + ChatGPT</div></div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step"><div class="num" style="background:#e65100">5</div><div class="label">Presenta</div><div class="tool-name">NotebookLM + Gemini</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 4: DECISION TREE ===== -->
+<div id="decide" class="section">
+  <div class="decision">
+    <h3>Decisor rápido: responde la pregunta, encuentra tu herramienta</h3>
+
+    <div class="d-row"><div class="d-q">¿Necesito datos actualizados?</div><div class="d-a">Sí → <span class="d-tool" style="color:#0C447C">Perplexity</span> (busca en internet con citas)</div></div>
+    <div class="d-row"><div class="d-q">¿Necesito analizar MIS documentos?</div><div class="d-a">Sí → <span class="d-tool" style="color:#633806">NotebookLM</span> (solo responde de tus fuentes)</div></div>
+    <div class="d-row"><div class="d-q">¿Necesito papers peer-reviewed?</div><div class="d-a">Sí → <span class="d-tool" style="color:#72243E">SciSpace</span> + <span class="d-tool" style="color:#712B13">Elicit</span></div></div>
+    <div class="d-row"><div class="d-q">¿Necesito razonamiento profundo?</div><div class="d-a">Sí → <span class="d-tool" style="color:#3C3489">Claude</span> (pensamiento con matices)</div></div>
+    <div class="d-row"><div class="d-q">¿Necesito creatividad e iteración?</div><div class="d-a">Sí → <span class="d-tool" style="color:#27500A">ChatGPT</span> (Canvas + variaciones)</div></div>
+    <div class="d-row"><div class="d-q">¿Necesito analizar imágenes?</div><div class="d-a">Sí → <span class="d-tool" style="color:#085041">Gemini</span> (multimodal + Google Suite)</div></div>
+    <div class="d-row"><div class="d-q">¿Necesito reflexionar con TIHA?</div><div class="d-a">Sí → <span class="d-tool" style="color:#791F1F">TIHA Bot</span> (humanización)</div></div>
+    <div class="d-row"><div class="d-q">¿No sé qué necesito?</div><div class="d-a">Empieza con <span class="d-tool" style="color:#3C3489">Claude</span> o <span class="d-tool" style="color:#27500A">ChatGPT</span> y refina</div></div>
+  </div>
+
+  <div class="highlight blue">
+    <strong>Consejo TIHA:</strong> "La herramienta correcta no es la más poderosa — es la que mejor responde a tu PREGUNTA. Y la mejor pregunta siempre empieza en tu criterio humano, no en la IA."
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-section">
+  <p>"La inteligencia artificial no reemplaza al ser humano;<br>lo potencia para trascender."</p>
+  <div class="author">— Metodología TIHA, Prof. Mariluz Serrano Ortiz</div>
+</div>
+
+</div>
+
+<div class="footer-sm">
+  ADMI 6990 — IA Generativa para la Transformación Estratégica Empresarial<br>
+  Prof. Mariluz Serrano Ortiz, Ed.D. | Universidad de Puerto Rico<br>
+  Tercer Trimestre 2025–2026 | Metodología TIHA
+</div>
+
+<script>
+var scormAPI=null;
+function findSCORMAPI(w){var a=0;while(!w.API&&w.parent&&w.parent!=w&&a<10){a++;w=w.parent;}return w.API||null;}
+function initSCORM(){try{scormAPI=findSCORMAPI(window);if(scormAPI){scormAPI.LMSInitialize("");scormAPI.LMSSetValue("cmi.core.lesson_status","completed");scormAPI.LMSCommit("");}}catch(e){}}
+window.onload=initSCORM;
+window.onbeforeunload=function(){try{if(scormAPI)scormAPI.LMSFinish("");}catch(e){}};
+
+function showSection(id){
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active')});
+  document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active')});
+  document.getElementById(id).classList.add('active');
+  var tabs=document.querySelectorAll('.nav-tab');
+  var ids=['tools','quick','workflow','decide'];
+  var idx=ids.indexOf(id);
+  if(idx>=0&&tabs[idx])tabs[idx].classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleCard(el){
+  var wasOpen=el.classList.contains('open');
+  el.classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
