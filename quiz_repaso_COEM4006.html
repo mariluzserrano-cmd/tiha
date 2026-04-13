@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COEM 4006 - Repaso Gamificado</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  :root {
+    --primary: #1B4F72; --pl: #2E86C1; --pp: #EBF5FB;
+    --green: #27AE60; --gl: #E8F8F5;
+    --red: #E74C3C; --rl: #FDEDEC;
+    --warm: #F39C12; --wl: #FEF9E7;
+    --purple: #8E44AD;
+    --bg: #f0f2f5; --white: #fff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --radius: 16px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',sans-serif; background:var(--bg); color:#333; min-height:100vh; }
+
+  .game-container { max-width:720px; margin:0 auto; padding:20px; }
+
+  /* SCREENS */
+  .screen { display:none; animation: fadeIn 0.4s ease; }
+  .screen.active { display:block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(15px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes popIn { 0%{transform:scale(0.8);opacity:0} 100%{transform:scale(1);opacity:1} }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+  @keyframes confetti { 0%{transform:translateY(0) rotate(0)} 100%{transform:translateY(-60px) rotate(360deg); opacity:0} }
+
+  .header-bar {
+    background: linear-gradient(135deg, var(--primary), var(--pl));
+    color:white; padding:24px 28px; border-radius:var(--radius);
+    margin-bottom:20px; position:relative; overflow:hidden;
+  }
+  .header-bar::after {
+    content:''; position:absolute; top:-40%; right:-5%;
+    width:200px; height:200px; background:rgba(255,255,255,0.05);
+    border-radius:50%;
+  }
+  .header-bar h1 { font-size:1.4em; font-weight:800; margin-bottom:4px; }
+  .header-bar p { font-size:0.85em; opacity:0.85; }
+
+  /* SCORE BAR */
+  .score-bar {
+    display:flex; justify-content:space-between; align-items:center;
+    background:var(--white); border-radius:var(--radius); padding:14px 20px;
+    box-shadow:var(--shadow); margin-bottom:16px;
+  }
+  .score-item { text-align:center; }
+  .score-item .label { font-size:11px; color:#999; text-transform:uppercase; letter-spacing:1px; }
+  .score-item .value { font-size:1.5em; font-weight:800; color:var(--primary); }
+  .score-item .value.gold { color:var(--warm); }
+
+  .progress-track { height:6px; background:#e0e0e0; border-radius:10px; margin-bottom:16px; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--primary),var(--pl)); border-radius:10px; transition:width 0.5s; }
+
+  /* QUESTION CARD */
+  .q-card {
+    background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:28px; margin-bottom:16px;
+  }
+  .q-category {
+    display:inline-block; padding:4px 14px; border-radius:20px;
+    font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px;
+    margin-bottom:14px;
+  }
+  .q-category.email { background:var(--pp); color:var(--primary); }
+  .q-category.ia { background:#F4ECF7; color:var(--purple); }
+  .q-category.netiqueta { background:var(--gl); color:var(--green); }
+  .q-category.voz { background:var(--wl); color:#D68910; }
+
+  .q-text { font-size:1.1em; font-weight:600; line-height:1.6; margin-bottom:20px; color:var(--primary); }
+
+  .option-btn {
+    display:block; width:100%; text-align:left; padding:14px 18px;
+    background:var(--bg); border:2px solid transparent; border-radius:12px;
+    margin:8px 0; cursor:pointer; font-family:'Inter',sans-serif;
+    font-size:0.92em; line-height:1.5; transition:all 0.2s;
+    position:relative;
+  }
+  .option-btn:hover { border-color:var(--pl); background:var(--pp); transform:translateX(4px); }
+  .option-btn.correct { background:var(--gl); border-color:var(--green); animation:popIn 0.3s; }
+  .option-btn.wrong { background:var(--rl); border-color:var(--red); animation:shake 0.4s; }
+  .option-btn.disabled { pointer-events:none; opacity:0.6; }
+  .option-btn .opt-letter {
+    display:inline-block; width:28px; height:28px; line-height:28px;
+    text-align:center; border-radius:50%; background:var(--primary);
+    color:white; font-weight:700; font-size:12px; margin-right:12px;
+    vertical-align:middle;
+  }
+
+  .feedback-box {
+    padding:16px 20px; border-radius:12px; margin-top:16px;
+    font-size:0.9em; line-height:1.6; display:none;
+  }
+  .feedback-box.show { display:block; animation:popIn 0.3s; }
+  .feedback-box.correct { background:var(--gl); border-left:4px solid var(--green); }
+  .feedback-box.wrong { background:var(--rl); border-left:4px solid var(--red); }
+  .feedback-box strong { display:block; margin-bottom:4px; }
+
+  .next-btn {
+    display:none; margin:20px auto 0; padding:12px 36px;
+    background:var(--primary); color:white; border:none; border-radius:30px;
+    font-family:'Inter',sans-serif; font-size:0.95em; font-weight:600;
+    cursor:pointer; transition:all 0.2s;
+  }
+  .next-btn:hover { background:var(--pl); transform:translateY(-2px); }
+  .next-btn.show { display:block; }
+
+  /* START SCREEN */
+  .start-screen { text-align:center; padding:40px 20px; }
+  .start-screen .emoji { font-size:4em; margin-bottom:16px; }
+  .start-screen h2 { font-size:1.6em; color:var(--primary); margin-bottom:12px; }
+  .start-screen p { color:#666; max-width:500px; margin:0 auto 24px; line-height:1.7; }
+  .start-btn {
+    padding:16px 48px; background:linear-gradient(135deg,var(--primary),var(--pl));
+    color:white; border:none; border-radius:30px; font-family:'Inter',sans-serif;
+    font-size:1.1em; font-weight:700; cursor:pointer; transition:all 0.3s;
+    box-shadow:0 4px 15px rgba(27,79,114,0.3);
+  }
+  .start-btn:hover { transform:translateY(-3px); box-shadow:0 8px 25px rgba(27,79,114,0.4); }
+
+  .topics { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:20px 0; }
+  .topic-tag {
+    padding:6px 16px; border-radius:20px; font-size:12px; font-weight:600;
+  }
+
+  /* RESULTS */
+  .results { text-align:center; }
+  .results .big-emoji { font-size:5em; margin-bottom:16px; animation:popIn 0.5s; }
+  .results h2 { font-size:1.8em; color:var(--primary); margin-bottom:8px; }
+  .results .score-big { font-size:3.5em; font-weight:800; color:var(--primary); margin:12px 0; }
+  .results .score-sub { color:#666; margin-bottom:24px; }
+  .result-detail {
+    display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin:20px 0;
+  }
+  .result-card {
+    background:var(--bg); border-radius:12px; padding:16px 24px; min-width:120px;
+  }
+  .result-card .rc-val { font-size:1.6em; font-weight:800; }
+  .result-card .rc-label { font-size:11px; color:#999; text-transform:uppercase; }
+  .takeaway {
+    background:var(--wl); border-left:4px solid var(--warm);
+    border-radius:0 12px 12px 0; padding:16px 20px; margin:20px 0;
+    text-align:left; font-size:0.9em; line-height:1.7;
+  }
+  .takeaway strong { color:var(--warm); }
+  .restart-btn {
+    padding:14px 40px; background:var(--primary); color:white;
+    border:none; border-radius:30px; font-family:'Inter',sans-serif;
+    font-size:1em; font-weight:600; cursor:pointer; margin-top:16px;
+  }
+
+  @media(max-width:600px) {
+    .game-container { padding:12px; }
+    .header-bar h1 { font-size:1.1em; }
+    .q-text { font-size:1em; }
+    .score-bar { flex-wrap:wrap; gap:8px; }
+  }
+</style>
+</head>
+<body>
+<div class="game-container">
+
+  <div class="header-bar">
+    <h1>&#9889; Repaso Rel&aacute;mpago: Comunicaci&oacute;n Digital</h1>
+    <p>COEM 4006 &middot; Dra. Serrano-Ortiz &middot; Modelo TIHA</p>
+  </div>
+
+  <!-- START SCREEN -->
+  <div class="screen active" id="screen-start">
+    <div class="q-card start-screen">
+      <div class="emoji">&#127919;</div>
+      <h2>&iquest;Cu&aacute;nto recuerdas?</h2>
+      <p>10 preguntas r&aacute;pidas sobre comunicaci&oacute;n electr&oacute;nica profesional, netiqueta, IA generativa y la importancia de tu propia voz.</p>
+      <div class="topics">
+        <span class="topic-tag q-category email">Correo profesional</span>
+        <span class="topic-tag q-category netiqueta">Netiqueta</span>
+        <span class="topic-tag q-category ia">IA Generativa</span>
+        <span class="topic-tag q-category voz">Tu propia voz</span>
+      </div>
+      <button class="start-btn" onclick="startGame()">&#128640; &iexcl;Comenzar!</button>
+    </div>
+  </div>
+
+  <!-- GAME SCREEN -->
+  <div class="screen" id="screen-game">
+    <div class="score-bar">
+      <div class="score-item"><div class="label">Pregunta</div><div class="value" id="qNum">1/10</div></div>
+      <div class="score-item"><div class="label">Correctas</div><div class="value" id="scoreVal" style="color:var(--green)">0</div></div>
+      <div class="score-item"><div class="label">Racha</div><div class="value gold" id="streakVal">0 &#128293;</div></div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div id="questionArea"></div>
+  </div>
+
+  <!-- RESULTS SCREEN -->
+  <div class="screen" id="screen-results">
+    <div class="q-card results" id="resultsContent"></div>
+  </div>
+
+</div>
+
+<script>
+const questions = [
+  {
+    cat: "email", catLabel: "Correo profesional",
+    q: "&iquest;Cu&aacute;l es la forma correcta de iniciar un correo electr&oacute;nico profesional a alguien que no conoces?",
+    opts: [
+      "Hola, &iquest;c&oacute;mo est&aacute;s?",
+      "Estimado/a [nombre y apellido]:",
+      "Hey! Te escribo porque...",
+      "Buenos d&iacute;as (sin nombre)"
+    ],
+    correct: 1,
+    fb: "El saludo profesional incluye el t&iacute;tulo o nombre completo del destinatario. &laquo;Estimado/a&raquo; seguido del nombre demuestra respeto y formalidad adecuada. Recuerda: el saludo es tu primera impresi&oacute;n digital."
+  },
+  {
+    cat: "netiqueta", catLabel: "Netiqueta",
+    q: "Un compa&ntilde;ero de trabajo te env&iacute;a un mensaje en MAYÚSCULAS pidiendo un documento urgente. &iquest;Qu&eacute; implica el uso de may&uacute;sculas en comunicaci&oacute;n digital?",
+    opts: [
+      "Es una forma de resaltar lo importante",
+      "Equivale a GRITAR y se considera descort&eacute;s",
+      "Es una pr&aacute;ctica aceptable en mensajes urgentes",
+      "No tiene ninguna connotaci&oacute;n especial"
+    ],
+    correct: 1,
+    fb: "En la comunicaci&oacute;n digital, escribir en MAY&Uacute;SCULAS equivale a gritar. Incluso en situaciones urgentes, existen formas m&aacute;s profesionales de comunicar prioridad: usar el indicador de prioridad del correo, ser directo en el asunto, o llamar."
+  },
+  {
+    cat: "ia", catLabel: "IA Generativa",
+    q: "Tu jefe te pide redactar un comunicado interno. Decides usar ChatGPT para generar un borrador. &iquest;Cu&aacute;l es la pr&aacute;ctica correcta?",
+    opts: [
+      "Copiar y pegar directamente &mdash; la IA escribe mejor que yo",
+      "Usar el borrador como punto de partida, editarlo con tu criterio y voz profesional, y documentar que usaste IA",
+      "No usar IA bajo ninguna circunstancia en entornos profesionales",
+      "Usar el texto de IA pero cambiar algunas palabras para que parezca tuyo"
+    ],
+    correct: 1,
+    fb: "La IA generativa es una herramienta, no un sustituto de tu pensamiento cr&iacute;tico. El enfoque correcto es usarla como punto de partida, aplicar tu criterio profesional, editar con tu propia voz y ser transparente sobre su uso. &iexcl;Eso es Nivel 4 de nuestra pol&iacute;tica de IA!"
+  },
+  {
+    cat: "voz", catLabel: "Tu propia voz",
+    q: "&iquest;Por qu&eacute; es importante mantener tu propia voz al escribir, incluso cuando usas herramientas de IA?",
+    opts: [
+      "Porque la IA comete errores gramaticales frecuentemente",
+      "Porque tu voz refleja tu identidad profesional, tu pensamiento cr&iacute;tico y tu autenticidad &mdash; eso es lo que te diferencia",
+      "Porque los profesores pueden detectar texto generado por IA",
+      "Porque la IA no puede escribir en espa&ntilde;ol correctamente"
+    ],
+    correct: 1,
+    fb: "Tu voz profesional es tu marca personal. La IA puede generar texto competente, pero carece de tu perspectiva &uacute;nica, tu experiencia, tu contexto cultural y tu pensamiento cr&iacute;tico. En el mundo empresarial, la autenticidad genera confianza y credibilidad."
+  },
+  {
+    cat: "email", catLabel: "Correo profesional",
+    q: "&iquest;Qu&eacute; elementos debe incluir la l&iacute;nea de asunto de un correo electr&oacute;nico profesional?",
+    opts: [
+      "Puede dejarse en blanco si el mensaje es breve",
+      "Un saludo cordial como &laquo;Hola&raquo;",
+      "Un resumen claro, conciso y espec&iacute;fico del contenido del mensaje",
+      "El nombre del remitente"
+    ],
+    correct: 2,
+    fb: "La l&iacute;nea de asunto es como un titular: debe ser clara, concisa y espec&iacute;fica. Ejemplo: &laquo;Solicitud de reuni&oacute;n &mdash; Proyecto Q2 &mdash; Abril 15&raquo; en lugar de &laquo;Hola&raquo; o dejarla vac&iacute;a. Un buen asunto aumenta las probabilidades de que tu correo sea le&iacute;do."
+  },
+  {
+    cat: "ia", catLabel: "IA Generativa",
+    q: "Vas a incluir en tu portafolio digital un texto sobre tus aspiraciones profesionales. &iquest;Cu&aacute;l de estas estrategias refleja mejor el uso responsable de IA?",
+    opts: [
+      "Pedirle a la IA que escriba tus aspiraciones basadas en tu carrera",
+      "Escribir primero tus ideas propias, luego usar IA para mejorar la redacci&oacute;n manteniendo tu contenido original",
+      "Generar varias versiones con IA y elegir la que suene m&aacute;s impresionante",
+      "No usar IA para nada personal"
+    ],
+    correct: 1,
+    fb: "La estrategia &oacute;ptima es: TÚ piensas primero, la IA te asiste despu&eacute;s. Tus aspiraciones son tuyas &mdash; nadie m&aacute;s puede articularlas con autenticidad. La IA puede ayudarte a pulir la redacci&oacute;n, pero el contenido, las ideas y la visi&oacute;n deben ser genuinamente tuyos."
+  },
+  {
+    cat: "netiqueta", catLabel: "Netiqueta",
+    q: "Est&aacute;s en una reuni&oacute;n virtual por Teams con tu equipo de trabajo. &iquest;Cu&aacute;l de estas pr&aacute;cticas es INCORRECTA?",
+    opts: [
+      "Silenciar tu micr&oacute;fono cuando no hablas",
+      "Tener la c&aacute;mara encendida durante la presentaci&oacute;n",
+      "Enviar mensajes privados por chat mientras un compa&ntilde;ero presenta",
+      "Usar la funci&oacute;n de levantar la mano para participar"
+    ],
+    correct: 2,
+    fb: "Enviar mensajes privados durante una presentaci&oacute;n equivale a susurrar en una reuni&oacute;n presencial &mdash; es una falta de respeto al presentador. La comunicaci&oacute;n sincr&oacute;nica requiere atenci&oacute;n plena. Si necesitas comunicar algo urgente, espera al espacio de preguntas."
+  },
+  {
+    cat: "voz", catLabel: "Tu propia voz",
+    q: "En tu reflexi&oacute;n final del proyecto, &iquest;qu&eacute; demuestra mejor que has desarrollado pensamiento cr&iacute;tico sobre comunicaci&oacute;n digital?",
+    opts: [
+      "Citar muchas fuentes acad&eacute;micas sin conectarlas con tu experiencia",
+      "Escribir lo que crees que la profesora quiere leer",
+      "Conectar los marcos te&oacute;ricos (DigComp, UNESCO, TIHA) con experiencias personales concretas y formular tu propia postura",
+      "Resumir los contenidos del curso en orden cronol&oacute;gico"
+    ],
+    correct: 2,
+    fb: "El pensamiento cr&iacute;tico se demuestra cuando conectas la teor&iacute;a con tu realidad, tomas postura fundamentada y articulas c&oacute;mo transformaste tu pr&aacute;ctica. No es repetir &mdash; es transformar el conocimiento en algo propio y aplicable."
+  },
+  {
+    cat: "email", catLabel: "Correo profesional",
+    q: "&iquest;Cu&aacute;ndo es apropiado usar &laquo;Responder a todos&raquo; en un correo electr&oacute;nico corporativo?",
+    opts: [
+      "Siempre, para que todos est&eacute;n informados",
+      "Solo cuando tu respuesta es relevante para TODOS los destinatarios",
+      "Nunca &mdash; es mejor reenviar el mensaje",
+      "Cuando quieres que tu jefe vea tu respuesta"
+    ],
+    correct: 1,
+    fb: "El &laquo;Responder a todos&raquo; debe usarse con criterio: solo cuando la informaci&oacute;n es pertinente para todos los destinatarios. Usarlo indiscriminadamente satura las bandejas de entrada y es una de las faltas de netiqueta m&aacute;s comunes en entornos laborales."
+  },
+  {
+    cat: "ia", catLabel: "IA Generativa",
+    q: "Seg&uacute;n la pol&iacute;tica de IA de nuestro curso (Nivel 4: Uso Abierto), &iquest;qu&eacute; es fundamental al usar herramientas de IA en tus asignaciones?",
+    opts: [
+      "Usarla solo para tareas f&aacute;ciles",
+      "No mencionarlo porque est&aacute; permitido",
+      "Documentar c&oacute;mo se utiliz&oacute; la IA y qu&eacute; impacto tuvo en los resultados",
+      "Asegurarte de que nadie se entere"
+    ],
+    correct: 2,
+    fb: "La transparencia es la clave del Nivel 4. No se trata de esconder ni de presumir el uso de IA, sino de documentar: &iquest;c&oacute;mo la usaste? &iquest;Para qu&eacute;? &iquest;Qu&eacute; aportaste t&uacute; al resultado final? Eso es integridad acad&eacute;mica en la era digital."
+  }
+];
+
+let currentQ = 0, score = 0, streak = 0, maxStreak = 0, answered = false;
+
+function startGame() {
+  currentQ = 0; score = 0; streak = 0; maxStreak = 0;
+  // Shuffle questions
+  for(let i = questions.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [questions[i], questions[j]] = [questions[j], questions[i]];
+  }
+  document.getElementById('screen-start').classList.remove('active');
+  document.getElementById('screen-game').classList.add('active');
+  showQuestion();
+}
+
+function showQuestion() {
+  answered = false;
+  const q = questions[currentQ];
+  document.getElementById('qNum').textContent = (currentQ+1) + '/10';
+  document.getElementById('scoreVal').textContent = score;
+  document.getElementById('streakVal').innerHTML = streak + ' &#128293;';
+  document.getElementById('progressFill').style.width = ((currentQ)/10*100) + '%';
+
+  const letters = ['A','B','C','D'];
+  let html = '<div class="q-card">';
+  html += '<span class="q-category ' + q.cat + '">' + q.catLabel + '</span>';
+  html += '<div class="q-text">' + q.q + '</div>';
+  q.opts.forEach((opt, i) => {
+    html += '<button class="option-btn" onclick="selectAnswer('+i+')" id="opt'+i+'">';
+    html += '<span class="opt-letter">' + letters[i] + '</span>' + opt + '</button>';
+  });
+  html += '<div class="feedback-box" id="feedback"></div>';
+  html += '<button class="next-btn" id="nextBtn" onclick="nextQuestion()">';
+  html += (currentQ < 9) ? 'Siguiente &#8594;' : 'Ver resultados &#127942;';
+  html += '</button>';
+  html += '</div>';
+  document.getElementById('questionArea').innerHTML = html;
+}
+
+function selectAnswer(idx) {
+  if(answered) return;
+  answered = true;
+  const q = questions[currentQ];
+  const isCorrect = idx === q.correct;
+
+  document.querySelectorAll('.option-btn').forEach(b => b.classList.add('disabled'));
+
+  if(isCorrect) {
+    document.getElementById('opt'+idx).classList.add('correct');
+    score++;
+    streak++;
+    if(streak > maxStreak) maxStreak = streak;
+  } else {
+    document.getElementById('opt'+idx).classList.add('wrong');
+    document.getElementById('opt'+q.correct).classList.add('correct');
+    streak = 0;
+  }
+
+  document.getElementById('scoreVal').textContent = score;
+  document.getElementById('streakVal').innerHTML = streak + ' &#128293;';
+
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback-box show ' + (isCorrect ? 'correct' : 'wrong');
+  fb.innerHTML = '<strong>' + (isCorrect ? '&#10004; &iexcl;Correcto!' : '&#10008; No exactamente...') + '</strong>' + q.fb;
+
+  document.getElementById('nextBtn').classList.add('show');
+}
+
+function nextQuestion() {
+  currentQ++;
+  if(currentQ >= 10) {
+    showResults();
+  } else {
+    showQuestion();
+  }
+}
+
+function showResults() {
+  document.getElementById('screen-game').classList.remove('active');
+  document.getElementById('screen-results').classList.add('active');
+  document.getElementById('progressFill').style.width = '100%';
+
+  const pct = Math.round(score/10*100);
+  let emoji, msg;
+  if(pct >= 90) { emoji='&#127942;'; msg='&iexcl;Dominas la comunicaci&oacute;n digital profesional! Est&aacute;s list@ para tu portafolio.'; }
+  else if(pct >= 70) { emoji='&#128170;'; msg='&iexcl;Buen dominio! Repasa los temas donde fallaste para fortalecer tu proyecto final.'; }
+  else if(pct >= 50) { emoji='&#128161;'; msg='Hay &aacute;reas que reforzar. Revisa el material del SCORM antes de trabajar tu portafolio.'; }
+  else { emoji='&#128218;'; msg='Necesitas repasar los conceptos clave. Revisa las lecturas y el SCORM interactivo.'; }
+
+  let html = '<div class="big-emoji">' + emoji + '</div>';
+  html += '<h2>Resultados</h2>';
+  html += '<div class="score-big">' + score + '/10</div>';
+  html += '<div class="score-sub">' + pct + '% de respuestas correctas</div>';
+  html += '<div class="result-detail">';
+  html += '<div class="result-card"><div class="rc-val" style="color:var(--green)">' + score + '</div><div class="rc-label">Correctas</div></div>';
+  html += '<div class="result-card"><div class="rc-val" style="color:var(--red)">' + (10-score) + '</div><div class="rc-label">Incorrectas</div></div>';
+  html += '<div class="result-card"><div class="rc-val" style="color:var(--warm)">' + maxStreak + ' &#128293;</div><div class="rc-label">Mejor racha</div></div>';
+  html += '</div>';
+  html += '<div class="takeaway"><strong>&#128172; Mensaje clave para tu proyecto final:</strong><br>' + msg + '<br><br>';
+  html += 'Recuerda: tu portafolio digital es tu huella profesional intencional. Cada texto, cada imagen, cada decisi&oacute;n de dise&ntilde;o comunica qui&eacute;n eres. <strong>La IA es tu herramienta; tu voz es tu marca.</strong></div>';
+  html += '<button class="restart-btn" onclick="restart()">&#128260; Jugar de nuevo</button>';
+  document.getElementById('resultsContent').innerHTML = html;
+}
+
+function restart() {
+  document.getElementById('screen-results').classList.remove('active');
+  document.getElementById('screen-start').classList.add('active');
+}
+</script>
+</body>
+</html>
