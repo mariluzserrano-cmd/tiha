@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta Post-Taller | Career Bot 24/7</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #E3263A 0%, #b91f29 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            width: 100%;
+            padding: 40px;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: #E3263A;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            margin: 0 auto 15px;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: #E3263A;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+
+        .rating-container {
+            display: flex;
+            gap: 12px;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .rating-btn {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rating-btn:hover {
+            transform: scale(1.1);
+            border-color: #E3263A;
+            background: #FFF5F5;
+        }
+
+        .rating-btn.selected {
+            background: #E3263A;
+            color: white;
+            border-color: #E3263A;
+            transform: scale(1.15);
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 100px;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #E3263A;
+            box-shadow: 0 0 0 3px rgba(227, 38, 58, 0.1);
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #E3263A;
+            box-shadow: 0 0 0 3px rgba(227, 38, 58, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit {
+            background: #E3263A;
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background: #c91f2e;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(227, 38, 58, 0.2);
+        }
+
+        .btn-submit:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #c3e6cb;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .error-message {
+            display: none;
+            background: #f8d7da;
+            color: #721c24;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid #f5c6cb;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #E3263A;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .required {
+            color: #E3263A;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .rating-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 16px;
+            }
+
+            button {
+                padding: 12px 16px;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">✨</div>
+            <h1>Tu Feedback Importa</h1>
+            <p class="subtitle">Ayúdanos a mejorar el taller Career Bot 24/7</p>
+        </div>
+
+        <div id="successMessage" class="success-message">
+            ✅ ¡Gracias! Tu respuesta fue enviada. Pronto recibirás la plantilla en tu email.
+        </div>
+
+        <div id="errorMessage" class="error-message"></div>
+
+        <form id="feedbackForm">
+            <!-- Pregunta 1: ¿Qué te pareció? -->
+            <div class="form-group">
+                <label for="rating">¿Qué te pareció el taller? <span class="required">*</span></label>
+                <div class="rating-container" id="ratingContainer">
+                    <button type="button" class="rating-btn" data-value="1" title="Muy malo">😞</button>
+                    <button type="button" class="rating-btn" data-value="2" title="Malo">😐</button>
+                    <button type="button" class="rating-btn" data-value="3" title="Bien">🙂</button>
+                    <button type="button" class="rating-btn" data-value="4" title="Muy bien">😊</button>
+                    <button type="button" class="rating-btn" data-value="5" title="¡Excelente!">🤩</button>
+                </div>
+                <input type="hidden" id="rating" name="rating" required>
+            </div>
+
+            <!-- Pregunta 2: ¿Qué te llevas? -->
+            <div class="form-group">
+                <label for="takeaway">¿Qué te llevas de este taller? <span class="required">*</span></label>
+                <textarea id="takeaway" name="takeaway" 
+                    placeholder="Cuéntanos qué aprendiste, qué te inspiró, qué harás diferente..." 
+                    required></textarea>
+            </div>
+
+            <!-- Pregunta 3: Email -->
+            <div class="form-group">
+                <label for="email">Tu Email <span class="required">*</span></label>
+                <input type="email" id="email" name="email" 
+                    placeholder="tu.email@example.com" 
+                    required>
+                <small style="color: #666; display: block; margin-top: 8px;">
+                    Te enviaremos la plantilla y recursos del taller
+                </small>
+            </div>
+
+            <!-- Botón Submit -->
+            <div class="button-group">
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    Enviar Mi Feedback
+                </button>
+            </div>
+
+            <!-- Loading -->
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p style="margin-top: 15px; color: #666;">Enviando tu respuesta...</p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Rating buttons
+        const ratingButtons = document.querySelectorAll('.rating-btn');
+        const ratingInput = document.getElementById('rating');
+
+        ratingButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                ratingButtons.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                ratingInput.value = btn.dataset.value;
+            });
+        });
+
+        // Form submission
+        const form = document.getElementById('feedbackForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const loading = document.getElementById('loading');
+        const successMsg = document.getElementById('successMessage');
+        const errorMsg = document.getElementById('errorMessage');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Validar
+            if (!ratingInput.value) {
+                showError('Por favor, selecciona una puntuación');
+                return;
+            }
+
+            const rating = ratingInput.value;
+            const takeaway = document.getElementById('takeaway').value.trim();
+            const email = document.getElementById('email').value.trim();
+
+            if (!takeaway || !email) {
+                showError('Por favor, completa todos los campos');
+                return;
+            }
+
+            // Mostrar loading
+            submitBtn.disabled = true;
+            form.style.display = 'none';
+            loading.style.display = 'block';
+            errorMsg.classList.remove('show');
+
+            try {
+                // Crear FormData
+                const formData = new FormData();
+                formData.append('Puntuación', getRatingLabel(rating));
+                formData.append('¿Qué te llevas?', takeaway);
+                formData.append('Email del Participante', email);
+                formData.append('Fecha', new Date().toLocaleString('es-PR'));
+                formData.append('_captcha', 'false');
+                formData.append('_next', window.location.href);
+
+                // Enviar a FormSubmit.co
+                const response = await fetch('https://formsubmit.co/mariluz.serrano@upr.edu', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    // Éxito
+                    loading.style.display = 'none';
+                    successMsg.classList.add('show');
+                    form.reset();
+                    ratingButtons.forEach(b => b.classList.remove('selected'));
+                    submitBtn.disabled = false;
+
+                    // Reaparecer form después de 4 segundos
+                    setTimeout(() => {
+                        form.style.display = 'block';
+                        successMsg.classList.remove('show');
+                    }, 4000);
+                } else {
+                    throw new Error('Error al enviar');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                loading.style.display = 'none';
+                form.style.display = 'block';
+                submitBtn.disabled = false;
+                showError('Hubo un error al enviar tu respuesta. Intenta de nuevo.');
+            }
+        });
+
+        function showError(message) {
+            errorMsg.textContent = message;
+            errorMsg.classList.add('show');
+            setTimeout(() => {
+                errorMsg.classList.remove('show');
+            }, 5000);
+        }
+
+        function getRatingLabel(rating) {
+            const labels = {
+                1: '😞 Muy malo',
+                2: '😐 Malo',
+                3: '🙂 Bien',
+                4: '😊 Muy bien',
+                5: '🤩 ¡Excelente!'
+            };
+            return labels[rating] || 'Sin calificar';
+        }
+
+        // Keyboard navigation para ratings
+        document.addEventListener('keydown', (e) => {
+            if (e.key >= '1' && e.key <= '5') {
+                const btn = document.querySelector(`.rating-btn[data-value="${e.key}"]`);
+                if (btn) {
+                    btn.click();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
