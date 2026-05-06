@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico: Caja de Herramientas XR + IA</title>
+    <style>
+        :root {
+            --primary-color: #c41230;
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --border-color: #e1e4e8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        
+        body { background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding: 2rem 1rem; }
+        
+        .container { max-width: 800px; margin: 0 auto; background: var(--card-bg); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; }
+        
+        .header { background-color: var(--primary-color); color: white; padding: 2rem; text-align: center; }
+        .header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        .header p { opacity: 0.9; }
+
+        form { padding: 2rem; }
+        
+        .section-title { color: var(--primary-color); border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1.5rem; margin-top: 2rem; font-size: 1.3rem; }
+        .section-title:first-child { margin-top: 0; }
+
+        .question { margin-bottom: 1.5rem; }
+        .question label.main-label { display: block; font-weight: bold; margin-bottom: 0.5rem; color: #444; }
+
+        .radio-group { display: flex; gap: 1rem; margin-top: 0.5rem; }
+        .radio-item { display: flex; align-items: center; gap: 0.5rem; }
+
+        .grid-checkboxes { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.8rem; }
+        .checkbox-item { display: flex; align-items: center; gap: 0.5rem; background: #f8f9fa; padding: 0.5rem; border-radius: 6px; border: 1px solid var(--border-color); }
+
+        .scale-group { display: flex; justify-content: space-between; background: #f8f9fa; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); }
+        .scale-item { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+        .scale-labels { display: flex; justify-content: space-between; font-size: 0.8rem; color: #666; margin-top: 0.2rem; padding: 0 1rem; }
+
+        textarea { width: 100%; padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; resize: vertical; min-height: 100px; }
+        textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 2px rgba(196, 18, 48, 0.2); }
+
+        .btn-submit { display: block; width: 100%; background-color: var(--primary-color); color: white; border: none; padding: 1rem; font-size: 1.2rem; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 2rem; transition: background-color 0.3s; }
+        .btn-submit:hover { background-color: #a00f27; }
+
+        /* Estilos del Resultado */
+        #result-view { display: none; padding: 3rem 2rem; text-align: center; }
+        .profile-badge { display: inline-block; background-color: #fdf0f2; color: var(--primary-color); padding: 0.5rem 1.5rem; border-radius: 20px; font-weight: bold; margin-bottom: 1rem; border: 1px solid var(--primary-color); }
+        .result-card { text-align: left; background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem; border-left: 4px solid var(--primary-color); }
+        .result-card h3 { margin-bottom: 0.5rem; color: #333; font-size: 1.1rem; }
+        .result-card p { color: #555; font-style: italic; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="form-view">
+        <div class="header">
+            <h1>Caja de Herramientas XR + IA</h1>
+            <p>Diagnóstico inicial para diseñar experiencias con intención</p>
+        </div>
+
+        <form id="diagnosticoForm">
+            <h2 class="section-title">1. Experiencia previa</h2>
+            
+            <div class="question">
+                <label class="main-label">¿Has usado realidad virtual (VR)?</label>
+                <div class="radio-group">
+                    <label class="radio-item"><input type="radio" name="vr" value="Sí" required> Sí</label>
+                    <label class="radio-item"><input type="radio" name="vr" value="No"> No</label>
+                </div>
+            </div>
+            <div class="question">
+                <label class="main-label">¿Has usado realidad aumentada (AR)?</label>
+                <div class="radio-group">
+                    <label class="radio-item"><input type="radio" name="ar" value="Sí" required> Sí</label>
+                    <label class="radio-item"><input type="radio" name="ar" value="No"> No</label>
+                </div>
+            </div>
+            <div class="question">
+                <label class="main-label">¿Has entrado a mundos virtuales (Spatial, Frame, etc.)?</label>
+                <div class="radio-group">
+                    <label class="radio-item"><input type="radio" name="mundos" value="Sí" required> Sí</label>
+                    <label class="radio-item"><input type="radio" name="mundos" value="No"> No</label>
+                </div>
+            </div>
+            <div class="question">
+                <label class="main-label">¿Has diseñado recursos educativos con IA?</label>
+                <div class="radio-group">
+                    <label class="radio-item"><input type="radio" name="ia_edu" value="Sí" required> Sí</label>
+                    <label class="radio-item"><input type="radio" name="ia_edu" value="No"> No</label>
+                </div>
+            </div>
+
+            <h2 class="section-title">2. Herramientas que conoces</h2>
+            <p style="margin-bottom: 1rem; font-size: 0.9rem; color: #666;">Marca todas las que has usado alguna vez:</p>
+            <div class="grid-checkboxes">
+                <label class="checkbox-item"><input type="checkbox" name="herramientas" value="ChatGPT"> ChatGPT</label>
+                <label class="checkbox-item"><input type="checkbox" name="herramientas" value="Claude"> Claude</label>
+                <label class="checkbox-item"><input type="checkbox" name="herramientas" value="Copilot"> Copilot</label>
+                <label class="checkbox-item"><input type="checkbox" name="herramientas" value="Perplexity"> Perplexity</label>
+                <label class="checkbox-item"><input type="checkbox" name="herramientas" value="Canva IA"> Canva IA</label>
+                <label class="checkbox-item"><input type="checkbox" name="herramientas" value="Gamma"> Gamma</label>
+                <label class="checkbox-item"><input type="checkbox" name="herramientas" value="Synthesia"> Synthesia</label>
+                <label class="checkbox-item"><input type="checkbox" name="herramientas" value="HeyGen"> HeyGen</label>
+                <label class="checkbox-item"><input type="checkbox" name="herramientas" value="Spatial"> Spatial</label>
+                <label class="checkbox-item"><input type="checkbox" name="herramientas" value="Frame"> Frame</label>
+                <label class="checkbox-item"><input type="checkbox" name="herramientas" value="CoSpaces"> CoSpaces</label>
+                <label class="checkbox-item"><input type="checkbox" name="herramientas" value="VirtualSpeech"> VirtualSpeech</label>
+                <label class="checkbox-item"><input type="checkbox" name="herramientas" value="SciSpace"> SciSpace</label>
+                <label class="checkbox-item"><input type="checkbox" name="herramientas" value="Raindrop"> Raindrop</label>
+                <label class="checkbox-item"><input type="checkbox" id="ninguna" value="Ninguna"> Ninguna</label>
+            </div>
+
+            <h2 class="section-title">3. Nivel de seguridad</h2>
+            <p style="margin-bottom: 1rem; font-size: 0.9rem; color: #666;">Escala del 1 (Totalmente en desacuerdo) al 5 (Totalmente de acuerdo):</p>
+            
+            <div class="question">
+                <label class="main-label">Me siento cómoda/o usando IA.</label>
+                <div class="scale-group">
+                    <label class="scale-item"><input type="radio" name="comodidad_ia" value="1" required>1</label>
+                    <label class="scale-item"><input type="radio" name="comodidad_ia" value="2">2</label>
+                    <label class="scale-item"><input type="radio" name="comodidad_ia" value="3">3</label>
+                    <label class="scale-item"><input type="radio" name="comodidad_ia" value="4">4</label>
+                    <label class="scale-item"><input type="radio" name="comodidad_ia" value="5">5</label>
+                </div>
+            </div>
+            
+            <div class="question">
+                <label class="main-label">Me siento cómoda/o explorando plataformas nuevas.</label>
+                <div class="scale-group">
+                    <label class="scale-item"><input type="radio" name="exploracion" value="1" required>1</label>
+                    <label class="scale-item"><input type="radio" name="exploracion" value="2">2</label>
+                    <label class="scale-item"><input type="radio" name="exploracion" value="3">3</label>
+                    <label class="scale-item"><input type="radio" name="exploracion" value="4">4</label>
+                    <label class="scale-item"><input type="radio" name="exploracion" value="5">5</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <label class="main-label">Me interesa crear experiencias inmersivas.</label>
+                <div class="scale-group">
+                    <label class="scale-item"><input type="radio" name="interes_inmersivo" value="1" required>1</label>
+                    <label class="scale-item"><input type="radio" name="interes_inmersivo" value="2">2</label>
+                    <label class="scale-item"><input type="radio" name="interes_inmersivo" value="3">3</label>
+                    <label class="scale-item"><input type="radio" name="interes_inmersivo" value="4">4</label>
+                    <label class="scale-item"><input type="radio" name="interes_inmersivo" value="5">5</label>
+                </div>
+            </div>
+
+            <div class="question">
+                <label class="main-label">Me preocupa la ética de estas tecnologías.</label>
+                <div class="scale-group">
+                    <label class="scale-item"><input type="radio" name="etica" value="1" required>1</label>
+                    <label class="scale-item"><input type="radio" name="etica" value="2">2</label>
+                    <label class="scale-item"><input type="radio" name="etica" value="3">3</label>
+                    <label class="scale-item"><input type="radio" name="etica" value="4">4</label>
+                    <label class="scale-item"><input type="radio" name="etica" value="5">5</label>
+                </div>
+            </div>
+
+            <h2 class="section-title">4. La Pregunta TIHA</h2>
+            <div class="question">
+                <label class="main-label">¿Qué experiencia humana entiendes que la tecnología nunca debería sustituir?</label>
+                <textarea id="tiha_answer" placeholder="Escribe tu reflexión aquí..." required></textarea>
+            </div>
+
+            <h2 class="section-title">5. Proyecto soñado</h2>
+            <div class="question">
+                <label class="main-label">Si al final del curso pudieras presentar una experiencia inmersiva educativa, ¿sobre qué tema sería?</label>
+                <textarea id="proyecto_answer" placeholder="Describe brevemente tu idea..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">Generar Perfil de Diagnóstico</button>
+        </form>
+    </div>
+
+    <div id="result-view">
+        <h2 style="margin-bottom: 1rem; color: var(--primary-color);">¡Gracias por compartir!</h2>
+        <p>Tu punto de partida para este curso es:</p>
+        
+        <div class="profile-badge" id="profileType">Cargando perfil...</div>
+        
+        <p id="profileDesc" style="margin-bottom: 2rem;">...</p>
+
+        <div class="result-card">
+            <h3>Lo que la tecnología no debe sustituir:</h3>
+            <p id="res-tiha">...</p>
+        </div>
+
+        <div class="result-card">
+            <h3>El mundo que quieres construir:</h3>
+            <p id="res-proyecto">...</p>
+        </div>
+        
+        <button onclick="location.reload()" class="btn-submit" style="background-color: #6c757d; margin-top: 3rem;">Hacer nuevo diagnóstico</button>
+    </div>
+</div>
+
+<script>
+    // Lógica para que "Ninguna" desmarque las demás herramientas
+    const checkboxNinguna = document.getElementById('ninguna');
+    const checkboxesHerramientas = document.querySelectorAll('input[name="herramientas"]');
+
+    checkboxNinguna.addEventListener('change', (e) => {
+        if(e.target.checked) {
+            checkboxesHerramientas.forEach(cb => cb.checked = false);
+        }
+    });
+
+    checkboxesHerramientas.forEach(cb => {
+        cb.addEventListener('change', () => {
+            if(cb.checked) checkboxNinguna.checked = false;
+        });
+    });
+
+    // Lógica al enviar el formulario
+    document.getElementById('diagnosticoForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Recoger valores clave para determinar el perfil
+        const numHerramientas = document.querySelectorAll('input[name="herramientas"]:checked').length;
+        const etica = parseInt(document.querySelector('input[name="etica"]:checked').value);
+        const interesInmersivo = parseInt(document.querySelector('input[name="interes_inmersivo"]:checked').value);
+        
+        // Recoger textos
+        const tiha = document.getElementById('tiha_answer').value;
+        const proyecto = document.getElementById('proyecto_answer').value;
+
+        // Determinar perfil
+        let tipoPerfil = "Explorador Curioso";
+        let descPerfil = "Estás en el momento perfecto para descubrir cómo la IA y los mundos inmersivos pueden potenciar tu práctica. ¡Mucha apertura para aprender!";
+
+        if (numHerramientas >= 5) {
+            tipoPerfil = "Pionero Tecnológico";
+            descPerfil = "Ya tienes un buen dominio de varias herramientas. Tu reto en este curso será llevarlas al siguiente nivel y conectarlas con propósito.";
+        } else if (etica >= 4) {
+            tipoPerfil = "Arquitecto Ético";
+            descPerfil = "Tienes una visión crítica fundamental. Serás clave para asegurar que las experiencias que diseñemos mantengan la humanización en el centro.";
+        } else if (interesInmersivo >= 4) {
+            tipoPerfil = "Creador de Mundos";
+            descPerfil = "Tu imaginación está lista para saltar a la tercera dimensión. Este curso te dará los cimientos técnicos para construir eso que visualizas.";
+        }
+
+        // Mostrar resultados
+        document.getElementById('profileType').innerText = tipoPerfil;
+        document.getElementById('profileDesc').innerText = descPerfil;
+        document.getElementById('res-tiha').innerText = `"${tiha}"`;
+        document.getElementById('res-proyecto').innerText = `"${proyecto}"`;
+
+        // Cambiar de vista
+        document.getElementById('form-view').style.display = 'none';
+        document.getElementById('result-view').style.display = 'block';
+        window.scrollTo(0,0);
+    });
+</script>
+
+</body>
+</html>
