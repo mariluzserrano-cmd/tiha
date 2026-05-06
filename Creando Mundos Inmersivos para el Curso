@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El mundo que quiero crear</title>
+    <style>
+        :root {
+            --primary-color: #c41230; /* Tono carmesí inspirado en Sagrado Corazón */
+            --bg-color: #f8f9fa;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .guiding-question {
+            font-size: 1.2rem;
+            font-weight: 500;
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-left: 5px solid var(--primary-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-section, .timer-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .timer-section {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .timer-display {
+            font-size: 4rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 1rem 0;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(196, 18, 48, 0.2);
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.1s;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #a00f27;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button.secondary {
+            background-color: #6c757d;
+            margin-top: 10px;
+        }
+        
+        button.secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .entries-container {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .entry-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--primary-color);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .entry-card h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .entry-card .badge {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            color: #666;
+        }
+
+        .entry-card p {
+            margin-bottom: 0.5rem;
+        }
+
+        .entry-card .emotion {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .closing-section {
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .closing-quote {
+            display: none;
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: white;
+            background-color: var(--primary-color);
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(196, 18, 48, 0.3);
+            margin-top: 2rem;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>El mundo que quiero crear</h1>
+            <div class="guiding-question">
+                "Si pudieras crear un mundo inmersivo para enseñar, sanar, recordar o transformar algo… ¿qué mundo crearías?"
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <div class="form-section">
+                <form id="worldForm">
+                    <div class="form-group">
+                        <label for="name">Nombre</label>
+                        <input type="text" id="name" required placeholder="Ej. Carlos Rivera">
+                    </div>
+                    <div class="form-group">
+                        <label for="area">Área profesional o educativa</label>
+                        <input type="text" id="area" required placeholder="Ej. Educación, Diseño, Negocios...">
+                    </div>
+                    <div class="form-group">
+                        <label for="world">Un mundo que te gustaría crear</label>
+                        <textarea id="world" rows="3" required placeholder="Describe brevemente ese espacio inmersivo..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="emotion">Una emoción que provoque</label>
+                        <input type="text" id="emotion" required placeholder="Ej. Esperanza, Curiosidad, Calma...">
+                    </div>
+                    <button type="submit">Plantar esta semilla</button>
+                </form>
+            </div>
+
+            <div class="timer-section">
+                <h3>Tiempo por estudiante</h3>
+                <div class="timer-display" id="timer">01:00</div>
+                <button id="startTimerBtn">Iniciar 1 Minuto</button>
+                <button id="resetTimerBtn" class="secondary">Reiniciar</button>
+            </div>
+        </div>
+
+        <div class="entries-container" id="entriesContainer">
+            <!-- Las tarjetas de los estudiantes aparecerán aquí -->
+        </div>
+
+        <div class="closing-section">
+            <button id="revealBtn" style="background-color: #333; max-width: 300px;">Cerrar Actividad</button>
+            <div class="closing-quote" id="closingQuote">
+                "Eso que acaban de compartir es la semilla de este curso. No vamos a crear tecnología vacía; vamos a diseñar experiencias con intención."
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lógica del Formulario y Tarjetas
+        const form = document.getElementById('worldForm');
+        const container = document.getElementById('entriesContainer');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const area = document.getElementById('area').value;
+            const world = document.getElementById('world').value;
+            const emotion = document.getElementById('emotion').value;
+
+            const card = document.createElement('div');
+            card.className = 'entry-card';
+            card.innerHTML = `
+                <h3>${name}</h3>
+                <div class="badge">${area}</div>
+                <p><strong>Mundo:</strong> ${world}</p>
+                <p class="emotion">Emoción: ${emotion}</p>
+            `;
+
+            // Agregar al principio
+            container.insertBefore(card, container.firstChild);
+            
+            // Limpiar formulario
+            form.reset();
+        });
+
+        // Lógica del Temporizador
+        let timeLeft = 60;
+        let timerId = null;
+        const timerDisplay = document.getElementById('timer');
+        const startBtn = document.getElementById('startTimerBtn');
+        const resetBtn = document.getElementById('resetTimerBtn');
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        startBtn.addEventListener('click', () => {
+            if (timerId !== null) return;
+            startBtn.textContent = "Corriendo...";
+            timerId = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(timerId);
+                    timerId = null;
+                    startBtn.textContent = "Iniciar 1 Minuto";
+                    timerDisplay.style.color = "#ff0000"; // Cambia a rojo al terminar
+                }
+            }, 1000);
+        });
+
+        resetBtn.addEventListener('click', () => {
+            clearInterval(timerId);
+            timerId = null;
+            timeLeft = 60;
+            updateTimerDisplay();
+            startBtn.textContent = "Iniciar 1 Minuto";
+            timerDisplay.style.color = "var(--primary-color)";
+        });
+
+        // Lógica de Cierre (Revelar Frase)
+        const revealBtn = document.getElementById('revealBtn');
+        const closingQuote = document.getElementById('closingQuote');
+
+        revealBtn.addEventListener('click', () => {
+            closingQuote.style.display = 'block';
+            revealBtn.style.display = 'none';
+            // Desplaza suavemente hacia la frase final
+            setTimeout(() => {
+                closingQuote.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        });
+    </script>
+</body>
+</html>
