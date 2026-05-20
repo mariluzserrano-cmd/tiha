@@ -1,46 +1,93 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Simulador de Sistema Solar - EDU 690</title>
+    <title>Simulador de Sistema Solar Interactivo - EDU 690</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+
+    <script>
+      AFRAME.registerComponent('info-planeta', {
+        schema: {
+          nombre: {type: 'string', default: ''},
+          datos: {type: 'string', default: ''}
+        },
+        init: function () {
+          var el = this.el;
+          var data = this.data;
+          
+          // Buscamos el panel de texto en la escena
+          var panelTexto = document.querySelector('#panel-info');
+
+          // 1. Efecto al pasar el cursor (Hover) -> Agranda el planeta
+          el.addEventListener('mouseenter', function () {
+            el.setAttribute('animation__hover', 'property: scale; to: 1.3 1.3 1.3; dur: 200');
+          });
+
+          // Cuando el cursor sale del planeta -> Regresa a su tamaño original
+          el.addEventListener('mouseleave', function () {
+            el.setAttribute('animation__hover', 'property: scale; to: 1 1 1; dur: 200');
+          });
+
+          // 2. Efecto al hacer Clic o Tocar -> Actualiza el panel de información
+          el.addEventListener('click', function () {
+            panelTexto.setAttribute('value', data.nombre + '\n' + data.datos);
+          });
+        }
+      });
+    </script>
   </head>
   <body>
     <a-scene>
-      <a-entity position="0 1.6 8">
-        <a-camera></a-camera>
+      
+      <a-entity position="0 2 8">
+        <a-camera>
+          <a-cursor color="#FF0000" width="0.05" integrity="true"></a-cursor>
+        </a-camera>
       </a-entity>
+
+      <a-text id="panel-info" 
+              value="EDU 690\nApunta y haz clic en un planeta para explorar sus datos." 
+              position="0 4.5 0" 
+              align="center" 
+              color="#FFFF00" 
+              scale="1.2 1.2 1.2">
+      </a-text>
 
       <a-entity position="0 1.25 0">
         <a-sphere radius="1.5" color="#FFCC00" 
+                  class="interactivo"
+                  info-planeta="nombre: El Sol; datos: Estrella de tipo espectral G2V. Contiene el 99.8% de la masa del Sistema Solar."
                   animation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
         </a-sphere>
-        <a-text value="Sol" position="0 2 0" align="center" scale="2 2 2" color="#FFFFFF"></a-text>
+        <a-text value="Sol" position="0 2 0" align="center" scale="1.5 1.5 1.5" color="#FFFFFF"></a-text>
       </a-entity>
 
       <a-entity position="0 1.25 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 15000">
-        
         <a-entity position="4 0 0">
           <a-sphere radius="0.5" color="#287AB8"
+                    class="interactivo"
+                    info-planeta="nombre: La Tierra; datos: Nuestro hogar. Unico planeta conocido con agua liquida en la superficie y vida activa."
                     animation="property: rotation; to: 0 360 0; loop: true; dur: 5000"></a-sphere>
           <a-text value="Tierra" position="0 0.8 0" align="center" color="#FFFFFF"></a-text>
           
           <a-entity animation="property: rotation; to: 0 360 0; loop: true; dur: 3000">
-              <a-sphere position="1 0 0" radius="0.15" color="#CCCCCC"></a-sphere>
-              <a-text value="Luna" position="1 0.3 0" align="center" scale="0.5 0.5 0.5" color="#FFFFFF"></a-text>
+              <a-sphere position="1 0 0" radius="0.15" color="#CCCCCC"
+                        class="interactivo"
+                        info-planeta="nombre: La Luna; datos: Unico satelite natural de la Tierra. Afecta las mareas y estabiliza el eje terrestre."></a-sphere>
           </a-entity>
         </a-entity>
       </a-entity>
 
       <a-entity position="0 1.25 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 25000">
-        
         <a-entity position="7 0 0">
           <a-sphere radius="0.4" color="#FF4500"
+                    class="interactivo"
+                    info-planeta="nombre: Marte; datos: El planeta rojo. Posee el volcan mas grande del Sistema Solar, el Monte Olimpo."
                     animation="property: rotation; to: 0 360 0; loop: true; dur: 6000"></a-sphere>
           <a-text value="Marte" position="0 0.7 0" align="center" color="#FFFFFF"></a-text>
         </a-entity>
       </a-entity>
 
-      <a-sky color="#0B0C10"></a-sky>
+      <a-sky color="#050508"></a-sky>
 
     </a-scene>
   </body>
