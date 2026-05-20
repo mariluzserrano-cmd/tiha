@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EDU 690 · Las 4 realidades · Tabla de referencia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #0F0408;
+  --bg-card: #1C0710;
+  --bg-elev: #2A0E1B;
+  --ink: #F5E8D8;
+  --ink-muted: rgba(245, 232, 216, 0.72);
+  --ink-faint: rgba(245, 232, 216, 0.4);
+  --accent: #B8284C;
+  --accent-soft: #F4A6B8;
+  --accent-gold: #D4A574;
+  --teal: #7BC9A7;
+  --line: rgba(245, 232, 216, 0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: var(--bg-deep); color: var(--ink);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400; font-size: 16px; line-height: 1.6;
+  min-height: 100vh; -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 1;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/></svg>");
+  opacity: 0.04; mix-blend-mode: screen;
+}
+body::after {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 15% 5%, rgba(184, 40, 76, 0.22), transparent 60%),
+    radial-gradient(ellipse 50% 35% at 85% 95%, rgba(244, 166, 184, 0.1), transparent 60%);
+}
+.wrap { position: relative; z-index: 2; max-width: 1100px; margin: 0 auto; padding: 56px 32px 80px; }
+
+/* HEADER */
+.brand {
+  display: flex; align-items: center; gap: 16px;
+  padding-bottom: 28px; border-bottom: 1px solid var(--line);
+  margin-bottom: 56px;
+}
+.brand-mark {
+  width: 44px; height: 44px; border: 1px solid var(--accent-soft);
+  display: grid; place-items: center;
+  font-family: 'Fraunces', serif; font-style: italic; font-weight: 900; font-size: 22px;
+  color: var(--accent-soft); border-radius: 50%; position: relative;
+  background: rgba(184, 40, 76, 0.08);
+}
+.brand-mark::after { content: ''; position: absolute; inset: -5px; border: 1px solid var(--line); border-radius: 50%; }
+.brand-meta { flex: 1; }
+.brand-eyebrow { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 4px; }
+.brand-course { font-size: 14px; color: var(--ink-muted); font-weight: 500; }
+.session { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint); }
+
+/* HERO */
+.hero { margin-bottom: 64px; }
+.hero-eyebrow {
+  font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--accent-soft); margin-bottom: 24px;
+  display: flex; align-items: center; gap: 16px;
+}
+.hero-eyebrow::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, rgba(244,166,184,0.5), transparent); max-width: 260px; }
+.hero-title {
+  font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+  font-variation-settings: 'opsz' 144, 'SOFT' 80;
+  font-size: clamp(46px, 7vw, 88px); line-height: 0.95; letter-spacing: -0.025em;
+  margin-bottom: 24px;
+}
+.hero-title em { color: var(--accent-soft); font-style: italic; }
+.hero-deck {
+  font-size: 18px; color: var(--ink-muted); max-width: 720px; line-height: 1.6;
+}
+.hero-deck em { color: var(--accent-soft); font-family: 'Fraunces', serif; font-style: italic; }
+
+/* TABLE */
+.tbl {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  margin-bottom: 56px;
+}
+.tbl-head {
+  display: grid;
+  grid-template-columns: 1.1fr 1.5fr 2fr;
+  background: linear-gradient(135deg, rgba(184, 40, 76, 0.15), rgba(184, 40, 76, 0.02));
+  border-bottom: 1px solid var(--line);
+}
+.tbl-head > div {
+  padding: 24px 28px;
+  font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--accent-soft); font-weight: 600;
+}
+.tbl-head > div:not(:last-child) { border-right: 1px solid var(--line); }
+
+.row {
+  display: grid;
+  grid-template-columns: 1.1fr 1.5fr 2fr;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  transition: background 0.3s ease;
+}
+.row:last-child { border-bottom: none; }
+.row:hover { background: rgba(184, 40, 76, 0.04); }
+.row > div {
+  padding: 32px 28px;
+}
+.row > div:not(:last-child) { border-right: 1px solid var(--line); }
+
+.cell-name {
+  position: relative;
+}
+.cell-name::before {
+  content: ''; position: absolute; left: 0; top: 24px; bottom: 24px;
+  width: 3px; background: var(--accent);
+}
+.cell-name .tag {
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--accent-gold); margin-bottom: 8px; font-weight: 600;
+}
+.cell-name .name {
+  font-family: 'Fraunces', serif; font-style: italic; font-weight: 500;
+  font-variation-settings: 'opsz' 60, 'SOFT' 50;
+  font-size: 28px; line-height: 1.1; letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.cell-name .name .full {
+  display: block; font-size: 14px; color: var(--ink-faint); font-style: normal;
+  font-family: 'IBM Plex Sans', sans-serif; font-weight: 400;
+  letter-spacing: 0.05em; margin-top: 6px;
+}
+
+.cell-what {
+  font-size: 15px; color: var(--ink); line-height: 1.65;
+}
+.cell-what strong {
+  color: var(--accent-soft); font-weight: 600;
+}
+.cell-what .note {
+  display: block; margin-top: 14px; font-size: 12.5px;
+  color: var(--ink-faint); font-style: italic; font-family: 'Fraunces', serif;
+  letter-spacing: 0.01em;
+}
+
+.cell-example {
+  font-size: 14.5px; color: var(--ink-muted); line-height: 1.65;
+}
+.cell-example .equipment {
+  display: inline-block; margin-top: 10px;
+  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent-gold); font-weight: 600;
+  padding: 4px 10px; border: 1px solid rgba(212, 165, 116, 0.3);
+  border-radius: 100px;
+}
+
+/* SUMMARY GRID (4 quick visual reminders) */
+.summary {
+  margin-top: 64px;
+  padding-top: 56px;
+  border-top: 1px solid var(--line);
+}
+.summary-eyebrow {
+  font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--accent-gold); margin-bottom: 18px;
+}
+.summary-title {
+  font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+  font-variation-settings: 'opsz' 144;
+  font-size: clamp(32px, 4.5vw, 48px); line-height: 1.05; margin-bottom: 40px;
+  letter-spacing: -0.02em;
+}
+.summary-title em { color: var(--accent-soft); font-style: italic; }
+.quick-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px;
+}
+.quick {
+  background: var(--bg-card); border: 1px solid var(--line);
+  padding: 24px 24px 22px;
+  position: relative; overflow: hidden;
+}
+.quick::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 100%; height: 3px;
+}
+.quick.vr::before { background: var(--accent); }
+.quick.ar::before { background: var(--accent-soft); }
+.quick.mr::before { background: var(--accent-gold); }
+.quick.sim::before { background: var(--teal); }
+.quick-name {
+  font-family: 'Fraunces', serif; font-style: italic; font-weight: 600;
+  font-size: 20px; margin-bottom: 6px; color: var(--ink);
+}
+.quick-verb {
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--accent-soft); margin-bottom: 14px; font-weight: 600;
+}
+.quick.sim .quick-verb { color: var(--teal); }
+.quick-line {
+  font-size: 13.5px; color: var(--ink-muted); line-height: 1.55;
+}
+
+/* FOOTER */
+.footer {
+  margin-top: 64px;
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+.footer-quote {
+  font-family: 'Fraunces', serif; font-style: italic;
+  font-size: 20px; color: var(--accent-soft); margin-bottom: 16px;
+  max-width: 680px; margin-left: auto; margin-right: auto;
+  line-height: 1.45;
+}
+.footer-meta {
+  font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* MOBILE */
+@media (max-width: 760px) {
+  .wrap { padding: 32px 20px 60px; }
+  .brand { margin-bottom: 36px; padding-bottom: 20px; }
+  .hero { margin-bottom: 40px; }
+  .tbl-head, .row { grid-template-columns: 1fr; }
+  .tbl-head > div:not(:last-child),
+  .row > div:not(:last-child) { border-right: none; border-bottom: 1px solid var(--line); }
+  .tbl-head { display: none; }
+  .row > div { padding: 24px 24px; }
+  .row > div::before {
+    content: attr(data-label);
+    display: block; font-size: 10px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--accent-gold);
+    margin-bottom: 10px; font-weight: 600;
+  }
+  .cell-name::before { display: none; }
+  .cell-name { border-left: 3px solid var(--accent); }
+}
+
+/* PRINT */
+@media print {
+  body::after, body::before { display: none; }
+  body { background: white; color: black; }
+  .wrap { max-width: 100%; padding: 20px; }
+  .tbl, .quick { break-inside: avoid; border: 1px solid #ccc; background: white; }
+  .row { background: white; }
+  .hero-title, .summary-title { color: #1A0510 !important; }
+  .hero-title em, .summary-title em { color: #B8284C !important; }
+  .cell-name .name { color: #1A0510 !important; }
+  .cell-what { color: #1A0510 !important; }
+  .cell-what strong { color: #B8284C !important; }
+  .cell-example { color: #444 !important; }
+  .quick-name { color: #1A0510 !important; }
+  .footer-quote { color: #B8284C !important; }
+  .row:hover { background: white; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="brand">
+    <div class="brand-mark">↻</div>
+    <div class="brand-meta">
+      <div class="brand-eyebrow">Tabla de referencia · Post-clase</div>
+      <div class="brand-course">EDU 690 · Realidades Inmersivas, Simulación y Tecnologías Emergentes</div>
+    </div>
+    <div class="session">Sesión 1 · 20 mayo 2026</div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-eyebrow">Marco conceptual</div>
+    <h1 class="hero-title">Las cuatro realidades, <em>en una mirada</em>.</h1>
+    <p class="hero-deck">
+      Guarda esta tabla. Es tu referencia para distinguir <em>qué es qué</em> cuando explores la Actividad 2 y construyas tus propuestas educativas. La diferencia entre <em>sustituir</em>, <em>superponer</em>, <em>interactuar</em> y <em>simular</em> es lo que define qué tecnología necesitas para qué propósito pedagógico.
+    </p>
+  </section>
+
+  <section class="tbl">
+    <div class="tbl-head">
+      <div>Tipología</div>
+      <div>Qué hace</div>
+      <div>Ejemplo concreto</div>
+    </div>
+
+    <!-- VR -->
+    <div class="row">
+      <div class="cell-name" data-label="Tipología">
+        <div class="tag">Inmersión total</div>
+        <div class="name">VR<span class="full">Realidad Virtual</span></div>
+      </div>
+      <div class="cell-what" data-label="Qué hace">
+        <strong>Sustituye</strong> el mundo real por uno digital. Inmersión total.
+        <span class="note">El usuario ya no ve su entorno físico — está, sensorialmente, en otro lugar.</span>
+      </div>
+      <div class="cell-example" data-label="Ejemplo concreto">
+        Te pones gafas Meta Quest y estás en el Coliseo Romano. No ves tu salón.
+        <span class="equipment">Requiere visor (HMD)</span>
+      </div>
+    </div>
+
+    <!-- AR -->
+    <div class="row">
+      <div class="cell-name" data-label="Tipología">
+        <div class="tag">Inmersión parcial</div>
+        <div class="name">AR<span class="full">Realidad Aumentada</span></div>
+      </div>
+      <div class="cell-what" data-label="Qué hace">
+        <strong>Superpone</strong> información digital sobre el mundo real. Inmersión parcial.
+        <span class="note">El entorno físico permanece visible — se le agregan capas digitales encima.</span>
+      </div>
+      <div class="cell-example" data-label="Ejemplo concreto">
+        Apuntas el celular a una página de libro y aparece un dinosaurio 3D encima. Sigues viendo tu cuarto.
+        <span class="equipment">Solo necesita celular</span>
+      </div>
+    </div>
+
+    <!-- MR -->
+    <div class="row">
+      <div class="cell-name" data-label="Tipología">
+        <div class="tag">Inmersión híbrida</div>
+        <div class="name">MR<span class="full">Realidad Mixta</span></div>
+      </div>
+      <div class="cell-what" data-label="Qué hace">
+        El contenido digital <strong>interactúa con</strong> el mundo real (no solo aparece encima).
+        <span class="note">El sistema reconoce tu espacio: la mesa, la pared, la luz. Hay oclusión y física real.</span>
+      </div>
+      <div class="cell-example" data-label="Ejemplo concreto">
+        Pones un "corazón humano" virtual sobre tu mesa, y al caminar alrededor lo ves desde distintos ángulos como si fuera físico.
+        <span class="equipment">Apple Vision Pro · HoloLens</span>
+      </div>
+    </div>
+
+    <!-- Simulación -->
+    <div class="row">
+      <div class="cell-name" data-label="Tipología">
+        <div class="tag">No inmersiva</div>
+        <div class="name">Simulación<span class="full">En pantalla 2D</span></div>
+      </div>
+      <div class="cell-what" data-label="Qué hace">
+        Mundo digital pero <strong>plano</strong>, en monitor. <strong>No</strong> es inmersiva técnicamente.
+        <span class="note">Aunque sea visualmente rica y educativamente poderosa, no genera inmersión sensorial total.</span>
+      </div>
+      <div class="cell-example" data-label="Ejemplo concreto">
+        Una simulación de química en Labster en tu laptop, o un mundo construido en Spatial visto sin gafas.
+        <span class="equipment">Laptop o tablet</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="summary">
+    <div class="summary-eyebrow">Síntesis de bolsillo</div>
+    <h2 class="summary-title">Una palabra para <em>cada una</em>.</h2>
+    <div class="quick-grid">
+      <div class="quick vr">
+        <div class="quick-name">VR</div>
+        <div class="quick-verb">Sustituye</div>
+        <div class="quick-line">El mundo real desaparece. Vives en otro lugar.</div>
+      </div>
+      <div class="quick ar">
+        <div class="quick-name">AR</div>
+        <div class="quick-verb">Superpone</div>
+        <div class="quick-line">Tu entorno permanece — se le añaden capas digitales.</div>
+      </div>
+      <div class="quick mr">
+        <div class="quick-name">MR</div>
+        <div class="quick-verb">Interactúa</div>
+        <div class="quick-line">Lo digital y lo físico conversan: se ocultan, proyectan, responden.</div>
+      </div>
+      <div class="quick sim">
+        <div class="quick-name">Simulación</div>
+        <div class="quick-verb">Representa</div>
+        <div class="quick-line">Mundo digital en pantalla plana. Rica, pero no inmersiva.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p class="footer-quote">
+      "No aprendimos herramientas. Aprendimos nuevas maneras de imaginar el aprendizaje."
+    </p>
+    <div class="footer-meta">Dra. Mariluz Serrano-Ortiz · Metodología TIHA</div>
+  </footer>
+
+</div>
+</body>
+</html>
