@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simulador de Sistema Solar - EDU 690</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-entity position="0 1.6 8">
+        <a-camera></a-camera>
+      </a-entity>
+
+      <a-entity position="0 1.25 0">
+        <a-sphere radius="1.5" color="#FFCC00" 
+                  animation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
+        </a-sphere>
+        <a-text value="Sol" position="0 2 0" align="center" scale="2 2 2" color="#FFFFFF"></a-text>
+      </a-entity>
+
+      <a-entity position="0 1.25 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 15000">
+        
+        <a-entity position="4 0 0">
+          <a-sphere radius="0.5" color="#287AB8"
+                    animation="property: rotation; to: 0 360 0; loop: true; dur: 5000"></a-sphere>
+          <a-text value="Tierra" position="0 0.8 0" align="center" color="#FFFFFF"></a-text>
+          
+          <a-entity animation="property: rotation; to: 0 360 0; loop: true; dur: 3000">
+              <a-sphere position="1 0 0" radius="0.15" color="#CCCCCC"></a-sphere>
+              <a-text value="Luna" position="1 0.3 0" align="center" scale="0.5 0.5 0.5" color="#FFFFFF"></a-text>
+          </a-entity>
+        </a-entity>
+      </a-entity>
+
+      <a-entity position="0 1.25 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 25000">
+        
+        <a-entity position="7 0 0">
+          <a-sphere radius="0.4" color="#FF4500"
+                    animation="property: rotation; to: 0 360 0; loop: true; dur: 6000"></a-sphere>
+          <a-text value="Marte" position="0 0.7 0" align="center" color="#FFFFFF"></a-text>
+        </a-entity>
+      </a-entity>
+
+      <a-sky color="#0B0C10"></a-sky>
+
+    </a-scene>
+  </body>
+</html>
