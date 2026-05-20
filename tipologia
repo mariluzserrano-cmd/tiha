@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tipología de las Realidades Inmersivas</title>
+    <style>
+        /* Paleta de colores ajustada */
+        :root {
+            --azul-oscuro: #0D3A84;
+            --azul-medio: #2B65B5;
+            --celeste: #4eb5e6;
+            --fondo-pantalla: #F4F6F9; /* Gris perla muy suave */
+            --blanco: #ffffff;
+            --texto: #333333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--fondo-pantalla);
+            color: var(--texto);
+            margin: 0;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: var(--blanco);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            max-width: 1000px;
+            width: 100%;
+            border-top: 5px solid var(--azul-oscuro);
+        }
+
+        .header h1 {
+            color: var(--azul-oscuro);
+            margin: 0 0 10px 0;
+            font-size: 2.2em;
+        }
+
+        .header p {
+            color: var(--azul-medio);
+            font-size: 1.2em;
+            margin: 0;
+            font-style: italic;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        /* Estilo de las tarjetas interactivas */
+        .card {
+            background-color: var(--blanco);
+            border-top: 5px solid var(--azul-medio);
+            border-radius: 10px;
+            padding: 25px 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(13, 58, 132, 0.15);
+            border-top: 5px solid var(--celeste);
+        }
+
+        .card h3 {
+            color: var(--azul-oscuro);
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+
+        .card p {
+            font-size: 0.95em;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .click-hint {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 15px;
+            background-color: #E6F0FA;
+            color: var(--azul-oscuro);
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        /* Estilos de la Ventana Emergente (Modal) */
+        .modal-overlay {
+            display: none; /* Esto garantiza que no se vea azul al inicio */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(13, 58, 132, 0.85); /* Azul transparente solo para el fondo del modal */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--blanco);
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 85%;
+            position: relative;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            border-left: 8px solid var(--celeste);
+            animation: aparecer 0.3s ease-out;
+        }
+
+        @keyframes aparecer {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close-btn:hover {
+            color: var(--azul-oscuro);
+        }
+
+        .modal-content h2 {
+            color: var(--azul-oscuro);
+            margin-top: 0;
+        }
+
+        .modal-content p {
+            font-size: 1.05em;
+            line-height: 1.6;
+            color: #444;
+        }
+
+        .modal-content .highlight {
+            background-color: #E6F0FA;
+            padding: 15px;
+            border-radius: 8px;
+            color: var(--azul-oscuro);
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .modal-content ul {
+            padding-left: 20px;
+            line-height: 1.8;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>TIPOLOGÍA DE LAS REALIDADES INMERSIVAS</h1>
+        <p>Del Stereoscope al Metaverso · 200 años de inmersión</p>
+    </div>
+
+    <div class="grid-container">
+        
+        <div class="card" onclick="openModal('modal-vr')">
+            <div>
+                <h3>REALIDAD VIRTUAL (VR)</h3>
+                <p>Sustituye completamente el mundo real por un entorno digital inmersivo.</p>
+            </div>
+            <span class="click-hint">Haz clic para expandir ⤢</span>
+        </div>
+
+        <div class="card" onclick="openModal('modal-ar')">
+            <div>
+                <h3>REALIDAD AUMENTADA (AR)</h3>
+                <p>Añade capas digitales al mundo real a través de dispositivos.</p>
+            </div>
+            <span class="click-hint">Haz clic para expandir ⤢</span>
+        </div>
+
+        <div class="card" onclick="openModal('modal-mr')">
+            <div>
+                <h3>REALIDAD MIXTA (MR)</h3>
+                <p>Integra objetos digitales que interactúan con el entorno físico.</p>
+            </div>
+            <span class="click-hint">Haz clic para expandir ⤢</span>
+        </div>
+
+        <div class="card" onclick="openModal('modal-meta')">
+            <div>
+                <h3>METAVERSO</h3>
+                <p>Espacios digitales persistentes donde podemos trabajar, aprender y socializar.</p>
+            </div>
+            <span class="click-hint">Haz clic para expandir ⤢</span>
+        </div>
+
+    </div>
+
+    <div class="modal-overlay" id="modal-vr" onclick="closeIfOutside(event, 'modal-vr')">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal-vr')">&times;</span>
+            <h2>REALIDAD VIRTUAL (VR)</h2>
+            <p>Sustituye completamente el mundo real por un entorno digital inmersivo. El usuario deja de ver su entorno físico para sumergirse sensorialmente en otro lugar.</p>
+            <strong>Ejemplos en educación:</strong>
+            <ul>
+                <li>Recorrer el cuerpo humano en 3D.</li>
+                <li>Visitar museos o lugares históricos imposibles (ej. Anne Frank House).</li>
+                <li>Simulaciones avanzadas en salud y STEM.</li>
+            </ul>
+            <div class="highlight">🧠 Inmersión total con visores.</div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-ar" onclick="closeIfOutside(event, 'modal-ar')">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal-ar')">&times;</span>
+            <h2>REALIDAD AUMENTADA (AR)</h2>
+            <p>Añade capas digitales al mundo real a través de dispositivos como teléfonos o tabletas. El usuario sigue viendo su entorno físico, pero enriquecido.</p>
+            <strong>Ejemplos en educación:</strong>
+            <ul>
+                <li>Google Arts & Culture: llevar arte a tu propio espacio.</li>
+                <li>Filtros y experiencias interactivas que transforman la percepción.</li>
+                <li>Información contextual superpuesta sobre lo que vemos.</li>
+            </ul>
+            <div class="highlight">📱 El mundo real + información digital conviven en tiempo real.</div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-mr" onclick="closeIfOutside(event, 'modal-mr')">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal-mr')">&times;</span>
+            <h2>REALIDAD MIXTA (MR)</h2>
+            <p>Integra objetos digitales que interactúan con el entorno físico. La tecnología reconoce paredes, muebles y profundidades, logrando que lo digital y lo físico se fusionen.</p>
+            <strong>Ejemplos en educación:</strong>
+            <ul>
+                <li>Trabajo colaborativo con hologramas.</li>
+                <li>Diseño y prototipado espacial en 3D.</li>
+                <li>Entrenamientos médicos y técnicos avanzados.</li>
+            </ul>
+            <div class="highlight">🖐️ Los objetos digitales entienden y responden a tu entorno.</div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-meta" onclick="closeIfOutside(event, 'modal-meta')">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal-meta')">&times;</span>
+            <h2>METAVERSO</h2>
+            <p>Espacios digitales persistentes donde podemos trabajar, aprender y socializar. No es una tecnología específica, sino un lugar compartido accesible desde múltiples dispositivos.</p>
+            <strong>Ejemplos en educación:</strong>
+            <ul>
+                <li>Salas colaborativas como Spatial.io.</li>
+                <li>Eventos, clases y reuniones inmersivas.</li>
+                <li>Comunidades y experiencias compartidas.</li>
+            </ul>
+            <div class="highlight">👥 Presencia compartida en mundos digitales persistentes.</div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        function closeIfOutside(event, id) {
+            // Si el clic ocurre exactamente en el fondo azul oscuro, cierra la ventana
+            if (event.target.id === id) {
+                closeModal(id);
+            }
+        }
+    </script>
+</body>
+</html>
