@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EDU 690 · Reflexión de cierre · Sesión 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #0F0408;
+  --bg-card: #1C0710;
+  --bg-elev: #2A0E1B;
+  --ink: #F5E8D8;
+  --ink-muted: rgba(245, 232, 216, 0.65);
+  --ink-faint: rgba(245, 232, 216, 0.35);
+  --accent: #B8284C;
+  --accent-soft: #F4A6B8;
+  --accent-gold: #D4A574;
+  --teal: #7BC9A7;
+  --line: rgba(245, 232, 216, 0.1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: var(--bg-deep); color: var(--ink);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400; font-size: 16px; line-height: 1.6;
+  min-height: 100vh; overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 1;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/></svg>");
+  opacity: 0.04; mix-blend-mode: screen;
+}
+body::after {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 10%, rgba(184, 40, 76, 0.18), transparent 60%),
+    radial-gradient(ellipse 40% 30% at 80% 90%, rgba(244, 166, 184, 0.08), transparent 60%);
+}
+.app { position: relative; z-index: 2; min-height: 100vh; display: flex; flex-direction: column; max-width: 920px; margin: 0 auto; padding: 0 24px; }
+.app-header {
+  padding: 28px 0; display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--line); flex-wrap: wrap; gap: 16px;
+}
+.brand { display: flex; align-items: center; gap: 16px; }
+.brand-mark {
+  width: 40px; height: 40px; border: 1px solid var(--accent-soft);
+  display: grid; place-items: center;
+  font-family: 'Fraunces', serif; font-style: italic; font-weight: 900; font-size: 20px;
+  color: var(--accent-soft); border-radius: 50%; position: relative;
+  background: rgba(184, 40, 76, 0.08);
+}
+.brand-mark::after { content: ''; position: absolute; inset: -5px; border: 1px solid var(--line); border-radius: 50%; }
+.brand-text { font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted); }
+.brand-text strong { color: var(--ink); font-weight: 500; }
+.session-meta { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint); }
+
+.progress-rail { display: none; gap: 6px; padding: 24px 0 0; }
+.progress-rail span { flex: 1; height: 3px; background: var(--line); transition: background 0.6s ease; }
+.progress-rail span.done { background: var(--accent-soft); }
+.progress-rail span.active { background: var(--accent); }
+
+.screen { display: none; flex: 1; padding: 48px 0 140px; animation: fadeIn 0.5s ease both; }
+.screen.active { display: flex; flex-direction: column; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.eyebrow {
+  font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--accent-soft); margin-bottom: 28px;
+  display: flex; align-items: center; gap: 16px;
+}
+.eyebrow::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, rgba(244,166,184,0.5), transparent); max-width: 200px; }
+
+.q-title {
+  font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+  font-variation-settings: 'opsz' 144, 'SOFT' 70;
+  font-size: clamp(34px, 5vw, 56px); line-height: 1.05; letter-spacing: -0.02em;
+  margin-bottom: 18px; max-width: 1000px;
+}
+.q-title em { color: var(--accent-soft); font-style: italic; }
+.q-helper { color: var(--ink-muted); font-size: 15px; max-width: 720px; margin-bottom: 36px; }
+
+.options { display: grid; gap: 12px; margin-bottom: auto; }
+.opt {
+  position: relative; padding: 22px 28px;
+  background: var(--bg-card); border: 1px solid var(--line);
+  cursor: pointer; transition: border 0.3s ease, transform 0.2s ease, background 0.3s ease;
+  display: flex; align-items: center; gap: 16px;
+  user-select: none; overflow: hidden;
+}
+.opt:hover { border-color: var(--accent-soft); transform: translateX(4px); }
+.opt-label {
+  font-family: 'Fraunces', serif; font-weight: 500; font-style: italic;
+  font-variation-settings: 'opsz' 60, 'SOFT' 50;
+  font-size: 22px; letter-spacing: -0.01em; line-height: 1.2;
+  flex: 1;
+}
+.opt-sub {
+  display: block;
+  font-family: 'IBM Plex Sans', sans-serif; font-style: normal; font-weight: 400;
+  font-size: 13px; color: var(--ink-faint); letter-spacing: 0.02em;
+  margin-top: 4px;
+}
+.opt.selected {
+  border-color: var(--accent-soft); background: var(--bg-elev);
+}
+.opt.selected::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(184, 40, 76, 0.22), rgba(244, 166, 184, 0.06));
+  pointer-events: none;
+}
+.opt.selected::after {
+  content: '✓'; position: absolute; top: 50%; right: 20px; transform: translateY(-50%);
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--accent-soft); color: var(--bg-deep);
+  display: grid; place-items: center; font-size: 15px; font-weight: 700;
+  animation: checkIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes checkIn { from { opacity: 0; transform: translateY(-50%) scale(0); } to { opacity: 1; transform: translateY(-50%) scale(1); } }
+.opt > * { position: relative; z-index: 1; }
+
+/* Scale (1-5) */
+.scale-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: auto; }
+@media (max-width: 700px) { .scale-row { grid-template-columns: repeat(5, 1fr); gap: 6px; } }
+.scale-cell {
+  background: var(--bg-card); border: 1px solid var(--line);
+  padding: 24px 8px 18px; text-align: center; cursor: pointer;
+  position: relative; overflow: hidden;
+  transition: border 0.3s ease, background 0.3s ease;
+  user-select: none;
+  display: flex; flex-direction: column; justify-content: center;
+  min-height: 130px;
+}
+.scale-cell:hover { border-color: var(--accent-soft); }
+.scale-num {
+  font-family: 'Fraunces', serif; font-style: italic; font-weight: 700;
+  font-variation-settings: 'opsz' 144;
+  font-size: clamp(40px, 7vw, 54px); line-height: 1; color: var(--accent-soft); margin-bottom: 8px;
+}
+.scale-label { font-size: 9.5px; color: var(--ink-muted); letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.3; }
+.scale-cell.selected { border-color: var(--accent-soft); background: var(--bg-elev); }
+.scale-cell.selected::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(184, 40, 76, 0.22), rgba(244, 166, 184, 0.06));
+  pointer-events: none;
+}
+.scale-cell > * { position: relative; z-index: 1; }
+
+/* Text areas */
+.text-input, .text-area {
+  width: 100%; padding: 18px 22px;
+  background: var(--bg-card); border: 1px solid var(--line); color: var(--ink);
+  font-family: 'IBM Plex Sans', sans-serif; font-size: 16px;
+  outline: none; transition: border 0.2s ease;
+  margin-bottom: auto;
+}
+.text-area {
+  font-family: 'Fraunces', serif; font-style: italic; font-size: 22px;
+  line-height: 1.4; min-height: 200px; resize: vertical;
+}
+.text-input::placeholder, .text-area::placeholder { color: var(--ink-faint); }
+.text-input:focus, .text-area:focus { border-color: var(--accent-soft); }
+
+.field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+.field-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-muted); }
+
+/* SETUP */
+.setup-title {
+  font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+  font-variation-settings: 'opsz' 144, 'SOFT' 80;
+  font-size: clamp(40px, 6.5vw, 78px); line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 24px;
+}
+.setup-title .accent { color: var(--accent-soft); }
+.setup-deck { font-size: 17px; color: var(--ink-muted); max-width: 600px; line-height: 1.65; margin-bottom: 32px; }
+.setup-fineprint {
+  font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink-faint); margin-bottom: 28px;
+  display: flex; align-items: center; gap: 12px;
+}
+.setup-fineprint::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--accent-gold); }
+
+.start-btn {
+  padding: 22px 40px; background: var(--accent); color: var(--ink); border: none;
+  font-family: 'IBM Plex Sans', sans-serif; font-size: 13px;
+  letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500;
+  cursor: pointer; transition: all 0.3s ease;
+  display: inline-flex; align-items: center; gap: 18px; margin-top: 16px;
+  align-self: flex-start;
+}
+.start-btn:hover { background: var(--accent-soft); color: var(--bg-deep); letter-spacing: 0.26em; }
+.start-btn .arrow { font-family: 'Fraunces', serif; font-style: italic; font-size: 24px; font-weight: 400; }
+.start-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.start-btn:disabled:hover { background: var(--accent); color: var(--ink); letter-spacing: 0.22em; }
+
+/* Bottom nav */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  padding: 20px 24px; display: flex; justify-content: center; align-items: center;
+  background: linear-gradient(to top, var(--bg-deep) 65%, transparent);
+  z-index: 10; pointer-events: none; gap: 12px;
+}
+.bottom-nav-inner {
+  max-width: 920px; width: 100%;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  flex-wrap: wrap;
+}
+.bottom-nav > *, .bottom-nav-inner > * { pointer-events: auto; }
+.nav-btn {
+  padding: 14px 26px; background: transparent; color: var(--ink-muted);
+  border: 1px solid var(--line);
+  font-family: 'IBM Plex Sans', sans-serif; font-size: 12px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  cursor: pointer; transition: all 0.25s ease; font-weight: 500;
+}
+.nav-btn:hover { color: var(--ink); border-color: var(--accent-soft); }
+.nav-btn.primary { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+.nav-btn.primary:hover { background: var(--accent-soft); color: var(--bg-deep); border-color: var(--accent-soft); }
+.nav-btn:disabled { opacity: 0.25; cursor: not-allowed; }
+.nav-btn:disabled:hover { color: var(--ink-muted); border-color: var(--line); }
+
+.live-counter { display: flex; align-items: center; gap: 12px; font-size: 11px; color: var(--ink-faint); letter-spacing: 0.2em; text-transform: uppercase; }
+.live-dot { width: 8px; height: 8px; background: var(--teal); border-radius: 50%; animation: pulse 1.6s ease-in-out infinite; box-shadow: 0 0 12px var(--teal); }
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.4); } }
+
+/* Review */
+.review-list { display: flex; flex-direction: column; gap: 24px; margin-bottom: 40px; }
+.review-item { border-bottom: 1px solid var(--line); padding-bottom: 22px; }
+.review-q { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 10px; }
+.review-a { font-family: 'Fraunces', serif; font-style: italic; font-size: 22px; color: var(--ink); line-height: 1.3; }
+.review-a.empty { color: var(--ink-faint); font-size: 17px; }
+.review-edit {
+  margin-top: 12px; background: none; border: none;
+  color: var(--accent-soft); font-size: 11px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  cursor: pointer; padding: 0;
+}
+.review-edit:hover { color: var(--ink); }
+.summary-actions { display: flex; gap: 14px; margin-bottom: 60px; flex-wrap: wrap; }
+
+/* Thanks */
+.thanks-hero { max-width: 800px; margin: 60px auto 0; text-align: center; }
+.thanks-mark {
+  width: 96px; height: 96px; border-radius: 50%;
+  border: 1px solid var(--accent-soft); margin: 0 auto 40px;
+  display: grid; place-items: center;
+  font-family: 'Fraunces', serif; font-style: italic; font-size: 48px;
+  color: var(--accent-soft); background: rgba(184, 40, 76, 0.1);
+  position: relative;
+}
+.thanks-mark::after { content: ''; position: absolute; inset: -8px; border: 1px solid var(--line); border-radius: 50%; }
+.thanks-title {
+  font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+  font-variation-settings: 'opsz' 144, 'SOFT' 80;
+  font-size: clamp(44px, 6vw, 78px); line-height: 0.95; letter-spacing: -0.02em; margin-bottom: 24px;
+}
+.thanks-title em { color: var(--accent-soft); font-style: italic; }
+.thanks-deck { color: var(--ink-muted); font-size: 17px; line-height: 1.65; max-width: 540px; margin: 0 auto 28px; }
+.thanks-status {
+  font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+  margin-bottom: 32px; display: inline-flex; align-items: center; gap: 12px;
+  padding: 14px 22px; border: 1px solid var(--line); border-radius: 100px;
+}
+.thanks-status.success { color: var(--teal); border-color: rgba(123, 201, 167, 0.3); }
+.thanks-status.warn { color: var(--accent-gold); border-color: rgba(212, 165, 116, 0.3); }
+.thanks-status.error { color: var(--accent-soft); border-color: rgba(244, 166, 184, 0.3); }
+.thanks-quote {
+  font-family: 'Fraunces', serif; font-style: italic; color: var(--accent-soft);
+  font-size: 19px; max-width: 540px; margin: 0 auto 24px; line-height: 1.5;
+}
+
+@media (max-width: 700px) {
+  .app-header { padding: 20px 0; }
+  .screen { padding: 32px 0 140px; }
+  .opt { padding: 18px 22px; }
+  .opt-label { font-size: 19px; }
+  .opt.selected::after { right: 14px; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-mark">↻</div>
+      <div class="brand-text">EDU 690 — <strong>Reflexión de cierre</strong></div>
+    </div>
+    <div class="session-meta">Sesión 1 · 20 mayo 2026</div>
+  </header>
+  <div class="progress-rail" id="progressRail"></div>
+
+  <!-- SETUP -->
+  <section id="setup" class="screen">
+    <div>
+      <div class="setup-fineprint">Tu voz cuenta · 3 minutos</div>
+      <h1 class="setup-title">Antes de irte, <span class="accent">cuéntame</span> cómo te fue.</h1>
+      <p class="setup-deck">
+        Esta clase fue intensa — recorrimos 200 años de tecnología, vivimos AR en vivo, entramos al metaverso, y exploramos NotebookLM. <strong style="color:var(--ink)">Quiero saber qué necesitas reforzar para que ningún tema se quede atrás.</strong> Tus respuestas llegan directo a mi correo y guían cómo diseño el contenido asincrónico de esta semana.
+      </p>
+      <p class="setup-deck" style="font-style:italic;font-family:'Fraunces',serif;color:var(--ink-faint);font-size:15px">
+        Honestidad total. No hay respuestas correctas. Solo dime cómo te fue.
+      </p>
+      <div class="field">
+        <label class="field-label" for="student-name">Tu nombre</label>
+        <input class="text-input" id="student-name" placeholder="Como te llamas" autocomplete="off" style="font-family:'IBM Plex Sans',sans-serif;font-style:normal;font-size:18px">
+      </div>
+      <div class="field">
+        <label class="field-label" for="student-email">Tu correo (opcional)</label>
+        <input class="text-input" id="student-email" placeholder="Para que pueda escribirte si te quedas con dudas" type="email" autocomplete="off" style="font-family:'IBM Plex Sans',sans-serif;font-style:normal;font-size:18px">
+      </div>
+      <button class="start-btn" id="start-btn">Empezar <span class="arrow">→</span></button>
+    </div>
+  </section>
+
+  <main id="screens"></main>
+
+  <section id="review" class="screen"></section>
+  <section id="thanks" class="screen"></section>
+</div>
+
+<nav class="bottom-nav" id="bottomNav" style="display:none">
+  <div class="bottom-nav-inner">
+    <button class="nav-btn" id="prev-btn">← Atrás</button>
+    <div class="live-counter"><span class="live-dot"></span><span id="liveStatus">Pregunta 1 de 6</span></div>
+    <button class="nav-btn primary" id="next-btn">Siguiente →</button>
+  </div>
+</nav>
+
+<script>
+// ===== CONFIG =====
+// Formspree endpoint — envía respuestas directo a mserrano@sagrado.edu
+// Profesora: para activar el envío automático:
+// 1. Ve a https://formspree.io → crea cuenta GRATIS con mserrano@sagrado.edu
+// 2. New form → nombre "EDU 690 Reflexión" → copia tu endpoint
+// 3. Pega aquí entre las comillas (reemplaza la cadena vacía):
+const FORMSPREE_ENDPOINT = '';
+
+// Si está vacío, las respuestas se descargan como JSON (backup seguro)
+// Cuando Formspree esté configurado, llegan automáticamente al correo.
+
+const PROF_EMAIL = 'mserrano@sagrado.edu';
+
+const QUESTIONS = [
+  {
+    id: 'q1',
+    eyebrow: 'Pregunta 1 / 6',
+    title: '¿Cómo te sentiste <em>en general</em> con la clase de hoy?',
+    helper: 'Sé honesta/o. Esto me ayuda a calibrar el ritmo y la profundidad.',
+    type: 'scale',
+    options: [
+      { id: 's1', label: 'Abrumada/o', num: '1' },
+      { id: 's2', label: 'Confundida/o', num: '2' },
+      { id: 's3', label: 'Bien', num: '3' },
+      { id: 's4', label: 'Inspirada/o', num: '4' },
+      { id: 's5', label: 'Encendida/o', num: '5' },
+    ]
+  },
+  {
+    id: 'q2',
+    eyebrow: 'Pregunta 2 / 6',
+    title: '¿Qué parte de la clase <em>te impactó más</em>?',
+    helper: 'Selecciona la que mejor describa tu experiencia.',
+    type: 'single',
+    options: [
+      { id: 'realfake', label: 'El ejercicio "¿Real o fake?"', sub: 'Los videos comparados de Apple Vision Pro' },
+      { id: 'historia', label: 'La línea de tiempo (1838→hoy)', sub: '200 años de inmersión' },
+      { id: 'arts', label: 'La demo de Google Arts & Culture', sub: 'Cuando vimos arte en nuestro espacio' },
+      { id: 'spatial', label: 'Entrar a Spatial.io juntas/os', sub: 'Nuestro primer metaverso compartido' },
+      { id: 'casos', label: 'Los casos reales (NASA, Smithsonian, Burger King)', sub: 'Aprender por descubrimiento' },
+      { id: 'notebooklm', label: 'La demo de NotebookLM', sub: 'IA aplicada a investigación académica' },
+      { id: 'cierre', label: 'El cierre y la reflexión final', sub: 'El verdadero propósito de la tecnología' }
+    ]
+  },
+  {
+    id: 'q3',
+    eyebrow: 'Pregunta 3 / 6',
+    title: '¿Qué <em>te gustaría practicar más</em> de manera asincrónica?',
+    helper: 'Puedes marcar varias. Esto guía el contenido de refuerzo que prepararé esta semana.',
+    type: 'multi',
+    options: [
+      { id: 'practica-arts', label: 'Practicar Google Arts & Culture AR', sub: 'Más ejemplos y aplicaciones educativas' },
+      { id: 'practica-spatial', label: 'Aprender a crear mi propia sala en Spatial', sub: 'No solo entrar, sino construir' },
+      { id: 'practica-notebooklm', label: 'Profundizar en NotebookLM', sub: 'Para la Actividad 2 y mi investigación' },
+      { id: 'practica-gemini', label: 'Crear simuladores con Gemini (o Claude/GPT)', sub: 'Programar prototipos con IA generativa' },
+      { id: 'practica-github', label: 'Subir mis proyectos a GitHub', sub: 'Compartirlos públicamente con un link' },
+      { id: 'practica-vr', label: 'Conceptos básicos de VR antes del 10 de junio', sub: 'Para llegar preparada/o a la sesión en Salud' },
+      { id: 'practica-mr', label: 'Realidad Mixta y computación espacial', sub: 'Apple Vision Pro, HoloLens' },
+      { id: 'practica-metaverso', label: 'Pedagogía del metaverso educativo', sub: 'Cómo diseñar experiencias en estos espacios' }
+    ]
+  },
+  {
+    id: 'q4',
+    eyebrow: 'Pregunta 4 / 6',
+    title: '¿Hay algo que <em>NO</em> te quedó claro?',
+    helper: 'Sé específica/o si puedes. Esto me permite atenderlo antes de la próxima sesión.',
+    type: 'multi',
+    options: [
+      { id: 'duda-no', label: 'Todo claro, gracias', sub: 'Salí entendiendo bien las 4 realidades' },
+      { id: 'duda-vr-ar', label: 'Diferencia entre VR y AR', sub: 'Aún no las distingo del todo' },
+      { id: 'duda-mr', label: 'Qué es exactamente la Realidad Mixta', sub: 'Cómo se diferencia de AR' },
+      { id: 'duda-metaverso', label: 'Qué hace al metaverso "metaverso"', sub: 'Y por qué Spatial entra en esa categoría' },
+      { id: 'duda-actividad2', label: 'Lo que tengo que hacer para la Actividad 2', sub: 'Las instrucciones, el formato, lo que se evalúa' },
+      { id: 'duda-notebooklm', label: 'Cómo usar NotebookLM bien', sub: 'Sin que la IA haga el trabajo por mí' },
+      { id: 'duda-otro', label: 'Otra duda (la escribo abajo)', sub: 'En el espacio para comentarios' }
+    ]
+  },
+  {
+    id: 'q5',
+    eyebrow: 'Pregunta 5 / 6',
+    title: 'Una palabra: <em>¿cómo sales</em> de esta clase?',
+    helper: 'Al principio te pregunté cómo entraste. Ahora — ¿una palabra al cierre?',
+    type: 'word',
+    placeholder: 'Tu palabra'
+  },
+  {
+    id: 'q6',
+    eyebrow: 'Pregunta 6 / 6 · Opcional',
+    title: '¿Quieres <em>añadir algo más</em>?',
+    helper: 'Cualquier comentario, sugerencia, pregunta o agradecimiento. Lo leo todo.',
+    type: 'longtext',
+    placeholder: 'Tu mensaje libre... (opcional)'
+  }
+];
+
+const state = {
+  idx: -1,
+  studentName: '',
+  studentEmail: '',
+  answers: {}
+};
+QUESTIONS.forEach(q => {
+  if (q.type === 'multi') state.answers[q.id] = [];
+  else if (q.type === 'word' || q.type === 'longtext') state.answers[q.id] = '';
+  else state.answers[q.id] = null;
+});
+
+function getQuestion(qid) { return QUESTIONS.find(q => q.id === qid); }
+function getOptionLabel(qid, oid) {
+  const q = getQuestion(qid);
+  if (!q || !q.options) return oid;
+  const o = q.options.find(o => o.id === oid);
+  return o ? o.label : oid;
+}
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function stripHtml(s) { return s.replace(/<[^>]+>/g, ''); }
+
+function renderProgressRail() {
+  const rail = document.getElementById('progressRail');
+  rail.innerHTML = '';
+  const inQ = state.idx >= 0 && state.idx < QUESTIONS.length;
+  if (!inQ) { rail.style.display = 'none'; return; }
+  rail.style.display = 'flex';
+  for (let i = 0; i < QUESTIONS.length; i++) {
+    const span = document.createElement('span');
+    if (i < state.idx) span.classList.add('done');
+    if (i === state.idx) span.classList.add('active');
+    rail.appendChild(span);
+  }
+}
+
+function buildScreens() {
+  const container = document.getElementById('screens');
+  container.innerHTML = '';
+  QUESTIONS.forEach(q => {
+    const sec = document.createElement('section');
+    sec.className = 'screen'; sec.id = q.id;
+    let inner = `
+      <div class="eyebrow">${q.eyebrow}</div>
+      <h2 class="q-title">${q.title}</h2>
+      <p class="q-helper">${q.helper}</p>`;
+    if (q.type === 'single' || q.type === 'multi') {
+      inner += `<div class="options" data-qid="${q.id}">
+        ${q.options.map(o => `
+          <div class="opt" data-oid="${o.id}">
+            <div class="opt-label">
+              ${o.label}
+              ${o.sub ? `<span class="opt-sub">${o.sub}</span>` : ''}
+            </div>
+          </div>`).join('')}
+      </div>`;
+    } else if (q.type === 'scale') {
+      inner += `<div class="scale-row" data-qid="${q.id}">
+        ${q.options.map(o => `
+          <div class="scale-cell" data-oid="${o.id}">
+            <div class="scale-num">${o.num}</div>
+            <div class="scale-label">${o.label}</div>
+          </div>`).join('')}
+      </div>`;
+    } else if (q.type === 'word') {
+      inner += `<input class="text-input" id="word-${q.id}" placeholder="${q.placeholder}" autocomplete="off" maxlength="40" style="font-family:'Fraunces',serif;font-style:italic;font-size:28px">`;
+    } else if (q.type === 'longtext') {
+      inner += `<textarea class="text-area" id="long-${q.id}" placeholder="${q.placeholder}"></textarea>`;
+    }
+    sec.innerHTML = inner;
+    container.appendChild(sec);
+  });
+
+  // Attach option click handlers
+  container.querySelectorAll('.opt, .scale-cell').forEach(el => {
+    el.addEventListener('click', () => {
+      const qid = el.parentElement.dataset.qid;
+      const oid = el.dataset.oid;
+      const q = getQuestion(qid);
+      if (q.type === 'multi') {
+        const arr = state.answers[qid];
+        const i = arr.indexOf(oid);
+        if (i >= 0) { arr.splice(i, 1); el.classList.remove('selected'); }
+        else { arr.push(oid); el.classList.add('selected'); }
+      } else {
+        state.answers[qid] = oid;
+        el.parentElement.querySelectorAll('.opt, .scale-cell').forEach(sib => sib.classList.remove('selected'));
+        el.classList.add('selected');
+      }
+    });
+  });
+
+  // Text inputs
+  QUESTIONS.forEach(q => {
+    if (q.type === 'word') {
+      const input = document.getElementById('word-' + q.id);
+      input.addEventListener('input', e => {
+        const v = e.target.value.trim().split(/\s+/)[0] || '';
+        state.answers[q.id] = v;
+      });
+      input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') { e.preventDefault(); document.getElementById('next-btn').click(); }
+      });
+    } else if (q.type === 'longtext') {
+      const area = document.getElementById('long-' + q.id);
+      area.addEventListener('input', e => {
+        state.answers[q.id] = e.target.value;
+      });
+    }
+  });
+}
+
+function refreshSelections(qid) {
+  const q = getQuestion(qid);
+  const screen = document.getElementById(qid);
+  if (!screen) return;
+  screen.querySelectorAll('.opt, .scale-cell').forEach(el => el.classList.remove('selected'));
+  const ans = state.answers[qid];
+  if (q.type === 'multi') {
+    ans.forEach(oid => {
+      const el = screen.querySelector(`[data-oid="${oid}"]`);
+      if (el) el.classList.add('selected');
+    });
+  } else if (q.type === 'single' || q.type === 'scale') {
+    if (ans) {
+      const el = screen.querySelector(`[data-oid="${ans}"]`);
+      if (el) el.classList.add('selected');
+    }
+  } else if (q.type === 'word') {
+    const input = document.getElementById('word-' + qid);
+    if (input) input.value = ans || '';
+  } else if (q.type === 'longtext') {
+    const area = document.getElementById('long-' + qid);
+    if (area) area.value = ans || '';
+  }
+}
+
+function showScreen() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const nav = document.getElementById('bottomNav');
+  const inQ = state.idx >= 0 && state.idx < QUESTIONS.length;
+
+  if (state.idx === -1) {
+    document.getElementById('setup').classList.add('active');
+    nav.style.display = 'none';
+  } else if (inQ) {
+    const q = QUESTIONS[state.idx];
+    document.getElementById(q.id).classList.add('active');
+    nav.style.display = 'flex';
+    document.getElementById('liveStatus').textContent = `Pregunta ${state.idx+1} de ${QUESTIONS.length}`;
+    const lastQ = state.idx === QUESTIONS.length - 1;
+    document.getElementById('next-btn').textContent = lastQ ? 'Revisar →' : 'Siguiente →';
+    document.getElementById('prev-btn').disabled = state.idx === 0;
+    refreshSelections(q.id);
+    // Auto-focus inputs
+    setTimeout(() => {
+      if (q.type === 'word') document.getElementById('word-' + q.id)?.focus();
+      else if (q.type === 'longtext') document.getElementById('long-' + q.id)?.focus();
+    }, 100);
+  } else if (state.idx === QUESTIONS.length) {
+    renderReview();
+    document.getElementById('review').classList.add('active');
+    nav.style.display = 'none';
+  } else if (state.idx === QUESTIONS.length + 1) {
+    document.getElementById('thanks').classList.add('active');
+    nav.style.display = 'none';
+  }
+  renderProgressRail();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function getAnswerLabel(q) {
+  const ans = state.answers[q.id];
+  if (q.type === 'multi') {
+    if (!ans.length) return null;
+    return ans.map(oid => getOptionLabel(q.id, oid)).join(' · ');
+  } else if (q.type === 'single' || q.type === 'scale') {
+    if (!ans) return null;
+    return getOptionLabel(q.id, ans);
+  } else if (q.type === 'word' || q.type === 'longtext') {
+    return ans || null;
+  }
+  return null;
+}
+
+function renderReview() {
+  const review = document.getElementById('review');
+  // Optional questions: q4 (only if duda-otro selected we should remind to fill q6), q6 always optional
+  // Required: q1, q2, q3, q5
+  const required = ['q1', 'q2', 'q3', 'q5'];
+  const isComplete = required.every(qid => {
+    const q = getQuestion(qid);
+    const ans = state.answers[qid];
+    if (q.type === 'multi') return ans.length > 0;
+    return !!ans;
+  });
+  const labelMap = {
+    q1: 'Cómo te sentiste',
+    q2: 'Lo que más te impactó',
+    q3: 'Qué quieres practicar más',
+    q4: 'Lo que NO quedó claro',
+    q5: 'Una palabra al cierre',
+    q6: 'Comentario libre'
+  };
+  review.innerHTML = `
+    <div class="eyebrow">Casi listo · Revisa antes de enviar</div>
+    <h2 class="q-title" style="margin-bottom:36px">Tus respuestas, <em>${escapeHtml(state.studentName || 'estudiante')}</em>.</h2>
+    <div class="review-list">
+      ${QUESTIONS.map((q, i) => {
+        const ans = getAnswerLabel(q);
+        const isOptional = q.id === 'q4' || q.id === 'q6';
+        return `
+          <div class="review-item">
+            <div class="review-q">${labelMap[q.id]}${isOptional ? ' · opcional' : ''}</div>
+            <div class="review-a ${ans ? '' : 'empty'}">${ans ? escapeHtml(ans) : (isOptional ? '— Sin respuesta —' : '— Falta tu respuesta —')}</div>
+            <button class="review-edit" data-edit="${i}">Editar</button>
+          </div>`;
+      }).join('')}
+    </div>
+    <div class="summary-actions">
+      <button class="nav-btn primary" id="submit-btn" ${isComplete ? '' : 'disabled'}>${isComplete ? '↗ Enviar a la profesora' : 'Completa las preguntas requeridas'}</button>
+      <button class="nav-btn" id="review-back">← Atrás</button>
+    </div>
+    ${!isComplete ? '<p style="color:var(--ink-faint);font-size:13px;margin-top:-40px;margin-bottom:60px">Las preguntas opcionales (4 y 6) puedes dejarlas en blanco. Las demás sí son necesarias.</p>' : ''}`;
+  review.querySelectorAll('[data-edit]').forEach(btn => {
+    btn.onclick = () => { state.idx = +btn.dataset.edit; showScreen(); };
+  });
+  document.getElementById('review-back').onclick = () => { state.idx = QUESTIONS.length - 1; showScreen(); };
+  document.getElementById('submit-btn').onclick = submit;
+}
+
+async function submit() {
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  const today = new Date().toLocaleString('es-PR', { dateStyle: 'long', timeStyle: 'short' });
+  const payload = {
+    _subject: `EDU 690 · Reflexión Sesión 1 · ${state.studentName}`,
+    _replyto: state.studentEmail || '',
+    estudiante: state.studentName,
+    correo_estudiante: state.studentEmail || '(no proporcionado)',
+    fecha_envio: today,
+    curso: 'EDU 690-081',
+    sesion: 'Sesión 1 — 20 mayo 2026',
+    profesora: 'Dra. Mariluz Serrano-Ortiz',
+    'q1_como_se_sintio': getAnswerLabel(getQuestion('q1')) || '',
+    'q2_lo_que_mas_impacto': getAnswerLabel(getQuestion('q2')) || '',
+    'q3_quiere_practicar_mas': getAnswerLabel(getQuestion('q3')) || '',
+    'q4_lo_que_no_quedo_claro': getAnswerLabel(getQuestion('q4')) || '(sin respuesta)',
+    'q5_palabra_al_cierre': getAnswerLabel(getQuestion('q5')) || '',
+    'q6_comentario_libre': getAnswerLabel(getQuestion('q6')) || '(sin respuesta)',
+  };
+
+  let sendStatus = 'local';
+  if (FORMSPREE_ENDPOINT) {
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      sendStatus = res.ok ? 'success' : 'error';
+    } catch (e) { sendStatus = 'error'; }
+  }
+  // Always download local backup
+  downloadJSON(`reflexion_${(state.studentName || 'estudiante').replace(/\s+/g, '_')}.json`, payload);
+
+  state.idx = QUESTIONS.length + 1;
+  renderThanks(sendStatus);
+  showScreen();
+}
+
+function renderThanks(sendStatus) {
+  const thanks = document.getElementById('thanks');
+  let statusBox = '', body = '';
+  if (sendStatus === 'success') {
+    statusBox = '<div class="thanks-status success">● Enviado a la profesora</div>';
+    body = 'Recibirá tus respuestas por correo en unos segundos. También se guardó una copia en tu dispositivo, por si acaso.';
+  } else if (sendStatus === 'error') {
+    statusBox = '<div class="thanks-status error">⚠ El envío automático no funcionó</div>';
+    body = 'Pero no te preocupes: se descargó una copia de tus respuestas en tu dispositivo. Envíala por Canvas o correo a mserrano@sagrado.edu cuando puedas.';
+  } else {
+    statusBox = '<div class="thanks-status warn">● Copia descargada</div>';
+    body = 'Se descargó un archivo con tus respuestas. Compártelo con la profesora por Canvas o correo a mserrano@sagrado.edu.';
+  }
+  thanks.innerHTML = `
+    <div class="thanks-hero">
+      <div class="thanks-mark">✓</div>
+      ${statusBox}
+      <h1 class="thanks-title">Gracias, <em>${escapeHtml((state.studentName || 'compañera').split(' ')[0])}</em>.</h1>
+      <p class="thanks-deck">${body}</p>
+      <p class="thanks-quote">
+        "No aprendimos herramientas hoy. Aprendimos nuevas maneras de imaginar el aprendizaje."
+      </p>
+      <p class="thanks-deck" style="font-style:italic;font-family:'Fraunces',serif;color:var(--accent-soft);font-size:18px">
+        Nos vemos pronto. El viaje sigue.
+      </p>
+    </div>`;
+}
+
+function downloadJSON(filename, data) {
+  try {
+    const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (e) { console.error('Download failed', e); }
+}
+
+// INIT
+document.getElementById('start-btn').addEventListener('click', () => {
+  const name = document.getElementById('student-name').value.trim();
+  if (!name) {
+    document.getElementById('student-name').focus();
+    document.getElementById('student-name').style.borderColor = 'var(--accent)';
+    return;
+  }
+  state.studentName = name;
+  state.studentEmail = document.getElementById('student-email').value.trim();
+  state.idx = 0; showScreen();
+});
+document.getElementById('next-btn').addEventListener('click', () => { state.idx++; showScreen(); });
+document.getElementById('prev-btn').addEventListener('click', () => { if (state.idx > 0) state.idx--; showScreen(); });
+document.addEventListener('keydown', e => {
+  if (state.idx < 0 || state.idx >= QUESTIONS.length) return;
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === 'ArrowRight') document.getElementById('next-btn').click();
+  if (e.key === 'ArrowLeft' && state.idx > 0) document.getElementById('prev-btn').click();
+});
+
+buildScreens();
+showScreen();
+</script>
+</body>
+</html>
