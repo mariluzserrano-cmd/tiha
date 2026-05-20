@@ -5,22 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tipología de las Realidades Inmersivas</title>
     <style>
-        /* Paleta de colores basada en la infografía */
+        /* Paleta de colores ajustada */
         :root {
             --azul-oscuro: #0D3A84;
             --azul-medio: #2B65B5;
-            --azul-claro: #E6F0FA;
             --celeste: #4eb5e6;
+            --fondo-pantalla: #F4F6F9; /* Gris perla muy suave */
             --blanco: #ffffff;
             --texto: #333333;
         }
 
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--azul-claro);
+            background-color: var(--fondo-pantalla);
             color: var(--texto);
             margin: 0;
-            padding: 20px;
+            padding: 30px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -35,12 +35,13 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             max-width: 1000px;
             width: 100%;
+            border-top: 5px solid var(--azul-oscuro);
         }
 
         .header h1 {
             color: var(--azul-oscuro);
             margin: 0 0 10px 0;
-            font-size: 2.5em;
+            font-size: 2.2em;
         }
 
         .header p {
@@ -52,8 +53,8 @@
 
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
             max-width: 1200px;
             width: 100%;
         }
@@ -63,64 +64,113 @@
             background-color: var(--blanco);
             border-top: 5px solid var(--azul-medio);
             border-radius: 10px;
-            padding: 20px;
+            padding: 25px 20px;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.08);
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(13, 58, 132, 0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(13, 58, 132, 0.15);
             border-top: 5px solid var(--celeste);
         }
 
         .card h3 {
             color: var(--azul-oscuro);
             margin-top: 0;
-            font-size: 1.3em;
+            font-size: 1.2em;
         }
 
         .card p {
             font-size: 0.95em;
             color: #555;
+            line-height: 1.5;
         }
 
         .click-hint {
             display: inline-block;
-            margin-top: 15px;
-            padding: 5px 15px;
-            background-color: var(--azul-claro);
+            margin-top: 20px;
+            padding: 8px 15px;
+            background-color: #E6F0FA;
             color: var(--azul-oscuro);
             border-radius: 20px;
             font-size: 0.85em;
             font-weight: bold;
         }
 
-        /* Estilos del Modal (Ventana emergente) */
+        /* Estilos de la Ventana Emergente (Modal) */
         .modal-overlay {
-            display: none;
+            display: none; /* Esto garantiza que no se vea azul al inicio */
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(13, 58, 132, 0.8);
+            background-color: rgba(13, 58, 132, 0.85); /* Azul transparente solo para el fondo del modal */
             z-index: 1000;
             justify-content: center;
             align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
         }
 
         .modal-content {
             background-color: var(--blanco);
             padding: 40px;
-            border-radius: 15px;
+            border-radius: 12px;
             max-width: 600px;
-            width: 90%;
+            width: 85%;
             position: relative;
-            transform: scale(0.8);
-            transition: transform 0.3s ease;
-            box-shadow: 0
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            border-left: 8px solid var(--celeste);
+            animation: aparecer 0.3s ease-out;
+        }
+
+        @keyframes aparecer {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close-btn:hover {
+            color: var(--azul-oscuro);
+        }
+
+        .modal-content h2 {
+            color: var(--azul-oscuro);
+            margin-top: 0;
+        }
+
+        .modal-content p {
+            font-size: 1.05em;
+            line-height: 1.6;
+            color: #444;
+        }
+
+        .modal-content .highlight {
+            background-color: #E6F0FA;
+            padding: 15px;
+            border-radius: 8px;
+            color: var(--azul-oscuro);
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .modal-content ul
