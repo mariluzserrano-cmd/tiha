@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA al servicio de Head Start · Tarjeta TIHA</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap');
+
+  :root{
+    --navy:#1B3A5B; --navy2:#12293F; --blue:#2E6CA4; --sky:#DCEAF5;
+    --gold:#F4B41A; --red:#E3263A; --green:#2E8B57; --ink:#1F2A37;
+    --gray:#5B6B7B; --light:#F4F7FA; --paper:#FFFFFF;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Source Sans 3',sans-serif; color:var(--ink);
+    background:#e9eef3; line-height:1.5; -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:1140px; margin:0 auto; background:var(--paper); box-shadow:0 8px 30px rgba(0,0,0,.12);}
+
+  /* HEADER */
+  .header{background:var(--navy); color:#fff; padding:26px 22px; position:relative; overflow:hidden;}
+  .blocks{position:absolute; top:20px; right:20px; display:grid; grid-template-columns:repeat(2,24px); gap:5px;}
+  .blocks span{width:24px;height:24px;border-radius:5px;}
+  .kicker{font-size:11px; font-weight:700; letter-spacing:2.5px; color:var(--gold);
+    text-transform:uppercase; margin-bottom:8px; padding-right:70px;}
+  .title{font-family:'Fraunces',serif; font-size:clamp(26px,6vw,38px); font-weight:700; line-height:1.08;}
+  .title .accent{color:var(--gold);}
+  .subtitle{font-size:clamp(13px,3.4vw,15px); color:var(--sky); margin-top:10px; font-style:italic; max-width:780px;}
+
+  /* RECETA */
+  .recipe{background:var(--gold); padding:16px 22px;}
+  .recipe b{font-family:'Fraunces',serif; color:#3D2A00; font-size:15px; display:block; margin-bottom:10px;}
+  .recipe .steps{display:flex; flex-wrap:wrap; gap:8px 6px; align-items:center;}
+  .recipe .step{display:inline-flex; align-items:center; gap:6px;}
+  .recipe .chip{background:#3D2A00; color:var(--gold); font-weight:700; font-size:11px;
+    padding:4px 11px; border-radius:20px; letter-spacing:.5px;}
+  .recipe .desc{font-size:13px; color:#5A3D00; font-weight:600;}
+  .recipe .plus{color:#3D2A00; font-weight:700; padding:0 2px;}
+
+  /* BODY */
+  .body{padding:22px;}
+  .sectlabel{font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+    color:var(--red); margin-bottom:16px; display:flex; align-items:center; gap:10px;}
+  .sectlabel::after{content:''; flex:1; height:2px; background:linear-gradient(90deg,#f0d4d8,transparent);}
+
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;}
+  .card{background:var(--light); border:1px solid #E2E8F0; border-radius:14px; padding:16px;}
+  .card .top{display:flex; align-items:flex-start; gap:11px; margin-bottom:11px;}
+  .ic{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;
+    justify-content:center;flex-shrink:0;}
+  .ic svg{width:21px;height:21px;fill:#fff;}
+  .card h3{font-family:'Fraunces',serif; font-size:18px; font-weight:700; color:var(--ink); line-height:1.12; margin-bottom:6px;}
+  .role{display:inline-block; font-size:10px; font-weight:700; letter-spacing:.5px;
+    text-transform:uppercase; padding:3px 9px; border-radius:12px;}
+  .prompt{background:#fff; border:1px dashed #c7d2dd; border-left:4px solid var(--blue);
+    border-radius:9px; padding:12px 13px; font-size:14px; line-height:1.5; color:var(--ink); font-style:italic;}
+  .prompt .lead{font-style:normal; font-weight:700; color:var(--blue); display:block; font-size:10.5px;
+    letter-spacing:.6px; text-transform:uppercase; margin-bottom:6px;}
+  .copybtn{margin-top:10px; display:inline-flex; align-items:center; gap:6px; background:var(--blue);
+    color:#fff; border:none; font-family:inherit; font-size:12.5px; font-weight:700; padding:8px 14px;
+    border-radius:8px; cursor:pointer; transition:background .2s;}
+  .copybtn:hover{background:var(--navy);}
+  .copybtn.done{background:var(--green);}
+  .copybtn svg{width:13px;height:13px;fill:#fff;}
+
+  /* INFO BLOCKS */
+  .info{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .federal{background:var(--navy); color:#fff; border-radius:14px; padding:18px;}
+  .federal h3{font-family:'Fraunces',serif; font-size:17px; color:var(--gold); margin-bottom:10px;}
+  .federal p{font-size:13.5px; color:var(--sky); line-height:1.5; margin-bottom:12px;}
+  .federal .warn{background:rgba(227,38,58,.18); border:1px solid rgba(227,38,58,.5);
+    border-radius:9px; padding:11px 13px; font-size:12.5px; line-height:1.45; color:#ffd9de;}
+  .federal .warn b{color:#fff;}
+
+  .side{display:flex; flex-direction:column; gap:16px;}
+  .qrbox{background:var(--light); border:1px solid #E2E8F0; border-radius:14px; padding:16px;
+    display:flex; gap:15px; align-items:center;}
+  .qrbox img{width:96px;height:96px;border-radius:9px;background:#fff;padding:4px;flex-shrink:0;}
+  .qrbox .qt{font-size:13.5px; line-height:1.45; color:var(--ink);}
+  .qrbox .qt b{font-family:'Fraunces',serif; font-size:16px; color:var(--navy); display:block; margin-bottom:4px;}
+  .qrbox .qt a{color:var(--blue); font-weight:700; text-decoration:none; word-break:break-all;}
+  .golden{background:linear-gradient(135deg,#fff6e0,#ffedc4); border-radius:14px; padding:16px; border:1px solid #f0d99a;}
+  .golden h4{font-size:11px; letter-spacing:1.2px; text-transform:uppercase; color:#9a6b00; margin-bottom:9px; font-weight:700;}
+  .golden ul{list-style:none; font-size:13.5px; line-height:1.6; color:#5A3D00;}
+  .golden li{padding-left:20px; position:relative; margin-bottom:5px;}
+  .golden li::before{content:'✓'; position:absolute; left:0; color:#c8941a; font-weight:700;}
+
+  /* FOOTER */
+  .footer{background:var(--navy2); color:#fff; padding:20px 22px; text-align:center;}
+  .footer .tag{font-family:'Fraunces',serif; font-style:italic; font-size:15px; color:var(--gold); margin-bottom:8px;}
+  .footer .contact{font-size:12.5px; color:var(--sky); line-height:1.6;}
+  .footer .contact b{color:#fff;}
+
+  /* RESPONSIVE — celular en vertical */
+  @media (max-width:720px){
+    body{background:#fff;}
+    .wrap{box-shadow:none;}
+    .grid{grid-template-columns:1fr; gap:14px;}
+    .info{grid-template-columns:1fr;}
+    .header{padding:22px 18px;}
+    .recipe,.body,.footer{padding-left:18px; padding-right:18px;}
+    .qrbox img{width:84px;height:84px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="blocks">
+      <span style="background:var(--gold)"></span><span style="background:var(--red)"></span>
+      <span style="background:var(--blue)"></span><span style="background:var(--sky)"></span>
+    </div>
+    <div class="kicker">Tarjeta para llevar · Personal de Centros Head Start</div>
+    <div class="title">La IA <span class="accent">al servicio de tu día a día</span></div>
+    <div class="subtitle">Desde tu celular, con Copilot. Un prompt listo para cada tarea — maestras, ayudantes, cocina y alimentos, y personal administrativo.</div>
+  </div>
+
+  <div class="recipe">
+    <b>La receta del buen prompt:</b>
+    <div class="steps">
+      <span class="step"><span class="chip">QUIÉN</span><span class="desc">eres</span></span><span class="plus">+</span>
+      <span class="step"><span class="chip">QUÉ</span><span class="desc">necesitas</span></span><span class="plus">+</span>
+      <span class="step"><span class="chip">CÓMO</span><span class="desc">lo quieres</span></span><span class="plus">+</span>
+      <span class="step"><span class="chip">DETALLES</span><span class="desc">concretos</span></span>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="sectlabel">Seis usos · seis prompts listos para copiar</div>
+    <div class="grid">
+
+      <div class="card">
+        <div class="top">
+          <div class="ic" style="background:var(--red)"><svg viewBox="0 0 512 512"><path d="M64 112c-8.8 0-16 7.2-16 16v22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1V128c0-8.8-7.2-16-16-16H64zM48 212.2V384c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V212.2L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2z"/></svg></div>
+          <div><h3>Comunicación con familias</h3><span class="role" style="background:#fde7ea;color:var(--red)">Maestras · Ayudantes</span></div>
+        </div>
+        <div class="prompt"><span class="lead">Copia y ajusta</span><span class="ptxt">"Eres maestra de un centro Head Start. Escribe un aviso breve y cariñoso para las familias recordándoles traer ropa de cambio para la próxima semana. Tono cálido y claro, en español."</span></div>
+        <button class="copybtn"><svg viewBox="0 0 448 512"><path d="M384 96V384c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V96c0-35.3 28.7-64 64-64H320c35.3 0 64 28.7 64 64zM160 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H256c17.7 0 32-14.3 32-32s-14.3-32-32-32H160z"/></svg>Copiar prompt</button>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div class="ic" style="background:var(--green)"><svg viewBox="0 0 448 512"><path d="M416 0C400 0 288 32 288 176V288c0 35.3 28.7 64 64 64h32V480c0 17.7 14.3 32 32 32s32-14.3 32-32V352 240 32c0-17.7-14.3-32-32-32zM64 16C64 7.8 57.9 1 49.7 .1S34.2 4.6 32.4 12.5L2.1 148.8C.7 155 0 161.3 0 167.6c0 45.2 29.5 83.4 70.3 96.8L64 480c0 17.7 14.3 32 32 32s32-14.3 32-32l-6.3-215.6C162.5 251 192 212.8 192 167.6c0-6.3-.7-12.6-2.1-18.8L159.6 12.5c-1.8-7.9-8.9-13.4-17-12.5S128 7.8 128 16V146.9c0 1.7-1.4 3.1-3.1 3.1c-1.6 0-2.9-1.2-3.1-2.8L112.1 14.7C111.5 6.5 104.7 0 96.4 0S81.3 6.5 80.7 14.7L71.2 147.2c-.1 1.6-1.5 2.8-3.1 2.8c-1.7 0-3.1-1.4-3.1-3.1V16z"/></svg></div>
+          <div><h3>Menús y meriendas</h3><span class="role" style="background:#e3f3ea;color:var(--green)">Cocina · Alimentos</span></div>
+        </div>
+        <div class="prompt"><span class="lead">Copia y ajusta</span><span class="ptxt">"Eres encargada de alimentos en un centro Head Start. Dame 5 ideas de meriendas saludables, económicas y fáciles de preparar para niños de 3 a 5 años, usando ingredientes comunes en Puerto Rico."</span></div>
+        <button class="copybtn"><svg viewBox="0 0 448 512"><path d="M384 96V384c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V96c0-35.3 28.7-64 64-64H320c35.3 0 64 28.7 64 64zM160 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H256c17.7 0 32-14.3 32-32s-14.3-32-32-32H160z"/></svg>Copiar prompt</button>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div class="ic" style="background:var(--blue)"><svg viewBox="0 0 384 512"><path d="M192 0c-41.8 0-77.4 26.7-90.5 64H64C28.7 64 0 92.7 0 128V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H282.5C269.4 26.7 233.8 0 192 0zm0 64a32 32 0 1 1 0 64 32 32 0 1 1 0-64zM112 192H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H208c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg></div>
+          <div><h3>Minutas de reuniones</h3><span class="role" style="background:#e1edf6;color:var(--blue)">Administrativo · Todas</span></div>
+        </div>
+        <div class="prompt"><span class="lead">Copia y ajusta</span><span class="ptxt">"Convierte estas notas sueltas en una minuta formal con asistentes, acuerdos, responsables y próxima fecha: [pega aquí tus notas]. No incluyas datos personales de niños o familias."</span></div>
+        <button class="copybtn"><svg viewBox="0 0 448 512"><path d="M384 96V384c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V96c0-35.3 28.7-64 64-64H320c35.3 0 64 28.7 64 64zM160 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H256c17.7 0 32-14.3 32-32s-14.3-32-32-32H160z"/></svg>Copiar prompt</button>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div class="ic" style="background:var(--gold)"><svg viewBox="0 0 512 512"><path d="M152.1 38.2c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L7 113C-2.3 103.6-2.3 88.4 7 79s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zm0 160c9.9 8.9 10.7 24 1.8 33.9l-72 80c-4.4 4.9-10.6 7.8-17.2 7.9s-12.9-2.4-17.6-7L7 273c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l22.1 22.1 55.1-61.2c8.9-9.9 24-10.7 33.9-1.8zM224 96c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32zm0 160c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32zM160 416c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H192c-17.7 0-32-14.3-32-32zM48 368a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg></div>
+          <div><h3>Listas de cotejo</h3><span class="role" style="background:#fbeecb;color:#9a6b00">Cocina · Limpieza · Todas</span></div>
+        </div>
+        <div class="prompt"><span class="lead">Copia y ajusta</span><span class="ptxt">"Crea una lista de cotejo para la apertura del comedor por la mañana: limpieza, temperatura de alimentos, inventario y seguridad. En formato de casillas para marcar."</span></div>
+        <button class="copybtn"><svg viewBox="0 0 448 512"><path d="M384 96V384c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V96c0-35.3 28.7-64 64-64H320c35.3 0 64 28.7 64 64zM160 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H256c17.7 0 32-14.3 32-32s-14.3-32-32-32H160z"/></svg>Copiar prompt</button>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div class="ic" style="background:var(--red)"><svg viewBox="0 0 384 512"><path d="M297.2 248.9C311.6 228.3 320 203.2 320 176c0-70.7-57.3-128-128-128S64 105.3 64 176c0 27.2 8.4 52.3 22.8 72.9c3.7 5.3 8.1 11.3 12.8 17.7c12.9 17.7 28.3 38.9 39.8 59.8c10.4 19 15.7 38.8 18.3 57.5H109c-2.2-12-5.9-23.7-11.8-34.5c-9.9-18-22.2-34.9-34.5-51.8C27.6 247.9 16 213.3 16 176C16 78.8 94.8 0 192 0s176 78.8 176 176c0 37.3-11.6 71.9-31.4 100.3c-5 7.2-10.2 14.3-15.4 21.4c-12.3 16.8-24.6 33.7-34.5 51.8c-5.9 10.8-9.6 22.5-11.8 34.5H226.4c2.6-18.7 7.9-38.6 18.3-57.5c11.5-20.9 26.9-42.1 39.8-59.8c4.7-6.4 9-12.4 12.7-17.7zM192 512c-44.2 0-80-35.8-80-80V416H272v16c0 44.2-35.8 80-80 80z"/></svg></div>
+          <div><h3>Ideas de actividades</h3><span class="role" style="background:#fde7ea;color:var(--red)">Maestras · Ayudantes</span></div>
+        </div>
+        <div class="prompt"><span class="lead">Copia y ajusta</span><span class="ptxt">"Eres ayudante de maestra. Dame 3 actividades sensoriales sencillas, de bajo costo y apropiadas para niños de 3 a 4 años, que pueda montar en 10 minutos con materiales del salón."</span></div>
+        <button class="copybtn"><svg viewBox="0 0 448 512"><path d="M384 96V384c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V96c0-35.3 28.7-64 64-64H320c35.3 0 64 28.7 64 64zM160 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H256c17.7 0 32-14.3 32-32s-14.3-32-32-32H160z"/></svg>Copiar prompt</button>
+      </div>
+
+      <div class="card">
+        <div class="top">
+          <div class="ic" style="background:var(--blue)"><svg viewBox="0 0 448 512"><path d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192zm280 89l-99 99-39-39c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l56 56c9.4 9.4 24.6 9.4 33.9 0L362 315c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0z"/></svg></div>
+          <div><h3>Organiza tu semana</h3><span class="role" style="background:#e1edf6;color:var(--blue)">Todas</span></div>
+        </div>
+        <div class="prompt"><span class="lead">Copia y ajusta</span><span class="ptxt">"Tengo estas tareas pendientes para esta semana: [pégalas aquí]. Organízalas por prioridad y por día, en una lista clara y realista que pueda seguir desde mi celular."</span></div>
+        <button class="copybtn"><svg viewBox="0 0 448 512"><path d="M384 96V384c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V96c0-35.3 28.7-64 64-64H320c35.3 0 64 28.7 64 64zM160 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H256c17.7 0 32-14.3 32-32s-14.3-32-32-32H160z"/></svg>Copiar prompt</button>
+      </div>
+
+    </div>
+
+    <div class="info">
+      <div class="federal">
+        <h3>📋 Fondos federales: documenta sin agobio</h3>
+        <p>Head Start usa fondos federales, así que hay que documentar planes, minutas y expedientes. La IA te ayuda a ordenarlo más rápido.</p>
+        <div class="warn"><b>⚠️ Confidencialidad primero:</b> nunca pongas en la IA datos personales de niños o familias (nombres completos, salud, direcciones). Usa iniciales o datos genéricos.</div>
+      </div>
+      <div class="side">
+        <div class="qrbox">
+          <img src="data:image/png;base64,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" alt="Código QR a recursos TIHA">
+          <div class="qt"><b>Comparte esta tarjeta</b>Escanea o visita <a href="https://www.profmariluzserranoortiz.com">profmariluzserranoortiz.com</a> para videos y más recursos.</div>
+        </div>
+        <div class="golden">
+          <h4>Recuerda siempre</h4>
+          <ul>
+            <li>La IA da el borrador; tú pones el corazón.</li>
+            <li>Revisa todo antes de usarlo o enviarlo.</li>
+            <li>Que el mensaje suene a ti, no a una máquina.</li>
+            <li>Empieza por un solo uso. Sin prisa.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="tag">"No es usar más tecnología, es usar tecnología para vivir mejor."</div>
+    <div class="contact"><b>Dra. Mariluz Serrano Ortiz</b><br>Modelo TIHA · UPR Río Piedras · mariluz.serrano@upr.edu</div>
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.copybtn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var card = btn.closest('.card');
+      var txt = card.querySelector('.ptxt').innerText.replace(/^"|"$/g,'');
+      var orig = btn.innerHTML;
+      function ok(){ btn.classList.add('done'); btn.textContent='¡Copiado!';
+        setTimeout(function(){ btn.classList.remove('done'); btn.innerHTML=orig; },1800); }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(txt).then(ok).catch(function(){fallback(txt,ok);});
+      } else { fallback(txt,ok); }
+    });
+  });
+  function fallback(t,cb){ var ta=document.createElement('textarea'); ta.value=t;
+    ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta);
+    ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); cb(); }
+</script>
+</body>
+</html>
