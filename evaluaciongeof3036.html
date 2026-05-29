@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluación Final del Curso · GEOF 3036</title>
+<style>
+  :root {
+    --azul-tiha: #1e3a5f;
+    --azul-claro: #4a7ba7;
+    --dorado: #c9a961;
+    --crema: #faf6ef;
+    --crema-oscuro: #f0e9d8;
+    --texto: #2c2c2c;
+    --texto-suave: #5a5a5a;
+    --borde: #d8cfb8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: linear-gradient(135deg, var(--crema) 0%, var(--crema-oscuro) 100%);
+    color: var(--texto);
+    line-height: 1.7;
+    min-height: 100vh;
+    padding: 20px 0;
+  }
+  .contenedor {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(30, 58, 95, 0.12);
+    overflow: hidden;
+  }
+  .encabezado {
+    background: linear-gradient(135deg, var(--azul-tiha) 0%, var(--azul-claro) 100%);
+    color: #fff;
+    padding: 40px 32px 36px;
+    text-align: center;
+    position: relative;
+  }
+  .encabezado::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--dorado);
+    margin: 18px auto 0;
+    border-radius: 2px;
+  }
+  .codigo-curso {
+    font-family: 'Helvetica', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.9;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-size: 2rem;
+    font-weight: normal;
+    font-style: italic;
+    margin-bottom: 14px;
+    line-height: 1.3;
+  }
+  .subtitulo {
+    font-size: 1rem;
+    opacity: 0.95;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .modelo-tiha {
+    font-family: 'Helvetica', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-top: 24px;
+  }
+  .intro {
+    padding: 28px 36px;
+    background: var(--crema);
+    border-bottom: 2px solid var(--borde);
+    font-size: 0.98rem;
+    color: var(--texto-suave);
+    text-align: center;
+    font-style: italic;
+  }
+  .intro strong { color: var(--azul-tiha); font-style: normal; }
+  .formulario { padding: 32px 36px; }
+  .seccion {
+    margin-bottom: 30px;
+    padding-bottom: 26px;
+    border-bottom: 1px dashed var(--borde);
+  }
+  .seccion:last-of-type { border-bottom: none; margin-bottom: 18px; }
+  .pilar {
+    display: inline-block;
+    font-family: 'Helvetica', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dorado);
+    background: rgba(201, 169, 97, 0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    font-weight: bold;
+  }
+  .pregunta {
+    font-size: 1.08rem;
+    color: var(--azul-tiha);
+    margin-bottom: 14px;
+    font-weight: 600;
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+  }
+  .numero {
+    background: var(--azul-tiha);
+    color: #fff;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    font-family: 'Helvetica', sans-serif;
+  }
+  textarea {
+    width: 100%;
+    min-height: 90px;
+    padding: 12px 14px;
+    border: 1.5px solid var(--borde);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.98rem;
+    background: #fdfcf8;
+    resize: vertical;
+    transition: border-color 0.2s;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: var(--azul-claro);
+    background: #fff;
+  }
+  .escala {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .escala label {
+    background: #fdfcf8;
+    border: 1.5px solid var(--borde);
+    border-radius: 10px;
+    padding: 14px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.88rem;
+  }
+  .escala label:hover {
+    border-color: var(--dorado);
+    background: var(--crema);
+    transform: translateY(-2px);
+  }
+  .escala input[type="radio"] { display: none; }
+  .escala input[type="radio"]:checked + label,
+  .escala label.seleccionado {
+    background: var(--azul-tiha);
+    color: #fff;
+    border-color: var(--azul-tiha);
+  }
+  .emoji-grande {
+    display: block;
+    font-size: 1.6rem;
+    margin-bottom: 4px;
+  }
+  .botones {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    padding: 24px 36px;
+    background: var(--crema);
+    border-top: 2px solid var(--borde);
+    flex-wrap: wrap;
+  }
+  button {
+    font-family: inherit;
+    font-size: 0.98rem;
+    padding: 13px 26px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .btn-enviar {
+    background: var(--azul-tiha);
+    color: #fff;
+  }
+  .btn-enviar:hover {
+    background: var(--azul-claro);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(30, 58, 95, 0.25);
+  }
+  .btn-descargar {
+    background: var(--dorado);
+    color: #fff;
+  }
+  .btn-descargar:hover {
+    background: #b89549;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(201, 169, 97, 0.35);
+  }
+  .instrucciones {
+    padding: 20px 36px 28px;
+    background: var(--crema);
+    font-size: 0.9rem;
+    color: var(--texto-suave);
+    text-align: center;
+    line-height: 1.6;
+  }
+  .instrucciones strong { color: var(--azul-tiha); }
+  .firma {
+    padding: 24px 36px 32px;
+    text-align: center;
+    background: var(--azul-tiha);
+    color: #fff;
+  }
+  .firma .nombre {
+    font-size: 1.05rem;
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+  .firma .info {
+    font-size: 0.82rem;
+    opacity: 0.85;
+    line-height: 1.6;
+  }
+  @media (max-width: 600px) {
+    body { padding: 0; }
+    .contenedor { border-radius: 0; }
+    .encabezado { padding: 32px 22px; }
+    h1 { font-size: 1.5rem; }
+    .formulario, .intro, .instrucciones, .firma { padding-left: 22px; padding-right: 22px; }
+    .botones { padding: 20px 22px; }
+    .escala { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <div class="encabezado">
+    <div class="codigo-curso">GEOF 3036 · Primavera 2026</div>
+    <h1>Tu voz cierra el círculo</h1>
+    <div class="subtitulo">Antes de despedirnos, regálame unos minutos para reflexionar sobre lo que vivimos juntos este semestre. Tu experiencia ilumina el camino de quienes vendrán.</div>
+    <div class="modelo-tiha">Modelo TIHA · Tecnologías para la Inspiración y Humanización del Aprendizaje</div>
+  </div>
+
+  <div class="intro">
+    Esta evaluación es <strong>anónima y voluntaria</strong>. No hay respuestas correctas ni incorrectas: solo tu mirada honesta. Lo que compartas servirá para hacer de este curso una experiencia aún más significativa para futuras promociones. Gracias por tu generosidad. 🌱
+  </div>
+
+  <form class="formulario" id="evaluacion">
+
+    <div class="seccion">
+      <div class="pilar">Inspiración</div>
+      <div class="pregunta"><span class="numero">1</span><span>¿Qué fue lo más significativo o lo que más te marcó de tu experiencia en este curso?</span></div>
+      <textarea name="p1" placeholder="Tu reflexión aquí..."></textarea>
+    </div>
+
+    <div class="seccion">
+      <div class="pilar">Humanización del aprendizaje</div>
+      <div class="pregunta"><span class="numero">2</span><span>¿Cuánto sentiste que este curso te trató como persona, y no solo como un número o estudiante?</span></div>
+      <div class="escala">
+        <input type="radio" name="p2" id="p2-1" value="Muy poco"><label for="p2-1"><span class="emoji-grande">😕</span>Muy poco</label>
+        <input type="radio" name="p2" id="p2-2" value="Algo"><label for="p2-2"><span class="emoji-grande">🙂</span>Algo</label>
+        <input type="radio" name="p2" id="p2-3" value="Bastante"><label for="p2-3"><span class="emoji-grande">😊</span>Bastante</label>
+        <input type="radio" name="p2" id="p2-4" value="Muchísimo"><label for="p2-4"><span class="emoji-grande">😍</span>Muchísimo</label>
+      </div>
+    </div>
+
+    <div class="seccion">
+      <div class="pilar">Competencias paralegales</div>
+      <div class="pregunta"><span class="numero">3</span><span>De las destrezas trabajadas — gestión de documentos legales, redacción de actas, contratos, poderes y listas de cotejo — ¿cuál sientes que te prepara más para tu rol como Office Manager?</span></div>
+      <textarea name="p3" placeholder="Comparte qué destreza te resulta más valiosa y por qué..."></textarea>
+    </div>
+
+    <div class="seccion">
+      <div class="pilar">Contexto puertorriqueño</div>
+      <div class="pregunta"><span class="numero">4</span><span>El curso ancló cada documento en legislación de Puerto Rico (Ley 55-2020, Ley 162-2018, Ley 80-1976, entre otras). ¿Cómo cambió esto tu forma de ver los documentos administrativos?</span></div>
+      <textarea name="p4" placeholder="Tu reflexión aquí..."></textarea>
+    </div>
+
+    <div class="seccion">
+      <div class="pilar">Uso ético y creativo de la IA</div>
+      <div class="pregunta"><span class="numero">5</span><span>¿Qué aprendiste sobre integrar la inteligencia artificial de forma ética y responsable en la gestión de documentos legales y administrativos?</span></div>
+      <textarea name="p5" placeholder="Tu reflexión aquí..."></textarea>
+    </div>
+
+    <div class="seccion">
+      <div class="pilar">Identidad profesional</div>
+      <div class="pregunta"><span class="numero">6</span><span>Pensando en tu identidad como Office Manager con competencias paralegales, ¿qué te llevas de este curso que aplicarás de aquí en adelante?</span></div>
+      <textarea name="p6" placeholder="Tu reflexión aquí..."></textarea>
+    </div>
+
+    <div class="seccion">
+      <div class="pilar">Recursos del curso</div>
+      <div class="pregunta"><span class="numero">7</span><span>De los recursos que trabajamos — manual, presentación, plantillas, módulo interactivo, portafolio digital, proyecto final — ¿cuál te resultó más útil y por qué?</span></div>
+      <textarea name="p7" placeholder="Tu reflexión aquí..."></textarea>
+    </div>
+
+    <div class="seccion">
+      <div class="pilar">Mejora continua</div>
+      <div class="pregunta"><span class="numero">8</span><span>¿Qué le recomendarías a la profesora para futuras promociones del curso? Toda sugerencia es bienvenida.</span></div>
+      <textarea name="p8" placeholder="Tu sugerencia aquí..."></textarea>
+    </div>
+
+  </form>
+
+  <div class="botones">
+    <button type="button" class="btn-enviar" onclick="enviarPorCorreo()">✉️ Enviar por correo</button>
+    <button type="button" class="btn-descargar" onclick="descargarRespuestas()">⬇️ Descargar respuestas</button>
+  </div>
+
+  <div class="instrucciones">
+    <strong>¿Cómo entregar?</strong> Al presionar <strong>"Enviar por correo"</strong> se abrirá tu aplicación de correo con un mensaje ya preparado para la profesora; solo dale enviar. Si prefieres, presiona <strong>"Descargar respuestas"</strong> y adjunta el archivo en un correo a <strong>mariluz.serrano@upr.edu</strong>.
+  </div>
+
+  <div class="firma">
+    <div class="nombre">Dra. Mariluz Serrano Ortiz</div>
+    <div class="info">
+      Departamento de Gerencia de Oficina y Comunicación Empresarial<br>
+      Facultad de Administración de Empresas · UPR, Recinto de Río Piedras
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const preguntas = {
+    p1: "1. Lo más significativo o lo que más te marcó",
+    p2: "2. ¿Cuánto sentiste que el curso te trató como persona?",
+    p3: "3. Destreza que más te prepara como Office Manager",
+    p4: "4. Cómo cambió tu visión el anclaje en legislación de PR",
+    p5: "5. Aprendizajes sobre integrar IA de forma ética",
+    p6: "6. Lo que te llevas para tu identidad profesional",
+    p7: "7. Recurso del curso que te resultó más útil",
+    p8: "8. Recomendaciones para futuras promociones"
+  };
+
+  function recogerRespuestas() {
+    const form = document.getElementById('evaluacion');
+    const datos = new FormData(form);
+    let texto = "EVALUACIÓN FINAL DEL CURSO · GEOF 3036\n";
+    texto += "Primavera 2026 · Modelo TIHA\n";
+    texto += "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n";
+    for (const clave in preguntas) {
+      const valor = datos.get(clave) || "(sin respuesta)";
+      texto += preguntas[clave] + "\n";
+      texto += "→ " + valor + "\n\n";
+    }
+    texto += "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
+    texto += "Gracias por tu generosidad. 🌱";
+    return texto;
+  }
+
+  function enviarPorCorreo() {
+    const cuerpo = recogerRespuestas();
+    const asunto = "Evaluación final del curso GEOF 3036";
+    const url = "mailto:mariluz.serrano@upr.edu?subject=" + encodeURIComponent(asunto) + "&body=" + encodeURIComponent(cuerpo);
+    window.location.href = url;
+  }
+
+  function descargarRespuestas() {
+    const texto = recogerRespuestas();
+    const blob = new Blob([texto], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = "evaluacion_geof3036.txt";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+</script>
+
+</body>
+</html>
