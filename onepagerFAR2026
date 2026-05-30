@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compromiso TIHA - IA con Propósito</title>
+    <style>
+        :root {
+            --tiha-azul: #d8ecf4;
+            --tiha-dorado: #f3df8c;
+            --tiha-gris: #3f4a4f;
+            --far-naranja: #d84a26;
+            --far-marron: #5b514b;
+            --crema: #fbf7ef;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background: var(--crema);
+            font-family: "Georgia", "Times New Roman", serif;
+            color: var(--tiha-gris);
+            display: flex;
+            justify-content: center;
+        }
+
+        .document-container {
+            width: 100%;
+            max-width: 800px;
+            background: #ffffff;
+            border: 8px solid var(--tiha-azul);
+            padding: 40px;
+            box-sizing: border-box;
+            border-radius: 4px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        .logos {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logos img {
+            max-height: 80px;
+            object-fit: contain;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            margin: 10px 0 5px;
+            color: var(--far-marron);
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 18px;
+            font-weight: normal;
+            margin: 0 0 25px;
+            color: var(--far-naranja);
+        }
+
+        .quote {
+            text-align: center;
+            font-style: italic;
+            font-size: 16px;
+            margin: 20px auto;
+            padding: 12px 25px;
+            border-top: 2px solid var(--tiha-dorado);
+            border-bottom: 2px solid var(--tiha-dorado);
+            max-width: 85%;
+        }
+
+        .section-title {
+            font-size: 18px;
+            color: var(--far-marron);
+            border-left: 6px solid var(--far-naranja);
+            padding-left: 10px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            margin-top: 30px;
+        }
+
+        .principles-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            background: #ffffff;
+            border: 1px solid var(--tiha-azul);
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+        }
+
+        .checkbox-label:hover {
+            background: var(--crema);
+        }
+
+        .checkbox-label input {
+            margin-top: 3px;
+            margin-right: 10px;
+            accent-color: var(--far-naranja);
+            width: 18px;
+            height: 18px;
+        }
+
+        .levels {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .level {
+            padding: 15px 5px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .level-0 { background: var(--tiha-azul); }
+        .level-1 { background: #e8f3d8; }
+        .level-2 { background: var(--tiha-dorado); }
+        .level-3 { background: #f2c9b9; }
+        .level-4 { background: #e7d7ef; }
+
+        .commitment-box {
+            background: #ffffff;
+            border: 2px dashed var(--far-naranja);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--tiha-gris);
+        }
+
+        textarea {
+            width: 100%;
+            height: 60px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            resize: vertical;
+            box-sizing: border-box;
+            background-color: #fafafa;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--far-naranja);
+            background-color: #fff;
+        }
+
+        .statement {
+            background: var(--tiha-azul);
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 15px;
+            line-height: 1.5;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .signature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .input-line {
+            width: 100%;
+            border: none;
+            border-bottom: 2px solid var(--far-marron);
+            padding: 8px 0;
+            font-size: 16px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: transparent;
+            color: var(--tiha-gris);
+        }
+
+        .input-line:focus {
+            outline: none;
+            border-bottom-color: var(--far-naranja);
+        }
+
+        .input-label {
+            font-size: 12px;
+            color: var(--far-marron);
+            margin-top: 4px;
+            display: block;
+        }
+
+        .actions {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn-submit {
+            background-color: var(--far-naranja);
+            color: white;
+        }
+
+        .btn-print {
+            background-color: var(--tiha-gris);
+            color: white;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .document-container {
+                border: 6px solid var(--tiha-azul);
+                box-shadow: none;
+                max-width: 100%;
+                padding: 30px;
+            }
+            .actions {
+                display: none;
+            }
+            textarea {
+                border: none;
+                border-bottom: 1px solid #ccc;
+                background: transparent;
+                resize: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <form class="document-container" action="https://formsubmit.co/SEU_EMAIL_AQUI@GMAIL.COM" method="POST">
+        
+        <input type="hidden" name="_autoresponse" value="¡Hola! Gracias por completar tu compromiso de IA con Propósito. Hemos registrado tus respuestas exitosamente. Abajo verás un resumen de tu participación.">
+        <input type="hidden" name="_next" value="https://mariluzserrano-cmd.github.io/tiha/interactivoFAR2026.html">
+        <input type="hidden" name="_subject" value="Nuevo Compromiso TIHA Recibido">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+
+        <div class="logos">
+            <img src="logo-tiha.png" alt="Logo TIHA">
+            <img src="Logo-FAR-2-big.avif" alt="Logo Fundación Ángel Ramos">
+        </div>
+
+        <h1>IA con Propósito</h1>
+        <h2>Compromiso para una práctica educativa ética, crítica y humanizada</h2>
+
+        <div class="quote">
+            “No es usar más tecnología, es usar tecnología para trabajar mejor.”
+        </div>
+
+        <div class="section-title">Principios que me llevo hoy</div>
+        <div class="principles-grid">
+            <label class="checkbox-label">
+                <input type="checkbox" name="Principio_Verificar" value="Sí">
+                Verificaré la información antes de compartirla.
+            </label>
+            <label class="checkbox-label">
+                <input type="checkbox" name="Principio_PensamientoCritico" value="Sí">
+                Enseñaré pensamiento crítico, no dependencia tecnológica.
+            </label>
+            <label class="checkbox-label">
+                <input type="checkbox" name="Principio_TransparenciaIA" value="Sí">
+                Declararé el uso de IA cuando corresponda.
+            </label>
+            <label class="checkbox-label">
+                <input type="checkbox" name="Principio_ReflexionHumana" value="Sí">
+                Diseñaré actividades donde la reflexión humana sea esencial.
+            </label>
+            <label class="checkbox-label">
+                <input type="checkbox" name="Principio_Inspirar" value="Sí">
+                Utilizaré la IA para inspirar y humanizar el aprendizaje.
+            </label>
+            <label class="checkbox-label">
+                <input type="checkbox" name="Principio_Sensibilidad" value="Sí">
+                Integraré la IA con transparencia, propósito y sensibilidad.
+            </label>
+        </div>
+
+        <div class="section-title">Los 5 niveles de uso de IA</div>
+        <div class="levels">
+            <div class="level level-0">0<br>Prohibido</div>
+            <div class="level level-1">1<br>Restringido</div>
+            <div class="level level-2">2<br>Moderado</div>
+            <div class="level level-3">3<br>Co-creación</div>
+            <div class="level level-4">4<br>Uso abierto</div>
+        </div>
+
+        <div class="section-title">Mi compromiso personal</div>
+        <div class="commitment-box">
+            <div class="form-group">
+                <label>En mi próximo curso, taller o experiencia educativa voy a utilizar la IA para:</label>
+                <textarea name="Proposito_Uso_IA" required placeholder="Escribe tu respuesta aquí..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Con el propósito de que mis participantes:</label>
+                <textarea name="Meta_Participantes" required placeholder="Escribe tu respuesta aquí..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Una acción concreta que implementaré durante los próximos 30 días es:</label>
+                <textarea name="Accion_30_Dias" required placeholder="Escribe tu respuesta aquí..."></textarea>
+            </div>
+        </div>
+
+        <div class="statement">
+            Reconozco que la inteligencia artificial no sustituye la reflexión humana, la empatía ni el juicio profesional.<br>
+            Me comprometo a utilizarla de forma ética, transparente y centrada en el aprendizaje significativo de las personas.
+        </div>
+
+        <div class="signature-grid">
+            <div>
+                <input type="text" class="input-line" name="Nombre" required>
+                <span class="input-label">Nombre del participante</span>
+            </div>
+            <div>
+                <input type="email" class="input-line" name="email" required>
+                <span class="input-label">Correo Electrónico</span>
+            </div>
+            <div>
+                <input type="date" class="input-line" name="Fecha" required>
+                <span class="input-label">Fecha</span>
+            </div>
+            <div>
+                <input type="text" class="input-line" name="Curso_Proyecto" required>
+                <span class="input-label">Curso / Proyecto</span>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button type="submit" class="btn btn-submit">Enviar Compromiso</button>
+            <button type="button" class="btn btn-print" onclick="window.print()">Guardar como PDF</button>
+        </div>
+
+    </form>
+
+</body>
+</html>
