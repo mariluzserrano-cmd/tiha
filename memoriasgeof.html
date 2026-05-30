@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banner · Ver mis memorias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#f4ece1;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:2rem;font-family:'Outfit',sans-serif}
+  .wrap{max-width:600px;width:100%}
+  /* ====== EL BANNER (esto es lo que copias al correo) ====== */
+  .banner{
+    position:relative;overflow:hidden;border-radius:14px;text-decoration:none;display:block;
+    background:linear-gradient(135deg,#80111a,#a4161a 55%,#6e1014);
+    color:#fbf7f2;padding:2.4rem 2rem;text-align:center;
+    box-shadow:0 18px 40px -16px rgba(110,16,20,.55);
+  }
+  .banner::before{content:"";position:absolute;inset:0;opacity:.14;
+    background-image:radial-gradient(circle at 1px 1px,#fff 1px,transparent 0);background-size:24px 24px}
+  .banner::after{content:"";position:absolute;top:-40%;right:-10%;width:240px;height:240px;border-radius:50%;
+    background:radial-gradient(circle,rgba(199,154,62,.35),transparent 70%)}
+  .b-kick{position:relative;font-size:.72rem;letter-spacing:.34em;text-transform:uppercase;opacity:.85;font-weight:500}
+  .b-tit{position:relative;font-family:'Fraunces',serif;font-weight:600;font-size:2rem;line-height:1.05;margin:.5rem 0 .2rem}
+  .b-tit em{font-style:italic;color:#f3d9a0}
+  .b-sub{position:relative;font-size:.95rem;font-weight:300;opacity:.92;max-width:38ch;margin:.6rem auto 1.4rem}
+  .b-cta{position:relative;display:inline-flex;align-items:center;gap:.5rem;
+    background:#fbf7f2;color:#80111a;font-weight:600;font-size:.95rem;letter-spacing:.02em;
+    padding:.8rem 1.6rem;border-radius:100px;text-decoration:none;transition:transform .3s,box-shadow .3s;
+    box-shadow:0 6px 18px -6px rgba(0,0,0,.4)}
+  .banner:hover .b-cta{transform:translateY(-2px);box-shadow:0 10px 24px -8px rgba(0,0,0,.5)}
+  .b-cta svg{width:16px;height:16px}
+  /* ====== fin del banner ====== */
+  .nota{margin-top:1.4rem;font-size:.82rem;color:#8a726c;text-align:center;line-height:1.55}
+  .nota code{background:#fff;padding:.1rem .4rem;border-radius:4px;color:#80111a}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- COPIA DESDE AQUÍ -->
+  <a class="banner" href="#REEMPLAZAR-CON-TU-ENLACE">
+    <div class="b-kick">Gerencia de Oficina · UPR-RP</div>
+    <div class="b-tit">Mis <em>Memorias</em></div>
+    <div class="b-sub">Un recorrido por los años, los rostros y los momentos que dieron forma a una vocación.</div>
+    <span class="b-cta">
+      Ver mis memorias
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </span>
+  </a>
+  <!-- HASTA AQUÍ -->
+
+  <p class="nota">
+    Sustituye <code>#REEMPLAZAR-CON-TU-ENLACE</code> por la URL donde subas la página de memorias
+    (Google Drive, OneDrive del recinto, etc.).
+  </p>
+</div>
+</body>
+</html>
