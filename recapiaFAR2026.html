@@ -6,7 +6,7 @@
     <style>
         @page {
             size: letter;
-            margin: 10mm 12mm;
+            margin: 10mm;
             background-color: #fbf7ef;
         }
         
@@ -24,19 +24,35 @@
             line-height: 1.3;
         }
 
+        /* Contenedor que simula una página física */
         .page-container {
             background-color: #ffffff;
             border: 6px solid #d8ecf4;
             padding: 20px 25px;
-            min-height: 10.1in;
+            height: 10.1in;
             position: relative;
+            margin: 0 auto 20px auto;
+            max-width: 8.5in;
+            page-break-after: always;
+        }
+
+        @media print {
+            body {
+                background-color: #ffffff;
+            }
+            .page-container {
+                margin: 0;
+                height: 10.2in;
+                max-width: 100%;
+                border: 6px solid #d8ecf4;
+            }
         }
 
         /* Header block */
         .header-table {
             width: 100%;
             display: table;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
         .header-cell {
             display: table-cell;
@@ -46,25 +62,25 @@
         .header-center { width: 50%; text-align: center; }
         .header-right { width: 25%; text-align: right; }
 
-        .logo-tiha { max-height: 50px; object-fit: contain; }
-        .logo-far { max-height: 50px; object-fit: contain; }
+        .logo-tiha { max-height: 55px; object-fit: contain; }
+        .logo-far { max-height: 55px; object-fit: contain; }
 
         h1 {
             font-family: "Georgia", "Times New Roman", serif;
             font-size: 18pt;
             color: #5b514b;
-            margin: 0 0 4px 0;
+            margin: 0 0 5px 0;
             font-weight: bold;
             letter-spacing: 0.5px;
         }
         .subtitle {
             font-size: 10.5pt;
             color: #d84a26;
-            margin: 0 0 6px 0;
+            margin: 0 0 8px 0;
             font-weight: normal;
         }
         .meta-text {
-            font-size: 8.5pt;
+            font-size: 9pt;
             color: #5b514b;
             line-height: 1.4;
         }
@@ -74,9 +90,9 @@
             text-align: center;
             font-family: "Georgia", "Times New Roman", serif;
             font-style: italic;
-            font-size: 10.5pt;
-            margin: 10px auto;
-            padding: 6px 0;
+            font-size: 11pt;
+            margin: 15px auto;
+            padding: 8px 0;
             border-top: 1.5px solid #f3df8c;
             border-bottom: 1.5px solid #f3df8c;
             width: 90%;
@@ -84,31 +100,33 @@
         }
 
         /* Main 2-Column Layout via Table */
+        /* CORRECCIÓN DE MÁRGENES: Quitamos border-spacing y usamos padding */
         .main-layout {
             width: 100%;
             display: table;
             table-layout: fixed;
-            border-collapse: separate;
-            border-spacing: 18px 0;
-            margin-top: 10px;
+            margin-top: 15px;
+            border-collapse: collapse; /* Evita que la tabla crezca más del 100% */
         }
         .column {
             display: table-cell;
             vertical-align: top;
             width: 50%;
         }
+        .col-left { padding-right: 15px; }
+        .col-right { padding-left: 15px; }
 
         /* Section Styling */
         .section {
-            margin-bottom: 14px;
+            margin-bottom: 20px;
         }
         .section-title {
             font-family: "Georgia", "Times New Roman", serif;
-            font-size: 11pt;
+            font-size: 12pt;
             color: #5b514b;
-            border-left: 4px solid #d84a26;
-            padding-left: 8px;
-            margin-bottom: 8px;
+            border-left: 5px solid #d84a26;
+            padding-left: 10px;
+            margin-bottom: 12px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -121,9 +139,10 @@
             list-style: none;
         }
         .diag-item {
-            margin-bottom: 5px;
-            padding-left: 14px;
+            margin-bottom: 6px;
+            padding-left: 16px;
             position: relative;
+            font-size: 9.5pt;
         }
         .diag-item::before {
             content: "•";
@@ -131,6 +150,8 @@
             position: absolute;
             left: 2px;
             font-weight: bold;
+            font-size: 12pt;
+            line-height: 1;
         }
 
         /* Section 2: Conceptos Clave */
@@ -138,17 +159,18 @@
             background: #fafafa;
             border: 1px solid #d8ecf4;
             border-radius: 6px;
-            padding: 6px 10px;
-            margin-bottom: 6px;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            width: 100%; /* Asegura que no se desborde */
         }
         .concept-title {
             font-weight: bold;
             color: #d84a26;
-            font-size: 9pt;
-            margin-bottom: 2px;
+            font-size: 9.5pt;
+            margin-bottom: 3px;
         }
         .concept-desc {
-            font-size: 8.5pt;
+            font-size: 9pt;
             color: #3f4a4f;
             margin: 0;
         }
@@ -163,14 +185,14 @@
             background: #ffffff;
             border: 1px solid #e2e8f0;
             border-left: 3px solid #3f4a4f;
-            padding: 5px 8px;
-            margin-bottom: 5px;
+            padding: 6px 10px;
+            margin-bottom: 6px;
             border-radius: 4px;
             vertical-align: top;
-            font-size: 8.5pt;
+            font-size: 9pt;
         }
         .tool-tag:nth-child(odd) {
-            margin-right: 4%;
+            margin-right: 3%;
         }
         .tool-name {
             font-weight: bold;
@@ -179,13 +201,13 @@
 
         /* Section 4: Los 5 niveles de uso */
         .levels-stack {
-            margin-top: 6px;
+            margin-top: 8px;
         }
         .level-row {
-            padding: 4px 10px;
-            margin-bottom: 3px;
+            padding: 6px 12px;
+            margin-bottom: 4px;
             border-radius: 4px;
-            font-size: 8.5pt;
+            font-size: 9pt;
             font-weight: bold;
         }
         .lvl-0 { background: #d8ecf4; color: #3f4a4f; }
@@ -196,9 +218,9 @@
         
         .level-note {
             font-style: italic;
-            font-size: 8pt;
+            font-size: 8.5pt;
             color: #5b514b;
-            margin-top: 4px;
+            margin-top: 6px;
         }
 
         /* Section 5: Idea Fuerza Box */
@@ -206,14 +228,14 @@
             background: #ffffff;
             border: 2px dashed #d84a26;
             border-radius: 8px;
-            padding: 10px 12px;
-            margin-top: 8px;
+            padding: 12px 15px;
+            margin-top: 10px;
         }
         .idea-text {
-            font-size: 8.5pt;
-            margin-bottom: 4px;
+            font-size: 9.5pt;
+            margin-bottom: 6px;
             position: relative;
-            padding-left: 12px;
+            padding-left: 15px;
         }
         .idea-text::before {
             content: "→";
@@ -226,35 +248,45 @@
             margin-bottom: 0;
         }
 
-        /* Section 6: Próximos pasos */
+        /* Section 6: Próximos pasos (Pagina 2) */
         .step-item {
-            margin-bottom: 5px;
-            font-size: 8.5pt;
+            margin-bottom: 15px;
+            font-size: 12pt;
+            display: table;
         }
         .step-checkbox {
+            display: table-cell;
             font-family: monospace;
             color: #d84a26;
             font-weight: bold;
-            margin-right: 6px;
+            font-size: 16pt;
+            padding-right: 12px;
+            vertical-align: top;
+        }
+        .step-text {
+            display: table-cell;
+            vertical-align: middle;
+            color: #3f4a4f;
         }
 
         /* Footer */
         .footer {
             position: absolute;
-            bottom: 12px;
+            bottom: 20px;
             left: 25px;
             right: 25px;
             text-align: center;
-            font-size: 7.5pt;
+            font-size: 8pt;
             color: #5b514b;
-            border-top: 1px solid #f3df8c;
-            padding-top: 6px;
-            line-height: 1.4;
+            border-top: 1.5px solid #f3df8c;
+            padding-top: 8px;
+            line-height: 1.5;
         }
     </style>
 </head>
 <body>
 
+    <!-- PÁGINA 1 -->
     <div class="page-container">
         
         <!-- Header Section -->
@@ -285,7 +317,7 @@
         <div class="main-layout">
             
             <!-- LEFT COLUMN -->
-            <div class="column">
+            <div class="column col-left">
                 
                 <!-- Sección 1 -->
                 <div class="section">
@@ -296,7 +328,7 @@
                         <li class="diag-item"><strong>32%</strong> se ubicó en el <strong>Nivel 1 — Básico</strong> de competencias.</li>
                         <li class="diag-item">Solo <strong>3 de 22</strong> conocían el concepto crítico de <em>alucinación de IA</em>.</li>
                         <li class="diag-item"><strong>ChatGPT</strong> se coronó como la herramienta más conocida por todos.</li>
-                        <li class="diag-item">Solo el <strong>27%</strong> indicó contar con una política o lineamiento institucional.</li>
+                        <li class="diag-item">Solo el <strong>27%</strong> indicó contar con una política o lineamiento institucional sobre el uso de IA.</li>
                     </ul>
                 </div>
 
@@ -316,7 +348,7 @@
                 </div>
 
                 <!-- Sección 5 -->
-                <div class="section">
+                <div class="section" style="margin-bottom: 0;">
                     <div class="section-title">5. Idea fuerza del taller</div>
                     <div class="idea-box">
                         <div class="idea-text">La IA <strong>no sustituye</strong> la intención pedagógica del docente.</div>
@@ -327,7 +359,7 @@
             </div>
 
             <!-- RIGHT COLUMN -->
-            <div class="column">
+            <div class="column col-right">
                 
                 <!-- Sección 2 -->
                 <div class="section">
@@ -360,7 +392,7 @@
                 </div>
 
                 <!-- Sección 3 -->
-                <div class="section">
+                <div class="section" style="margin-bottom: 0;">
                     <div class="section-title">3. Herramientas exploradas</div>
                     <div class="tools-container">
                         <div class="tool-tag"><span class="tool-name">TIHA Bot:</span> Enfoque humanizado.</div>
@@ -373,25 +405,69 @@
                     </div>
                 </div>
 
-                <!-- Sección 6 -->
-                <div class="section">
-                    <div class="section-title">6. Próximo paso recomendado</div>
-                    <div class="step-item"><span class="step-checkbox">[ ]</span> Revisar una actividad actual dentro de Moodle.</div>
-                    <div class="step-item"><span class="step-checkbox">[ ]</span> Definir el nivel exacto de uso de IA permitido.</div>
-                    <div class="step-item"><span class="step-checkbox">[ ]</span> Crear o ajustar la rúbrica de evaluación correspondiente.</div>
-                    <div class="step-item"><span class="step-checkbox">[ ]</span> Incluir una declaración breve de uso de IA para los alumnos.</div>
-                    <div class="step-item"><span class="step-checkbox">[ ]</span> Probar una herramienta nueva durante los próximos 30 días.</div>
-                </div>
-
             </div>
         </div>
 
-        <!-- Footer Block -->
+        <!-- Footer Page 1 -->
         <div class="footer">
             <strong>TIHA</strong> – Tecnologías para la Inspiración y la Humanización del Aprendizaje<br>
             Fundación Ángel Ramos | 2026 | Dra. Mariluz Serrano Ortiz
         </div>
 
+    </div>
+
+    <!-- PÁGINA 2 -->
+    <div class="page-container">
+        
+        <!-- Header Simplificado para la Pagina 2 -->
+        <div class="header-table" style="border-bottom: 2px solid #d8ecf4; padding-bottom: 15px; margin-bottom: 30px;">
+            <div class="header-cell header-left">
+                <img src="file:///home/bard/logo TIHA oficial.png" class="logo-tiha" style="max-height: 40px;" alt="Logo TIHA">
+            </div>
+            <div class="header-cell header-center">
+                <h1 style="font-size: 14pt; margin: 0; color: #d84a26;">Hoja de Acción y Compromiso</h1>
+            </div>
+            <div class="header-cell header-right">
+                <img src="file:///home/bard/image_6997aa.png" class="logo-far" style="max-height: 40px;" alt="Logo Fundación Ángel Ramos">
+            </div>
+        </div>
+
+        <!-- Sección 6 -->
+        <div class="section" style="padding: 0 40px;">
+            <div class="section-title" style="font-size: 16pt; margin-bottom: 30px; text-align: center; border-left: none; border-bottom: 4px solid #d84a26; padding-bottom: 10px; display: inline-block; width: 100%;">
+                6. Próximo paso recomendado
+            </div>
+            
+            <div style="background-color: #fafafa; border: 1px solid #e2e8f0; border-radius: 12px; padding: 40px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+                <div class="step-item">
+                    <div class="step-checkbox">[&nbsp;&nbsp;]</div>
+                    <div class="step-text">Revisar una actividad actual dentro de Moodle.</div>
+                </div>
+                <div class="step-item">
+                    <div class="step-checkbox">[&nbsp;&nbsp;]</div>
+                    <div class="step-text">Definir el nivel exacto de uso de IA permitido.</div>
+                </div>
+                <div class="step-item">
+                    <div class="step-checkbox">[&nbsp;&nbsp;]</div>
+                    <div class="step-text">Crear o ajustar la rúbrica de evaluación correspondiente.</div>
+                </div>
+                <div class="step-item">
+                    <div class="step-checkbox">[&nbsp;&nbsp;]</div>
+                    <div class="step-text">Incluir una declaración breve de uso de IA para los alumnos.</div>
+                </div>
+                <div class="step-item" style="margin-bottom: 0;">
+                    <div class="step-checkbox">[&nbsp;&nbsp;]</div>
+                    <div class="step-text">Probar una herramienta nueva durante los próximos 30 días.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Page 2 -->
+        <div class="footer">
+            <strong>TIHA</strong> – Tecnologías para la Inspiración y la Humanización del Aprendizaje<br>
+            Fundación Ángel Ramos | 2026 | Dra. Mariluz Serrano Ortiz
+        </div>
+        
     </div>
 
 </body>
