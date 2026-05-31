@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Course Evaluation · INCO 4104</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1f2933;
+    --soft:#5b6770;
+    --paper:#fbf7f0;
+    --card:#ffffff;
+    --teal:#0f766e;
+    --teal-deep:#0b524c;
+    --gold:#c98a2b;
+    --gold-soft:#f3e2c4;
+    --mist:#e8f1ef;
+    --line:#e7ded2;
+    --shadow:0 18px 50px -24px rgba(15,118,110,.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Outfit',sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(circle at 12% 8%, rgba(15,118,110,.10), transparent 42%),
+      radial-gradient(circle at 88% 92%, rgba(201,138,43,.12), transparent 45%),
+      var(--paper);
+    line-height:1.6;
+    padding:0 0 80px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:780px;margin:0 auto;padding:0 22px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    text-align:center;
+    padding:72px 22px 46px;
+    position:relative;
+  }
+  .eyebrow{
+    font-size:.78rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--teal);font-weight:600;margin-bottom:26px;
+  }
+  .hero h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(2.3rem,6vw,3.5rem);
+    line-height:1.08;
+    color:var(--teal-deep);
+    letter-spacing:-.01em;
+    margin-bottom:20px;
+  }
+  .hero p.lead{
+    max-width:560px;margin:0 auto 26px;
+    font-size:1.08rem;color:var(--soft);
+  }
+  .tiha-badge{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:.82rem;color:var(--teal-deep);
+    background:var(--mist);
+    border:1px solid rgba(15,118,110,.18);
+    padding:9px 18px;border-radius:999px;font-weight:500;
+  }
+  .tiha-badge::before{content:"✦";color:var(--gold);font-size:.9rem;}
+
+  /* ---------- INTRO NOTE ---------- */
+  .note{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-left:4px solid var(--gold);
+    border-radius:14px;
+    padding:24px 26px;
+    margin:8px 0 40px;
+    box-shadow:var(--shadow);
+    color:var(--soft);
+    font-size:1rem;
+  }
+  .note strong{color:var(--ink);font-weight:600;}
+
+  /* ---------- SECTIONS ---------- */
+  .section-label{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-size:1.02rem;
+    color:var(--gold);
+    margin:36px 0 10px;
+    padding-left:2px;
+  }
+  .q{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:26px 26px 24px;
+    margin-bottom:18px;
+    box-shadow:0 8px 28px -22px rgba(31,41,51,.5);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .q:focus-within{
+    transform:translateY(-2px);
+    box-shadow:0 20px 44px -26px rgba(15,118,110,.55);
+    border-color:rgba(15,118,110,.4);
+  }
+  .q .num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:30px;height:30px;border-radius:50%;
+    background:var(--teal);color:#fff;
+    font-family:'Fraunces',serif;font-weight:600;font-size:.95rem;
+    margin-right:12px;flex-shrink:0;
+  }
+  .q .qhead{display:flex;align-items:flex-start;margin-bottom:16px;}
+  .q label.qtext{font-size:1.06rem;color:var(--ink);font-weight:500;padding-top:3px;}
+  textarea{
+    width:100%;min-height:96px;resize:vertical;
+    font-family:'Outfit',sans-serif;font-size:1rem;color:var(--ink);
+    border:1px solid var(--line);border-radius:10px;
+    padding:13px 15px;background:#fdfbf7;
+    transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(15,118,110,.12);}
+
+  /* ---------- SCALE ---------- */
+  .scale{display:flex;gap:10px;flex-wrap:wrap;}
+  .scale label{
+    flex:1 1 120px;cursor:pointer;
+    border:1px solid var(--line);border-radius:12px;
+    padding:14px 10px;text-align:center;
+    background:#fdfbf7;transition:all .18s ease;
+    display:flex;flex-direction:column;align-items:center;gap:6px;
+    font-size:.9rem;color:var(--soft);
+  }
+  .scale label .emo{font-size:1.6rem;line-height:1;}
+  .scale input{position:absolute;opacity:0;pointer-events:none;}
+  .scale input:checked + .emo, .scale label.checked{}
+  .scale label.checked{
+    border-color:var(--teal);background:var(--mist);
+    color:var(--teal-deep);font-weight:600;
+    box-shadow:0 6px 16px -10px rgba(15,118,110,.6);
+  }
+
+  /* ---------- BUTTONS ---------- */
+  .actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:42px 0 14px;}
+  .btn{
+    font-family:'Outfit',sans-serif;font-size:1rem;font-weight:600;
+    padding:15px 30px;border-radius:999px;border:none;cursor:pointer;
+    display:inline-flex;align-items:center;gap:9px;
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .btn-primary{background:var(--teal);color:#fff;box-shadow:0 12px 30px -14px rgba(15,118,110,.8);}
+  .btn-primary:hover{transform:translateY(-2px);background:var(--teal-deep);}
+  .btn-ghost{background:transparent;color:var(--teal-deep);border:1.5px solid var(--teal);}
+  .btn-ghost:hover{background:var(--mist);transform:translateY(-2px);}
+
+  .howto{
+    text-align:center;font-size:.95rem;color:var(--soft);
+    max-width:580px;margin:0 auto;
+  }
+  .howto strong{color:var(--ink);}
+
+  /* ---------- GRATITUDE ---------- */
+  .gratitude{
+    margin:54px 0 0;
+    background:linear-gradient(150deg, var(--teal-deep), var(--teal));
+    color:#fdfbf7;border-radius:22px;
+    padding:46px 34px;text-align:center;
+    box-shadow:0 26px 60px -30px rgba(11,82,76,.85);
+    position:relative;overflow:hidden;
+  }
+  .gratitude::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 80% 0%, rgba(201,138,43,.28), transparent 55%);
+  }
+  .gratitude > *{position:relative;}
+  .gratitude h2{
+    font-family:'Fraunces',serif;font-weight:600;
+    font-size:clamp(1.7rem,4vw,2.3rem);margin-bottom:18px;
+  }
+  .gratitude p{font-size:1.06rem;opacity:.95;max-width:580px;margin:0 auto 14px;}
+  .gratitude .photos-btn{
+    display:inline-flex;align-items:center;gap:10px;margin-top:14px;
+    background:var(--gold-soft);color:var(--teal-deep);
+    font-weight:600;padding:14px 28px;border-radius:999px;
+    text-decoration:none;transition:transform .2s ease, box-shadow .2s ease;
+    box-shadow:0 10px 26px -14px rgba(0,0,0,.5);
+  }
+  .gratitude .photos-btn:hover{transform:translateY(-2px) scale(1.02);}
+
+  /* ---------- SIGNATURE ---------- */
+  .sig{text-align:center;margin-top:46px;color:var(--soft);font-size:.92rem;}
+  .sig .name{
+    font-family:'Fraunces',serif;font-style:italic;font-size:1.25rem;
+    color:var(--teal-deep);margin-bottom:6px;
+  }
+  .sig .leaf{color:var(--gold);font-size:1.1rem;}
+
+  .toast{
+    position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(120px);
+    background:var(--ink);color:#fff;padding:14px 24px;border-radius:12px;
+    font-size:.95rem;box-shadow:0 16px 40px -16px rgba(0,0,0,.6);
+    transition:transform .35s cubic-bezier(.2,.9,.3,1.2);z-index:50;
+  }
+  .toast.show{transform:translateX(-50%) translateY(0);}
+
+  @media (max-width:520px){
+    .hero{padding:54px 18px 36px;}
+    .q{padding:22px 18px;}
+    .gratitude{padding:38px 22px;}
+  }
+</style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="eyebrow">INCO 4104 · Spring 2026</div>
+    <h1>Your voice closes the circle</h1>
+    <p class="lead">Before we say goodbye, give me a few minutes to reflect on what we lived together this semester. Your experience lights the path for those who come next.</p>
+    <span class="tiha-badge">TIHA Model · Technologies for the Inspiration and Humanization of Learning</span>
+  </header>
+
+  <main class="wrap">
+    <div class="note">
+      This evaluation is <strong>anonymous and voluntary</strong>. There are no right or wrong answers — only your honest perspective. What you share will help make this course an even more meaningful experience for future cohorts. Thank you for your generosity. 🌱
+    </div>
+
+    <form id="evalForm">
+
+      <div class="section-label">Inspiration</div>
+      <div class="q">
+        <div class="qhead"><span class="num">1</span><label class="qtext" for="q1">What was the most meaningful part of your experience in this course — the thing that stayed with you most?</label></div>
+        <textarea id="q1" name="q1" placeholder="Share what moved you…"></textarea>
+      </div>
+
+      <div class="section-label">Humanization of learning</div>
+      <div class="q">
+        <div class="qhead"><span class="num">2</span><label class="qtext">How much did this course treat you as a person, and not just as a number or a student?</label></div>
+        <div class="scale" data-name="q2">
+          <label><input type="radio" name="q2" value="Very little"><span class="emo">😕</span>Very little</label>
+          <label><input type="radio" name="q2" value="Somewhat"><span class="emo">🙂</span>Somewhat</label>
+          <label><input type="radio" name="q2" value="Quite a bit"><span class="emo">😊</span>Quite a bit</label>
+          <label><input type="radio" name="q2" value="Very much"><span class="emo">😍</span>Very much</label>
+        </div>
+      </div>
+
+      <div class="section-label">Communication technologies</div>
+      <div class="q">
+        <div class="qhead"><span class="num">3</span><label class="qtext" for="q3">Of the tools we worked with — Spatial, Gamma, Canva, AI chatbots, Microsoft Teams, Mote, and others — which one do you feel best prepares you to communicate in a professional setting?</label></div>
+        <textarea id="q3" name="q3" placeholder="Name the tool and tell me why…"></textarea>
+      </div>
+
+      <div class="section-label">Emerging & immersive technologies</div>
+      <div class="q">
+        <div class="qhead"><span class="num">4</span><label class="qtext" for="q4">Building your 3D virtual portfolio in Spatial pushed you into immersive, spatial communication. How did designing and defending that space change the way you see digital communication?</label></div>
+        <textarea id="q4" name="q4" placeholder="Reflect on the Spatial experience…"></textarea>
+      </div>
+
+      <div class="section-label">Ethical & creative use of AI</div>
+      <div class="q">
+        <div class="qhead"><span class="num">5</span><label class="qtext" for="q5">What did you learn about integrating artificial intelligence in an ethical, responsible, and genuinely human way into your communication work?</label></div>
+        <textarea id="q5" name="q5" placeholder="Share what you take away about ethical AI…"></textarea>
+      </div>
+
+      <div class="section-label">Professional identity</div>
+      <div class="q">
+        <div class="qhead"><span class="num">6</span><label class="qtext" for="q6">Thinking about who you are becoming as a professional communicator, what will you carry forward from this course and apply from here on?</label></div>
+        <textarea id="q6" name="q6" placeholder="What stays with you going forward…"></textarea>
+      </div>
+
+      <div class="section-label">Course resources</div>
+      <div class="q">
+        <div class="qhead"><span class="num">7</span><label class="qtext" for="q7">Of the resources we used — readings, presentations, templates, interactive module, the Spatial portfolio, and the final project — which was most useful to you, and why?</label></div>
+        <textarea id="q7" name="q7" placeholder="Tell me which resource and why…"></textarea>
+      </div>
+
+      <div class="section-label">Continuous improvement</div>
+      <div class="q">
+        <div class="qhead"><span class="num">8</span><label class="qtext" for="q8">What would you recommend to the professor for future cohorts of this course? Every suggestion is welcome.</label></div>
+        <textarea id="q8" name="q8" placeholder="Your suggestions for what comes next…"></textarea>
+      </div>
+
+    </form>
+
+    <div class="actions">
+      <button type="button" class="btn btn-primary" id="emailBtn">✉️ Send by email</button>
+      <button type="button" class="btn btn-ghost" id="downloadBtn">⬇️ Download my answers</button>
+    </div>
+
+    <p class="howto"><strong>How do I submit?</strong> When you click <strong>"Send by email"</strong>, your mail app will open with a message already prepared for the professor — just hit send. If you prefer, click <strong>"Download my answers"</strong> and attach the file to an email to <strong>mariluz.serrano@upr.edu</strong>.</p>
+
+    <section class="gratitude">
+      <h2>Thank you, thank you, thank you 🌱</h2>
+      <p>To every one of you who took the time to complete this course and to give your whole participation — your grades are already in the system. Thank you for such a beautiful learning journey together.</p>
+      <p>And as promised, I'm sharing again the photos I took of us at Sagrado, so you can keep them as a memory of everyone who was there.</p>
+      <a class="photos-btn" href="https://photos.app.goo.gl/KF7g1kTGtbGyCrKN8" target="_blank" rel="noopener">📸 View the photos from Sagrado</a>
+    </section>
+
+    <div class="sig">
+      <div class="name">Dra. Mariluz Serrano Ortiz</div>
+      Department of Office Management and Business Communication<br>
+      College of Business Administration · UPR, Río Piedras Campus<br>
+      <span class="leaf">✦ TIHA Model ✦</span>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+  // Scale selection styling
+  document.querySelectorAll('.scale').forEach(group=>{
+    group.querySelectorAll('label').forEach(lab=>{
+      lab.addEventListener('click',()=>{
+        group.querySelectorAll('label').forEach(l=>l.classList.remove('checked'));
+        lab.classList.add('checked');
+      });
+    });
+  });
+
+  const questions = [
+    "1. Most meaningful part of the experience:",
+    "2. Treated as a person (not a number):",
+    "3. Tool that best prepares you to communicate:",
+    "4. How Spatial changed your view of digital communication:",
+    "5. Ethical & creative use of AI:",
+    "6. Professional identity — what you carry forward:",
+    "7. Most useful course resource and why:",
+    "8. Recommendations for future cohorts:"
+  ];
+
+  function collect(){
+    const f = document.getElementById('evalForm');
+    const get = n => {
+      const el = f.elements[n];
+      if(!el) return "(no answer)";
+      if(el.length){ for(const r of el){ if(r.checked) return r.value; } return "(no answer)"; }
+      return (el.value||"").trim() || "(no answer)";
+    };
+    let out = "INCO 4104 · Final Course Evaluation — Spring 2026\\n";
+    out += "TIHA Model · Anonymous & Voluntary\\n";
+    out += "====================================================\\n\\n";
+    for(let i=1;i<=8;i++){ out += questions[i-1] + "\\n" + get('q'+i) + "\\n\\n"; }
+    out += "----------------------------------------------------\\n";
+    out += "Thank you for closing the circle. 🌱";
+    return out;
+  }
+
+  function showToast(msg){
+    const t=document.getElementById('toast');
+    t.textContent=msg;t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),3200);
+  }
+
+  document.getElementById('emailBtn').addEventListener('click',()=>{
+    const body = encodeURIComponent(collect());
+    const subject = encodeURIComponent("INCO 4104 — Final Course Evaluation");
+    window.location.href = `mailto:mariluz.serrano@upr.edu?subject=${subject}&body=${body}`;
+    showToast("Opening your email app… ✉️");
+  });
+
+  document.getElementById('downloadBtn').addEventListener('click',()=>{
+    const blob = new Blob([collect()],{type:'text/plain;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href=url;a.download='INCO4104_Course_Evaluation.txt';
+    document.body.appendChild(a);a.click();a.remove();
+    URL.revokeObjectURL(url);
+    showToast("Your answers were downloaded ⬇️");
+  });
+</script>
+</body>
+</html>
