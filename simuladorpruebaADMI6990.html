@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorador del Metaverso Educativo</title>
+    <style>
+        /* Estilos generales y reset */
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .contenedor-principal {
+            width: 90%;
+            max-width: 1000px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Encabezado */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            margin: 10px 0 0 0;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Área del Simulador (Entorno Virtual Abstracto) */
+        .escenario-inmersivo {
+            position: relative;
+            height: 450px;
+            background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+            background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.4) 0%, rgba(0,0,0,0.05) 100%);
+            border-bottom: 3px solid #e2e8f0;
+            overflow: hidden;
+        }
+
+        /* Nodos interactivos */
+        .nodo {
+            position: absolute;
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            user-select: none;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 3px solid rgba(255,255,255,0.5);
+            animation: flotar 4s ease-in-out infinite;
+        }
+
+        .nodo:hover, .nodo.activo {
+            transform: scale(1.15);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+            z-index: 10;
+        }
+
+        /* Posiciones y colores de los nodos */
+        #nodo-metaverso { top: 15%; left: 15%; background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); color: #d6336c; border-color: white; animation-delay: 0s;}
+        #nodo-framevr { top: 50%; left: 35%; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); animation-delay: 1s;}
+        #nodo-educacion { top: 20%; left: 65%; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: #087f5b; animation-delay: 0.5s;}
+        #nodo-inmersivos { top: 60%; left: 75%; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); animation-delay: 1.5s;}
+
+        @keyframes flotar {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Panel de Información */
+        .panel-info {
+            padding: 30px;
+            background-color: #ffffff;
+            min-height: 180px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .contenido-info {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .contenido-info.activo {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .contenido-info h2 {
+            color: #2d3748;
+            margin-top: 0;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 10px;
+        }
+
+        .contenido-info p {
+            line-height: 1.7;
+            color: #4a5568;
+            font-size: 1.05rem;
+        }
+
+        .instruccion-inicial {
+            text-align: center;
+            width: 100%;
+            color: #718096;
+            font-size: 1.2rem;
+            font-style: italic;
+            margin: auto;
+        }
+
+        /* Decoración de fondo en el escenario */
+        .grid-bg {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform: perspective(500px) rotateX(60deg);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor-principal">
+        <header>
+            <h1>Realidad Virtual y Educación</h1>
+            <p>Haz clic en los elementos del entorno para descubrir cómo el metaverso transforma el aprendizaje a distancia.</p>
+        </header>
+
+        <div class="escenario-inmersivo">
+            <div class="grid-bg"></div>
+            
+            <div class="nodo" id="nodo-metaverso" onclick="mostrarInfo('metaverso')">
+                Metaverso Educativo
+            </div>
+            <div class="nodo" id="nodo-framevr" onclick="mostrarInfo('framevr')">
+                FrameVR.io
+            </div>
+            <div class="nodo" id="nodo-educacion" onclick="mostrarInfo('educacion')">
+                Educación a Distancia
+            </div>
+            <div class="nodo" id="nodo-inmersivos" onclick="mostrarInfo('inmersivos')">
+                Mundos Inmersivos
+            </div>
+        </div>
+
+        <div class="panel-info">
+            <div id="instruccion" class="instruccion-inicial">
+                <p>Selecciona una esfera en el espacio virtual para comenzar la exploración.</p>
+            </div>
+
+            <div id="info-metaverso" class="contenido-info">
+                <h2>El Metaverso en la Educación</h2>
+                <p>El metaverso educativo no es solo un videojuego; es una convergencia de realidades físicas y digitales. Permite a los estudiantes interactuar en espacios tridimensionales compartidos, rompiendo las barreras de las videollamadas tradicionales y fomentando un aprendizaje constructivista donde se "aprende haciendo" dentro de simulaciones seguras.</p>
+            </div>
+
+            <div id="info-framevr" class="contenido-info">
+                <h2>Explorando FrameVR.io</h2>
+                <p><strong>FrameVR</strong> es una plataforma democratizadora para la WebXR. Su gran ventaja en la educación es que funciona directamente desde el navegador, sin necesidad de instalar software pesado o requerir gafas de realidad virtual costosas. Los profesores pueden crear galerías, salas de reuniones o escenarios históricos donde los estudiantes colaboran en tiempo real usando avatares.</p>
+            </div>
+
+            <div id="info-educacion" class="contenido-info">
+                <h2>Reimaginando la Educación a Distancia</h2>
+                <p>La educación asincrónica tradicional a menudo sufre de aislamiento. Al integrar tecnologías inmersivas, recuperamos el "sentido de presencia" (telepresencia). Los estudiantes sienten que están "allí" con sus compañeros y su profesor. Esto aumenta dramáticamente el compromiso (engagement), la retención de información y facilita dinámicas de trabajo en equipo más naturales.</p>
+            </div>
+
+            <div id="info-inmersivos" class="contenido-info">
+                <h2>Diseño de Mundos Inmersivos</h2>
+                <p>Crear un mundo inmersivo para el aprendizaje requiere diseño instruccional enfocado en la interactividad. Se utilizan herramientas como audio espacial (escuchas más fuerte a quien está cerca de tu avatar), pizarras 3D interactuables, y modelos tridimensionales (como sistemas solares, moléculas o artefactos históricos) que los estudiantes pueden manipular directamente.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function mostrarInfo(idInfo) {
+            // Ocultar la instrucción inicial
+            document.getElementById('instruccion').style.display = 'none';
+
+            // Ocultar todos los paneles de información
+            let contenidos = document.querySelectorAll('.contenido-info');
+            contenidos.forEach(function(contenido) {
+                contenido.classList.remove('activo');
+            });
+
+            // Quitar clase activa de todos los nodos
+            let nodos = document.querySelectorAll('.nodo');
+            nodos.forEach(function(nodo) {
+                nodo.classList.remove('activo');
+                nodo.style.animationPlayState = 'running'; // Restaurar flotación
+            });
+
+            // Mostrar el panel seleccionado
+            document.getElementById('info-' + idInfo).classList.add('activo');
+
+            // Resaltar el nodo seleccionado
+            let nodoSeleccionado = document.getElementById('nodo-' + idInfo);
+            nodoSeleccionado.classList.add('activo');
+            nodoSeleccionado.style.animationPlayState = 'paused'; // Pausar flotación al seleccionar
+        }
+    </script>
+</body>
+</html>
