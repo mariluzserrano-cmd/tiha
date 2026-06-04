@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EDU 690 · Prompts para tu simulador · TIHA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F4F6FB; --bg-soft: #EAEEF8; --card: #FFFFFF;
+  --ink: #1E2A44; --ink-soft: #4A5878; --ink-faint: #8290AE;
+  --blue: #4A7DD6; --blue-deep: #2E5AA8; --lavender: #B8A6E8; --lavender-deep: #8B6FD4;
+  --gold: #C98A3C; --teal: #5FB3A3; --line: rgba(74,125,214,0.16);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; line-height: 1.65;
+  -webkit-font-smoothing: antialiased; padding-bottom: 80px;
+}
+body::after {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse 50% 40% at 10% 5%, rgba(74,125,214,0.1), transparent 60%),
+              radial-gradient(ellipse 45% 35% at 92% 95%, rgba(184,166,232,0.14), transparent 60%);
+}
+.wrap { position: relative; z-index: 2; max-width: 880px; margin: 0 auto; padding: 0 24px; }
+
+/* HERO */
+.hero { padding: 64px 0 44px; border-bottom: 1px solid var(--line); margin-bottom: 44px; }
+.hero-brand { display: flex; align-items: center; gap: 14px; margin-bottom: 36px; }
+.hero-mark {
+  width: 46px; height: 46px; border: 1px solid var(--blue); border-radius: 50%;
+  display: grid; place-items: center; font-family: 'Fraunces', serif; font-style: italic;
+  font-weight: 900; font-size: 22px; color: var(--blue-deep); background: var(--card); position: relative;
+}
+.hero-mark::after { content: ''; position: absolute; inset: -5px; border: 1px solid var(--line); border-radius: 50%; }
+.hero-brand-text { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-soft); }
+.hero-brand-text strong { display: block; color: var(--ink); font-weight: 600; font-size: 14px; margin-top: 2px; letter-spacing: 0.05em; }
+.hero-eyebrow { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--lavender-deep); font-weight: 600; margin-bottom: 16px; }
+.hero-title {
+  font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+  font-variation-settings: 'opsz' 144, 'SOFT' 60;
+  font-size: clamp(38px, 6vw, 68px); line-height: 1.0; letter-spacing: -0.025em; margin-bottom: 22px;
+}
+.hero-title em { color: var(--blue-deep); }
+.hero-deck { font-size: 18px; color: var(--ink-soft); max-width: 680px; line-height: 1.6; }
+.hero-deck a { color: var(--blue-deep); text-decoration: none; border-bottom: 1px solid var(--line); }
+.hero-deck a:hover { border-color: var(--blue); }
+.hero-deck code { background: var(--bg-soft); padding: 2px 8px; border-radius: 5px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: var(--blue-deep); }
+
+/* Golden rule callout */
+.golden {
+  background: linear-gradient(135deg, rgba(201,138,60,0.1), rgba(184,166,232,0.08));
+  border: 1px solid rgba(201,138,60,0.25); border-radius: 14px;
+  padding: 24px 28px; margin: 32px 0 8px;
+}
+.golden .lbl { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 8px; }
+.golden .txt { font-family: 'Fraunces', serif; font-style: italic; font-size: 20px; color: var(--ink); line-height: 1.4; }
+
+/* Quick nav */
+.quicknav { display: flex; flex-wrap: wrap; gap: 10px; margin: 40px 0 8px; }
+.quicknav a {
+  font-size: 13.5px; padding: 9px 16px; border-radius: 100px; border: 1px solid var(--line);
+  color: var(--ink-soft); text-decoration: none; transition: all 0.2s ease; background: var(--card);
+}
+.quicknav a:hover { border-color: var(--blue); color: var(--blue-deep); transform: translateY(-2px); }
+
+/* Profession cards */
+.prof { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 32px 34px; margin: 24px 0; box-shadow: 0 4px 22px rgba(46,90,168,0.06); scroll-margin-top: 20px; position: relative; overflow: hidden; }
+.prof::before { content: ''; position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: var(--blue); }
+.prof:nth-child(even)::before { background: var(--lavender-deep); }
+.prof-head { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+.prof-ico { font-size: 34px; line-height: 1; }
+.prof-title { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: clamp(24px, 3.2vw, 32px); color: var(--ink); line-height: 1.1; }
+.prompt {
+  background: var(--ink); color: #DCE6FA; border-radius: 12px; padding: 24px 26px 24px;
+  font-size: 16px; line-height: 1.65; position: relative; margin-bottom: 18px;
+}
+.prompt .ptag { position: absolute; top: -11px; left: 18px; font-size: 10px; letter-spacing: 0.2em; color: #fff; background: var(--lavender-deep); padding: 3px 12px; font-weight: 700; border-radius: 4px; }
+.prompt strong { color: var(--gold); font-weight: 500; }
+.prompt .copy-btn {
+  position: absolute; top: 14px; right: 14px; background: rgba(255,255,255,0.12);
+  border: none; color: #DCE6FA; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 7px 14px; border-radius: 7px; cursor: pointer; transition: all 0.2s ease; font-family: 'IBM Plex Sans', sans-serif; font-weight: 500;
+}
+.prompt .copy-btn:hover { background: var(--blue); color: #fff; }
+.prompt .copy-btn.done { background: var(--teal); color: #fff; }
+.ideas { font-size: 14.5px; color: var(--ink-soft); }
+.ideas strong { color: var(--blue-deep); font-weight: 600; }
+
+/* Universal highlight */
+.prof.universal { background: linear-gradient(135deg, rgba(74,125,214,0.07), rgba(184,166,232,0.07)); border-color: rgba(139,111,212,0.3); }
+.prof.universal::before { background: linear-gradient(to bottom, var(--blue), var(--lavender-deep)); }
+
+/* Tips */
+.tips { background: var(--bg-soft); border-radius: 16px; padding: 32px 34px; margin: 36px 0; }
+.tips-title { font-family: 'Fraunces', serif; font-style: italic; font-size: 26px; color: var(--ink); margin-bottom: 20px; }
+.tip-item { display: flex; gap: 16px; margin-bottom: 16px; align-items: flex-start; }
+.tip-item:last-child { margin-bottom: 0; }
+.tip-n { flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; background: var(--card); border: 1px solid var(--blue); color: var(--blue-deep); display: grid; place-items: center; font-family: 'Fraunces', serif; font-style: italic; font-weight: 600; font-size: 16px; }
+.tip-body { font-size: 15.5px; color: var(--ink-soft); padding-top: 3px; }
+.tip-body strong { color: var(--ink); font-weight: 600; }
+
+/* Footer */
+.foot { text-align: center; padding: 48px 0 20px; border-top: 1px solid var(--line); margin-top: 48px; }
+.foot-quote { font-family: 'Fraunces', serif; font-style: italic; font-size: 20px; color: var(--blue-deep); max-width: 560px; margin: 0 auto 14px; line-height: 1.45; }
+.foot-meta { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); }
+
+@media (max-width: 640px) {
+  .hero { padding: 44px 0 32px; }
+  .prof { padding: 24px 22px; }
+  .prompt { font-size: 15px; padding: 22px 18px; }
+  .prompt .copy-btn { position: static; display: inline-block; margin-bottom: 12px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="hero-brand">
+      <div class="hero-mark">↻</div>
+      <div class="hero-brand-text">Proyecto TIHA · EDU 690<strong>Realidades Inmersivas, Simulación y Tecnologías Emergentes</strong></div>
+    </div>
+    <div class="hero-eyebrow">Guía práctica</div>
+    <h1 class="hero-title">Prompts para crear tu <em>simulador</em> con IA</h1>
+    <p class="hero-deck">
+      Cada quien tiene una profesión distinta — y eso es nuestra riqueza. Busca tu área, copia el prompt, y pégalo en <a href="https://gemini.google.com" target="_blank">Gemini</a>, <a href="https://claude.ai" target="_blank">Claude</a> o ChatGPT. Cambia lo que está en <strong>[corchetes]</strong> por tu tema. La IA te entrega el código; lo guardas como archivo <code>.html</code> y lo subes a GitHub para compartirlo.
+    </p>
+    <div class="golden">
+      <div class="lbl">La regla de oro</div>
+      <div class="txt">Mientras más específico tu prompt, mejor el simulador. Piensa primero: ¿qué quiero que la persona EXPERIMENTE, no solo que lea?</div>
+    </div>
+  </header>
+
+  <nav class="quicknav">
+    <a href="#salud">🩺 Salud</a>
+    <a href="#derecho">⚖️ Derecho</a>
+    <a href="#negocios">💼 Negocios</a>
+    <a href="#arte">🎨 Arte</a>
+    <a href="#ciencias">🔬 Ciencias</a>
+    <a href="#sociales">📊 Ciencias sociales</a>
+    <a href="#educacion">🏫 Educación</a>
+    <a href="#tecnologia">💻 Tecnología</a>
+    <a href="#universal">🌟 Universal</a>
+  </nav>
+
+  <section class="prof" id="salud">
+    <div class="prof-head"><div class="prof-ico">🩺</div><div class="prof-title">Salud, enfermería y ciencias médicas</div></div>
+    <div class="prompt">
+      <span class="ptag">Prompt</span>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+      <span class="ptext">"Crea un simulador interactivo en HTML, en español, sobre <strong>[el sistema cardiovascular / las etapas de una herida / el proceso de medicación segura]</strong>. Que muestre un diagrama visual donde el usuario pueda hacer clic en cada parte para ver su función, con colores suaves y profesionales. Incluye un breve escenario de toma de decisiones al final (por ejemplo, '¿qué harías si...?') con retroalimentación inmediata. Todo en un solo archivo HTML, sin instalaciones."</span>
+    </div>
+    <div class="ideas"><strong>Ideas de tema:</strong> anatomía de un órgano, protocolo de signos vitales, cadena de bioseguridad, etapas de cicatrización, triaje de emergencias.</div>
+  </section>
+
+  <section class="prof" id="derecho">
+    <div class="prof-head"><div class="prof-ico">⚖️</div><div class="prof-title">Derecho, justicia y ciencias jurídicas</div></div>
+    <div class="prompt">
+      <span class="ptag">Prompt</span>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+      <span class="ptext">"Crea un simulador interactivo en HTML, en español, sobre <strong>[las etapas de un proceso judicial / los derechos constitucionales / un caso hipotético]</strong>. Que presente un escenario donde el usuario tome decisiones paso a paso y vea las consecuencias legales de cada una, con explicaciones claras. Diseño formal y elegante, navegable por clics. Un solo archivo HTML, sin instalaciones."</span>
+    </div>
+    <div class="ideas"><strong>Ideas de tema:</strong> debido proceso, jerarquía de tribunales, análisis de un caso, derechos del consumidor, mediación de conflictos.</div>
+  </section>
+
+  <section class="prof" id="negocios">
+    <div class="prof-head"><div class="prof-ico">💼</div><div class="prof-title">Negocios, gerencia y administración</div></div>
+    <div class="prompt">
+      <span class="ptag">Prompt</span>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+      <span class="ptext">"Crea un simulador interactivo en HTML, en español, sobre <strong>[el flujo de caja de una empresa / las etapas de un plan de negocios / la toma de decisiones gerenciales]</strong>. Que permita al usuario mover variables (por ejemplo, ajustar precios o costos con deslizadores) y ver cómo cambian los resultados en tiempo real, con gráficas simples. Diseño profesional y limpio. Todo en un archivo HTML."</span>
+    </div>
+    <div class="ideas"><strong>Ideas de tema:</strong> punto de equilibrio, cadena de suministro, organigrama interactivo, análisis FODA, ciclo de ventas.</div>
+  </section>
+
+  <section class="prof" id="arte">
+    <div class="prof-head"><div class="prof-ico">🎨</div><div class="prof-title">Arte, diseño y humanidades</div></div>
+    <div class="prompt">
+      <span class="ptag">Prompt</span>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+      <span class="ptext">"Crea un simulador interactivo en HTML, en español, sobre <strong>[la teoría del color / los movimientos artísticos / los elementos de la composición visual]</strong>. Que sea muy visual, donde el usuario pueda experimentar (por ejemplo, mezclar colores o cambiar elementos) y ver el resultado al instante. Estética bella e inspiradora. Un solo archivo HTML, sin instalaciones."</span>
+    </div>
+    <div class="ideas"><strong>Ideas de tema:</strong> línea de tiempo del arte, rueda de color interactiva, análisis de una obra, elementos del diseño, períodos literarios.</div>
+  </section>
+
+  <section class="prof" id="ciencias">
+    <div class="prof-head"><div class="prof-ico">🔬</div><div class="prof-title">Ciencias (biología, química, física, ambiental)</div></div>
+    <div class="prompt">
+      <span class="ptag">Prompt</span>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+      <span class="ptext">"Crea un simulador interactivo en HTML, en español, sobre <strong>[el ciclo del agua / la tabla periódica / las leyes del movimiento]</strong>. Que el usuario pueda manipular variables y observar los cambios visualmente, con animaciones simples. Incluye una pregunta de comprobación al final. Colores claros y científicos. Todo en un archivo HTML."</span>
+    </div>
+    <div class="ideas"><strong>Ideas de tema:</strong> fotosíntesis, ecosistemas, reacciones químicas, sistema solar, fuerzas físicas.</div>
+  </section>
+
+  <section class="prof" id="sociales">
+    <div class="prof-head"><div class="prof-ico">📊</div><div class="prof-title">Ciencias sociales, psicología y trabajo social</div></div>
+    <div class="prompt">
+      <span class="ptag">Prompt</span>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+      <span class="ptext">"Crea un simulador interactivo en HTML, en español, sobre <strong>[las etapas del desarrollo humano / un escenario de intervención social / los estilos de comunicación]</strong>. Que presente situaciones donde el usuario elige cómo responder y recibe retroalimentación empática sobre cada opción. Diseño cálido y humano, navegable por clics. Un solo archivo HTML."</span>
+    </div>
+    <div class="ideas"><strong>Ideas de tema:</strong> pirámide de Maslow, escenario de consejería, dinámica familiar, sesgos cognitivos, redes de apoyo.</div>
+  </section>
+
+  <section class="prof" id="educacion">
+    <div class="prof-head"><div class="prof-ico">🏫</div><div class="prof-title">Educación y pedagogía</div></div>
+    <div class="prompt">
+      <span class="ptag">Prompt</span>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+      <span class="ptext">"Crea un simulador interactivo en HTML, en español, sobre <strong>[un concepto que enseñas / una estrategia pedagógica / un escenario de aula]</strong>. Que modele cómo un estudiante interactuaría con el contenido, con elementos clicables y retroalimentación inmediata. Que sirva como ejemplo de recurso didáctico. Colores agradables y motivadores. Todo en un archivo HTML."</span>
+    </div>
+    <div class="ideas"><strong>Ideas de tema:</strong> una lección de tu materia, taxonomía de Bloom, manejo de aula, evaluación formativa, estilos de aprendizaje.</div>
+  </section>
+
+  <section class="prof" id="tecnologia">
+    <div class="prof-head"><div class="prof-ico">💻</div><div class="prof-title">Tecnología, ingeniería y áreas técnicas</div></div>
+    <div class="prompt">
+      <span class="ptag">Prompt</span>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+      <span class="ptext">"Crea un simulador interactivo en HTML, en español, sobre <strong>[un algoritmo / un circuito / un proceso técnico]</strong>. Que el usuario pueda manipular entradas y ver las salidas en tiempo real, con visualización clara del proceso. Diseño moderno y funcional. Un solo archivo HTML, sin instalaciones."</span>
+    </div>
+    <div class="ideas"><strong>Ideas de tema:</strong> diagrama de flujo interactivo, lógica de programación, circuito eléctrico, red de datos, proceso de manufactura.</div>
+  </section>
+
+  <section class="prof universal" id="universal">
+    <div class="prof-head"><div class="prof-ico">🌟</div><div class="prof-title">¿No encuentras tu área? Prompt universal</div></div>
+    <div class="prompt">
+      <span class="ptag">Prompt</span>
+      <button class="copy-btn" onclick="copyPrompt(this)">Copiar</button>
+      <span class="ptext">"Crea un simulador interactivo en HTML, en español, sobre <strong>[TU TEMA]</strong>, dirigido a <strong>[a quién va dirigido]</strong>. Quiero que el usuario pueda <strong>[explorar / decidir / manipular / experimentar]</strong> en vez de solo leer. Hazlo visual, con colores agradables, navegable por clics, con retroalimentación inmediata. Que funcione en el navegador sin instalar nada. Inclúyelo todo en un solo archivo HTML."</span>
+    </div>
+    <div class="ideas">Este prompt funciona para <strong>cualquier disciplina</strong>. Solo describe bien qué quieres que la persona experimente.</div>
+  </section>
+
+  <div class="tips">
+    <div class="tips-title">Tres consejos para mejorar cualquier simulador</div>
+    <div class="tip-item"><div class="tip-n">1</div><div class="tip-body"><strong>Pídele cambios:</strong> si no te gusta el resultado, escríbele "hazlo más colorido", "añade sonido", "que sea más simple". La IA itera contigo.</div></div>
+    <div class="tip-item"><div class="tip-n">2</div><div class="tip-body"><strong>Piensa en la experiencia:</strong> lo que distingue un buen simulador no es el código — es qué siente y descubre quien lo usa.</div></div>
+    <div class="tip-item"><div class="tip-n">3</div><div class="tip-body"><strong>Conéctalo con tu disciplina:</strong> el mejor simulador es el que resuelve algo real de TU campo profesional.</div></div>
+  </div>
+
+  <footer class="foot">
+    <p class="foot-quote">"No aprendimos herramientas. Aprendimos nuevas maneras de imaginar el aprendizaje."</p>
+    <div class="foot-meta">Dra. Mariluz Serrano-Ortiz · Proyecto TIHA · EDU 690</div>
+  </footer>
+
+</div>
+
+<script>
+function copyPrompt(btn) {
+  const prompt = btn.closest('.prompt');
+  const text = prompt.querySelector('.ptext').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '¡Copiado!';
+    btn.classList.add('done');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('done'); }, 2000);
+  }).catch(() => {
+    btn.textContent = 'Selecciona y copia';
+  });
+}
+</script>
+</body>
+</html>
