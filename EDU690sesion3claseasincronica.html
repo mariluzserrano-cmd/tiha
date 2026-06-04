@@ -106,7 +106,9 @@ body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-in
 .tl-empty { text-align: center; padding: 60px 20px; color: var(--ink-faint); }
 .tl-empty .ico { font-size: 48px; margin-bottom: 16px; }
 .timeline { display: flex; flex-direction: column; gap: 0; margin: 24px 0; }
-.tl-item { display: flex; gap: 22px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.tl-item { display: flex; gap: 22px; padding: 20px 16px; border-bottom: 1px solid var(--line); border-radius: 10px; transition: all 0.2s ease; cursor: pointer; }
+.tl-item:hover { background: var(--bg-soft); transform: translateX(4px); }
+.tl-item:hover .tl-time { color: var(--lavender-deep); }
 .tl-time { flex-shrink: 0; font-family: 'Fraunces', serif; font-style: italic; font-size: 18px; color: var(--blue-deep); width: 110px; }
 .tl-body { flex: 1; }
 .tl-topic { font-size: 17px; color: var(--ink); font-weight: 600; margin-bottom: 4px; }
@@ -258,10 +260,133 @@ body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-in
   <section class="panel" id="panel-minuto">
     <h2 class="panel-title">La clase <em>minuto a minuto</em></h2>
     <p class="panel-deck">Navega la clase por temas: salta directo a la parte que quieras repasar.</p>
+    <p class="panel-deck" style="margin-top:-16px;font-size:15px;color:var(--ink-faint)">Toca cualquier tema para abrir el video justo en ese momento.</p>
     <div id="timeline-content">
-      <div class="tl-empty">
-        <div class="ico">⏱️</div>
-        <p style="font-size:18px;color:var(--ink-soft);max-width:440px;margin:0 auto">Esta sección se completará pronto con los temas marcados por minuto, una vez que la profesora procese la transcripción de la clase.</p>
+      <div class="timeline">
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=0" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">0:00</div>
+          <div class="tl-body"><div class="tl-topic">Bienvenida a la clase asincrónica</div><div class="tl-desc">Cómo aprovechar el video: pausar, tomar notas, repasar a tu ritmo. Hoy no solo aprendemos — creamos.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=44" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">0:44</div>
+          <div class="tl-body"><div class="tl-topic">Lo que ustedes pidieron</div><div class="tl-desc">Crear simuladores con IA, subir proyectos a GitHub y crear sus propios espacios inmersivos.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=104" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">1:44</div>
+          <div class="tl-body"><div class="tl-topic">Noticia: Spatial cierra en julio</div><div class="tl-desc">Por qué migramos a FrameVR — y por qué ya no vale la pena crear espacios en Spatial.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=166" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">2:46</div>
+          <div class="tl-body"><div class="tl-topic">Repaso: Realidad Virtual y Aumentada</div><div class="tl-desc">VR sustituye el mundo; AR superpone lo digital. Preparación para la experiencia del 11 en Sagrado.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=213" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">3:33</div>
+          <div class="tl-body"><div class="tl-topic">Recorrido por los materiales en Canvas</div><div class="tl-desc">Dónde encontrar la presentación, las infografías, la caja de recursos y la síntesis de la unidad.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=401" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">6:41</div>
+          <div class="tl-body"><div class="tl-topic">La Actividad 4 y el nuevo mundo inmersivo</div><div class="tl-desc">Dónde vamos a trabajar — un espacio parecido a Spatial pero más simple y bello.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=425" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">7:05</div>
+          <div class="tl-body"><div class="tl-topic">Repaso: Realidad Mixta y Metaverso</div><div class="tl-desc">La MR entiende el espacio físico. El metaverso conecta en lo tridimensional y social.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=490" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">8:10</div>
+          <div class="tl-body"><div class="tl-topic">El simulador NO es VR, AR ni metaverso</div><div class="tl-desc">El momento de Google: vibe coding. Una categoría distinta que también transforma la educación.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=538" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">8:58</div>
+          <div class="tl-body"><div class="tl-topic">NotebookLM: tu asistente de investigación</div><div class="tl-desc">Para qué sirve, cómo usarlo bien, y por qué es confiable (trabaja con tus fuentes).</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=646" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">10:46</div>
+          <div class="tl-body"><div class="tl-topic">Buscar fuentes web en NotebookLM</div><div class="tl-desc">Cómo pedirle búsquedas en español sobre VR, metaverso e IA generativa en educación.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=784" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">13:04</div>
+          <div class="tl-body"><div class="tl-topic">Curar el contenido: el arte de discernir</div><div class="tl-desc">Cómo evaluar fuentes — descartar blogs y Wikipedia, quedarse con artículos arbitrados (DOI, ORCID).</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=967" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">16:07</div>
+          <div class="tl-body"><div class="tl-topic">Conversar y citar con NotebookLM</div><div class="tl-desc">Hacer preguntas, ver categorías de discusión, y citar la fuente exacta de cada idea.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=1124" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">18:44</div>
+          <div class="tl-body"><div class="tl-topic">Crear materiales: presentaciones y audio</div><div class="tl-desc">Generar presentaciones, resúmenes de audio tipo podcast, y personalizar con tu información.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=1281" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">21:21</div>
+          <div class="tl-body"><div class="tl-topic">Mapas conceptuales, informes e infografías</div><div class="tl-desc">Todo lo que NotebookLM puede generar para tus estudiantes, y cómo darle tu estilo.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=1436" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">23:56</div>
+          <div class="tl-body"><div class="tl-topic">Citar con APA y llevar el contenido a Word</div><div class="tl-desc">Cómo NotebookLM te dice de dónde sacó cada idea para tus referencias estilo APA 7.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=1577" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">26:17</div>
+          <div class="tl-body"><div class="tl-topic">Truco: crear desde lo que ya generaste</div><div class="tl-desc">Convertir un resumen en infografía, mapa conceptual o podcast — y refinar slide por slide.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=1772" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">29:32</div>
+          <div class="tl-body"><div class="tl-topic">Editar y revisar presentaciones generadas</div><div class="tl-desc">Cómo pedir cambios específicos, añadir diapositivas y generar versiones revisadas.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=2015" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">33:35</div>
+          <div class="tl-body"><div class="tl-topic">Compartir tu Notebook y cierre del tema</div><div class="tl-desc">Cómo dar acceso por enlace sin hacerlo público. Resumen de todo lo que ofrece NotebookLM.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=2102" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">35:02</div>
+          <div class="tl-body"><div class="tl-topic">¡Ahora al CÓMO! Crear un simulador con IA</div><div class="tl-desc">Empieza la práctica. Los prompts por profesión y por qué no necesitas saber programar.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=2188" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">36:28</div>
+          <div class="tl-body"><div class="tl-topic">Simulador en Gemini (paso a paso)</div><div class="tl-desc">Tomar el prompt de enfermería, pegarlo en Gemini, y ver el simulador generarse.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=2295" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">38:15</div>
+          <div class="tl-body"><div class="tl-topic">El mismo simulador en Claude</div><div class="tl-desc">Crear con la versión gratuita (Sonnet 4.6) y comparar herramientas.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=2373" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">39:33</div>
+          <div class="tl-body"><div class="tl-topic">GitHub: crear tu repositorio</div><div class="tl-desc">Abrir cuenta, crear el repositorio "simuladores EDU 690" y mantener consistencia.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=2640" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">44:00</div>
+          <div class="tl-body"><div class="tl-topic">Subir tu simulador: pegar el HTML</div><div class="tl-desc">Add file, crear archivo nuevo, pegar el código, ponerle .html y commit change.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=2839" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">47:19</div>
+          <div class="tl-body"><div class="tl-topic">Activar GitHub Pages (paso clave)</div><div class="tl-desc">Settings → Pages → deploy from branch → main root. Cómo obtener tu URL público.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=3026" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">50:26</div>
+          <div class="tl-body"><div class="tl-topic">Montar más simuladores (Claude, ChatGPT, TIHA-bot)</div><div class="tl-desc">Subir el de derecho, usar el código de varias IA, y comparar resultados.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=3552" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">59:12</div>
+          <div class="tl-body"><div class="tl-topic">Cierre de la práctica de simuladores</div><div class="tl-desc">Tu tarea: practicar con tu área. Lo más retante será GitHub, pero ya está grabado.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=3592" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">59:52</div>
+          <div class="tl-body"><div class="tl-topic">FrameVR: nuestro espacio inmersivo</div><div class="tl-desc">Crear cuenta, elegir tu mundo, hacer tu avatar y conocer a Sacha, la IA del espacio.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=3884" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">1:04:44</div>
+          <div class="tl-body"><div class="tl-topic">Añadir material didáctico en FrameVR</div><div class="tl-desc">Modo de edición, subir imágenes, usar el menú de creación y entrenar a Sacha.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=4401" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">1:13:21</div>
+          <div class="tl-body"><div class="tl-topic">Entrar al mundo TIHA + transcripción de reuniones</div><div class="tl-desc">Cómo entrar a mi espacio, moverte, y la función de transcribir reuniones por email.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=4619" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">1:16:59</div>
+          <div class="tl-body"><div class="tl-topic">La Actividad 4 explicada (entrega 17 de junio)</div><div class="tl-desc">Dejar mensaje en mi mundo, curar en Raindrop, y qué entregar exactamente.</div></div>
+        </a>
+        <a class="tl-item" href="https://youtu.be/Ssjtj2SUmRg?t=4791" target="_blank" style="text-decoration:none;color:inherit">
+          <div class="tl-time">1:19:51</div>
+          <div class="tl-body"><div class="tl-topic">Cierre y reflexión final</div><div class="tl-desc">La pregunta para llevarte, cómo completar la reflexión y enviarla por correo.</div></div>
+        </a>
       </div>
     </div>
   </section>
