@@ -181,18 +181,69 @@
     document.querySelector('.builder').scrollIntoView({behavior:'smooth'});
   }
 
+  // Limpia una pieza: quita etiquetas tipo "Rol:", recorta, capitaliza y cierra con punto.
+  function pulir(texto){
+    if(!texto) return '';
+    var s = texto.trim();
+    // quita una etiqueta inicial como "Rol:", "Contexto -", "Tarea =", etc.
+    s = s.replace(/^\s*(rol|contexto|tarea|formato|r|c|t|f)\s*[:\-=.)]+\s*/i,'');
+    // colapsa espacios y saltos de línea
+    s = s.replace(/\s+/g,' ').trim();
+    if(!s) return '';
+    // primera letra mayúscula
+    s = s.charAt(0).toUpperCase() + s.slice(1);
+    // cierra con punto si no termina en signo de puntuación
+    if(!/[.!?…:]$/.test(s)) s += '.';
+    return s;
+  }
+
   function armar(){
-    var r=document.getElementById('rol').value.trim();
-    var c=document.getElementById('ctx').value.trim();
-    var t=document.getElementById('tarea').value.trim();
-    var f=document.getElementById('formato').value.trim();
-    if(!r&&!c&&!t&&!f){ document.getElementById('output').textContent='Completa al menos una pieza para armar tu prompt.'; return; }
-    var p='';
-    if(r) p+=r+' ';
-    if(c) p+=c+' ';
-    if(t) p+=t+' ';
-    if(f) p+=f;
-    document.getElementById('output').textContent=p.trim();
+    var r=pulir(document.getElementById('rol').value);
+    var c=pulir(document.getElementById('ctx').value);
+    var t=pulir(document.getElementById('tarea').value);
+    var f=pulir(document.getElementById('formato').value);
+
+    if(!r&&!c&&!t&&!f){
+      document.getElementById('output').textContent='Completa al menos una pieza para armar tu prompt.';
+      return;
+    }
+
+    var partes=[];
+
+    // ROL — encabeza el prompt definiendo el papel de la IA
+    if(r){
+      var rolTxt = r;
+      // si no empieza diciendo "eres/actúa", lo enmarcamos con naturalidad
+      if(!/^\s*(eres|act[úu]a|asume|comp[óo]rtate)/i.test(rolTxt)){
+        rolTxt = 'Actúa como ' + rolTxt.charAt(0).toLowerCase() + rolTxt.slice(1);
+      }
+      partes.push(rolTxt);
+    }
+
+    // CONTEXTO — conector según haya rol o no
+    if(c){
+      var ctxTxt = (r ? 'Contexto: ' : '') + c;
+      partes.push(ctxTxt);
+    }
+
+    // TAREA — la instrucción principal, bien marcada
+    if(t){
+      var tareaTxt = 'Tu tarea es la siguiente: ' + t.charAt(0).toLowerCase() + t.slice(1);
+      partes.push(tareaTxt);
+    }
+
+    // FORMATO — cómo se quiere la respuesta
+    if(f){
+      var fmtTxt = 'Presenta el resultado así: ' + f.charAt(0).toLowerCase() + f.slice(1);
+      partes.push(fmtTxt);
+    }
+
+    // Cierre TIHA: recordatorio de verificación (solo si hay una tarea real)
+    if(t){
+      partes.push('Si algún dato no es seguro, indícalo claramente en lugar de inventarlo.');
+    }
+
+    document.getElementById('output').textContent = partes.join('\n\n');
   }
 
   function copiar(){
