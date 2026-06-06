@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clase Final · Presentación de Portafolios | ADMI 6990 · TIHA</title>
+<style>
+  :root{
+    --vino:#8B2A2A;
+    --coral:#D85A30;
+    --crema:#F4E8D8;
+    --crema-claro:#FBF5EC;
+    --tinta:#2C2420;
+    --gris:#6B5D52;
+    --linea:#E3D3BE;
+    --verde:#3B7A57;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:Georgia,'Times New Roman',serif;
+    background:var(--crema-claro);
+    color:var(--tinta);
+    line-height:1.65;
+    padding:0 0 60px;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 22px;}
+
+  /* Encabezado */
+  header.hero{
+    background:linear-gradient(135deg,var(--vino) 0%,#6E1F1F 100%);
+    color:#fff;padding:40px 22px 34px;text-align:center;
+  }
+  header.hero .kicker{
+    font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+    opacity:.9;margin-bottom:14px;
+  }
+  header.hero h1{font-size:1.95rem;line-height:1.2;margin-bottom:8px;font-weight:normal;}
+  header.hero h2{font-size:1.05rem;font-style:italic;font-weight:normal;opacity:.95;margin-bottom:18px;}
+  header.hero .meta{
+    display:inline-block;background:rgba(255,255,255,.14);
+    padding:8px 18px;border-radius:30px;font-size:.85rem;letter-spacing:.04em;
+  }
+
+  /* Secciones */
+  section{margin-top:38px;}
+  .card{
+    background:#fff;border:1px solid var(--linea);border-radius:14px;
+    padding:26px 28px;box-shadow:0 2px 14px rgba(139,42,42,.05);
+  }
+  h3.sec{
+    font-size:1.35rem;color:var(--vino);margin-bottom:6px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .sec-sub{color:var(--gris);font-size:.92rem;font-style:italic;margin-bottom:18px;}
+
+  /* Cita TIHA */
+  .quote{
+    background:var(--crema);border-left:5px solid var(--coral);
+    padding:20px 24px;border-radius:0 12px 12px 0;margin:26px 0;
+    font-style:italic;font-size:1.05rem;color:var(--vino);
+  }
+  .quote .author{
+    display:block;margin-top:10px;font-size:.82rem;font-style:normal;
+    color:var(--gris);letter-spacing:.03em;
+  }
+
+  /* Agenda / cronograma */
+  .agenda-intro{
+    background:var(--crema);border-radius:12px;padding:16px 20px;
+    margin-bottom:20px;font-size:.95rem;
+  }
+  .agenda-intro strong{color:var(--vino);}
+  table.cron{width:100%;border-collapse:collapse;margin-top:8px;font-size:.93rem;}
+  table.cron th{
+    background:var(--vino);color:#fff;text-align:left;padding:10px 12px;
+    font-weight:normal;font-size:.82rem;letter-spacing:.05em;text-transform:uppercase;
+  }
+  table.cron td{padding:11px 12px;border-bottom:1px solid var(--linea);vertical-align:top;}
+  table.cron tr:nth-child(even) td{background:var(--crema-claro);}
+  table.cron .hora{font-weight:bold;color:var(--coral);white-space:nowrap;}
+  table.cron .grupo{font-weight:bold;color:var(--vino);}
+  table.cron .integrantes{font-size:.82rem;color:var(--gris);display:block;margin-top:2px;}
+  .fase td{background:var(--coral)!important;color:#fff;font-weight:bold;font-size:.85rem;letter-spacing:.04em;}
+
+  /* Recordatorios chatbot */
+  ul.check{list-style:none;margin-top:8px;}
+  ul.check li{
+    position:relative;padding:9px 0 9px 34px;border-bottom:1px dashed var(--linea);
+    font-size:.96rem;
+  }
+  ul.check li:last-child{border-bottom:none;}
+  ul.check li::before{
+    content:"✓";position:absolute;left:0;top:8px;
+    background:var(--verde);color:#fff;width:22px;height:22px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:.8rem;
+  }
+  .destaca{
+    background:linear-gradient(135deg,#FFF4EC,#FBE9DC);
+    border:1px solid var(--coral);border-radius:12px;padding:18px 22px;margin-top:18px;
+  }
+  .destaca h4{color:var(--coral);font-size:1.05rem;margin-bottom:8px;}
+
+  /* Rúbrica */
+  table.rub{width:100%;border-collapse:collapse;margin-top:14px;font-size:.88rem;}
+  table.rub th{background:var(--vino);color:#fff;padding:9px 10px;text-align:left;font-weight:normal;font-size:.8rem;}
+  table.rub td{padding:9px 10px;border-bottom:1px solid var(--linea);vertical-align:top;}
+  table.rub td.pts{text-align:center;font-weight:bold;color:var(--coral);white-space:nowrap;}
+  table.rub tr:nth-child(even) td{background:var(--crema-claro);}
+  .comp-head{
+    background:var(--coral);color:#fff;padding:10px 14px;border-radius:8px;
+    margin:22px 0 0;font-size:1rem;font-weight:bold;
+  }
+  .subtotal td{background:var(--crema)!important;font-weight:bold;color:var(--vino);}
+  .total-row{
+    background:var(--vino);color:#fff;padding:14px 18px;border-radius:8px;
+    margin-top:14px;display:flex;justify-content:space-between;align-items:center;
+    font-size:1.1rem;font-weight:bold;
+  }
+  .bono{
+    background:var(--crema);border:1px dashed var(--coral);border-radius:12px;
+    padding:16px 20px;margin-top:16px;font-size:.92rem;
+  }
+  .bono strong{color:var(--coral);}
+
+  /* Reflexión interactiva */
+  .reflexion-box{background:#fff;border:1px solid var(--linea);border-radius:14px;padding:26px 28px;}
+  .lectura-link{
+    display:inline-flex;align-items:center;gap:8px;background:var(--vino);color:#fff;
+    text-decoration:none;padding:11px 20px;border-radius:30px;font-size:.9rem;margin:6px 0 18px;
+  }
+  .pregunta{
+    font-size:1.12rem;color:var(--vino);font-weight:bold;margin-bottom:6px;line-height:1.4;
+  }
+  textarea{
+    width:100%;min-height:150px;border:1px solid var(--linea);border-radius:10px;
+    padding:14px;font-family:Georgia,serif;font-size:1rem;color:var(--tinta);
+    resize:vertical;background:var(--crema-claro);
+  }
+  textarea:focus{outline:none;border-color:var(--coral);}
+  .campo-nombre{
+    width:100%;border:1px solid var(--linea);border-radius:10px;padding:12px 14px;
+    font-family:Georgia,serif;font-size:1rem;margin-bottom:12px;background:var(--crema-claro);
+  }
+  .campo-nombre:focus{outline:none;border-color:var(--coral);}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;}
+  .btn{
+    border:none;cursor:pointer;font-family:Georgia,serif;font-size:.92rem;
+    padding:12px 22px;border-radius:30px;display:inline-flex;align-items:center;gap:8px;
+    transition:transform .15s,box-shadow .15s;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(139,42,42,.18);}
+  .btn-png{background:var(--coral);color:#fff;}
+  .btn-pdf{background:var(--vino);color:#fff;}
+  .btn-email{background:var(--verde);color:#fff;}
+  .nota-priv{font-size:.8rem;color:var(--gris);margin-top:14px;font-style:italic;}
+
+  footer{
+    margin-top:48px;text-align:center;color:var(--gris);font-size:.82rem;
+    border-top:1px solid var(--linea);padding-top:24px;
+  }
+  footer .firma{color:var(--vino);font-style:italic;margin-top:6px;}
+  @media(max-width:560px){
+    header.hero h1{font-size:1.5rem;}
+    .card,.reflexion-box{padding:20px 16px;}
+    table.cron,table.rub{font-size:.8rem;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="kicker">Universidad de Puerto Rico · Recinto de Río Piedras · EGAE</div>
+  <h1>Clase Final · Presentación de Portafolios</h1>
+  <h2>Proyecto Final · Business AI Prototype</h2>
+  <div class="meta">ADMI 6990 · Generative AI for Strategic Business Transformation · 3T 2025–2026</div>
+</header>
+
+<div class="wrap">
+
+  <div class="quote">
+    «Cuando integramos la inteligencia artificial con intención humanizadora, no solo aprendemos con ella, aprendemos a ser más nosotros mismos.»
+    <span class="author">TIHA (2026)</span>
+  </div>
+
+  <!-- ESTRUCTURA DE LA CLASE -->
+  <section>
+    <div class="card">
+      <h3 class="sec">📅 Así trabajaremos el sábado</h3>
+      <p class="sec-sub">Estructura general de nuestra última jornada juntos</p>
+      <div class="agenda-intro">
+        Comenzamos a la <strong>1:11 PM</strong> y cerramos a las <strong>3:50 PM</strong>.
+        Cada equipo cuenta con <strong>15 minutos</strong>: aproximadamente
+        <strong>8 min</strong> para presentar el portafolio y demostrar el bot,
+        <strong>4 min</strong> para que interactuemos en vivo con su chatbot mediante el
+        <em>prompt maestro</em>, y <strong>3 min</strong> de preguntas y transición.
+        El <strong>portafolio (website) ES su presentación</strong>: navéguenlo en vivo.
+      </div>
+
+      <table class="cron">
+        <thead>
+          <tr><th>Hora</th><th>Momento</th></tr>
+        </thead>
+        <tbody>
+          <tr class="fase"><td class="hora">1:00</td><td>Conexión, cámaras encendidas y bienvenida TIHA</td></tr>
+          <tr><td class="hora">1:11</td><td><span class="grupo">Grupo 1 · Mercadotecnia IA</span><span class="integrantes">Bryan Cardona-González (líder, CEO) · Brenda Banchs-Rodríguez (COO) · Generosa Afanador-Doménech (CFO) · Jorge Ayala-Soto (CTO y Ética)</span></td></tr>
+          <tr><td class="hora">1:26</td><td><span class="grupo">Grupo 2 · Human Pulse AI</span><span class="integrantes">Joshua Sierra-Rolón (líder) · Isabella Marengo-Ortiz · Juan Motta-Febres</span></td></tr>
+          <tr><td class="hora">1:41</td><td><span class="grupo">Grupo 3 · TranSolutions</span><span class="integrantes">Alice Haddock-Torres (líder) · Airam Feliciano-Kercado · Coralys Pérez-Luciano</span></td></tr>
+          <tr><td class="hora">1:56</td><td><span class="grupo">Grupo 4 · IA-UniData-UPR</span><span class="integrantes">Luis Castro-Rivera (líder) · Nyctor Nazario-Márquez · Liliana Benítez-Villanueva</span></td></tr>
+          <tr class="fase"><td class="hora">2:11</td><td>Pausa breve · estiramiento ☕</td></tr>
+          <tr><td class="hora">2:16</td><td><span class="grupo">Grupo 5 · Praxia Lens</span><span class="integrantes">Emmanuel Vargas-Torres (líder) · Yanitzia Rivera-Burgos</span></td></tr>
+          <tr><td class="hora">2:31</td><td><span class="grupo">Grupo 6 · OnboardCompassAI</span><span class="integrantes">Christian Rodríguez-Avilés (individual)</span></td></tr>
+          <tr><td class="hora">2:46</td><td><span class="grupo">Grupo 7 · PulseBoard</span><span class="integrantes">Kishna Suárez-Hernández (líder) · Elián Batista-Quiñones · Andrés Cabrera-Serrano · Pedro López-Berríos</span></td></tr>
+          <tr><td class="hora">3:01</td><td><span class="grupo">Grupo 8 · AcuityOS</span><span class="integrantes">Lizbeth Hernández-Mercado (líder) · Milagros Muñoz-Figueroa · Gabriel Vélez-Aponte</span></td></tr>
+          <tr class="fase"><td class="hora">3:16</td><td>Reflexión colectiva (UNESCO et al., 2025) y evaluación entre pares</td></tr>
+          <tr class="fase"><td class="hora">3:40</td><td>Cierre TIHA · Experiencia de humanización del aprendizaje</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- RECORDATORIOS CHATBOT -->
+  <section>
+    <div class="card">
+      <h3 class="sec">🤖 Lo más importante: su chatbot</h3>
+      <p class="sec-sub">La demostración del bot y nuestra interacción en vivo es el corazón de la presentación</p>
+      <ul class="check">
+        <li>Tengan <strong>listo el enlace de su chatbot</strong> para compartirlo en el chat al momento de presentar, de modo que podamos abrirlo e interactuar con él en vivo.</li>
+        <li>El <strong>portafolio (website) es su presentación</strong>. Con que <strong>un líder comparta todo en su modelo</strong> es suficiente; desde ahí trabajaremos.</li>
+        <li>Distribúyanse las partes entre los integrantes para una entrega fluida.</li>
+        <li><strong>Cámara encendida</strong> durante toda la presentación. 🎥</li>
+      </ul>
+
+      <div class="destaca">
+        <h4>✨ Actividad en vivo: el Prompt Maestro</h4>
+        <p>Preparen un <strong>«prompt maestro»</strong>: una instrucción bien diseñada que nos compartan
+        para probar su bot en tiempo real. Con ese mismo prompt afinaremos algunos detalles
+        y exploraremos juntos las capacidades de su prototipo. Es su oportunidad de mostrar
+        lo que su chatbot puede hacer cuando se le habla con intención.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RÚBRICA -->
+  <section>
+    <div class="card">
+      <h3 class="sec">📊 Rúbrica TIHA del Portafolio</h3>
+      <p class="sec-sub">100 puntos totales · equivale al 45% de la nota final del curso, traducido proporcionalmente</p>
+
+      <div class="comp-head">📊 Componente A · Portafolio Digital (75 pts)</div>
+      <table class="rub">
+        <thead><tr><th>Criterio</th><th>Pts</th><th>Qué evaluamos</th></tr></thead>
+        <tbody>
+          <tr><td>1. Identidad del Equipo y Visión Humano-Céntrica</td><td class="pts">7</td><td>Portada profesional, propósito claro, identidad visual coherente, mission statement humanizador.</td></tr>
+          <tr><td>2. Problema Empresarial Real y Datos Sustentadores</td><td class="pts">12</td><td>Problema real, contexto evidenciado, mínimo 5 fuentes APA verificables, stakeholders identificados, justificación de IA basada en evidencia.</td></tr>
+          <tr><td>3. Canvas del Modelo de Negocio con IA</td><td class="pts">12</td><td>Los 9 bloques completos, IA integrada estratégicamente, narrativa coherente, modelo visual claro.</td></tr>
+          <tr><td>4. Marco Ético y Gobernanza Responsable</td><td class="pts">12</td><td>Aplicación de Floridi et al. (2018), riesgos identificados con mitigaciones específicas, gobernanza accionable.</td></tr>
+          <tr><td>5. Sala de Junta Simulada con IA (Chatbot de un Stakeholder)</td><td class="pts">12</td><td>Un chatbot representando un stakeholder, diálogo profundo documentado, refinamientos sustanciales del prototipo.</td></tr>
+          <tr><td>6. Prototipo Funcional Business AI</td><td class="pts">15</td><td>Prototipo demostrable, conectado al problema, caso de uso convincente, calidad ejecutiva.</td></tr>
+          <tr><td>7. Reflexión TIHA y Declaración de Uso de IA</td><td class="pts">5</td><td>Reflexión auténtica, declaración transparente, proyección estratégica futura.</td></tr>
+          <tr class="subtotal"><td>SUBTOTAL COMPONENTE A</td><td class="pts">75</td><td></td></tr>
+        </tbody>
+      </table>
+
+      <div class="comp-head">🎤 Componente B · Defensa Ejecutiva (20 pts)</div>
+      <table class="rub">
+        <thead><tr><th>Criterio</th><th>Pts</th><th>Qué evaluamos</th></tr></thead>
+        <tbody>
+          <tr><td>Claridad y Estructura Ejecutiva</td><td class="pts">6</td><td>Comunicación clara, estructura lógica, manejo del tiempo, transiciones fluidas entre integrantes.</td></tr>
+          <tr><td>Dominio del Contenido</td><td class="pts">6</td><td>Profundidad técnica, manejo del componente ético, respuestas a preguntas.</td></tr>
+          <tr><td>Demostración del Prototipo</td><td class="pts">4</td><td>Demostración tangible y persuasiva durante la presentación.</td></tr>
+          <tr><td>Cierre Humanizador</td><td class="pts">4</td><td>Reflexión final que conecte la propuesta con el impacto humano y TIHA.</td></tr>
+          <tr class="subtotal"><td>SUBTOTAL COMPONENTE B</td><td class="pts">20</td><td></td></tr>
+        </tbody>
+      </table>
+
+      <div class="comp-head">⚖️ Componente C · Calidad Transversal (5 pts)</div>
+      <table class="rub">
+        <thead><tr><th>Criterio</th><th>Pts</th><th>Qué evaluamos</th></tr></thead>
+        <tbody>
+          <tr><td>Rigurosidad APA 7ma</td><td class="pts">2</td><td>Citas correctas, DOI presente, sin referencias fabricadas. Citación transparente del uso de IA.</td></tr>
+          <tr><td>Diseño Profesional del Portafolio</td><td class="pts">2</td><td>Coherencia visual, jerarquía clara, navegación fluida, portafolio público y accesible.</td></tr>
+          <tr><td>Voz Auténtica del Equipo</td><td class="pts">1</td><td>Curaduría crítica evidente, integración respetuosa de Nivel 4 (Uso Abierto Declarado).</td></tr>
+          <tr class="subtotal"><td>SUBTOTAL COMPONENTE C</td><td class="pts">5</td><td></td></tr>
+        </tbody>
+      </table>
+
+      <div class="total-row"><span>TOTAL DEL PROYECTO FINAL</span><span>100 pts</span></div>
+
+      <div class="bono">
+        <strong>BONO opcional e individual:</strong> Comparte una publicación en LinkedIn sobre alguna
+        tarea del curso que te haya gustado mucho —ya evaluada satisfactoriamente— contando tu experiencia.
+        Puede ser sobre el Proyecto Final. <strong>11 puntos adicionales</strong> que se suman a tu nota final del curso.
+      </div>
+    </div>
+  </section>
+
+  <!-- REFLEXIÓN COLECTIVA -->
+  <section>
+    <div class="reflexion-box" id="captura">
+      <h3 class="sec">📖 Reflexión Colectiva</h3>
+      <p class="sec-sub">Lectura: UNESCO et al. (2025) · Guía sobre IA para Estudiantes</p>
+      <a class="lectura-link" href="https://unesdoc.unesco.org/ark:/48223/pf0000393812" target="_blank" rel="noopener">
+        📄 Abrir la lectura UNESCO et al. (2025)
+      </a>
+
+      <p class="pregunta">¿Qué aprendimos sobre la IA y la transformación a lo largo de este curso, y cómo cambia tu manera de imaginar tu rol profesional frente a la inteligencia artificial?</p>
+      <p class="sec-sub">Escribe tu reflexión auténtica. No hay respuesta correcta: queremos tu voz.</p>
+
+      <input class="campo-nombre" id="nombre" type="text" placeholder="Tu nombre" />
+      <textarea id="respuesta" placeholder="Escribe aquí tu reflexión..."></textarea>
+
+      <div class="btn-row">
+        <button class="btn btn-png" onclick="descargarPNG()">📸 Descargar (PNG)</button>
+        <button class="btn btn-pdf" onclick="descargarPDF()">📄 Descargar (PDF)</button>
+        <button class="btn btn-email" onclick="enviarEmail()">✉️ Enviar por email</button>
+      </div>
+      <p class="nota-priv">Tu reflexión se guarda solo en tu dispositivo hasta que la descargues o la envíes. Nada se sube automáticamente.</p>
+    </div>
+  </section>
+
+  <div class="quote">
+    «La inteligencia artificial no reemplaza al ser humano; lo potencia para trascender.»
+    <span class="author">Metodología TIHA · Dra. Mariluz Serrano Ortiz</span>
+  </div>
+
+  <footer>
+    ADMI 6990 · Generative AI for Strategic Business Transformation · 3T 2025–2026<br>
+    EGAE · Universidad de Puerto Rico · Recinto de Río Piedras<br>
+    <span class="firma">Dra. Mariluz Serrano Ortiz, 2026 · mariluz.serrano@upr.edu · WhatsApp: 787-381-1289</span>
+  </footer>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  function nombreArchivo(){
+    var n=document.getElementById('nombre').value.trim();
+    return n? n.replace(/\s+/g,'_'): 'reflexion';
+  }
+  function bloqueCaptura(){
+    // Construye un bloque temporal limpio para la captura
+    var nombre=document.getElementById('nombre').value.trim()||'(sin nombre)';
+    var resp=document.getElementById('respuesta').value.trim()||'(sin respuesta)';
+    var div=document.createElement('div');
+    div.style.cssText='width:780px;padding:40px;background:#FBF5EC;font-family:Georgia,serif;color:#2C2420;line-height:1.6;';
+    div.innerHTML=
+      '<div style="background:#8B2A2A;color:#fff;padding:20px;border-radius:10px;text-align:center;margin-bottom:24px;">'+
+        '<div style="font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;opacity:.9;">ADMI 6990 · TIHA · Reflexión Colectiva</div>'+
+        '<div style="font-size:1.3rem;margin-top:8px;">Reflexión Final del Curso</div>'+
+      '</div>'+
+      '<p style="color:#8B2A2A;font-weight:bold;font-size:1.05rem;">¿Qué aprendimos sobre la IA y la transformación, y cómo cambia tu manera de imaginar tu rol profesional frente a la IA?</p>'+
+      '<p style="margin:6px 0 18px;font-size:.85rem;color:#6B5D52;">Lectura base: UNESCO et al. (2025)</p>'+
+      '<p style="font-weight:bold;margin-bottom:6px;">Estudiante: '+nombre+'</p>'+
+      '<div style="background:#fff;border:1px solid #E3D3BE;border-radius:10px;padding:18px;white-space:pre-wrap;">'+resp+'</div>'+
+      '<p style="margin-top:24px;font-style:italic;color:#8B2A2A;border-left:4px solid #D85A30;padding-left:14px;">«La inteligencia artificial no reemplaza al ser humano; lo potencia para trascender.»<br><span style="font-size:.8rem;color:#6B5D52;font-style:normal;">Metodología TIHA · Dra. Mariluz Serrano Ortiz</span></p>';
+    return div;
+  }
+  function descargarPNG(){
+    var div=bloqueCaptura();
+    div.style.position='fixed';div.style.left='-9999px';document.body.appendChild(div);
+    html2canvas(div,{scale:2,backgroundColor:'#FBF5EC'}).then(function(canvas){
+      var a=document.createElement('a');
+      a.download='Reflexion_TIHA_'+nombreArchivo()+'.png';
+      a.href=canvas.toDataURL('image/png');a.click();
+      document.body.removeChild(div);
+    });
+  }
+  function descargarPDF(){
+    var div=bloqueCaptura();
+    div.style.position='fixed';div.style.left='-9999px';document.body.appendChild(div);
+    html2canvas(div,{scale:2,backgroundColor:'#FBF5EC'}).then(function(canvas){
+      var img=canvas.toDataURL('image/png');
+      var jsPDF=window.jspdf.jsPDF;
+      var pdf=new jsPDF('p','mm','a4');
+      var w=190, h=canvas.height*w/canvas.width;
+      pdf.addImage(img,'PNG',10,10,w,h);
+      pdf.save('Reflexion_TIHA_'+nombreArchivo()+'.pdf');
+      document.body.removeChild(div);
+    });
+  }
+  function enviarEmail(){
+    var nombre=document.getElementById('nombre').value.trim()||'(sin nombre)';
+    var resp=document.getElementById('respuesta').value.trim()||'(sin respuesta)';
+    var asunto=encodeURIComponent('Reflexión Colectiva TIHA · '+nombre+' · ADMI 6990');
+    var cuerpo=encodeURIComponent(
+      'Estimada Dra. Serrano:\n\nLe comparto mi reflexión colectiva (UNESCO et al., 2025).\n\nEstudiante: '+nombre+
+      '\n\n¿Qué aprendimos sobre la IA y la transformación, y cómo cambia mi rol profesional frente a la IA?\n\n'+resp+
+      '\n\n— Enviado desde la Guía de la Clase Final · Modelo TIHA');
+    window.location.href='mailto:mariluz.serrano@upr.edu?subject='+asunto+'&body='+cuerpo;
+  }
+</script>
+</body>
+</html>
