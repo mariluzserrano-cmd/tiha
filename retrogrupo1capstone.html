@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retroalimentación CAPSTONE · Grupo #1</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+  :root {
+    --navy: #0D2545;
+    --teal: #1A6B72;
+    --coral: #C95E42;
+    --gold: #C8993A;
+    --cream: #FAF7F2;
+    --light-teal: #E8F4F5;
+    --light-coral: #FBF0EC;
+    --light-gold: #FDF5E8;
+    --text: #1C1C2E;
+    --muted: #5A6475;
+    --border: #DDD8CF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    background: var(--cream);
+    color: var(--text);
+    font-size: 15.5px;
+    line-height: 1.75;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--navy);
+    color: #fff;
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: rgba(200,153,58,.12);
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30%;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(26,107,114,.15);
+  }
+  .header-program {
+    font-family: 'Source Serif 4', serif;
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+  header h1 span { color: var(--gold); }
+  .header-sub {
+    font-size: 13.5px;
+    color: rgba(255,255,255,.65);
+    font-style: italic;
+    margin-bottom: 32px;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    position: relative; z-index: 1;
+  }
+  .meta-item {
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .meta-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.5);
+    margin-bottom: 4px;
+  }
+  .meta-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .meta-value.score {
+    font-size: 26px;
+    color: var(--gold);
+  }
+
+  /* ── MAIN CONTENT ── */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 52px 40px 80px;
+  }
+
+  /* ── SECTION TITLES ── */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    margin-top: 48px;
+  }
+  .section-label:first-of-type { margin-top: 0; }
+  .section-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-teal { background: var(--teal); }
+  .dot-coral { background: var(--coral); }
+  .dot-gold { background: var(--gold); }
+  .dot-navy { background: var(--navy); }
+  .section-label h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+  }
+
+  /* ── VALORACIÓN GENERAL ── */
+  .valuation-box {
+    background: linear-gradient(135deg, var(--navy) 0%, #1A3560 100%);
+    color: #fff;
+    border-radius: 12px;
+    padding: 32px 36px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .valuation-box::after {
+    content: '93';
+    position: absolute;
+    right: 28px; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 120px;
+    font-weight: 900;
+    color: rgba(200,153,58,.15);
+    line-height: 1;
+  }
+  .val-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: 'Source Serif 4', serif;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  .valuation-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+  .valuation-box p {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: rgba(255,255,255,.85);
+    max-width: 560px;
+    position: relative; z-index: 1;
+  }
+
+  /* ── RUBRIC GRID ── */
+  .rubric-grid {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+  .rubric-item {
+    border-radius: 10px;
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: start;
+  }
+  .rubric-item.excelente {
+    background: var(--light-teal);
+    border-left: 4px solid var(--teal);
+  }
+  .rubric-item.bueno {
+    background: var(--light-gold);
+    border-left: 4px solid var(--gold);
+  }
+  .rubric-criterion {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--navy);
+    margin-bottom: 5px;
+  }
+  .rubric-note {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.6;
+    font-style: italic;
+  }
+  .rubric-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .badge-excelente {
+    background: var(--teal);
+    color: #fff;
+  }
+  .badge-bueno {
+    background: var(--gold);
+    color: var(--navy);
+  }
+
+  /* ── ORAL EVAL ── */
+  .oral-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .oral-card {
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+  .oral-card.positivo {
+    background: var(--light-teal);
+    border-left: 4px solid var(--teal);
+  }
+  .oral-card.mejora {
+    background: var(--light-coral);
+    border-left: 4px solid var(--coral);
+  }
+  .oral-card h4 {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: 'Source Serif 4', serif;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .oral-card.positivo h4 { color: var(--teal); }
+  .oral-card.mejora h4 { color: var(--coral); }
+  .oral-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  .oral-card ul li {
+    font-size: 13.5px;
+    color: var(--muted);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.55;
+  }
+  .oral-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    font-size: 11px;
+  }
+  .oral-card.positivo ul li::before { color: var(--teal); }
+  .oral-card.mejora ul li::before { color: var(--coral); }
+
+  /* ── PPTX OBSERVATIONS ── */
+  .pptx-obs {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 30px;
+    margin-bottom: 8px;
+  }
+  .pptx-obs h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--navy);
+    margin-bottom: 14px;
+  }
+  .obs-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+  }
+  .obs-list li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--muted);
+    align-items: start;
+  }
+  .obs-icon {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .icon-pos { background: #D6F0EC; color: var(--teal); }
+  .icon-warn { background: #FDF0CC; color: #8A6200; }
+  .icon-rec { background: #FDE8E1; color: var(--coral); }
+
+  /* ── TIME NOTE ── */
+  .time-note {
+    background: var(--light-gold);
+    border: 1px solid #E8C96A;
+    border-radius: 10px;
+    padding: 18px 22px;
+    font-size: 13.5px;
+    color: var(--text);
+    line-height: 1.65;
+    margin-bottom: 8px;
+  }
+  .time-note strong { color: var(--navy); }
+
+  /* ── HIGHLIGHTS FROM PPT ── */
+  .ppt-highlights {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+  .ppt-hl {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .ppt-hl-tag {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .ppt-hl p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  .ppt-hl strong { color: var(--navy); font-size: 13.5px; }
+
+  /* ── REFLECTION BOX ── */
+  .reflection-box {
+    background: var(--navy);
+    color: #fff;
+    border-radius: 12px;
+    padding: 32px 36px;
+    margin-bottom: 8px;
+  }
+  .reflection-box blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--gold);
+    border-left: 3px solid var(--gold);
+    padding-left: 18px;
+    margin-bottom: 18px;
+  }
+  .reflection-box p {
+    font-size: 14px;
+    color: rgba(255,255,255,.8);
+    line-height: 1.7;
+  }
+
+  /* ── RECOMMENDATIONS ── */
+  .recs {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .rec-item {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 14px;
+    align-items: start;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+  }
+  .rec-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .rec-text strong {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 3px;
+  }
+  .rec-text span {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  /* ── SCORE SUMMARY ── */
+  .score-summary {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 30px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .score-breakdown {
+    display: grid;
+    gap: 10px;
+  }
+  .score-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 60px;
+    gap: 10px;
+    align-items: center;
+    font-size: 13.5px;
+  }
+  .score-row .label { color: var(--muted); }
+  .score-bar-wrap {
+    height: 8px;
+    background: #EDEAE4;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .score-bar {
+    height: 100%;
+    border-radius: 4px;
+    background: var(--teal);
+  }
+  .score-bar.oral { background: var(--coral); }
+  .score-row .pts {
+    font-weight: 600;
+    color: var(--navy);
+    text-align: right;
+  }
+  .total-score {
+    text-align: center;
+  }
+  .total-score .big {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 900;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .total-score .big span { color: var(--teal); }
+  .total-score .label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .total-score .badge-ex {
+    display: inline-block;
+    background: var(--teal);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-top: 8px;
+  }
+
+  /* ── TIHA FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .footer-brand {
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .footer-brand strong {
+    display: block;
+    font-size: 12px;
+    color: var(--navy);
+    font-weight: 600;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--teal);
+    letter-spacing: -0.5px;
+  }
+  .footer-logo span { color: var(--gold); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 36px 0;
+  }
+
+  @media print {
+    body { font-size: 13px; }
+    header { padding: 32px 40px; }
+    main { padding: 32px 40px; }
+    .meta-grid { grid-template-columns: repeat(4,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════ HEADER ══════════ -->
+<header>
+  <div class="header-program">DECEP · Universidad de Puerto Rico · Modelo TIHA</div>
+  <h1>Certificación Profesional en<br><span>Gerencia de Proyectos PMP®</span></h1>
+  <p class="header-sub">Retroalimentación de Presentación CAPSTONE · Evaluación Ejecutiva</p>
+
+  <div class="meta-grid">
+    <div class="meta-item">
+      <div class="meta-label">Grupo</div>
+      <div class="meta-value">#1</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Proyecto</div>
+      <div class="meta-value">Modernización CaribeTech</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Fecha</div>
+      <div class="meta-value">6 de junio, 2026</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Puntuación</div>
+      <div class="meta-value score">93 / 100</div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════ MAIN ══════════ -->
+<main>
+
+  <!-- Integrantes -->
+  <p style="font-size:13px;color:var(--muted);letter-spacing:.5px;margin-bottom:36px;">
+    <strong style="color:var(--navy);">Integrantes:</strong>&nbsp;
+    Magda Amaral &nbsp;·&nbsp; Alfredo Machargo &nbsp;·&nbsp; Judith Flores &nbsp;·&nbsp; Karla Reyes
+  </p>
+
+  <!-- PUNTUACIÓN TOTAL -->
+  <div class="score-summary">
+    <div class="score-breakdown">
+      <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--navy);margin-bottom:14px;">Desglose de puntuación</div>
+      <div class="score-row">
+        <span class="label">Rúbrica (80 pts) — criterios 1–10</span>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:91.25%"></div></div>
+        <span class="pts">73/80</span>
+      </div>
+      <div class="score-row">
+        <span class="label">Evaluación oral (20 pts)</span>
+        <div class="score-bar-wrap"><div class="score-bar oral" style="width:100%"></div></div>
+        <span class="pts">20/20</span>
+      </div>
+      <p style="font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic;">Un punto descontado por gráficas que cubrían cifras clave (no conformidades). Tiempo extendido: +15 min concedidos para garantizar presentación completa.</p>
+    </div>
+    <div class="total-score">
+      <div class="big">93<span>/100</span></div>
+      <div class="label">Nota final</div>
+      <div class="badge-ex">EXCELENTE</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- VALORACIÓN GENERAL -->
+  <div class="section-label">
+    <div class="section-dot dot-navy"></div>
+    <h2>Valoración General</h2>
+  </div>
+
+  <div class="valuation-box">
+    <div class="val-badge">Evaluación Ejecutiva</div>
+    <h3>Desempeño Excelente</h3>
+    <p>El equipo presentó una propuesta estratégica de alta calidad ante la junta de CaribeTech Manufacturing, LLC, demostrando dominio de los conocimientos PMP® y pensamiento crítico aplicado. La integración de herramientas como Lean, MES/IoT, energía solar y el marco ADKAR —articulados con coherencia financiera y de riesgos— evidencia un nivel de madurez profesional notable para este nivel de formación. La reflexión final del equipo sobre el rol del criterio humano en la era de la IA generativa fue el cierre más poderoso de la presentación.</p>
+  </div>
+
+  <!-- NOTA SOBRE TIEMPO -->
+  <div class="time-note">
+    <strong>📋 Nota sobre gestión del tiempo:</strong> El equipo dispuso de 20 minutos asignados. Magda y Judith tomaron aproximadamente 40 minutos, por lo que se concedieron <strong>15 minutos adicionales</strong> para que Alfredo y Karla pudieran concluir su parte. Este factor impactó la profundidad con que se pudieron desarrollar algunos módulos (cronograma, stakeholders, comunicaciones) y es una oportunidad de desarrollo profesional que se detalla más adelante.
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RÚBRICA POR CRITERIOS -->
+  <div class="section-label">
+    <div class="section-dot dot-teal"></div>
+    <h2>Evaluación por Criterios · Rúbrica 80%</h2>
+  </div>
+
+  <div class="rubric-grid">
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">1. Definición del Proyecto y Caso de Negocio</div>
+        <div class="rubric-note">El Executive Summary articuló con claridad el problema estratégico de CaribeTech: demanda creciente (+30–35%), procesos desconectados y riesgo regulatorio. La comparativa de alternativas (no actuar / mejoras parciales / modernización integral) con justificación financiera ($7.187M → VAN positivo, ROI 28%, payback 2.5 años) fue convincente y ejecutivamente sólida. Nota: la gráfica del business case se desplazó visualmente durante la presentación, pero la explicación oral suplió el contexto.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">2. Calidad del Project Charter</div>
+        <div class="rubric-note">El charter presentado identificó sponsor, Project Manager, objetivo general, presupuesto preliminar, criterios de aprobación e hitos clave con fechas. La coherencia entre el objetivo SMART y el alcance es notable. El mensaje a la junta fue directo: "Aprobar Charter / Autorizar RFP / Activar ADKAR / PMO semanal." Atinado y enfocado.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">3. Gestión del Alcance y WBS/EDT</div>
+        <div class="rubric-note">La explicación del alcance fue una de las partes más sólidas: claridad sobre qué está dentro (rediseño Lean 65,000 pies², automatización, MES/IoT, energía solar, ADKAR) y qué está fuera (construcción nueva, expansión de mercado). Se articuló el cronograma dentro del módulo de alcance —una decisión narrativa que funcionó bien ante la junta.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item bueno">
+      <div>
+        <div class="rubric-criterion">4. Gestión del Cronograma</div>
+        <div class="rubric-note">El "Cronograma Maestro" fue presentado, pero la explicación dependió en exceso de la lectura de notas, lo que limitó la conexión visual y narrativa con la junta. Los hitos están bien definidos (mes 0.5 charter → mes 18 cierre), y la ruta crítica se mencionó, aunque no se desarrolló suficientemente para que el stakeholder comprendiera las interdependencias y buffers críticos.</div>
+      </div>
+      <div class="rubric-badge badge-bueno">Bueno · 4/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">5. Gestión de Costos y Earned Value Thinking</div>
+        <div class="rubric-note">Karla presentó con dominio el framework de governance y los KPIs de EVM (CPI ≥0.95, SPI ≥0.95). El Dashboard de mes 6 con semáforos fue un punto alto: mostró madurez en el control de proyectos (CPI 0.98 verde, SPI 0.92 amarillo con acción concreta). El Procurement Strategy integró el razonamiento de costo y riesgo de forma ejecutiva.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item bueno">
+      <div>
+        <div class="rubric-criterion">6. Gestión de Riesgos, Calidad y Procurement</div>
+        <div class="rubric-note">El HEAT MAP de riesgos fue un recurso visual excelente —se percibió dominio del tema. Sin embargo, la explicación de este módulo también cayó en lectura de notas, y no se profundizó en la lógica de priorización de riesgos ni en el plan de respuesta. Recomendación de divulgación: indicar en el slide qué herramienta de IA generó las gráficas (Claude, ChatGPT, etc.) con una nota discreta tipo "Generado con apoyo de [herramienta] | Revisado por el equipo."</div>
+      </div>
+      <div class="rubric-badge badge-bueno">Bueno · 4/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">7. Gestión Integrada de Cambios</div>
+        <div class="rubric-note">El Communication Plan y el Governance Framework (con tres niveles de aprobación de cambios: PM &lt;$5K, Comité Técnico $5K–100K, Comité Ejecutivo &gt;$100K) fueron presentados con lógica clara. Los stakeholders se explicaron de forma mínima por limitaciones de tiempo, pero la estructura de governance ya implica integración de cambios robusta.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">8. Integración de Conceptos PMP®</div>
+        <div class="rubric-note">Los objetivos SMART con línea base, meta y plazo para cada indicador fueron un elemento diferenciador. El vocabulario PMP® se mantuvo consistente a lo largo de toda la presentación: trade-offs, ruta crítica, EVM, RACI, ADKAR, CAPA, baseline. La diapositiva de "Defensa Oral: Preguntas Difíciles" mostró preparación estratégica genuina —el equipo anticipó cuestionamientos reales de junta.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item bueno">
+      <div>
+        <div class="rubric-criterion">9. Calidad de la Presentación Ejecutiva</div>
+        <div class="rubric-note">La presentación tiene slides ejecutivos de alta calidad: paleta de colores navy/teal/coral/gold profesional y coherente, tablas de datos bien estructuradas, dashboard con semáforos, y lenguaje ejecutivo apropiado. Se descuenta un punto porque algunas gráficas se desplazaron durante la presentación, cubriendo cifras importantes como la reducción de no conformidades. El trabajo oral fue el área de mayor variabilidad en el equipo.</div>
+      </div>
+      <div class="rubric-badge badge-bueno">Bueno · 4/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">10. Trabajo Colaborativo y Dinámica del Equipo</div>
+        <div class="rubric-note">El equipo demostró comunicación interna maravillosa. Cada integrante conocía su módulo y había integración real entre las partes. Karla cerró con la recomendación final a la junta y solicitó autorización para PMO semanal y fases —un cierre profesional y ejecutivo. La dinámica general del equipo fue colaborativa, respetuosa y bien coordinada.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- EVALUACIÓN ORAL -->
+  <div class="section-label">
+    <div class="section-dot dot-coral"></div>
+    <h2>Evaluación Oral · 20%</h2>
+  </div>
+
+  <div class="oral-grid">
+    <div class="oral-card positivo">
+      <h4>✦ Fortalezas observadas</h4>
+      <ul>
+        <li>Karla demostró dominio total de su módulo (governance, KPIs, procurement) y conectó los elementos con criterio financiero</li>
+        <li>La pregunta final al panel fue estratégica y ejecutivamente apropiada — solicitaron autorización concreta</li>
+        <li>El vocabulario PMP® fue consistente y auténtico a lo largo de toda la presentación</li>
+        <li>La reflexión final del equipo sobre el rol del juicio humano en la IA fue el momento más poderoso de la sesión</li>
+        <li>Magda mantuvo lenguaje del modelo y presentó con autoridad ejecutiva</li>
+      </ul>
+    </div>
+    <div class="oral-card mejora">
+      <h4>◈ Oportunidades de desarrollo</h4>
+      <ul>
+        <li>Judith priorizó la lectura de notas sobre el contacto directo con el stakeholder — en una junta real, esto reduce credibilidad ejecutiva</li>
+        <li>La gestión del tiempo fue el reto más significativo: Magda y Judith tomaron ~40 min del tiempo asignado de 20</li>
+        <li>El cronograma y los riesgos quedaron con menos tiempo del que merecían, limitando la profundidad explicativa</li>
+        <li>La comunicación no verbal durante módulos de lectura no proyectó la confianza que sí mostró el contenido escrito</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- FORTALEZAS DEL PPT -->
+  <div class="section-label">
+    <div class="section-dot dot-gold"></div>
+    <h2>Análisis del Material Presentado</h2>
+  </div>
+
+  <div class="pptx-obs">
+    <h4>Observaciones sobre los 31 slides · CaribeTech_Capstone_PMP_FINAL.pptx</h4>
+    <ul class="obs-list">
+      <li>
+        <div class="obs-icon icon-pos">✓</div>
+        <span><strong>Arquitectura narrativa sólida (31 slides):</strong> La presentación sigue una lógica ejecutiva impecable: Executive Summary → Diagnóstico → Business Case → SMART → Charter → Alcance → WBS → Cronograma → Costos/ROI → Riesgos → Calidad → Procurement → ADKAR → Governance → KPIs → Dashboard → Recomendación Final. Es una propuesta completa y coherente.</span>
+      </li>
+      <li>
+        <div class="obs-icon icon-pos">✓</div>
+        <span><strong>Dashboard Ejecutivo (Slide 26):</strong> El semáforo de mes 6 con CPI/SPI/hitos/riesgos/calidad/satisfacción y acciones concretas es un elemento de madurez profesional excepcional. Pocos equipos llegan a este nivel de precisión en Earned Value integrado.</span>
+      </li>
+      <li>
+        <div class="obs-icon icon-pos">✓</div>
+        <span><strong>Diapositiva de "Preguntas Difíciles" (Slide 28):</strong> Preparar respuestas ejecutivas para cuestionamientos reales de junta (¿por qué $7.187M? ¿cómo evitan interrupciones? ¿qué pasa si CNC se atrasa?) es una práctica PMP® de alto nivel que demuestra pensamiento estratégico real.</span>
+      </li>
+      <li>
+        <div class="obs-icon icon-pos">✓</div>
+        <span><strong>Reflexión TIHA (Slide 29):</strong> "La IA aceleró el análisis, pero las decisiones ejecutivas fueron del equipo consultor" — este mensaje es el corazón de la filosofía del curso y el equipo lo internalizó y lo articuló con voz propia. Magistral.</span>
+      </li>
+      <li>
+        <div class="obs-icon icon-warn">⚠</div>
+        <span><strong>Desplazamiento de gráficas:</strong> Al menos una gráfica en el business case y otras en el módulo de riesgos/calidad se movieron de su posición original, cubriendo cifras importantes (como la reducción de no conformidades). Esto requiere revisión de alineación en versión final antes de entregar a Moodle.</span>
+      </li>
+      <li>
+        <div class="obs-icon icon-rec">→</div>
+        <span><strong>Divulgación de IA:</strong> Se recomienda añadir en los slides que contienen gráficas generadas por IA una nota discreta (p.ej. al pie del slide): <em>"Visualización generada con apoyo de Claude · Revisada y validada por el equipo."</em> Esta práctica de transparencia académica y profesional está alineada con el Modelo TIHA.</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- REFLEXIÓN FINAL DEL EQUIPO -->
+  <div class="section-label">
+    <div class="section-dot dot-navy"></div>
+    <h2>Momento Más Memorable de la Presentación</h2>
+  </div>
+
+  <div class="reflection-box">
+    <blockquote>"Este proyecto nos enseñó que ser PMP® no es solo seguir el PMBOK®; es integrar criterio humano, datos financieros, riesgos, cultura organizacional y herramientas técnicas para tomar decisiones responsables."</blockquote>
+    <p>Esta reflexión, con la que el equipo cerró su presentación ante la junta, captura exactamente el aprendizaje que el curso busca cultivar. No lo dijeron porque estaba en el guión —lo dijeron porque lo vivieron durante el proceso de construcción del Capstone. Ese es el poder de la pedagogía vivencial: cuando el conocimiento se ancla en la experiencia, se vuelve criterio. Y el criterio es lo que distingue a un gerente de proyectos excelente.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RECOMENDACIONES -->
+  <div class="section-label">
+    <div class="section-dot dot-coral"></div>
+    <h2>Recomendaciones Profesionales</h2>
+  </div>
+
+  <div class="recs">
+    <div class="rec-item">
+      <div class="rec-num">1</div>
+      <div class="rec-text">
+        <strong>Practiquen la presentación sin notas en los próximos proyectos profesionales</strong>
+        <span>El contenido de este Capstone es lo suficientemente sólido para presentarse con dominio directo al stakeholder. La lectura de notas comunica preparación insuficiente aun cuando el dominio conceptual existe. El próximo paso: convertir bullets en historia, no en lectura.</span>
+      </div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num">2</div>
+      <div class="rec-text">
+        <strong>Establezcan un protocolo interno de gestión del tiempo para presentaciones</strong>
+        <span>Asignar un "timekeeper" dentro del equipo que señale discretamente cuando un módulo supera su tiempo asignado. En presentaciones ejecutivas reales, exceder el tiempo puede costar la atención —y el voto— de la junta.</span>
+      </div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num">3</div>
+      <div class="rec-text">
+        <strong>Incorporen la divulgación de herramientas de IA en materiales formales</strong>
+        <span>La transparencia sobre qué generó la IA y qué validó el equipo humano es una práctica ética profesional y académica. Una nota al pie en el slide es suficiente: "Visualización asistida por [herramienta] · Validada por el equipo." Esto fortalece, no debilita, la credibilidad profesional.</span>
+      </div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num">4</div>
+      <div class="rec-text">
+        <strong>Conserven esta presentación como portfolio profesional</strong>
+        <span>El nivel de integración entre áreas PMP®, el pensamiento financiero, la gestión cultural con ADKAR y el marco de governance son materiales que reflejan competencia real. Este Capstone puede acompañar sus aplicaciones de empleo o certificaciones como evidencia de capacidad aplicada.</span>
+      </div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num">5</div>
+      <div class="rec-text">
+        <strong>Continúen cultivando el equilibrio entre IA y juicio humano</strong>
+        <span>Su reflexión final fue el mejor mensaje del día: la IA aceleró el análisis, pero las decisiones fueron del equipo. Ese es exactamente el rol del profesional en la era de la IA generativa. Llévense ese principio a su práctica profesional diaria.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CIERRE -->
+  <div style="background:var(--light-teal);border-radius:12px;padding:28px 30px;border-left:4px solid var(--teal);">
+    <p style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--navy);margin-bottom:10px;">Felicitaciones, Equipo #1</p>
+    <p style="font-size:14px;color:var(--muted);line-height:1.75;">Como futuros gerentes de proyectos, demuestran que la excelencia técnica y el pensamiento estratégico no son incompatibles con la humildad de seguir aprendiendo. La reflexión que compartieron ante la junta —sobre evaluar, evaluar, evaluar— es precisamente el hábito que define a los mejores profesionales de la gerencia de proyectos. Les felicito por el nivel de trabajo colaborativo, la calidad de sus materiales y el coraje de defender una propuesta de $7.187M con datos, convicción y criterio.</p>
+    <p style="margin-top:16px;font-size:13px;color:var(--teal);font-style:italic;">Las herramientas de inteligencia artificial son aliadas que amplifican su juicio profesional — nunca un sustituto del pensamiento crítico que ustedes aportan como equipo.</p>
+  </div>
+
+</main>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="footer-brand">
+    <strong>Dra. Mariluz Serrano Ortiz, Ed.D.</strong>
+    Departamento de Gerencia de Oficina y Comunicación Empresarial<br>
+    Facultad de Administración de Empresas · UPR Recinto de Río Piedras<br>
+    DECEP · Certificación Profesional en Gerencia de Proyectos PMP®
+  </div>
+  <div class="footer-logo">TI<span>HA</span></div>
+</footer>
+
+</body>
+</html>
