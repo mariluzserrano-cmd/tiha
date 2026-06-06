@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evalúa al Equipo | CAPSTONE PMP®</title>
+<style>
+  :root{
+    --navy:#0f2a47;--teal:#1f8a8c;--coral:#e8645a;--gold:#d9a441;
+    --ink:#1b2733;--muted:#5d6b7a;--line:#dde4ea;--paper:#f6f8fa;
+    --good:#2e7d5b;--bad:#c0392b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Helvetica Neue',Arial,sans-serif;
+    background:radial-gradient(circle at 15% -5%,rgba(31,138,140,.12),transparent 42%),
+      radial-gradient(circle at 95% 0%,rgba(217,164,65,.14),transparent 40%),var(--paper);
+    color:var(--ink);line-height:1.55;padding:0 0 50px;}
+  .wrap{max-width:520px;margin:0 auto;padding:0 16px}
+  header{background:linear-gradient(135deg,var(--navy),var(--teal));color:#fff;
+    padding:26px 0 24px;border-bottom:5px solid var(--gold);text-align:center}
+  .eyebrow{letter-spacing:.2em;text-transform:uppercase;font-size:.66rem;color:var(--gold);font-weight:700}
+  header h1{font-size:1.5rem;margin:6px 0 3px}
+  header p{color:#cfe0e6;font-size:.9rem}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:20px;margin-top:18px;box-shadow:0 8px 24px rgba(15,42,71,.07)}
+  label.fld{display:block;font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;
+    color:var(--muted);font-weight:700;margin-bottom:6px}
+  input,textarea{width:100%;font-family:inherit;font-size:1rem;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:9px;padding:11px;background:var(--paper)}
+  input:focus,textarea:focus{outline:none;border-color:var(--teal);background:#fff;
+    box-shadow:0 0 0 3px rgba(31,138,140,.14)}
+  textarea{resize:vertical;min-height:74px}
+  .q{margin-top:18px}
+  .q-title{font-size:.98rem;font-weight:700;color:var(--navy);margin-bottom:10px}
+  /* convince toggle */
+  .conv{display:flex;gap:10px}
+  .conv button{flex:1;cursor:pointer;border:1.5px solid var(--line);background:#fff;
+    border-radius:11px;padding:14px 8px;font-size:.92rem;font-weight:700;color:var(--muted);
+    transition:all .14s}
+  .conv button .em{display:block;font-size:1.5rem;margin-bottom:3px}
+  .conv button.yes.sel{background:var(--good);border-color:var(--good);color:#fff}
+  .conv button.mid.sel{background:var(--gold);border-color:var(--gold);color:#1b2733}
+  .conv button.no.sel{background:var(--bad);border-color:var(--bad);color:#fff}
+  /* stars */
+  .stars{display:flex;gap:8px;justify-content:center}
+  .stars button{cursor:pointer;border:none;background:none;font-size:2.1rem;
+    color:var(--line);transition:transform .1s,color .14s}
+  .stars button:hover{transform:scale(1.15)}
+  .stars button.on{color:var(--gold)}
+  .star-lbl{text-align:center;font-size:.8rem;color:var(--muted);margin-top:4px;min-height:18px}
+  .btn{width:100%;cursor:pointer;border:none;border-radius:11px;padding:15px;
+    font-size:1rem;font-weight:700;letter-spacing:.03em;margin-top:14px;
+    transition:transform .12s,opacity .12s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-coral{background:var(--coral);color:#fff;box-shadow:0 6px 18px rgba(232,100,90,.34)}
+  .btn-teal{background:var(--teal);color:#fff;box-shadow:0 6px 18px rgba(31,138,140,.3)}
+  .btn-ghost{background:#fff;color:var(--navy);border:1.5px solid var(--line);box-shadow:none}
+  .anon{font-size:.78rem;color:var(--muted);text-align:center;margin-top:14px;font-style:italic}
+  footer{text-align:center;color:var(--muted);font-size:.72rem;margin-top:26px}
+
+  /* CAPTURE CARD (lo que se descarga como PNG) */
+  #capture{background:linear-gradient(150deg,#fff,#f4f8f8);border:1px solid var(--line);
+    border-radius:14px;padding:24px;margin-top:18px;display:none}
+  #capture .cap-head{border-bottom:3px solid var(--gold);padding-bottom:10px;margin-bottom:14px}
+  #capture .cap-head .e{letter-spacing:.16em;text-transform:uppercase;font-size:.6rem;color:var(--teal);font-weight:700}
+  #capture .cap-head h3{font-size:1.15rem;color:var(--navy);margin-top:3px}
+  #capture .row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line);font-size:.9rem}
+  #capture .row span:first-child{color:var(--muted)}
+  #capture .row span:last-child{font-weight:700;color:var(--navy);text-align:right}
+  #capture .verdict{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.78rem;font-weight:700;color:#fff}
+  #capture .cmt{margin-top:12px;font-size:.88rem;font-style:italic;color:var(--ink);
+    background:#fff;border-left:3px solid var(--teal);padding:10px 12px;border-radius:6px}
+  #capture .cap-foot{margin-top:14px;font-size:.66rem;color:var(--muted);text-align:center}
+  .alert{background:#fbe9e7;color:#9c4a42;border:1px solid #f0c4bf;padding:11px;
+    border-radius:9px;font-size:.85rem;margin-top:12px;display:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Capstone PMP® · Evaluación entre pares</div>
+  <h1>¿Te convence el equipo?</h1>
+  <p>Evalúa la presentación de tus compañeros</p>
+</header>
+
+<div class="wrap">
+  <!-- FORMULARIO -->
+  <div class="card" id="formCard">
+    <label class="fld">Grupo que estás evaluando</label>
+    <input id="grupo" type="text" placeholder="Ej. Grupo 2 — Modernización CaribeTech">
+
+    <div class="q">
+      <div class="q-title">Como stakeholder, ¿te convencieron?</div>
+      <div class="conv">
+        <button class="yes" onclick="setConv('Me convence',this)"><span class="em">👍</span>Me convence</button>
+        <button class="mid" onclick="setConv('Más o menos',this)"><span class="em">🤔</span>Más o menos</button>
+        <button class="no" onclick="setConv('No me convence',this)"><span class="em">👎</span>No me convence</button>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="q-title">Calidad general según la rúbrica</div>
+      <div class="stars" id="stars">
+        <button onclick="setStars(1,this)">★</button>
+        <button onclick="setStars(2,this)">★</button>
+        <button onclick="setStars(3,this)">★</button>
+        <button onclick="setStars(4,this)">★</button>
+        <button onclick="setStars(5,this)">★</button>
+      </div>
+      <div class="star-lbl" id="starLbl"></div>
+    </div>
+
+    <div class="q">
+      <label class="fld">Un comentario para el equipo</label>
+      <textarea id="comentario" placeholder="¿Qué te gustó? ¿Qué mejorarías? (claridad, datos, defensa de decisiones...)"></textarea>
+    </div>
+
+    <button class="btn btn-coral" onclick="generar()">Listo · Generar mi evaluación</button>
+    <p class="anon">🔒 Tu evaluación es anónima. No se pide tu nombre.</p>
+    <div class="alert" id="err"></div>
+  </div>
+
+  <!-- TARJETA CAPTURA -->
+  <div id="capture">
+    <div class="cap-head">
+      <div class="e">Capstone PMP® · Evaluación entre pares</div>
+      <h3 id="cGrupo"></h3>
+    </div>
+    <div class="row"><span>¿Convence al stakeholder?</span><span><span class="verdict" id="cVerdict"></span></span></div>
+    <div class="row"><span>Calidad (rúbrica)</span><span id="cStars"></span></div>
+    <div class="cmt" id="cCmt"></div>
+    <div class="cap-foot" id="cFoot"></div>
+  </div>
+
+  <!-- BOTONES POST -->
+  <div id="postBtns" style="display:none">
+    <button class="btn btn-teal" onclick="descargarPNG()">📸 Descargar captura (PNG)</button>
+    <button class="btn btn-ghost" onclick="enviarEmail()">✉️ Enviar por email</button>
+    <button class="btn btn-ghost" onclick="otra()">↺ Evaluar otro grupo</button>
+  </div>
+
+  <footer>Modelo TIHA · Dra. Mariluz Serrano Ortiz · DECEP – UPR</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+  // ====== CONFIGURACIÓN: cambie este correo por el suyo ======
+  const EMAIL_PROFESORA = "mariluz.serrano@upr.edu";
+  // ============================================================
+
+  let conv='', stars=0;
+  const LBL={1:'Deficiente',2:'Limitado',3:'Aceptable',4:'Bueno',5:'Excelente'};
+
+  function setConv(v,btn){
+    conv=v;
+    document.querySelectorAll('.conv button').forEach(b=>b.classList.remove('sel'));
+    btn.classList.add('sel');
+  }
+  function setStars(n,btn){
+    stars=n;
+    const btns=document.querySelectorAll('#stars button');
+    btns.forEach((b,i)=>b.classList.toggle('on',i<n));
+    document.getElementById('starLbl').textContent=LBL[n];
+  }
+
+  function generar(){
+    const err=document.getElementById('err');err.style.display='none';
+    const grupo=document.getElementById('grupo').value.trim();
+    if(!grupo){err.textContent='Escribe el nombre o número del grupo.';err.style.display='block';return;}
+    if(!conv){err.textContent='Indica si el equipo te convence.';err.style.display='block';return;}
+    if(!stars){err.textContent='Asigna las estrellas de calidad.';err.style.display='block';return;}
+
+    const cmt=document.getElementById('comentario').value.trim()||'(sin comentario)';
+    document.getElementById('cGrupo').textContent=grupo;
+    const vEl=document.getElementById('cVerdict');
+    vEl.textContent=conv;
+    vEl.style.background = conv==='Me convence'?'#2e7d5b':conv==='Más o menos'?'#d9a441':'#c0392b';
+    if(conv==='Más o menos')vEl.style.color='#1b2733';
+    document.getElementById('cStars').textContent='★'.repeat(stars)+'☆'.repeat(5-stars)+'  '+LBL[stars];
+    document.getElementById('cCmt').textContent='“'+cmt+'”';
+    document.getElementById('cFoot').textContent='Evaluación anónima entre pares · '+new Date().toLocaleString('es-PR');
+
+    document.getElementById('formCard').style.display='none';
+    document.getElementById('capture').style.display='block';
+    document.getElementById('postBtns').style.display='block';
+    document.getElementById('capture').scrollIntoView({behavior:'smooth'});
+  }
+
+  async function descargarPNG(){
+    const node=document.getElementById('capture');
+    const canvas=await html2canvas(node,{scale:2,backgroundColor:'#ffffff'});
+    const link=document.createElement('a');
+    const g=document.getElementById('grupo').value.trim().replace(/[^a-z0-9]/gi,'_');
+    link.download='Evaluacion_'+g+'.png';
+    link.href=canvas.toDataURL('image/png');
+    link.click();
+  }
+
+  function enviarEmail(){
+    const grupo=document.getElementById('grupo').value.trim();
+    const cmt=document.getElementById('comentario').value.trim()||'(sin comentario)';
+    const subject=encodeURIComponent('Evaluación entre pares — '+grupo);
+    const body=encodeURIComponent(
+      'EVALUACIÓN ANÓNIMA ENTRE PARES\n\n'+
+      'Grupo evaluado: '+grupo+'\n'+
+      '¿Convence al stakeholder?: '+conv+'\n'+
+      'Calidad (rúbrica): '+stars+'/5 — '+LBL[stars]+'\n'+
+      'Comentario: '+cmt+'\n'
+    );
+    window.location.href='mailto:'+EMAIL_PROFESORA+'?subject='+subject+'&body='+body;
+  }
+
+  function otra(){
+    conv='';stars=0;
+    document.getElementById('grupo').value='';
+    document.getElementById('comentario').value='';
+    document.querySelectorAll('.conv button').forEach(b=>b.classList.remove('sel'));
+    document.querySelectorAll('#stars button').forEach(b=>b.classList.remove('on'));
+    document.getElementById('starLbl').textContent='';
+    document.getElementById('capture').style.display='none';
+    document.getElementById('postBtns').style.display='none';
+    document.getElementById('formCard').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+</script>
+</body>
+</html>
