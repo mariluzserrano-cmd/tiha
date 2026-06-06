@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retroalimentación CAPSTONE · Grupo #2 · Coquí Consulting</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+  :root {
+    --navy: #0D2545;
+    --teal: #1A6B72;
+    --coral: #C95E42;
+    --gold: #C8993A;
+    --cream: #FAF7F2;
+    --light-teal: #E8F4F5;
+    --light-coral: #FBF0EC;
+    --light-gold: #FDF5E8;
+    --text: #1C1C2E;
+    --muted: #5A6475;
+    --border: #DDD8CF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    background: var(--cream);
+    color: var(--text);
+    font-size: 15.5px;
+    line-height: 1.75;
+  }
+
+  header {
+    background: var(--navy);
+    color: #fff;
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: rgba(200,153,58,.12);
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30%;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(26,107,114,.15);
+  }
+  .header-program {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+  header h1 span { color: var(--gold); }
+  .header-sub {
+    font-size: 13.5px;
+    color: rgba(255,255,255,.65);
+    font-style: italic;
+    margin-bottom: 32px;
+  }
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    position: relative; z-index: 1;
+  }
+  .meta-item {
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .meta-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.5);
+    margin-bottom: 4px;
+  }
+  .meta-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .meta-value.score { font-size: 26px; color: var(--gold); }
+
+  main { max-width: 900px; margin: 0 auto; padding: 52px 40px 80px; }
+
+  .section-label {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px; margin-top: 48px;
+  }
+  .section-label:first-of-type { margin-top: 0; }
+  .section-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dot-teal { background: var(--teal); }
+  .dot-coral { background: var(--coral); }
+  .dot-gold { background: var(--gold); }
+  .dot-navy { background: var(--navy); }
+  .section-label h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 700; color: var(--navy);
+  }
+
+  .score-summary {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 12px; padding: 28px 30px;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 24px; align-items: center; margin-bottom: 8px;
+  }
+  .score-breakdown { display: grid; gap: 10px; }
+  .score-row {
+    display: grid; grid-template-columns: 220px 1fr 60px;
+    gap: 10px; align-items: center; font-size: 13.5px;
+  }
+  .score-row .label { color: var(--muted); }
+  .score-bar-wrap { height: 8px; background: #EDEAE4; border-radius: 4px; overflow: hidden; }
+  .score-bar { height: 100%; border-radius: 4px; background: var(--teal); }
+  .score-bar.oral { background: var(--coral); }
+  .score-row .pts { font-weight: 600; color: var(--navy); text-align: right; }
+  .total-score { text-align: center; }
+  .total-score .big {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px; font-weight: 900; color: var(--navy); line-height: 1;
+  }
+  .total-score .big span { color: var(--teal); }
+  .total-score .label {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-top: 4px;
+  }
+  .total-score .badge-ex {
+    display: inline-block; background: var(--teal); color: #fff;
+    font-size: 12px; font-weight: 600; padding: 4px 14px;
+    border-radius: 20px; margin-top: 8px;
+  }
+
+  .valuation-box {
+    background: linear-gradient(135deg, var(--navy) 0%, #1A3560 100%);
+    color: #fff; border-radius: 12px; padding: 32px 36px;
+    margin-bottom: 40px; position: relative; overflow: hidden;
+  }
+  .valuation-box::after {
+    content: '97'; position: absolute; right: 28px; top: 50%;
+    transform: translateY(-50%); font-family: 'Playfair Display', serif;
+    font-size: 120px; font-weight: 900; color: rgba(200,153,58,.15); line-height: 1;
+  }
+  .val-badge {
+    display: inline-block; background: var(--gold); color: var(--navy);
+    font-weight: 600; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 14px;
+  }
+  .valuation-box h3 { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 12px; }
+  .valuation-box p {
+    font-size: 14.5px; line-height: 1.7; color: rgba(255,255,255,.85);
+    max-width: 580px; position: relative; z-index: 1;
+  }
+
+  .breathe-note {
+    background: var(--light-teal); border: 1px solid #9CCBCF;
+    border-radius: 10px; padding: 18px 22px; font-size: 13.5px;
+    color: var(--text); line-height: 1.65; margin-bottom: 8px;
+  }
+  .breathe-note strong { color: var(--teal); }
+
+  .rubric-grid { display: grid; gap: 14px; margin-bottom: 8px; }
+  .rubric-item {
+    border-radius: 10px; padding: 20px 24px;
+    display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: start;
+  }
+  .rubric-item.excelente { background: var(--light-teal); border-left: 4px solid var(--teal); }
+  .rubric-item.bueno { background: var(--light-gold); border-left: 4px solid var(--gold); }
+  .rubric-criterion { font-weight: 600; font-size: 14px; color: var(--navy); margin-bottom: 5px; }
+  .rubric-note { font-size: 13.5px; color: var(--muted); line-height: 1.6; font-style: italic; }
+  .rubric-badge {
+    display: inline-flex; align-items: center; padding: 4px 12px;
+    border-radius: 20px; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.5px; white-space: nowrap; flex-shrink: 0; margin-top: 2px;
+  }
+  .badge-excelente { background: var(--teal); color: #fff; }
+  .badge-bueno { background: var(--gold); color: var(--navy); }
+
+  .oral-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .oral-card { border-radius: 10px; padding: 20px 22px; }
+  .oral-card.positivo { background: var(--light-teal); border-left: 4px solid var(--teal); }
+  .oral-card.mejora { background: var(--light-coral); border-left: 4px solid var(--coral); }
+  .oral-card h4 {
+    font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+    font-weight: 600; margin-bottom: 10px;
+  }
+  .oral-card.positivo h4 { color: var(--teal); }
+  .oral-card.mejora h4 { color: var(--coral); }
+  .oral-card ul { list-style: none; padding: 0; }
+  .oral-card ul li {
+    font-size: 13.5px; color: var(--muted); padding: 4px 0;
+    padding-left: 16px; position: relative; line-height: 1.55;
+  }
+  .oral-card ul li::before { content: '→'; position: absolute; left: 0; font-size: 11px; }
+  .oral-card.positivo ul li::before { color: var(--teal); }
+  .oral-card.mejora ul li::before { color: var(--coral); }
+
+  .pptx-obs {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 12px; padding: 28px 30px; margin-bottom: 8px;
+  }
+  .pptx-obs h4 { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--navy); margin-bottom: 14px; }
+  .obs-list { list-style: none; padding: 0; display: grid; gap: 10px; }
+  .obs-list li {
+    display: grid; grid-template-columns: auto 1fr; gap: 10px;
+    font-size: 13.5px; line-height: 1.6; color: var(--muted); align-items: start;
+  }
+  .obs-icon {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+  }
+  .icon-pos { background: #D6F0EC; color: var(--teal); }
+  .icon-warn { background: #FDF0CC; color: #8A6200; }
+  .icon-rec { background: #FDE8E1; color: var(--coral); }
+
+  /* PEER EVAL */
+  .peer-section { display: grid; gap: 14px; margin-bottom: 8px; }
+  .peer-card {
+    background: #fff; border: 1px solid var(--border);
+    border-left: 4px solid var(--teal); border-radius: 10px; padding: 20px 24px;
+  }
+  .peer-head {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; margin-bottom: 12px; flex-wrap: wrap;
+  }
+  .peer-verdict {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600; color: var(--teal);
+  }
+  .peer-stars { color: var(--gold); font-size: 13px; letter-spacing: 1px; }
+  .peer-stars .label { color: var(--navy); font-weight: 600; margin-left: 4px; }
+  .peer-quote {
+    font-style: italic; font-size: 13.5px; color: var(--muted);
+    line-height: 1.65; border-left: 2px solid var(--border); padding-left: 14px;
+  }
+  .peer-meta { font-size: 11px; color: #9AA0AC; margin-top: 10px; }
+  .peer-synth {
+    background: var(--light-gold); border-radius: 10px;
+    padding: 18px 22px; font-size: 13.5px; color: var(--text); line-height: 1.65;
+  }
+  .peer-synth strong { color: var(--gold); }
+
+  .reflection-box {
+    background: var(--navy); color: #fff; border-radius: 12px;
+    padding: 32px 36px; margin-bottom: 8px;
+  }
+  .reflection-box blockquote {
+    font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700;
+    font-style: italic; line-height: 1.5; color: var(--gold);
+    border-left: 3px solid var(--gold); padding-left: 18px; margin-bottom: 18px;
+  }
+  .reflection-box p { font-size: 14px; color: rgba(255,255,255,.8); line-height: 1.7; }
+
+  .recs { display: grid; gap: 12px; margin-bottom: 8px; }
+  .rec-item {
+    display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start;
+    background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px;
+  }
+  .rec-num {
+    width: 36px; height: 36px; border-radius: 50%; background: var(--navy); color: #fff;
+    font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .rec-text strong { display: block; font-size: 13.5px; font-weight: 600; color: var(--navy); margin-bottom: 3px; }
+  .rec-text span { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+  footer {
+    border-top: 1px solid var(--border); padding: 28px 40px;
+    max-width: 900px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  }
+  .footer-brand { font-size: 11.5px; color: var(--muted); line-height: 1.6; }
+  .footer-brand strong { display: block; font-size: 12px; color: var(--navy); font-weight: 600; }
+  .footer-logo {
+    font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 900;
+    color: var(--teal); letter-spacing: -0.5px;
+  }
+  .footer-logo span { color: var(--gold); }
+
+  .divider { height: 1px; background: var(--border); margin: 36px 0; }
+
+  @media print {
+    body { font-size: 13px; }
+    header { padding: 32px 40px; }
+    main { padding: 32px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-program">DECEP · Universidad de Puerto Rico · Modelo TIHA</div>
+  <h1>Certificación Profesional en<br><span>Gerencia de Proyectos PMP®</span></h1>
+  <p class="header-sub">Retroalimentación de Presentación CAPSTONE · Evaluación Ejecutiva</p>
+
+  <div class="meta-grid">
+    <div class="meta-item">
+      <div class="meta-label">Grupo</div>
+      <div class="meta-value">#2 · Coquí Consulting</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Proyecto</div>
+      <div class="meta-value">Modernización CaribeTech</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Fecha</div>
+      <div class="meta-value">6 de junio, 2026</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Puntuación</div>
+      <div class="meta-value score">97 / 100</div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <p style="font-size:13px;color:var(--muted);letter-spacing:.5px;margin-bottom:36px;">
+    <strong style="color:var(--navy);">Integrantes:</strong>&nbsp;
+    Marylene García &nbsp;·&nbsp; Julie Alemán &nbsp;·&nbsp; Armando Ortíz &nbsp;·&nbsp; Waldo Córdova
+  </p>
+
+  <!-- PUNTUACIÓN -->
+  <div class="score-summary">
+    <div class="score-breakdown">
+      <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--navy);margin-bottom:14px;">Desglose de puntuación</div>
+      <div class="score-row">
+        <span class="label">Rúbrica (80 pts) — criterios 1–10</span>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:96.25%"></div></div>
+        <span class="pts">77/80</span>
+      </div>
+      <div class="score-row">
+        <span class="label">Evaluación oral (20 pts)</span>
+        <div class="score-bar-wrap"><div class="score-bar oral" style="width:100%"></div></div>
+        <span class="pts">20/20</span>
+      </div>
+      <p style="font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic;">Dos áreas marcadas como "Bueno" (Gestión de Costos y Gestión Integrada de Cambios) por desarrollo algo escueto. Todo lo demás alcanzó nivel Excelente.</p>
+    </div>
+    <div class="total-score">
+      <div class="big">97<span>/100</span></div>
+      <div class="label">Nota final</div>
+      <div class="badge-ex">EXCELENTE</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- VALORACIÓN -->
+  <div class="section-label">
+    <div class="section-dot dot-navy"></div>
+    <h2>Valoración General</h2>
+  </div>
+
+  <div class="valuation-box">
+    <div class="val-badge">Evaluación Ejecutiva</div>
+    <h3>Desempeño Sobresaliente</h3>
+    <p>Coquí Consulting entregó una de las propuestas más completas y profesionalmente articuladas del Capstone. La presentación combinó rigor técnico (ruta crítica con float, EVM detallado, Heat Map de riesgos) con una identidad de equipo genuina —se presentaron no solo como estudiantes, sino como una firma consultora que el stakeholder querría contratar. El ejercicio de respiración con el que abrimos transformó la energía del grupo, y se notó: comenzaron con una seguridad notable. Su decisión de delimitar explícitamente qué parte NO fue automatizada por IA y compartir las herramientas utilizadas fue un acto de transparencia profesional ejemplar.</p>
+  </div>
+
+  <!-- NOTA RESPIRACIÓN -->
+  <div class="breathe-note">
+    <strong>🌬️ Sobre el ejercicio de respiración inicial:</strong> Gracias por permitirme guiarles en ese momento de centramiento antes de comenzar. Observé cómo se movió la energía del equipo y cómo arrancaron con una confianza distinta. Es un recordatorio de que la presencia y la regulación emocional son herramientas de liderazgo tan reales como cualquier técnica PMP®. La invitación para Marylene y para todo el equipo: <strong>sostener esa respiración a lo largo de toda la presentación</strong>, no solo al inicio.
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RÚBRICA -->
+  <div class="section-label">
+    <div class="section-dot dot-teal"></div>
+    <h2>Evaluación por Criterios · Rúbrica 80%</h2>
+  </div>
+
+  <div class="rubric-grid">
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">1. Definición del Proyecto y Caso de Negocio</div>
+        <div class="rubric-note">Presentaron un inicio muy lindo y bien estructurado. El Resumen Ejecutivo con indicadores de éxito proyectados (+30% capacidad, -40% energía, 100% trazabilidad) capturó de inmediato la atención del stakeholder. El planteamiento del problema —crisis operacional y regulatoria con riesgo de perder contratos de $4M+— fue claro y urgente.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">2. Calidad del Project Charter</div>
+        <div class="rubric-note">El charter integró factores externos (que se percibieron también en la sección de calidad), presupuesto aprobado, autoridad del PM, restricciones, supuestos y exclusiones con precisión. Explicaron cuándo fue aprobado y cuáles fueron los gastos. La estructura es la de un documento ejecutivo real.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">3. Gestión del Alcance y WBS/EDT</div>
+        <div class="rubric-note">Waldo explicó esta sección muy bien. La gráfica del alcance contenía bastante información y la letra estaba pequeña, pero su explicación oral fue tan clara que suplió cualquier limitación visual. La distinción dentro/fuera del alcance fue rigurosa y bien fundamentada.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">4. Gestión del Cronograma</div>
+        <div class="rubric-note">¡Wow! El Cronograma Maestro es una imagen completa por fases que me encantó. Lo visualizo perfectamente como un HTML interactivo para presentar al stakeholder. Con esto solo, podrían presentar a cualquier CEO cómo se va a trabajar e ir directo a los riesgos. La Ruta Crítica con ES/EF/LS/LF y float identificado (60 semanas, holgura de 3 meses) demuestra dominio técnico real.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item bueno">
+      <div>
+        <div class="rubric-criterion">5. Gestión de Costos y Earned Value Thinking</div>
+        <div class="rubric-note">Armando explicó muy bien la gestión de costos desde el presupuesto, aunque de forma bastante escueta —me hubiese gustado que abundaran un poco más en esta parte, dado que el cost baseline es central para el control del proyecto. Marylene tomó el relevo con el ROI y beneficios esperados de manera fluida, sosteniendo bien esta parte e invitando a todos a ver el proyecto como financieramente viable (payback 2.8 años, NPV $708K, IRR 23%).</div>
+      </div>
+      <div class="rubric-badge badge-bueno">Bueno · 4/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">6. Gestión de Riesgos, Calidad y Procurement</div>
+        <div class="rubric-note">Muy bien explicado. El HEAT MAP fue excelente —Waldo, hiciste un trabajo maravilloso para convencer al stakeholder con esa visualización de probabilidad/impacto. Armando presentó el plan de calidad con una sección limpia y atemperada (ISO 9001/13485/45001, métricas de defectos, AQL). La estrategia de procurement con Buy American Act y multi-proveedor fue sólida.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item bueno">
+      <div>
+        <div class="rubric-criterion">7. Gestión Integrada de Cambios</div>
+        <div class="rubric-note">No estoy segura de haber visto esta parte de forma totalmente explícita. El OCM (ADKAR) está bien desarrollado y Waldo lo explicó con una metáfora memorable —los "predicadores que llevan el evangelio para reducir la resistencia"— trayendo ejemplos diversos que ayudan a entender. Me gusta que Armando insista en que ellos son la opción. Para fortalecer: hacer explícito el proceso formal de control integrado de cambios (umbrales de aprobación, flujo de change requests).</div>
+      </div>
+      <div class="rubric-badge badge-bueno">Bueno · 4/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">8. Integración de Conceptos PMP®</div>
+        <div class="rubric-note">Lo pude observar claramente. Me encantó cómo "criollizaron" algunos conceptos —ese recurso pedagógico de traducir el lenguaje técnico al contexto cultural me permitió entender exactamente lo que querían comunicar. Es una habilidad de comunicación ejecutiva valiosa: saber leer a la audiencia y adaptar el registro.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">9. Calidad de la Presentación Ejecutiva</div>
+        <div class="rubric-note">Excelentes slides de presentación. Limpio y organizado. La identidad visual de Coquí Consulting fue coherente y profesional de principio a fin. El Dashboard Ejecutivo con curva S de EVM y fórmulas explicadas (SPI, CPI, EAC, EV) fue un elemento de alto nivel técnico.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">10. Trabajo Colaborativo y Dinámica del Equipo</div>
+        <div class="rubric-note">Lo lograron plenamente: se comprometieron a estar juntos hasta el final. Gracias por el apoyo que le dieron a su compañera que tuvo inconvenientes personales —eso dice mucho de su madurez profesional y humana. El comentario de Waldo, "lo difícil lo hacemos ahora y lo imposible nos toma un poco más de tiempo", captura el espíritu de este equipo.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ORAL -->
+  <div class="section-label">
+    <div class="section-dot dot-coral"></div>
+    <h2>Evaluación Oral · 20%</h2>
+  </div>
+
+  <div class="oral-grid">
+    <div class="oral-card positivo">
+      <h4>✦ Fortalezas observadas</h4>
+      <ul>
+        <li>Julie explicó los entregables clave de forma magistral, y conectó el Plan de Comunicación con el Stakeholder Register y la responsabilidad de Coquí Consulting</li>
+        <li>Waldo "vendió" la propuesta — fue directo al grano y al punto, con metáforas que hicieron memorable el contenido técnico</li>
+        <li>El cierre transmitió confianza genuina: "son la opción"</li>
+        <li>Delimitar qué NO fue automatizado por IA y compartir las herramientas usadas fue transparencia profesional ejemplar</li>
+        <li>El comienzo, tras el ejercicio de respiración, fue notablemente seguro</li>
+      </ul>
+    </div>
+    <div class="oral-card mejora">
+      <h4>◈ Oportunidades de desarrollo</h4>
+      <ul>
+        <li>En Armando se sintió la presión del tiempo; aun así, en varios momentos logró transmitir convicción sobre cómo querían trabajar</li>
+        <li>Se percibió nerviosismo en Marylene — la clave es sostener la respiración del inicio durante toda la presentación, no solo al comenzar</li>
+        <li>El cierre final se leyó demasiado; un mensaje tan poderoso como "somos la opción" gana fuerza cuando se dice mirando a la junta, no leyendo</li>
+        <li>La gestión de costos quedó algo escueta y merecía más desarrollo oral</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PEER EVAL -->
+  <div class="section-label">
+    <div class="section-dot dot-gold"></div>
+    <h2>Evaluación Anónima Entre Pares</h2>
+  </div>
+
+  <div class="peer-section">
+
+    <div class="peer-card">
+      <div class="peer-head">
+        <span class="peer-verdict">✓ Me convence al stakeholder</span>
+        <span class="peer-stars">★★★★★ <span class="label">Excelente · 5/5</span></span>
+      </div>
+      <p class="peer-quote">"Del Grupo 2 me gustó todo. Una presentación muy completa, organizada y profesional. Se notó la preparación del equipo, el dominio del tema y la manera clara en que comunicaron la información. La presentación visual estuvo bien estructurada, con buen contenido y excelente coordinación entre los integrantes."</p>
+    </div>
+
+    <div class="peer-card">
+      <div class="peer-head">
+        <span class="peer-verdict">✓ Me convence al stakeholder</span>
+        <span class="peer-stars">★★★★☆ <span class="label">Bueno · 4/5</span></span>
+      </div>
+      <p class="peer-quote">"Muy bien presentado, me encantó el cronograma maestro. Recomendación: a veces hay que tomar decisiones durante la presentación para captar la atención — lo que Waldo hizo, ir al grano, fue excelente. No se debe interrumpir e indicar al compañero que ya sabe lo que está haciendo; hay que seguir un orden. En este punto me perdí. Es muy importante recordar que esto es un trabajo en equipo. Entran en presupuesto, tiempo, ejecución y estrategia."</p>
+      <div class="peer-meta">Evaluación anónima entre pares · 06/06/2026, 11:08 a.m.</div>
+    </div>
+
+    <div class="peer-card">
+      <div class="peer-head">
+        <span class="peer-verdict">✓ Me convence al stakeholder</span>
+        <span class="peer-stars">★★★★☆ <span class="label">Bueno · 4/5</span></span>
+      </div>
+      <p class="peer-quote">"En presupuesto, definieron claramente el problema, establecieron una estrategia y presentaron por qué debían contratarlos a ellos. Entendieron el proyecto; fueron concisos al explicar y presentar. El contenido de la presentación puede mejorar para que el lector entienda mejor — quizás muy cargada y tipografía muy pequeña. Muy buena presentación en general. Sin embargo, no se debe interrumpir a compañeros ni demostrar diferencias en una presentación."</p>
+      <div class="peer-meta">Evaluación anónima entre pares · 06/06/2026, 11:09 a.m.</div>
+    </div>
+
+    <div class="peer-card">
+      <div class="peer-head">
+        <span class="peer-verdict">✓ Me convence al stakeholder</span>
+        <span class="peer-stars">★★★★☆ <span class="label">Bueno · 4/5</span></span>
+      </div>
+      <p class="peer-quote">"El orden los brincaron un poco. La presentación es muy buena en sus imágenes y presentación de grupo. ¡Éxito!"</p>
+      <div class="peer-meta">Evaluación anónima entre pares · 06/06/2026, 11:25 a.m.</div>
+    </div>
+
+    <div class="peer-synth">
+      <strong>Síntesis de la voz de los pares:</strong> El consenso es contundente —el equipo convence al stakeholder y la calidad visual y de contenido es alta. Coinciden en dos oportunidades concretas: <em>(1)</em> mantener el orden y la fluidez de los relevos entre integrantes sin interrupciones ni señalamientos visibles entre compañeros durante la presentación, y <em>(2)</em> aligerar la densidad de algunas diapositivas y aumentar el tamaño de la tipografía. La coincidencia entre la mirada de los pares y mis observaciones fortalece la validez de la retroalimentación.
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ANÁLISIS PPT -->
+  <div class="section-label">
+    <div class="section-dot dot-teal"></div>
+    <h2>Análisis del Material Presentado</h2>
+  </div>
+
+  <div class="pptx-obs">
+    <h4>Observaciones sobre los 31 slides · Coqui_Consulting_Grupo_2.pptx</h4>
+    <ul class="obs-list">
+      <li>
+        <div class="obs-icon icon-pos">✓</div>
+        <span><strong>Cronograma Maestro por fases (Slide 12):</strong> Un roadmap visual completo de Dic-25 a May-27 con la lógica "Energía Primero" para proteger los equipos nuevos. Es exactamente el tipo de visual que un CEO entiende en segundos. Mi recomendación de convertirlo en HTML interactivo sigue en pie.</span>
+      </li>
+      <li>
+        <div class="obs-icon icon-pos">✓</div>
+        <span><strong>Ruta Crítica con float (Slide 13):</strong> ES/EF/LS/LF calculados, ruta crítica identificada (60 semanas) y holgura del proyecto (3 meses). La alerta de ordenar el láser CNC en la semana 1 por su lead time de 18 semanas demuestra pensamiento de PM real.</span>
+      </li>
+      <li>
+        <div class="obs-icon icon-pos">✓</div>
+        <span><strong>Dashboard Ejecutivo con EVM explicado (Slide 27):</strong> Cada fórmula (SPI, CPI, EAC, EV) acompañada de su interpretación en lenguaje llano ("por cada $1 gastado, generamos $1.02 de valor"). Esto es traducir lo técnico a lo ejecutivo — un diferenciador notable.</span>
+      </li>
+      <li>
+        <div class="obs-icon icon-pos">✓</div>
+        <span><strong>Transparencia de IA (Slide 30):</strong> Una diapositiva entera dedicada a divulgar las herramientas usadas (Claude para análisis financiero y verificación; ChatGPT para contenido inicial con mayor validación). Este es precisamente el estándar de transparencia que el Modelo TIHA promueve. Otros equipos pueden tomar este ejemplo.</span>
+      </li>
+      <li>
+        <div class="obs-icon icon-warn">⚠</div>
+        <span><strong>Densidad y tipografía:</strong> Coincidiendo con la voz de los pares, algunas diapositivas (alcance, plan de comunicación, procurement) están muy cargadas de información con letra pequeña. Para versión Moodle: dividir en dos slides o reducir contenido y aumentar el cuerpo de letra a ≥14pt.</span>
+      </li>
+      <li>
+        <div class="obs-icon icon-rec">→</div>
+        <span><strong>Coherencia de presupuesto:</strong> Verificar que la cifra del proyecto ($2.5M) sea consistente con el caso de estudio en todas las secciones, y que la fluidez de los relevos entre integrantes esté ensayada para evitar los "brincos de orden" que notaron los pares.</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- REFLEXIÓN -->
+  <div class="section-label">
+    <div class="section-dot dot-navy"></div>
+    <h2>Momento Más Memorable de la Presentación</h2>
+  </div>
+
+  <div class="reflection-box">
+    <blockquote>"La automatización puede apoyar gran parte de la coordinación administrativa y analítica de un gerente de proyectos, pero no puede sustituir el liderazgo, la negociación, el juicio estratégico y la gestión de relaciones humanas."</blockquote>
+    <p>La reflexión final del equipo —respondiendo a qué parte de la gerencia de proyectos no puede automatizarse— fue exactamente el corazón del aprendizaje del curso. Identificaron con claridad lo insustituible: liderar personas, construir confianza, manejar conflictos, asumir la responsabilidad final por las decisiones. Y lo más valioso: el hecho de que cada integrante explicó el caso de negocio de manera completamente distinta, como dijo Julie, es la prueba viva de que el criterio humano —diverso, situado, irrepetible— es lo que la IA no puede replicar. Les felicito.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RECOMENDACIONES -->
+  <div class="section-label">
+    <div class="section-dot dot-coral"></div>
+    <h2>Recomendaciones Profesionales</h2>
+  </div>
+
+  <div class="recs">
+    <div class="rec-item">
+      <div class="rec-num">1</div>
+      <div class="rec-text">
+        <strong>Sostengan la respiración —y la presencia— de principio a fin</strong>
+        <span>Comenzaron centrados gracias al ejercicio inicial. El próximo nivel para Marylene y para todo el equipo es mantener esa regulación durante toda la presentación. La respiración consciente entre transiciones de tema es una herramienta concreta de manejo de nervios ejecutivos.</span>
+      </div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num">2</div>
+      <div class="rec-text">
+        <strong>Cuiden la fluidez de los relevos entre integrantes</strong>
+        <span>Tanto los pares como yo notamos algunos "brincos de orden". En presentaciones de equipo, la transición entre quien habla debe ser invisible y ensayada. Eviten interrumpir o señalar a un compañero en vivo — frente a la junta, el equipo siempre se proyecta como una sola voz.</span>
+      </div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num">3</div>
+      <div class="rec-text">
+        <strong>Aligeren la densidad visual y agranden la tipografía</strong>
+        <span>El contenido es excelente, pero algunas diapositivas compiten consigo mismas por la atención. Menos texto por slide, letra más grande, y dejar que la explicación oral lleve el peso. Un slide debe apoyar al presentador, no reemplazarlo.</span>
+      </div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num">4</div>
+      <div class="rec-text">
+        <strong>Desarrollen más la gestión de costos y el control integrado de cambios</strong>
+        <span>Son las dos áreas que quedaron "Buenas" por brevedad. El cost baseline y el flujo formal de change requests (con umbrales de aprobación) merecen el mismo desarrollo robusto que le dieron al cronograma y los riesgos.</span>
+      </div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num">5</div>
+      <div class="rec-text">
+        <strong>Conviertan el Cronograma Maestro en un recurso interactivo</strong>
+        <span>Ese roadmap por fases es tan bueno que merece vivir como un HTML interactivo que puedan mostrar a cualquier CEO. Es un activo de portfolio profesional y una demostración concreta de cómo la tecnología amplifica la comunicación de proyectos.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CIERRE -->
+  <div style="background:var(--light-teal);border-radius:12px;padding:28px 30px;border-left:4px solid var(--teal);">
+    <p style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--navy);margin-bottom:10px;">Felicitaciones, Coquí Consulting</p>
+    <p style="font-size:14px;color:var(--muted);line-height:1.75;">No se presentaron como un grupo de estudiantes: se presentaron como una firma consultora con identidad, criterio y corazón. La forma en que sostuvieron a su compañera en un momento difícil, la transparencia con la que divulgaron su uso de IA, y la convicción con la que defendieron su propuesta hablan de una madurez profesional que va mucho más allá de la nota. Waldo lo vendió, Julie lo explicó, Armando sostuvo la presión, y Marylene encontró su confianza. Como equipo, lograron lo que el comentario de Waldo promete: hicieron lo difícil ahora.</p>
+    <p style="margin-top:16px;font-size:13px;color:var(--teal);font-style:italic;">Las herramientas de inteligencia artificial son aliadas que amplifican su juicio profesional — nunca un sustituto del pensamiento crítico que ustedes aportan como equipo.</p>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-brand">
+    <strong>Dra. Mariluz Serrano Ortiz, Ed.D.</strong>
+    Departamento de Gerencia de Oficina y Comunicación Empresarial<br>
+    Facultad de Administración de Empresas · UPR Recinto de Río Piedras<br>
+    DECEP · Certificación Profesional en Gerencia de Proyectos PMP®
+  </div>
+  <div class="footer-logo">TI<span>HA</span></div>
+</footer>
+
+</body>
+</html>
