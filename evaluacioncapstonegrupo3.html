@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retroalimentación CAPSTONE · Grupo #3 · Boritech Advisors</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+  :root {
+    --navy: #0D2545;
+    --teal: #1A6B72;
+    --coral: #C95E42;
+    --gold: #C8993A;
+    --cream: #FAF7F2;
+    --light-teal: #E8F4F5;
+    --light-coral: #FBF0EC;
+    --light-gold: #FDF5E8;
+    --text: #1C1C2E;
+    --muted: #5A6475;
+    --border: #DDD8CF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    background: var(--cream);
+    color: var(--text);
+    font-size: 15.5px;
+    line-height: 1.75;
+  }
+
+  header {
+    background: var(--navy);
+    color: #fff;
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: rgba(200,153,58,.12);
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30%;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(26,107,114,.15);
+  }
+  .header-program {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+  header h1 span { color: var(--gold); }
+  .header-sub {
+    font-size: 13.5px;
+    color: rgba(255,255,255,.65);
+    font-style: italic;
+    margin-bottom: 32px;
+  }
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    position: relative; z-index: 1;
+  }
+  .meta-item {
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .meta-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.5);
+    margin-bottom: 4px;
+  }
+  .meta-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .meta-value.score { font-size: 26px; color: var(--gold); }
+
+  main { max-width: 900px; margin: 0 auto; padding: 52px 40px 80px; }
+
+  .section-label {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px; margin-top: 48px;
+  }
+  .section-label:first-of-type { margin-top: 0; }
+  .section-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dot-teal { background: var(--teal); }
+  .dot-coral { background: var(--coral); }
+  .dot-gold { background: var(--gold); }
+  .dot-navy { background: var(--navy); }
+  .section-label h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 700; color: var(--navy);
+  }
+
+  .score-summary {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 12px; padding: 28px 30px;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 24px; align-items: center; margin-bottom: 8px;
+  }
+  .score-breakdown { display: grid; gap: 10px; }
+  .score-row {
+    display: grid; grid-template-columns: 220px 1fr 60px;
+    gap: 10px; align-items: center; font-size: 13.5px;
+  }
+  .score-row .label { color: var(--muted); }
+  .score-bar-wrap { height: 8px; background: #EDEAE4; border-radius: 4px; overflow: hidden; }
+  .score-bar { height: 100%; border-radius: 4px; background: var(--teal); }
+  .score-bar.oral { background: var(--coral); }
+  .score-row .pts { font-weight: 600; color: var(--navy); text-align: right; }
+  .total-score { text-align: center; }
+  .total-score .big {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px; font-weight: 900; color: var(--navy); line-height: 1;
+  }
+  .total-score .big span { color: var(--teal); }
+  .total-score .label {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-top: 4px;
+  }
+  .total-score .badge-ex {
+    display: inline-block; background: var(--teal); color: #fff;
+    font-size: 12px; font-weight: 600; padding: 4px 14px;
+    border-radius: 20px; margin-top: 8px;
+  }
+
+  .valuation-box {
+    background: linear-gradient(135deg, var(--navy) 0%, #1A3560 100%);
+    color: #fff; border-radius: 12px; padding: 32px 36px;
+    margin-bottom: 40px; position: relative; overflow: hidden;
+  }
+  .valuation-box::after {
+    content: '98'; position: absolute; right: 28px; top: 50%;
+    transform: translateY(-50%); font-family: 'Playfair Display', serif;
+    font-size: 120px; font-weight: 900; color: rgba(200,153,58,.15); line-height: 1;
+  }
+  .val-badge {
+    display: inline-block; background: var(--gold); color: var(--navy);
+    font-weight: 600; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 14px;
+  }
+  .valuation-box h3 { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 12px; }
+  .valuation-box p {
+    font-size: 14.5px; line-height: 1.7; color: rgba(255,255,255,.85);
+    max-width: 580px; position: relative; z-index: 1;
+  }
+
+  .rubric-grid { display: grid; gap: 14px; margin-bottom: 8px; }
+  .rubric-item {
+    border-radius: 10px; padding: 20px 24px;
+    display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: start;
+  }
+  .rubric-item.excelente { background: var(--light-teal); border-left: 4px solid var(--teal); }
+  .rubric-item.bueno { background: var(--light-gold); border-left: 4px solid var(--gold); }
+  .rubric-criterion { font-weight: 600; font-size: 14px; color: var(--navy); margin-bottom: 5px; }
+  .rubric-note { font-size: 13.5px; color: var(--muted); line-height: 1.6; font-style: italic; }
+  .rubric-badge {
+    display: inline-flex; align-items: center; padding: 4px 12px;
+    border-radius: 20px; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.5px; white-space: nowrap; flex-shrink: 0; margin-top: 2px;
+  }
+  .badge-excelente { background: var(--teal); color: #fff; }
+  .badge-bueno { background: var(--gold); color: var(--navy); }
+
+  .oral-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .oral-card { border-radius: 10px; padding: 20px 22px; }
+  .oral-card.positivo { background: var(--light-teal); border-left: 4px solid var(--teal); }
+  .oral-card.mejora { background: var(--light-coral); border-left: 4px solid var(--coral); }
+  .oral-card h4 {
+    font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+    font-weight: 600; margin-bottom: 10px;
+  }
+  .oral-card.positivo h4 { color: var(--teal); }
+  .oral-card.mejora h4 { color: var(--coral); }
+  .oral-card ul { list-style: none; padding: 0; }
+  .oral-card ul li {
+    font-size: 13.5px; color: var(--muted); padding: 4px 0;
+    padding-left: 16px; position: relative; line-height: 1.55;
+  }
+  .oral-card ul li::before { content: '→'; position: absolute; left: 0; font-size: 11px; }
+  .oral-card.positivo ul li::before { color: var(--teal); }
+  .oral-card.mejora ul li::before { color: var(--coral); }
+
+  .pptx-obs {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 12px; padding: 28px 30px; margin-bottom: 8px;
+  }
+  .pptx-obs h4 { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--navy); margin-bottom: 14px; }
+  .obs-list { list-style: none; padding: 0; display: grid; gap: 10px; }
+  .obs-list li {
+    display: grid; grid-template-columns: auto 1fr; gap: 10px;
+    font-size: 13.5px; line-height: 1.6; color: var(--muted); align-items: start;
+  }
+  .obs-icon {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+  }
+  .icon-pos { background: #D6F0EC; color: var(--teal); }
+  .icon-warn { background: #FDF0CC; color: #8A6200; }
+  .icon-rec { background: #FDE8E1; color: var(--coral); }
+
+  .peer-section { display: grid; gap: 14px; margin-bottom: 8px; }
+  .peer-card {
+    background: #fff; border: 1px solid var(--border);
+    border-left: 4px solid var(--teal); border-radius: 10px; padding: 20px 24px;
+  }
+  .peer-head {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; margin-bottom: 12px; flex-wrap: wrap;
+  }
+  .peer-verdict {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600; color: var(--teal);
+  }
+  .peer-stars { color: var(--gold); font-size: 13px; letter-spacing: 1px; }
+  .peer-stars .label { color: var(--navy); font-weight: 600; margin-left: 4px; }
+  .peer-quote {
+    font-style: italic; font-size: 13.5px; color: var(--muted);
+    line-height: 1.65; border-left: 2px solid var(--border); padding-left: 14px;
+  }
+  .peer-synth {
+    background: var(--light-gold); border-radius: 10px;
+    padding: 18px 22px; font-size: 13.5px; color: var(--text); line-height: 1.65;
+  }
+  .peer-synth strong { color: var(--gold); }
+
+  .reflection-box {
+    background: var(--navy); color: #fff; border-radius: 12px;
+    padding: 32px 36px; margin-bottom: 8px;
+  }
+  .reflection-box blockquote {
+    font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700;
+    font-style: italic; line-height: 1.5; color: var(--gold);
+    border-left: 3px solid var(--gold); padding-left: 18px; margin-bottom: 18px;
+  }
+  .reflection-box p { font-size: 14px; color: rgba(255,255,255,.8); line-height: 1.7; }
+
+  .recs { display: grid; gap: 12px; margin-bottom: 8px; }
+  .rec-item {
+    display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start;
+    background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px;
+  }
+  .rec-num {
+    width: 36px; height: 36px; border-radius: 50%; background: var(--navy); color: #fff;
+    font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .rec-text strong { display: block; font-size: 13.5px; font-weight: 600; color: var(--navy); margin-bottom: 3px; }
+  .rec-text span { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+  footer {
+    border-top: 1px solid var(--border); padding: 28px 40px;
+    max-width: 900px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  }
+  .footer-brand { font-size: 11.5px; color: var(--muted); line-height: 1.6; }
+  .footer-brand strong { display: block; font-size: 12px; color: var(--navy); font-weight: 600; }
+  .footer-logo {
+    font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 900;
+    color: var(--teal); letter-spacing: -0.5px;
+  }
+  .footer-logo span { color: var(--gold); }
+
+  .divider { height: 1px; background: var(--border); margin: 36px 0; }
+
+  @media print {
+    body { font-size: 13px; }
+    header { padding: 32px 40px; }
+    main { padding: 32px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-program">DECEP · Universidad de Puerto Rico · Modelo TIHA</div>
+  <h1>Certificación Profesional en<br><span>Gerencia de Proyectos PMP®</span></h1>
+  <p class="header-sub">Retroalimentación de Presentación CAPSTONE · Evaluación Ejecutiva</p>
+
+  <div class="meta-grid">
+    <div class="meta-item">
+      <div class="meta-label">Grupo</div>
+      <div class="meta-value">#3 · Boritech Advisors</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Proyecto</div>
+      <div class="meta-value">Modernización CaribeTech</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Fecha</div>
+      <div class="meta-value">6 de junio, 2026</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Puntuación</div>
+      <div class="meta-value score">98 / 100</div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <p style="font-size:13px;color:var(--muted);letter-spacing:.5px;margin-bottom:36px;">
+    <strong style="color:var(--navy);">Integrantes:</strong>&nbsp;
+    Emilio Cruz &nbsp;·&nbsp; Marisel Mauleón López &nbsp;·&nbsp; Jaime López &nbsp;·&nbsp; Karla Alicea
+  </p>
+
+  <!-- PUNTUACIÓN -->
+  <div class="score-summary">
+    <div class="score-breakdown">
+      <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--navy);margin-bottom:14px;">Desglose de puntuación</div>
+      <div class="score-row">
+        <span class="label">Rúbrica (80 pts) — criterios 1–10</span>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:97.5%"></div></div>
+        <span class="pts">78/80</span>
+      </div>
+      <div class="score-row">
+        <span class="label">Evaluación oral (20 pts)</span>
+        <div class="score-bar-wrap"><div class="score-bar oral" style="width:100%"></div></div>
+        <span class="pts">20/20</span>
+      </div>
+      <p style="font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic;">Una sola área marcada como "Bueno" (Calidad del Project Charter), por falta de claridad sobre dónde se presentó explícitamente. Todo lo demás alcanzó nivel Excelente.</p>
+    </div>
+    <div class="total-score">
+      <div class="big">98<span>/100</span></div>
+      <div class="label">Nota final</div>
+      <div class="badge-ex">EXCELENTE</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- VALORACIÓN -->
+  <div class="section-label">
+    <div class="section-dot dot-navy"></div>
+    <h2>Valoración General</h2>
+  </div>
+
+  <div class="valuation-box">
+    <div class="val-badge">Evaluación Ejecutiva</div>
+    <h3>Desempeño Excepcional</h3>
+    <p>Boritech Advisors entregó la propuesta de mayor puntuación del Capstone, y con razón. Desde el nombre de la firma hasta la recomendación final, el equipo proyectó una identidad consultora coherente y madura. Lo que más distinguió a este grupo fue su capacidad de hablarle directamente al stakeholder de principio a fin —me sentí, como evaluadora, en el rol del stakeholder, comprendiendo cada decisión a medida que la explicaban. La naturalidad de Marisel, el dominio de Emilio, la claridad de Jaime y la atención de Karla a la gobernanza y comunicación se combinaron en una presentación que convenció. Y su anclaje constante en la realidad de Puerto Rico los distinguió de todos los demás equipos.</p>
+  </div>
+
+  <!-- RÚBRICA -->
+  <div class="section-label">
+    <div class="section-dot dot-teal"></div>
+    <h2>Evaluación por Criterios · Rúbrica 80%</h2>
+  </div>
+
+  <div class="rubric-grid">
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">1. Definición del Proyecto y Caso de Negocio</div>
+        <div class="rubric-note">Me gustó el nombre y la presentación inicial con el summary de lo que se espera —muy claro. La proyección de 2 a 4 años me encantó. "CaribeTech necesita esta empresa para resolver su problema", dicho por Emilio, fue magistral. La situación se explicó muy bien desde lo que necesitan mejorar hasta el cumplimiento de trazabilidad. Emilio le habló directo al stakeholder de lo que sí tienen y de las debilidades encontradas: una apertura honesta y convincente.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item bueno">
+      <div>
+        <div class="rubric-criterion">2. Calidad del Project Charter</div>
+        <div class="rubric-note">No me quedó del todo claro dónde se presentó el Charter de forma explícita durante la exposición oral —¿se integró dentro del Stakeholder Management? El documento sí está en la presentación (slide 8) y es completo: sponsor, PM, presupuesto autorizado, restricciones no negociables, supuestos, criterios de éxito y comité aprobador. La recomendación es darle un momento propio y explícito en la narración oral, anclándolo a la magistral definición del proyecto que hizo Emilio.</div>
+      </div>
+      <div class="rubric-badge badge-bueno">Bueno · 4/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">3. Gestión del Alcance y WBS/EDT</div>
+        <div class="rubric-note">Marisel lo supo explicar muy bien y se entendió claramente lo que quieren integrar. Como bien señalaste: no basta con entrenar en tecnología, también hay que saber explicarla —y con Marisel eso quedó demostrado. El Scope Statement (in/out scope) y la WBS de 5 fases con descomposición jerárquica son rigurosos y completos.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">4. Gestión del Cronograma</div>
+        <div class="rubric-note">Me gustó este cronograma y cómo explicaron el solapamiento que se observa, junto con la mención del trabajo en equipo. Me gustó que presentaran los hitos. Los entregables clave por fase —hasta una Fase 5 de Validación y Cierre— estuvieron muy bien explicados por Marisel, suavemente y con mucha claridad.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">5. Gestión de Costos y Earned Value Thinking</div>
+        <div class="rubric-note">La manera en que Jaime explicó esta parte fue magistral. Valoro cómo "criollizan" el lenguaje para hacerlo comprensible —dónde invertir, con la procurement strategy bien articulada. El Cost Baseline con desglose CAPEX/OPEX y el EVM en el dashboard (SPI 0.99, CPI 1.01) demuestran dominio real de Earned Value.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">6. Gestión de Riesgos, Calidad y Procurement</div>
+        <div class="rubric-note">La ruta crítica se explicó muy bien. La imagen con las líneas rojas me confundía un poco entre tanto color, pero lo compensaron explicando con precisión dónde se ve el riesgo o el retraso y por qué es importante mirarlo. El plan de riesgos estuvo muy bien explicado de manera logística. El HEAT MAP, excelente: establecieron las más críticas primero y les dieron prioridad desde la realidad de Puerto Rico. "¿Quién avisa?", preguntó Karla —y me gustó que se comprometieran a dar resúmenes mensuales y semanales para mantener a los equipos alineados desde el communication plan.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">7. Gestión Integrada de Cambios</div>
+        <div class="rubric-note">Observé el ROI y los beneficios —trajeron las guías que se pueden integrar desde Puerto Rico, y eso está excelente. El Dashboard Ejecutivo lo explicó muy bien Marisel. El Governance Framework incluye un Change Control Board con umbrales claros (PM aprueba ≤$10K/≤2 semanas; CCB lo mayor) y una matriz de escalación por niveles bien definida.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">8. Integración de Conceptos PMP®</div>
+        <div class="rubric-note">Lo vi claramente en el CPM (Critical Path Method) explicado por Emilio. La matriz RACI presentada por Karla me llamó la atención —aunque no se detalló a fondo, su sola presencia en la propuesta demuestra madurez en la asignación de responsabilidades. El uso consistente de vocabulario PMBOK® 7 a lo largo de la presentación fue auténtico.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">9. Calidad de la Presentación Ejecutiva</div>
+        <div class="rubric-note">Muy profesionales y organizados. La identidad de marca de Boritech Advisors (con el sello "Confidencial" y la referencia a PMBOK® 7) le dio una seriedad consultora real. Slides limpios, bien estructurados y con jerarquía visual clara de principio a fin.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+    <div class="rubric-item excelente">
+      <div>
+        <div class="rubric-criterion">10. Trabajo Colaborativo y Dinámica del Equipo</div>
+        <div class="rubric-note">Se denotó que se prepararon para presentar. Me encantó. Cada integrante tenía un dominio claro de su sección y los relevos fueron fluidos. La cohesión del equipo y la complementariedad de sus estilos —Emilio directo, Marisel natural, Jaime didáctico, Karla atenta a la gobernanza— funcionaron como una verdadera firma consultora.</div>
+      </div>
+      <div class="rubric-badge badge-excelente">Excelente · 5/5</div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ORAL -->
+  <div class="section-label">
+    <div class="section-dot dot-coral"></div>
+    <h2>Evaluación Oral · 20%</h2>
+  </div>
+
+  <div class="oral-grid">
+    <div class="oral-card positivo">
+      <h4>✦ Fortalezas observadas</h4>
+      <ul>
+        <li>Emilio le habló directo al stakeholder, con honestidad sobre fortalezas y debilidades — magistral</li>
+        <li>Marisel explicó con naturalidad y suavidad; me hizo sentir el stakeholder comprendiendo cada paso</li>
+        <li>Jaime "criollizó" el lenguaje técnico de costos para hacerlo accesible — gran habilidad comunicativa</li>
+        <li>Karla aportó la dimensión de gobernanza y comunicación: "¿Quién avisa?" con compromiso de resúmenes periódicos</li>
+        <li>La recomendación final fue espectacular: le hablaron al stakeholder hasta el final, convenciendo con lo que se recuperaría</li>
+        <li>Anclaje constante en la realidad de Puerto Rico — eso los distinguió de todos</li>
+      </ul>
+    </div>
+    <div class="oral-card mejora">
+      <h4>◈ Oportunidades de desarrollo</h4>
+      <ul>
+        <li>Dar al Project Charter un momento propio y explícito en la narración oral, no solo en el documento</li>
+        <li>La matriz RACI merece una explicación más detallada — es un activo valioso que se mencionó de pasada</li>
+        <li>El diagrama de ruta crítica tenía demasiados colores/líneas; simplificar la paleta visual ayudaría a la lectura</li>
+        <li>Continuar fortaleciendo la defensa estratégica de cada decisión ante posibles cuestionamientos de la junta</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PEER EVAL -->
+  <div class="section-label">
+    <div class="section-dot dot-gold"></div>
+    <h2>Evaluación Anónima Entre Pares</h2>
+  </div>
+
+  <div class="peer-section">
+
+    <div class="peer-card">
+      <div class="peer-head">
+        <span class="peer-verdict">✓ Me convence al stakeholder</span>
+        <span class="peer-stars">★★★★★ <span class="label">Excelente · 5/5</span></span>
+      </div>
+      <p class="peer-quote">"La presentación del grupo demuestra un dominio sólido y comprensivo de los fundamentos de gestión de proyecto. Demostró estar preparado para asumir el rol de consultores en un proyecto de esta envergadura. Excelente presentación."</p>
+    </div>
+
+    <div class="peer-card">
+      <div class="peer-head">
+        <span class="peer-verdict">✓ Me convence al stakeholder</span>
+        <span class="peer-stars">★★★★★ <span class="label">Excelente · 5/5</span></span>
+      </div>
+      <p class="peer-quote">"Claro y preciso, en particular el cronograma."</p>
+    </div>
+
+    <div class="peer-card">
+      <div class="peer-head">
+        <span class="peer-verdict">✓ Me convence al stakeholder</span>
+        <span class="peer-stars">★★★★☆ <span class="label">Bueno · 4/5</span></span>
+      </div>
+      <p class="peer-quote">"Buena presentación."</p>
+    </div>
+
+    <div class="peer-synth">
+      <strong>Síntesis de la voz de los pares:</strong> Los tres evaluadores coinciden en que el equipo convence al stakeholder. Destacan especialmente la solidez de los fundamentos de gestión de proyecto y la claridad del cronograma —el mismo elemento que sobresalió en mi evaluación. El consenso de pares confirma que Boritech proyectó credibilidad consultora real, alineándose plenamente con la puntuación de Excelente.
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ANÁLISIS PPT -->
+  <div class="section-label">
+    <div class="section-dot dot-teal"></div>
+    <h2>Análisis del Material Presentado</h2>
+  </div>
+
+  <div class="pptx-obs">
+    <h4>Observaciones sobre los 31 slides · CAPSTONE_.pptx</h4>
+    <ul class="obs-list">
+      <li>
+        <div class="obs-icon icon-pos">✓</div>
+        <span><strong>Matriz RACI completa (Slide 20):</strong> Una matriz de 12 actividades × 9 roles con R/A/C/I bien asignados. Pocos equipos llegan a este nivel de detalle en la asignación de responsabilidades. Es un activo que merece más protagonismo en la exposición oral.</span>
+      </li>
+      <li>
+        <div class="obs-icon icon-pos">✓</div>
+        <span><strong>Diagrama de red CPM con holguras (Slide 13):</strong> ES/EF/LS/LF y holgura (H) calculados para cada nodo, ruta crítica identificada (92 semanas). Técnicamente impecable. Como notaste, la densidad cromática podría simplificarse para mejorar legibilidad.</span>
+      </li>
+      <li>
+        <div class="obs-icon icon-pos">✓</div>
+        <span><strong>Entregables por 5 fases (Slide 10):</strong> Desde Planificación hasta Validación y Cierre, con fechas y entregables concretos por fase. La inclusión de una Fase 5 de cierre formal con lecciones aprendidas demuestra visión completa del ciclo de vida del proyecto.</span>
+      </li>
+      <li>
+        <div class="obs-icon icon-pos">✓</div>
+        <span><strong>Uso Ético de la IA (Slide 28):</strong> Una diapositiva ejemplar que declara las herramientas (Claude, Copilot, ChatGPT, Gemini), su propósito, resultados útiles Y resultados NO útiles (vocabulario incorrecto, discrepancias entre contenidos), y la fortaleza del juicio humano (discernir errores, empatía, toma de decisiones). Este es el estándar TIHA en su máxima expresión —gracias por visibilizarlo así.</span>
+      </li>
+      <li>
+        <div class="obs-icon icon-warn">⚠</div>
+        <span><strong>Project Charter en la narración oral:</strong> El documento del Charter (slide 8) es robusto, pero en la exposición no quedó claro su momento explícito. Recomendación: anunciarlo claramente ("Pasamos ahora al Project Charter, el documento que formaliza la autorización...") para que el stakeholder lo registre como hito.</span>
+      </li>
+      <li>
+        <div class="obs-icon icon-rec">→</div>
+        <span><strong>Consistencia de referencias:</strong> La diapositiva 31 cita tanto PMBOK® 6ª como 7ª edición; conviene confirmar cuál es la base metodológica principal (la portada indica 7ª) para máxima coherencia académica en la versión final de Moodle.</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- REFLEXIÓN -->
+  <div class="section-label">
+    <div class="section-dot dot-navy"></div>
+    <h2>Momento Más Memorable de la Presentación</h2>
+  </div>
+
+  <div class="reflection-box">
+    <blockquote>"Sin métricas no se puede controlar un proyecto" — y más que controlar, llevarlo a la medición de riesgos y a la gestión de cómo trabajar los hallazgos.</blockquote>
+    <p>La frase de Emilio captura una verdad central de la gerencia de proyectos profesional. Pero lo que más me conmovió de este equipo fue su diapositiva de Uso Ético de la IA: no solo declararon qué herramientas usaron, sino que tuvieron la honestidad intelectual de nombrar los resultados <em>no útiles</em> —el vocabulario incorrecto, las discrepancias— y reivindicar la fortaleza del juicio humano para discernir esos errores. Esa es exactamente la evaluación crítica que el Modelo TIHA busca cultivar: la IA amplifica, pero el ser humano discierne, decide y asume la responsabilidad. Les felicito por hacerlo visible con tanta claridad.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RECOMENDACIONES -->
+  <div class="section-label">
+    <div class="section-dot dot-coral"></div>
+    <h2>Recomendaciones Profesionales</h2>
+  </div>
+
+  <div class="recs">
+    <div class="rec-item">
+      <div class="rec-num">1</div>
+      <div class="rec-text">
+        <strong>Den al Project Charter un momento explícito en la exposición</strong>
+        <span>El documento es sólido, pero en la narración oral se difuminó. En una junta real, el Charter es el hito de autorización formal: anúncienlo, enmárquenlo y conéctenlo con la magistral definición del problema que hizo Emilio. Es la única área que quedó "Buena" y es fácil de elevar a Excelente.</span>
+      </div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num">2</div>
+      <div class="rec-text">
+        <strong>Den protagonismo a la matriz RACI</strong>
+        <span>Esa matriz es uno de sus mejores activos y se mencionó de pasada. Dedicarle dos minutos para mostrar cómo se asignan responsabilidades en una decisión concreta (p.ej. la aprobación de cambios) reforzaría su credibilidad consultora.</span>
+      </div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num">3</div>
+      <div class="rec-text">
+        <strong>Simplifiquen la paleta visual del diagrama de ruta crítica</strong>
+        <span>El contenido técnico es excelente, pero la cantidad de colores y líneas dificultaba la lectura. Una paleta más sobria (ruta crítica en un color fuerte, el resto en gris) haría el diagrama más legible para un stakeholder ejecutivo.</span>
+      </div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num">4</div>
+      <div class="rec-text">
+        <strong>Conserven el anclaje en Puerto Rico como sello de marca</strong>
+        <span>Mencionar la realidad de la Isla —incentivos Ley 60, contexto energético, modernización local— los distinguió de todos los demás equipos. Es una propuesta de valor real: conozcan el contexto donde operan. Llévense ese instinto a su práctica profesional.</span>
+      </div>
+    </div>
+    <div class="rec-item">
+      <div class="rec-num">5</div>
+      <div class="rec-text">
+        <strong>Mantengan esa transparencia ejemplar sobre el uso de IA</strong>
+        <span>Su diapositiva de Uso Ético de la IA es un modelo para todo el programa. La honestidad de declarar lo que NO funcionó y reivindicar el juicio humano es precisamente la madurez profesional que define a los mejores gerentes de proyectos en la era de la IA generativa.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CIERRE -->
+  <div style="background:var(--light-teal);border-radius:12px;padding:28px 30px;border-left:4px solid var(--teal);">
+    <p style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--navy);margin-bottom:10px;">Felicitaciones, Boritech Advisors</p>
+    <p style="font-size:14px;color:var(--muted);line-height:1.75;">Lograron la puntuación más alta del Capstone porque hicieron algo difícil: convertir una propuesta técnica en una conversación con el stakeholder. Emilio abrió con honestidad, Marisel guió con naturalidad, Jaime tradujo lo complejo en cercano, y Karla cuidó la gobernanza y la comunicación. Su recomendación final fue espectacular —le hablaron a la junta hasta el último segundo, convenciendo con lo que se iba a recuperar. Y a lo largo de toda la presentación, nunca olvidaron dónde están: en Puerto Rico, resolviendo problemas reales con criterio propio. Eso es ser consultores. Eso es ser PMP®.</p>
+    <p style="margin-top:16px;font-size:13px;color:var(--teal);font-style:italic;">Las herramientas de inteligencia artificial son aliadas que amplifican su juicio profesional — nunca un sustituto del pensamiento crítico que ustedes aportan como equipo.</p>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-brand">
+    <strong>Dra. Mariluz Serrano Ortiz, Ed.D.</strong>
+    Departamento de Gerencia de Oficina y Comunicación Empresarial<br>
+    Facultad de Administración de Empresas · UPR Recinto de Río Piedras<br>
+    DECEP · Certificación Profesional en Gerencia de Proyectos PMP®
+  </div>
+  <div class="footer-logo">TI<span>HA</span></div>
+</footer>
+
+</body>
+</html>
