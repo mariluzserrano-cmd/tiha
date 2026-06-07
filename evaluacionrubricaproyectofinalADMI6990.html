@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluador del Portafolio · Business AI Prototype | ADMI 6990 · TIHA</title>
+<style>
+  :root{
+    --vino:#8B2A2A;--coral:#D85A30;--crema:#F4E8D8;--crema-claro:#FBF5EC;
+    --tinta:#2C2420;--gris:#6B5D52;--linea:#E3D3BE;--verde:#3B7A57;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--crema-claro);color:var(--tinta);line-height:1.55;padding:0 0 70px;}
+  .wrap{max-width:780px;margin:0 auto;padding:0 20px;}
+  header.hero{background:linear-gradient(135deg,var(--vino),#6E1F1F);color:#fff;padding:32px 20px 26px;text-align:center;}
+  header.hero .kicker{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;opacity:.9;margin-bottom:10px;}
+  header.hero h1{font-size:1.6rem;font-weight:normal;margin-bottom:6px;}
+  header.hero p{font-style:italic;opacity:.95;font-size:.92rem;}
+
+  /* Marcador fijo */
+  .marcador{position:sticky;top:0;z-index:50;background:var(--vino);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:12px 20px;box-shadow:0 2px 10px rgba(0,0,0,.15);}
+  .marcador .nota{font-size:1.5rem;font-weight:bold;}
+  .marcador .est{font-size:.85rem;opacity:.9;}
+
+  .card{background:#fff;border:1px solid var(--linea);border-radius:14px;padding:22px 20px;margin-top:24px;box-shadow:0 2px 14px rgba(139,42,42,.05);}
+  label.lbl{display:block;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vino);margin-bottom:6px;font-weight:bold;}
+  input[type=text],textarea{width:100%;border:1px solid var(--linea);border-radius:9px;padding:10px 12px;font-family:Georgia,serif;font-size:.95rem;color:var(--tinta);background:var(--crema-claro);margin-bottom:12px;}
+  input:focus,textarea:focus{outline:none;border-color:var(--coral);}
+  .fila2{display:flex;gap:12px;flex-wrap:wrap;}
+  .fila2>div{flex:1;min-width:140px;}
+
+  .comp-head{background:var(--coral);color:#fff;padding:10px 14px;border-radius:8px;margin:22px 0 4px;font-weight:bold;font-size:.98rem;}
+  .crit{border-bottom:1px solid var(--linea);padding:14px 0;}
+  .crit-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+  .crit-nombre{font-weight:bold;color:var(--vino);font-size:.96rem;}
+  .crit-desc{font-size:.82rem;color:var(--gris);margin-top:3px;}
+  .crit-pts{white-space:nowrap;display:flex;align-items:center;gap:6px;}
+  .crit-pts input{width:58px;text-align:center;margin-bottom:0;font-weight:bold;color:var(--coral);}
+  .crit-pts .max{font-size:.82rem;color:var(--gris);}
+  .crit-nota{margin-top:8px;}
+  .crit-nota textarea{min-height:50px;margin-bottom:0;font-size:.9rem;}
+
+  .subtotal{background:var(--crema);border-radius:8px;padding:8px 14px;margin-top:8px;display:flex;justify-content:space-between;font-weight:bold;color:var(--vino);font-size:.92rem;}
+
+  .notas-grales textarea{min-height:120px;}
+  .ayuda{font-size:.82rem;color:var(--gris);font-style:italic;margin-bottom:8px;}
+
+  .btn{border:none;cursor:pointer;font-family:Georgia,serif;font-size:.95rem;padding:13px 24px;border-radius:30px;display:inline-flex;align-items:center;gap:8px;transition:transform .15s,box-shadow .15s;}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(139,42,42,.18);}
+  .btn-primary{background:var(--coral);color:#fff;width:100%;justify-content:center;font-size:1.05rem;}
+  .btn-pdf{background:var(--vino);color:#fff;}
+  .btn-otro{background:var(--crema);color:var(--vino);}
+  .btn-regen{background:var(--verde);color:#fff;}
+  .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
+
+  #retro{display:none;}
+  .doc-edit{background:#fff;border:1px dashed var(--coral);border-radius:10px;padding:20px;min-height:300px;font-size:.95rem;line-height:1.7;}
+  .doc-edit:focus{outline:none;}
+  .doc-edit h2{color:var(--vino);font-size:1.15rem;margin:16px 0 6px;}
+  .doc-edit h3{color:var(--coral);font-size:1rem;margin:14px 0 4px;}
+  .doc-edit .cierre{font-style:italic;color:var(--vino);border-left:4px solid var(--coral);padding-left:14px;margin-top:18px;}
+
+  footer{margin-top:40px;text-align:center;color:var(--gris);font-size:.8rem;border-top:1px solid var(--linea);padding-top:22px;}
+  footer .firma{color:var(--vino);font-style:italic;margin-top:6px;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="kicker">ADMI 6990 · Business AI Prototype · Uso docente</div>
+  <h1>Evaluador del Portafolio Ejecutivo</h1>
+  <p>Puntúa la rúbrica de 100 puntos · captura notas · genera retrocomunicación TIHA</p>
+</header>
+
+<div class="marcador">
+  <div><span class="nota" id="m-nota">—</span> <span style="font-size:1rem;">/ 100</span></div>
+  <div class="est" id="m-est">Selecciona un grupo para comenzar</div>
+</div>
+
+<div class="wrap">
+
+  <div class="card" id="evaluador">
+    <!-- IDENTIFICACIÓN -->
+    <label class="lbl">Grupo / Prototipo</label>
+    <select id="grupo" style="width:100%;border:1px solid var(--linea);border-radius:9px;padding:10px 12px;font-family:Georgia,serif;font-size:.95rem;background:var(--crema-claro);margin-bottom:12px;" onchange="actualizarEst()">
+      <option value="">— Selecciona un grupo —</option>
+      <option>Grupo 1 · Mercadotecnia IA</option>
+      <option>Grupo 2 · Human Pulse AI</option>
+      <option>Grupo 3 · TranSolutions</option>
+      <option>Grupo 4 · IA-UniData-UPR</option>
+      <option>Grupo 5 · Praxia Lens</option>
+      <option>Grupo 6 · OnboardCompassAI</option>
+      <option>Grupo 7 · PulseBoard</option>
+      <option>Grupo 8 · AcuityOS</option>
+    </select>
+    <div class="fila2">
+      <div><label class="lbl">Líder / Integrantes</label><input type="text" id="integrantes" placeholder="Nombres"></div>
+      <div><label class="lbl">Fecha</label><input type="text" id="fecha" placeholder="13 de junio de 2026"></div>
+    </div>
+
+    <!-- COMPONENTE A -->
+    <div class="comp-head">📊 Componente A · Portafolio Digital (75 pts)</div>
+    <div id="compA"></div>
+    <div class="subtotal"><span>Subtotal Componente A</span><span id="sub-a">0 / 75</span></div>
+
+    <!-- COMPONENTE B -->
+    <div class="comp-head">🎤 Componente B · Defensa Ejecutiva (20 pts)</div>
+    <div id="compB"></div>
+    <div class="subtotal"><span>Subtotal Componente B</span><span id="sub-b">0 / 20</span></div>
+
+    <!-- COMPONENTE C -->
+    <div class="comp-head">⚖️ Componente C · Calidad Transversal (5 pts)</div>
+    <div id="compC"></div>
+    <div class="subtotal"><span>Subtotal Componente C</span><span id="sub-c">0 / 5</span></div>
+
+    <!-- BONO -->
+    <div class="comp-head" style="background:var(--verde);">✨ Bono LinkedIn (opcional, individual)</div>
+    <div class="crit">
+      <div class="crit-top">
+        <div><div class="crit-nombre">Publicación en LinkedIn ya evaluada satisfactoriamente</div><div class="crit-desc">Se suma a la nota final del curso. Individual.</div></div>
+        <div class="crit-pts"><input type="text" id="bono" value="0" oninput="calc()"><span class="max">/ 11</span></div>
+      </div>
+    </div>
+
+    <!-- NOTAS GENERALES -->
+    <div class="comp-head">📝 Tus anotaciones durante la presentación</div>
+    <div class="card" style="margin-top:8px;box-shadow:none;">
+      <p class="ayuda">Escribe libremente. Usa "+" para fortalezas, "−" para mejoras y "&gt;" para recomendaciones; o escribe normal y se incluirá tal cual. Estas notas alimentan la retrocomunicación.</p>
+      <textarea id="notas" class="notas-grales" placeholder="+ Excelente conexión del prototipo con el problema real&#10;− El Canvas necesita más profundidad en el bloque de socios clave&#10;&gt; Considerar afinar el prompt maestro para mostrar más matices del bot"></textarea>
+    </div>
+
+    <button class="btn btn-primary" onclick="generarRetro()">📝 Organizar retrocomunicación TIHA</button>
+  </div>
+
+  <!-- RETROCOMUNICACIÓN -->
+  <div class="card" id="retro">
+    <p class="ayuda">Edita el texto libremente antes de descargar — haz clic en cualquier parte para ajustar. Cada documento le habla solo a este equipo.</p>
+    <div class="doc-edit" id="doc" contenteditable="true"></div>
+    <div class="btn-row">
+      <button class="btn btn-pdf" onclick="descargarPDF()">⬇ Descargar PDF</button>
+      <button class="btn btn-regen" onclick="generarRetro()">↻ Regenerar desde notas</button>
+      <button class="btn btn-otro" onclick="volver()">↺ Volver a editar puntajes</button>
+    </div>
+  </div>
+
+  <footer>
+    Modelo TIHA · Tecnologías para la Inspiración y Humanización del Aprendizaje<br>
+    ADMI 6990 · 3T 2025–2026 · EGAE · UPR Río Piedras<br>
+    <span class="firma">Dra. Mariluz Serrano Ortiz · mariluz.serrano@upr.edu</span>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  var criteriosA=[
+    {n:"1. Identidad del Equipo y Visión Humano-Céntrica",p:7,d:"Portada profesional, propósito claro, identidad visual coherente, mission statement humanizador."},
+    {n:"2. Problema Empresarial Real y Datos Sustentadores",p:12,d:"Problema real, contexto evidenciado, mínimo 5 fuentes APA verificables, stakeholders identificados, justificación de IA basada en evidencia."},
+    {n:"3. Canvas del Modelo de Negocio con IA",p:12,d:"Los 9 bloques completos, IA integrada estratégicamente, narrativa coherente, modelo visual claro."},
+    {n:"4. Marco Ético y Gobernanza Responsable",p:12,d:"Aplicación de Floridi et al. (2018), riesgos identificados con mitigaciones específicas, gobernanza accionable."},
+    {n:"5. Sala de Junta Simulada con IA (Chatbot de un Stakeholder)",p:12,d:"Un chatbot representando un stakeholder, diálogo profundo documentado, refinamientos sustanciales del prototipo."},
+    {n:"6. Prototipo Funcional Business AI",p:15,d:"Prototipo demostrable, conectado al problema, caso de uso convincente, calidad ejecutiva."},
+    {n:"7. Reflexión TIHA y Declaración de Uso de IA",p:5,d:"Reflexión auténtica, declaración transparente, proyección estratégica futura."}
+  ];
+  var criteriosB=[
+    {n:"Claridad y Estructura Ejecutiva",p:6,d:"Comunicación clara, estructura lógica, manejo del tiempo, transiciones fluidas entre integrantes."},
+    {n:"Dominio del Contenido",p:6,d:"Profundidad técnica, manejo del componente ético, respuestas a preguntas."},
+    {n:"Demostración del Prototipo",p:4,d:"Demostración tangible y persuasiva durante la presentación."},
+    {n:"Cierre Humanizador",p:4,d:"Reflexión final que conecte la propuesta con el impacto humano y TIHA."}
+  ];
+  var criteriosC=[
+    {n:"Rigurosidad APA 7ma",p:2,d:"Citas correctas, DOI presente, sin referencias fabricadas. Citación transparente del uso de IA."},
+    {n:"Diseño Profesional del Portafolio",p:2,d:"Coherencia visual, jerarquía clara, navegación fluida, portafolio público y accesible."},
+    {n:"Voz Auténtica del Equipo",p:1,d:"Curaduría crítica evidente, integración respetuosa de Nivel 4 (Uso Abierto Declarado)."}
+  ];
+
+  function render(lista,cont,prefijo){
+    var html='';
+    lista.forEach(function(c,i){
+      var id=prefijo+i;
+      html+='<div class="crit"><div class="crit-top">'+
+        '<div><div class="crit-nombre">'+c.n+'</div><div class="crit-desc">'+c.d+'</div></div>'+
+        '<div class="crit-pts"><input type="text" id="pt-'+id+'" value="0" oninput="calc()"><span class="max">/ '+c.p+'</span></div>'+
+        '</div><div class="crit-nota"><textarea id="nt-'+id+'" placeholder="Nota breve (opcional)"></textarea></div></div>';
+    });
+    document.getElementById(cont).innerHTML=html;
+  }
+  render(criteriosA,'compA','A');
+  render(criteriosB,'compB','B');
+  render(criteriosC,'compC','C');
+
+  function val(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
+  function sumar(lista,prefijo){var s=0;lista.forEach(function(c,i){s+=val('pt-'+prefijo+i);});return s;}
+
+  function calc(){
+    var a=sumar(criteriosA,'A'),b=sumar(criteriosB,'B'),c=sumar(criteriosC,'C');
+    document.getElementById('sub-a').textContent=a+' / 75';
+    document.getElementById('sub-b').textContent=b+' / 20';
+    document.getElementById('sub-c').textContent=c+' / 5';
+    var total=a+b+c;
+    document.getElementById('m-nota').textContent=total;
+  }
+  function actualizarEst(){
+    var g=document.getElementById('grupo').value;
+    document.getElementById('m-est').textContent=g||'Selecciona un grupo para comenzar';
+  }
+
+  function generarRetro(){
+    calc();
+    var grupo=document.getElementById('grupo').value||'(Grupo sin seleccionar)';
+    var integ=document.getElementById('integrantes').value.trim();
+    var fecha=document.getElementById('fecha').value.trim()||'13 de junio de 2026';
+    var a=sumar(criteriosA,'A'),b=sumar(criteriosB,'B'),c=sumar(criteriosC,'C');
+    var bono=val('bono');
+    var total=a+b+c;
+
+    // Procesar notas generales
+    var notas=document.getElementById('notas').value.split('\n');
+    var fort=[],mejo=[],reco=[],otras=[];
+    notas.forEach(function(l){
+      l=l.trim();if(!l)return;
+      if(l[0]==='+')fort.push(l.substring(1).trim());
+      else if(l[0]==='-'||l[0]==='−')mejo.push(l.substring(1).trim());
+      else if(l[0]==='>')reco.push(l.substring(1).trim());
+      else otras.push(l);
+    });
+
+    // Notas por criterio
+    function notasCrit(lista,prefijo){
+      var arr=[];
+      lista.forEach(function(cr,i){
+        var t=document.getElementById('nt-'+prefijo+i).value.trim();
+        if(t)arr.push('<li><strong>'+cr.n+':</strong> '+t+'</li>');
+      });
+      return arr;
+    }
+    var detalle=notasCrit(criteriosA,'A').concat(notasCrit(criteriosB,'B')).concat(notasCrit(criteriosC,'C'));
+
+    var html='<h2>Retrocomunicación TIHA · Proyecto Final</h2>';
+    html+='<p><strong>'+grupo+'</strong>'+(integ?(' · '+integ):'')+'<br><span style="font-size:.85rem;color:#6B5D52;">'+fecha+' · ADMI 6990 · Business AI Prototype</span></p>';
+    html+='<p style="margin-top:10px;"><strong>Resultado:</strong> '+total+' / 100 puntos &nbsp;·&nbsp; Componente A: '+a+'/75 · Componente B: '+b+'/20 · Componente C: '+c+'/5'+(bono>0?(' &nbsp;·&nbsp; Bono LinkedIn (individual): +'+bono):'')+'</p>';
+
+    if(fort.length){html+='<h3>Lo que funcionó muy bien</h3><ul>';fort.forEach(function(x){html+='<li>'+x+'</li>';});html+='</ul>';}
+    if(mejo.length){html+='<h3>Lo que puede seguir afinándose</h3><ul>';mejo.forEach(function(x){html+='<li>'+x+'</li>';});html+='</ul>';}
+    if(reco.length){html+='<h3>Recomendaciones para continuar creciendo</h3><ul>';reco.forEach(function(x){html+='<li>'+x+'</li>';});html+='</ul>';}
+    if(detalle.length){html+='<h3>Observaciones por criterio</h3><ul>'+detalle.join('')+'</ul>';}
+    if(otras.length){html+='<h3>Notas adicionales</h3><p>'+otras.join('<br>')+'</p>';}
+
+    html+='<div class="cierre">«Cuando integramos la inteligencia artificial con intención humanizadora, no solo aprendemos con ella, aprendemos a ser más nosotros mismos.»<br><span style="font-size:.82rem;font-style:normal;color:#6B5D52;">TIHA (2026) · Dra. Mariluz Serrano Ortiz</span></div>';
+
+    document.getElementById('doc').innerHTML=html;
+    document.getElementById('evaluador').style.display='none';
+    document.getElementById('retro').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function volver(){
+    document.getElementById('retro').style.display='none';
+    document.getElementById('evaluador').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function descargarPDF(){
+    html2canvas(document.getElementById('doc'),{scale:2,backgroundColor:'#ffffff'}).then(function(canvas){
+      var img=canvas.toDataURL('image/png');
+      var jsPDF=window.jspdf.jsPDF;
+      var pdf=new jsPDF('p','mm','a4');
+      var w=190,h=canvas.height*w/canvas.width;
+      var y=10,pageH=277;
+      if(h<=pageH){pdf.addImage(img,'PNG',10,y,w,h);}
+      else{
+        var pos=0;
+        while(pos<h){
+          pdf.addImage(img,'PNG',10,y-pos,w,h);
+          pos+=pageH;
+          if(pos<h)pdf.addPage();
+        }
+      }
+      var g=document.getElementById('grupo').value.split('·')[0].trim().replace(/\s+/g,'_')||'grupo';
+      pdf.save('Retro_TIHA_'+g+'.pdf');
+    });
+  }
+</script>
+</body>
+</html>
