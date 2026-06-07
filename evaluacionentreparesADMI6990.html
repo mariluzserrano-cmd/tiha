@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evalúa al Equipo · Business AI Prototype | ADMI 6990 · TIHA</title>
+<style>
+  :root{
+    --vino:#8B2A2A;--coral:#D85A30;--crema:#F4E8D8;--crema-claro:#FBF5EC;
+    --tinta:#2C2420;--gris:#6B5D52;--linea:#E3D3BE;--verde:#3B7A57;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--crema-claro);color:var(--tinta);line-height:1.6;padding:0 0 60px;}
+  .wrap{max-width:620px;margin:0 auto;padding:0 20px;}
+  header.hero{background:linear-gradient(135deg,var(--vino),#6E1F1F);color:#fff;padding:34px 20px 28px;text-align:center;}
+  header.hero .kicker{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;opacity:.9;margin-bottom:12px;}
+  header.hero h1{font-size:1.7rem;font-weight:normal;margin-bottom:6px;}
+  header.hero p{font-style:italic;opacity:.95;font-size:.95rem;}
+  .card{background:#fff;border:1px solid var(--linea);border-radius:14px;padding:24px 22px;margin-top:26px;box-shadow:0 2px 14px rgba(139,42,42,.05);}
+  label.lbl{display:block;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--vino);margin-bottom:8px;font-weight:bold;}
+  select,input[type=text],textarea{width:100%;border:1px solid var(--linea);border-radius:10px;padding:12px 14px;font-family:Georgia,serif;font-size:1rem;color:var(--tinta);background:var(--crema-claro);}
+  select:focus,input:focus,textarea:focus{outline:none;border-color:var(--coral);}
+  textarea{min-height:110px;resize:vertical;}
+  .grupo-pregunta{margin-top:24px;}
+  .opciones{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;}
+  .opcion{flex:1;min-width:110px;border:2px solid var(--linea);border-radius:12px;padding:16px 10px;text-align:center;cursor:pointer;background:#fff;transition:all .15s;font-size:.92rem;}
+  .opcion .emoji{font-size:1.8rem;display:block;margin-bottom:6px;}
+  .opcion:hover{border-color:var(--coral);}
+  .opcion.sel{border-color:var(--coral);background:var(--crema);color:var(--vino);font-weight:bold;}
+  .estrellas{display:flex;gap:8px;margin-top:6px;}
+  .estrella{font-size:2.1rem;color:var(--linea);cursor:pointer;transition:color .12s,transform .12s;}
+  .estrella:hover{transform:scale(1.15);}
+  .estrella.on{color:var(--coral);}
+  .btn{border:none;cursor:pointer;font-family:Georgia,serif;font-size:.95rem;padding:13px 24px;border-radius:30px;display:inline-flex;align-items:center;gap:8px;transition:transform .15s,box-shadow .15s;}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(139,42,42,.18);}
+  .btn-primary{background:var(--coral);color:#fff;width:100%;justify-content:center;font-size:1.05rem;margin-top:8px;}
+  .btn-png{background:var(--coral);color:#fff;}
+  .btn-email{background:var(--verde);color:#fff;}
+  .btn-otro{background:var(--crema);color:var(--vino);}
+  .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
+  .nota-priv{font-size:.8rem;color:var(--gris);margin-top:16px;font-style:italic;text-align:center;}
+  #resultado{display:none;}
+  .res-head{background:linear-gradient(135deg,var(--vino),#6E1F1F);color:#fff;padding:22px;border-radius:12px;text-align:center;margin-bottom:18px;}
+  .res-head .nombre-grupo{font-size:1.3rem;margin-top:6px;}
+  .res-linea{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--linea);}
+  .res-linea .v{font-weight:bold;color:var(--coral);}
+  .res-coment{background:var(--crema-claro);border-left:4px solid var(--coral);border-radius:0 10px 10px 0;padding:14px 16px;margin-top:16px;font-style:italic;white-space:pre-wrap;}
+  .quote{background:var(--crema);border-left:5px solid var(--coral);padding:16px 20px;border-radius:0 12px 12px 0;margin-top:26px;font-style:italic;color:var(--vino);font-size:.98rem;}
+  .quote .author{display:block;margin-top:8px;font-size:.78rem;font-style:normal;color:var(--gris);}
+  footer{margin-top:40px;text-align:center;color:var(--gris);font-size:.8rem;border-top:1px solid var(--linea);padding-top:22px;}
+  footer .firma{color:var(--vino);font-style:italic;margin-top:6px;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="kicker">ADMI 6990 · Business AI Prototype · TIHA</div>
+  <h1>¿Te convence el equipo?</h1>
+  <p>Evalúa la presentación de tus compañeros</p>
+</header>
+
+<div class="wrap">
+
+  <!-- FORMULARIO -->
+  <div class="card" id="formulario">
+    <label class="lbl">Grupo que estás evaluando</label>
+    <select id="grupo">
+      <option value="">— Selecciona un grupo —</option>
+      <option>Grupo 1 · Mercadotecnia IA (Bryan Cardona)</option>
+      <option>Grupo 2 · Human Pulse AI (Joshua Sierra)</option>
+      <option>Grupo 3 · TranSolutions (Alice Haddock)</option>
+      <option>Grupo 4 · IA-UniData-UPR (Luis Castro)</option>
+      <option>Grupo 5 · Praxia Lens (Emmanuel Vargas)</option>
+      <option>Grupo 6 · OnboardCompassAI (Christian Rodríguez)</option>
+      <option>Grupo 7 · PulseBoard (Kishna Suárez)</option>
+      <option>Grupo 8 · AcuityOS (Lizbeth Hernández)</option>
+    </select>
+
+    <div class="grupo-pregunta">
+      <label class="lbl">Como stakeholder, ¿te convencieron?</label>
+      <div class="opciones" id="convence">
+        <div class="opcion" data-v="Me convence"><span class="emoji">👍</span>Me convence</div>
+        <div class="opcion" data-v="Más o menos"><span class="emoji">🤔</span>Más o menos</div>
+        <div class="opcion" data-v="No me convence"><span class="emoji">👎</span>No me convence</div>
+      </div>
+    </div>
+
+    <div class="grupo-pregunta">
+      <label class="lbl">Calidad general según la rúbrica</label>
+      <div class="estrellas" id="estrellas">
+        <span class="estrella" data-n="1">★</span>
+        <span class="estrella" data-n="2">★</span>
+        <span class="estrella" data-n="3">★</span>
+        <span class="estrella" data-n="4">★</span>
+        <span class="estrella" data-n="5">★</span>
+      </div>
+    </div>
+
+    <div class="grupo-pregunta">
+      <label class="lbl">¿Qué te pareció el chatbot / prototipo?</label>
+      <textarea id="bot" placeholder="¿Funcionó la demo? ¿El prompt maestro mostró su potencial? ¿Qué destacarías?"></textarea>
+    </div>
+
+    <div class="grupo-pregunta">
+      <label class="lbl">Un comentario para el equipo</label>
+      <textarea id="comentario" placeholder="Algo que les funcionó muy bien y algo que pueden seguir afinando..."></textarea>
+    </div>
+
+    <button class="btn btn-primary" onclick="generar()">Listo · Generar mi evaluación</button>
+    <p class="nota-priv">🔒 Tu evaluación es anónima. No se pide tu nombre. Se guarda solo en tu dispositivo hasta que la descargues o envíes.</p>
+  </div>
+
+  <!-- RESULTADO -->
+  <div class="card" id="resultado">
+    <div id="captura">
+      <div class="res-head">
+        <div style="font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;opacity:.9;">Evaluación entre pares · Business AI Prototype</div>
+        <div class="nombre-grupo" id="r-grupo"></div>
+      </div>
+      <div class="res-linea"><span>¿Convence al stakeholder?</span><span class="v" id="r-convence"></span></div>
+      <div class="res-linea"><span>Calidad (rúbrica)</span><span class="v" id="r-estrellas"></span></div>
+      <div class="res-coment" id="r-bot"></div>
+      <div class="res-coment" id="r-comentario"></div>
+      <div class="quote">«No es usar más tecnología, es usar tecnología para vivir mejor.»
+        <span class="author">Dra. Mariluz Serrano Ortiz · Modelo TIHA</span></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-png" onclick="descargarPNG()">📸 Descargar (PNG)</button>
+      <button class="btn btn-email" onclick="enviarEmail()">✉️ Enviar por email</button>
+      <button class="btn btn-otro" onclick="reiniciar()">↺ Evaluar otro grupo</button>
+    </div>
+  </div>
+
+  <footer>
+    ADMI 6990 · Generative AI for Strategic Business Transformation · 3T 2025–2026<br>
+    EGAE · Universidad de Puerto Rico · Recinto de Río Piedras<br>
+    <span class="firma">Modelo TIHA · Dra. Mariluz Serrano Ortiz · mariluz.serrano@upr.edu</span>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+  var estado={convence:'',estrellas:0};
+  document.querySelectorAll('#convence .opcion').forEach(function(o){
+    o.onclick=function(){
+      document.querySelectorAll('#convence .opcion').forEach(function(x){x.classList.remove('sel');});
+      o.classList.add('sel');estado.convence=o.dataset.v;
+    };
+  });
+  document.querySelectorAll('#estrellas .estrella').forEach(function(s){
+    s.onclick=function(){
+      estado.estrellas=parseInt(s.dataset.n);
+      document.querySelectorAll('#estrellas .estrella').forEach(function(x){
+        x.classList.toggle('on',parseInt(x.dataset.n)<=estado.estrellas);
+      });
+    };
+  });
+  function generar(){
+    var grupo=document.getElementById('grupo').value;
+    if(!grupo){alert('Por favor selecciona el grupo que estás evaluando.');return;}
+    if(!estado.convence){alert('Por favor indica si te convencieron.');return;}
+    if(!estado.estrellas){alert('Por favor asigna las estrellas de calidad.');return;}
+    document.getElementById('r-grupo').textContent=grupo;
+    document.getElementById('r-convence').textContent=estado.convence;
+    document.getElementById('r-estrellas').textContent='★'.repeat(estado.estrellas)+'☆'.repeat(5-estado.estrellas)+' ('+estado.estrellas+'/5)';
+    var bot=document.getElementById('bot').value.trim();
+    var com=document.getElementById('comentario').value.trim();
+    document.getElementById('r-bot').textContent=bot?('Sobre el chatbot/prototipo: '+bot):'';
+    document.getElementById('r-bot').style.display=bot?'block':'none';
+    document.getElementById('r-comentario').textContent=com?('Comentario para el equipo: '+com):'';
+    document.getElementById('r-comentario').style.display=com?'block':'none';
+    document.getElementById('formulario').style.display='none';
+    document.getElementById('resultado').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function nombreArchivo(){
+    var g=document.getElementById('grupo').value.split('·')[0].trim().replace(/\s+/g,'_');
+    return g||'evaluacion';
+  }
+  function descargarPNG(){
+    html2canvas(document.getElementById('captura'),{scale:2,backgroundColor:'#ffffff'}).then(function(canvas){
+      var a=document.createElement('a');
+      a.download='EvalPares_'+nombreArchivo()+'.png';
+      a.href=canvas.toDataURL('image/png');a.click();
+    });
+  }
+  function enviarEmail(){
+    var grupo=document.getElementById('grupo').value;
+    var bot=document.getElementById('bot').value.trim()||'(sin comentario)';
+    var com=document.getElementById('comentario').value.trim()||'(sin comentario)';
+    var asunto=encodeURIComponent('Evaluación entre pares · '+grupo+' · ADMI 6990');
+    var cuerpo=encodeURIComponent(
+      'Evaluación entre pares (anónima)\n\nGrupo evaluado: '+grupo+
+      '\n¿Convence al stakeholder?: '+estado.convence+
+      '\nCalidad (rúbrica): '+estado.estrellas+'/5'+
+      '\n\nSobre el chatbot/prototipo:\n'+bot+
+      '\n\nComentario para el equipo:\n'+com+
+      '\n\n— Enviado desde el Evaluador entre Pares · Modelo TIHA');
+    window.location.href='mailto:mariluz.serrano@upr.edu?subject='+asunto+'&body='+cuerpo;
+  }
+  function reiniciar(){
+    document.getElementById('grupo').value='';
+    document.getElementById('bot').value='';
+    document.getElementById('comentario').value='';
+    estado={convence:'',estrellas:0};
+    document.querySelectorAll('.opcion').forEach(function(x){x.classList.remove('sel');});
+    document.querySelectorAll('.estrella').forEach(function(x){x.classList.remove('on');});
+    document.getElementById('resultado').style.display='none';
+    document.getElementById('formulario').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+</script>
+</body>
+</html>
