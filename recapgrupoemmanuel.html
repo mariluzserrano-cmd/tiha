@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recap Mentoría Proyecto Final ADMI 6990</title>
+  <style>
+    :root{
+      --vino:#7f1d1d;
+      --vino2:#991b1b;
+      --crema:#fbf5ec;
+      --arena:#f3e6d6;
+      --dorado:#c7903f;
+      --azul:#17324d;
+      --gris:#4b5563;
+      --verde:#166534;
+    }
+    body{
+      margin:0;
+      font-family: Georgia, 'Times New Roman', serif;
+      background:var(--crema);
+      color:#1f2937;
+      line-height:1.6;
+    }
+    .hero{
+      background:linear-gradient(135deg,var(--vino),#5f1515);
+      color:white;
+      padding:42px 8% 36px;
+      text-align:center;
+    }
+    .hero .eyebrow{
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:13px;
+      opacity:.9;
+      font-weight:bold;
+    }
+    .hero h1{
+      margin:14px 0 8px;
+      font-size:36px;
+      line-height:1.15;
+    }
+    .hero p{margin:8px 0 0; font-size:17px; opacity:.95;}
+    main{max-width:960px; margin:0 auto; padding:32px 22px 54px;}
+    .card{
+      background:#fff;
+      border:1px solid #ead9c5;
+      border-radius:18px;
+      padding:26px 30px;
+      margin:22px 0;
+      box-shadow:0 10px 28px rgba(60,38,20,.07);
+    }
+    h2{color:var(--vino); margin:0 0 12px; font-size:25px;}
+    h3{color:var(--azul); margin:22px 0 8px; font-size:20px;}
+    ul{padding-left:24px; margin:10px 0 0;}
+    li{margin:8px 0;}
+    .quote{
+      background:var(--arena);
+      border-left:5px solid var(--dorado);
+      padding:18px 22px;
+      border-radius:12px;
+      font-style:italic;
+      color:#4b2b14;
+      margin:18px 0;
+    }
+    .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:16px;}
+    .mini{
+      background:#fff7ed;
+      border:1px solid #f0d5b2;
+      border-radius:14px;
+      padding:18px;
+    }
+    .mini strong{color:var(--vino2);}
+    .check{color:var(--verde); font-weight:bold;}
+    .tag{
+      display:inline-block;
+      background:#f8e7d3;
+      color:#7f1d1d;
+      border-radius:999px;
+      padding:6px 12px;
+      font-size:13px;
+      font-weight:bold;
+      margin:4px 6px 4px 0;
+    }
+    .footer{
+      text-align:center;
+      color:#6b7280;
+      font-size:14px;
+      margin-top:30px;
+      border-top:1px solid #ead9c5;
+      padding-top:22px;
+    }
+    @media print{.card{box-shadow:none;} body{background:white;} .hero{background:#7f1d1d!important;}}
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="eyebrow">Universidad de Puerto Rico · ADMI 6990</div>
+    <h1>Recap Mentoría Proyecto Final</h1>
+    <p><strong>Equipo:</strong> Emmanuel J. Vargas-Torres y Yanitzia · Business AI Prototype</p>
+  </section>
+
+  <main>
+    <section class="card">
+      <h2>Saludos, Emmanuel y Yanitzia:</h2>
+      <p>Gracias por el espacio de mentoría y por compartir el avance del proyecto. El prototipo que están desarrollando demuestra una integración muy sólida entre pensamiento estratégico, diseño técnico, ética organizacional y uso aplicado de inteligencia artificial.</p>
+      <p>Comparto este recap con los acuerdos y recomendaciones principales que deben tener presentes para la presentación final del sábado.</p>
+    </section>
+
+    <section class="card">
+      <h2>1. Reflexión TIHA y reflexión final del curso</h2>
+      <p>Conversamos que la reflexión TIHA no es una actividad aislada ni requiere necesariamente abrir el TIHA Bot. TIHA es la metodología que ha guiado la experiencia completa del curso: la humanización del aprendizaje, el acompañamiento, la reflexión crítica y el uso intencional de la tecnología.</p>
+      <ul>
+        <li>Pueden entregar la reflexión individual en el espacio oficial de Moodle en formato Word, PDF o texto.</li>
+        <li>También pueden incluirla dentro del website, de manera individual, como parte del cierre del portafolio.</li>
+        <li>La reflexión debe conectar el curso completo, el proyecto final y el impacto del aprendizaje en su vida académica y profesional.</li>
+      </ul>
+      <div class="quote">La reflexión TIHA debe mostrar cómo este proceso les ayudó a mirar la IA no solo como herramienta técnica, sino como posibilidad de crecimiento humano, profesional y estratégico.</div>
+    </section>
+
+    <section class="card">
+      <h2>2. Prototipo Praxialence</h2>
+      <p>El prototipo presentado está muy bien encaminado. Se diferencia de un chatbot general porque no busca sostener una conversación abierta sobre cualquier tema, sino responder dentro de un marco específico: el análisis de tareas según criterios humanos, éticos, legales y organizacionales.</p>
+      <div class="grid">
+        <div class="mini"><strong>Función central:</strong><br>Clasificar tareas y procesos según su nivel de automatización o necesidad de intervención humana.</div>
+        <div class="mini"><strong>Valor estratégico:</strong><br>Ayudar a tomar mejores decisiones sobre qué se puede automatizar y qué debe permanecer bajo juicio humano.</div>
+        <div class="mini"><strong>Diferenciador:</strong><br>No es un bot genérico; está diseñado para resolver el problema específico de Praxialence.</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>3. Elementos que deben destacar el sábado</h2>
+      <p>Dado que tienen aproximadamente 15 minutos, la prioridad debe ser mostrar la parte interactiva y funcional del prototipo.</p>
+      <ul>
+        <li><span class="check">✓</span> Expliquen brevemente qué problema resuelve Praxialence.</li>
+        <li><span class="check">✓</span> Presenten para qué funciona el prototipo.</li>
+        <li><span class="check">✓</span> Demuestren cómo el sistema analiza una tarea o situación.</li>
+        <li><span class="check">✓</span> Expliquen las categorías que utiliza el prototipo, como contacto humano, discreción ética y responsabilidad legal.</li>
+        <li><span class="check">✓</span> Destaquen que la decisión final no la toma la IA, sino la persona que interpreta el resultado.</li>
+      </ul>
+      <div class="quote">La clave no es presentar todo lo que hicieron, sino mostrar con claridad cómo el prototipo funciona y por qué resuelve el problema planteado.</div>
+    </section>
+
+    <section class="card">
+      <h2>4. Website y documentos de apoyo</h2>
+      <p>Me pareció excelente que no visualicen la página como una tarea tradicional, sino como un producto de una compañía. Esa mirada fortalece la dimensión profesional del proyecto.</p>
+      <ul>
+        <li>El website debe presentar la experiencia principal del proyecto y guiar la exposición.</li>
+        <li>Si el reporte completo, referencias, canvas o documentos de investigación hacen la página muy pesada, pueden subirlos como anejos oficiales en Moodle.</li>
+        <li>El Business Model Canvas puede quedar visible en el site o como documento separado si facilita la navegación.</li>
+        <li>Las referencias y evidencias deben estar disponibles, aunque no necesariamente todas integradas visualmente dentro de la página principal.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>5. Recomendaciones técnicas</h2>
+      <p>Para evitar que archivos pesados afecten la experiencia de usuario o consuman créditos innecesarios en Claude, pueden convertir documentos PDF en HTML y luego integrarlos como botón, enlace o sección dentro del site.</p>
+      <div class="grid">
+        <div class="mini"><strong>Si el PDF pesa demasiado:</strong><br>Subirlo a Moodle como anejo oficial.</div>
+        <div class="mini"><strong>Si quieren integrarlo al site:</strong><br>Convertirlo a HTML y enlazarlo mediante botón.</div>
+        <div class="mini"><strong>Si necesitan editar visualmente:</strong><br>Usar slides o imágenes optimizadas para mantener control del diseño.</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>6. Preparación para la presentación final</h2>
+      <ul>
+        <li>Practiquen la presentación con cronómetro para mantenerse dentro del tiempo asignado.</li>
+        <li>Prioricen la demostración del bot y la explicación del problema que resuelve.</li>
+        <li>Eviten perder demasiado tiempo en detalles técnicos internos que no sean necesarios para la audiencia.</li>
+        <li>Preparen el flujo exacto de navegación del site.</li>
+        <li>Verifiquen que enlaces, botones y demostraciones funcionen antes de la clase.</li>
+      </ul>
+      <p><strong>Orden de presentación:</strong> según conversamos, ustedes presentan después del receso, así que romperán el hielo en la segunda parte de la sesión.</p>
+    </section>
+
+    <section class="card">
+      <h2>7. Pendientes antes del sábado</h2>
+      <p><span class="tag">Reflexión TIHA</span><span class="tag">LinkedIn</span><span class="tag">Reporte / Canvas</span><span class="tag">Práctica con cronómetro</span></p>
+      <ul>
+        <li>Completar la reflexión final correspondiente.</li>
+        <li>Trabajar la parte de LinkedIn indicada en el curso.</li>
+        <li>Decidir si el reporte completo va dentro del site o como anejo en Moodle.</li>
+        <li>Practicar la demostración del prototipo para asegurar claridad y fluidez.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Cierre</h2>
+      <p>Estoy muy orgullosa del trabajo que han desarrollado. Este proyecto evidencia aprendizaje real, exploración técnica, pensamiento estratégico y una comprensión profunda de cómo la IA puede aportar valor sin desplazar el juicio humano.</p>
+      <p>Nos vemos el sábado, con el favor de Dios. Estoy a un click o a un voice note si necesitan algo adicional.</p>
+      <p><strong>— Dra. Mariluz Serrano Ortiz</strong><br>ADMI 6990 · Generative AI for Strategic Business Transformation</p>
+    </section>
+
+    <div class="footer">
+      “La inteligencia artificial no reemplaza el criterio humano; lo reta, lo expande y lo obliga a hacerse más consciente.” · TIHA
+    </div>
+  </main>
+</body>
+</html>
