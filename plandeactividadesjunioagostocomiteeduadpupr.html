@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Plan de Actividades Educativas · Junio–Agosto 2026 | ADPU | PR</title>
+<meta name="description" content="One-pager del Comité de Educación y Tecnología de ADPU | PR: plan de actividades educativas junio–agosto 2026, rumbo a la III Conferencia Anual de Administración Pública." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@500;700;800;900&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --azul-principal:#0d285b;
+    --azul-claro:#75bdf0;
+    --mostaza:#ffd258;
+    --azul-profundo:#072b45;
+    --fondo:#fff9ec;
+    --blanco:#ffffff;
+    --borde:rgba(13,40,91,.14);
+    --sombra:0 16px 40px rgba(7,43,69,.12);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:"Open Sans",Arial,sans-serif;
+    color:var(--azul-profundo);
+    background:
+      radial-gradient(circle at top right, rgba(117,189,240,.16), transparent 26rem),
+      linear-gradient(180deg,#ffffff 0%, var(--fondo) 100%);
+    line-height:1.6;
+  }
+  .topline{height:8px;background:linear-gradient(90deg,var(--azul-principal),var(--azul-claro),var(--mostaza))}
+
+  header{
+    background:linear-gradient(135deg,var(--azul-principal),var(--azul-profundo));
+    color:var(--blanco);
+    padding:44px 24px 52px;
+    position:relative;
+    overflow:hidden;
+  }
+  header:after{
+    content:"";position:absolute;right:-120px;bottom:-160px;width:360px;height:360px;
+    border-radius:50%;border:30px solid rgba(117,189,240,.18);
+  }
+  .hero{max-width:960px;margin:0 auto;position:relative;z-index:1}
+  .logo{
+    font-family:"Be Vietnam Pro","Open Sans",sans-serif;
+    font-weight:900;font-size:2rem;letter-spacing:-0.04em;margin-bottom:4px;
+  }
+  .logo .pr{color:var(--azul-claro)}
+  .logo .sep{color:var(--azul-claro);font-weight:500;margin:0 .12em}
+  .logo-sub{font-size:.78rem;color:rgba(255,255,255,.8);letter-spacing:.04em;margin-bottom:26px}
+  .eyebrow{
+    letter-spacing:.22em;text-transform:uppercase;color:var(--mostaza);
+    font-weight:700;font-size:.8rem;margin-bottom:10px;
+    font-family:"Be Vietnam Pro",sans-serif;
+  }
+  h1{
+    font-family:"Be Vietnam Pro","Open Sans",sans-serif;
+    font-size:clamp(1.9rem,4.5vw,3rem);
+    line-height:1.12;letter-spacing:-0.03em;margin:0 0 14px;
+  }
+  .hero p{max-width:760px;color:rgba(255,255,255,.88);margin:0;font-size:1.04rem}
+
+  main{max-width:960px;margin:-30px auto 60px;padding:0 24px;position:relative;z-index:2}
+  section{
+    background:var(--blanco);border:1px solid var(--borde);border-radius:20px;
+    padding:clamp(22px,4vw,36px);box-shadow:var(--sombra);margin:24px 0;
+  }
+  h2{
+    font-family:"Be Vietnam Pro",sans-serif;color:var(--azul-principal);
+    font-size:clamp(1.35rem,2.6vw,1.8rem);margin:0 0 14px;
+    border-left:7px solid var(--azul-claro);padding-left:14px;line-height:1.2;
+  }
+  h3{font-family:"Be Vietnam Pro",sans-serif;color:var(--azul-principal);font-size:1.1rem;margin:20px 0 8px}
+  .pill{
+    display:inline-block;background:var(--mostaza);color:var(--azul-profundo);
+    font-weight:700;border-radius:999px;padding:5px 14px;font-size:.8rem;
+    font-family:"Be Vietnam Pro",sans-serif;margin-bottom:10px;
+  }
+  .pill.azul{background:var(--azul-claro);color:var(--azul-profundo)}
+  ul{padding-left:1.2rem;margin:.5rem 0}
+  li{margin:6px 0}
+
+  .podcast{
+    display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start;
+  }
+  .podcast-icon{
+    width:64px;height:64px;border-radius:16px;flex:none;
+    background:linear-gradient(135deg,var(--azul-principal),var(--azul-profundo));
+    display:flex;align-items:center;justify-content:center;font-size:1.8rem;
+  }
+  .btn{
+    display:inline-block;background:var(--azul-principal);color:var(--blanco);
+    text-decoration:none;font-weight:700;border-radius:999px;padding:10px 22px;
+    font-family:"Be Vietnam Pro",sans-serif;font-size:.92rem;margin-top:10px;
+    transition:background .2s ease;
+  }
+  .btn:hover,.btn:focus-visible{background:var(--azul-profundo)}
+  .btn:focus-visible{outline:3px solid var(--mostaza);outline-offset:2px}
+
+  .callout{
+    background:linear-gradient(135deg,rgba(117,189,240,.18),rgba(255,210,88,.18));
+    border:1px solid rgba(117,189,240,.38);border-left:7px solid var(--mostaza);
+    border-radius:16px;padding:16px 18px;margin:18px 0;
+  }
+  .costo{
+    display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;
+  }
+  .costo div{
+    background:var(--fondo);border:1px solid var(--borde);border-radius:14px;
+    padding:12px 18px;font-size:.95rem;
+  }
+  .costo strong{display:block;color:var(--azul-principal);font-family:"Be Vietnam Pro",sans-serif}
+
+  table{width:100%;border-collapse:collapse;margin:16px 0 4px;border-radius:14px;overflow:hidden;border:1px solid var(--borde)}
+  th{background:var(--azul-principal);color:var(--blanco);font-family:"Be Vietnam Pro",sans-serif;text-align:left;padding:12px 14px;font-size:.92rem}
+  td{padding:12px 14px;border-bottom:1px solid var(--borde);vertical-align:top;font-size:.95rem}
+  tr:nth-child(even) td{background:rgba(117,189,240,.07)}
+  td .estado{
+    display:inline-block;border-radius:999px;padding:2px 10px;font-size:.74rem;font-weight:700;
+    font-family:"Be Vietnam Pro",sans-serif;
+  }
+  .hecho{background:rgba(13,40,91,.1);color:var(--azul-principal)}
+  .proximo{background:var(--mostaza);color:var(--azul-profundo)}
+  .planificado{background:rgba(117,189,240,.35);color:var(--azul-profundo)}
+
+  .conf{
+    background:linear-gradient(135deg,var(--azul-principal),var(--azul-profundo));
+    color:var(--blanco);border:none;
+  }
+  .conf h2{color:var(--blanco);border-left-color:var(--mostaza)}
+  .conf .fecha{
+    font-family:"Be Vietnam Pro",sans-serif;font-weight:800;font-size:1.15rem;
+    color:var(--mostaza);margin:6px 0 10px;
+  }
+  .conf p{color:rgba(255,255,255,.9)}
+
+  .nota{
+    font-size:.88rem;color:#5f6673;border-top:1px dashed var(--borde);
+    margin-top:18px;padding-top:12px;
+  }
+
+  footer{
+    background:var(--azul-profundo);color:var(--blanco);text-align:center;
+    padding:28px 24px;font-size:.92rem;
+  }
+  footer a{color:var(--azul-claro)}
+
+  @media (max-width:640px){
+    .podcast{grid-template-columns:1fr}
+    table,thead,tbody,tr{display:block}
+    thead{display:none}
+    td{display:block;border-bottom:none}
+    tr{border-bottom:1px solid var(--borde);padding:8px 0}
+    td:before{
+      content:attr(data-label);display:block;font-weight:700;color:var(--azul-principal);
+      font-family:"Be Vietnam Pro",sans-serif;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;
+    }
+  }
+  @media print{
+    body{background:#fff}
+    section,header{box-shadow:none}
+    section{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="topline"></div>
+
+<header>
+  <div class="hero">
+    <div class="logo">ADPU<span class="sep">|</span><span class="pr">PR</span></div>
+    <div class="logo-sub">Asociación de Administración Pública de Puerto Rico</div>
+    <div class="eyebrow">Comité de Educación y Tecnología</div>
+    <h1>Plan de Actividades Educativas<br>Junio – Agosto 2026</h1>
+    <p>Una ruta formativa de tres meses que conecta el aprendizaje de nuestra comunidad con el tema de la III Conferencia Anual: <em>Estado, sociedad y colaboración pública — nuevas arquitecturas de gobernanza</em>.</p>
+  </div>
+</header>
+
+<main>
+
+  <section aria-label="Actividad realizada">
+    <span class="pill azul">Actividad realizada</span>
+    <h2>🎙️ Podcast: ¿Qué es la Administración Pública y por qué importa?</h2>
+    <div class="podcast">
+      <div class="podcast-icon" aria-hidden="true">🎧</div>
+      <div>
+        <p>Conversación entre el <strong>Dr. Hernán Vera</strong>, el <strong>Dr. Urayoán Jordán Salivia</strong> y la <strong>Dra. Mariluz Serrano Ortiz</strong>, donde exploramos los fundamentos de la disciplina y su impacto en la vida cotidiana de las personas.</p>
+        <ul>
+          <li>Definición de administración pública</li>
+          <li>Bien común y gobernanza</li>
+          <li>Participación ciudadana</li>
+          <li>Tecnología y modernización gubernamental</li>
+          <li>Humanización de los servicios públicos</li>
+        </ul>
+        <a class="btn" href="https://open.spotify.com/episode/5CjE4804myRDiApvbSiJkJ?si=S8s_kfckQBC6pVr61mWOKA" target="_blank" rel="noopener">Escuchar el episodio</a>
+      </div>
+    </div>
+  </section>
+
+  <section aria-label="Próxima actividad">
+    <span class="pill">Próxima actividad · Martes, 30 de junio de 2026 · 7:00 PM</span>
+    <h2>El Proceso Parlamentario en la Gestión Pública</h2>
+    <p>Actividad educativa a cargo del <strong>Dr. Urayoán Jordán Salivia</strong>, orientada a fortalecer las destrezas parlamentarias de quienes participan en cuerpos deliberativos, juntas y espacios de colaboración pública.</p>
+    <p>El enfoque se atempera al tema de la conferencia anual, explorando el proceso parlamentario desde tres dimensiones:</p>
+    <ul>
+      <li><strong>En el Estado:</strong> el rol de las reglas parlamentarias en los cuerpos públicos deliberativos.</li>
+      <li><strong>En la sociedad:</strong> prácticas concretas como la redacción de minutas y la documentación de acuerdos.</li>
+      <li><strong>En la colaboración pública:</strong> qué arquitectura parlamentaria deben adoptar las alianzas y los espacios multisectoriales.</li>
+    </ul>
+    <div class="costo">
+      <div><strong>Integrantes ADPU | PR</strong> Libre de costo</div>
+      <div><strong>Público general</strong> $5.00</div>
+      <div><strong>Modalidad</strong> Virtual</div>
+    </div>
+  </section>
+
+  <section aria-label="Calendario de actividades">
+    <h2>Calendario · Junio a Agosto 2026</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Actividad</th>
+          <th>Facilita</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Fecha">Junio (realizada)</td>
+          <td data-label="Actividad">Podcast: ¿Qué es la Administración Pública y por qué importa?</td>
+          <td data-label="Facilita">Dr. Hernán Vera · Dr. Urayoán Jordán Salivia · Dra. Mariluz Serrano Ortiz</td>
+          <td data-label="Estado"><span class="estado hecho">Disponible</span></td>
+        </tr>
+        <tr>
+          <td data-label="Fecha">30 de junio · 7:00 PM</td>
+          <td data-label="Actividad">El Proceso Parlamentario en la Gestión Pública</td>
+          <td data-label="Facilita">Dr. Urayoán Jordán Salivia</td>
+          <td data-label="Estado"><span class="estado proximo">Próxima</span></td>
+        </tr>
+        <tr>
+          <td data-label="Fecha">Julio (fecha por anunciar)</td>
+          <td data-label="Actividad">Taller: Inteligencia Artificial en la Gestión Pública — diseño de prompts atemperados a los temas de la conferencia</td>
+          <td data-label="Facilita">Comité de Educación y Tecnología</td>
+          <td data-label="Estado"><span class="estado planificado">Planificada</span></td>
+        </tr>
+        <tr>
+          <td data-label="Fecha">Agosto (fecha por anunciar)</td>
+          <td data-label="Actividad">Taller: Tecnologías Emergentes y Gestión Pública — continuidad del taller de IA</td>
+          <td data-label="Facilita">Dra. Ana Teresa Rodríguez Lebrón</td>
+          <td data-label="Estado"><span class="estado planificado">Planificada</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout">
+      Cada actividad sirve de antesala temática a la conferencia anual, fortaleciendo destrezas deliberativas, tecnológicas y de colaboración en nuestra comunidad profesional.
+    </div>
+  </section>
+
+  <section class="conf" aria-label="Conferencia anual">
+    <h2>📌 Reserva la fecha: III Conferencia Anual de Administración Pública</h2>
+    <div class="fecha">Viernes, 2 de octubre de 2026</div>
+    <p><strong>Estado, sociedad y colaboración pública: nuevas arquitecturas de gobernanza.</strong></p>
+    <p>Conferencia magistral · Paneles · Networking · Diálogo interdisciplinario. Más información en <a href="https://www.adpupr.com" style="color:var(--mostaza)">www.adpupr.com</a>.</p>
+  </section>
+
+  <p class="nota">Documento de trabajo del Comité de Educación y Tecnología. Será discutido en la reunión del comité del miércoles 10 de junio de 2026, 5:30 PM (Teams), y queda sujeto a la aprobación del Dr. Urayoán Jordán Salivia.</p>
+
+</main>
+
+<footer>
+  <strong>ADPU | PR · Comité de Educación y Tecnología</strong><br>
+  P.O. Box 1269, Trujillo Alto, Puerto Rico 00977 · Tel. (939) 383-0043<br>
+  <a href="mailto:info@adpupr.com">info@adpupr.com</a> · <a href="https://www.adpupr.com">www.adpupr.com</a>
+</footer>
+</body>
+</html>
