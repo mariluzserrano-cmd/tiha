@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EDU 690 · Nos vemos el jueves 11</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F4F6FB; --card: #FFFFFF; --ink: #1E2A44; --ink-soft: #4A5878; --ink-faint: #8290AE;
+  --blue: #4A7DD6; --blue-deep: #2E5AA8; --lavender: #B8A6E8; --lavender-deep: #8B6FD4;
+  --gold: #C98A3C; --teal: #5FB3A3; --line: rgba(74,125,214,0.16);
+  --highlight: #FFF4C2; --highlight-border: #E6B800;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; line-height: 1.6; padding: 24px; }
+.email { max-width: 640px; margin: 0 auto; background: var(--card); border-radius: 18px; overflow: hidden; box-shadow: 0 8px 40px rgba(46,90,168,0.1); }
+
+.header { background: linear-gradient(135deg, var(--blue-deep), var(--lavender-deep)); padding: 44px 40px 38px; color: #fff; position: relative; }
+.h-brand { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.85; margin-bottom: 14px; }
+.h-title { font-family: 'Fraunces', serif; font-style: italic; font-size: 38px; line-height: 1.05; margin-bottom: 10px; }
+.h-sub { font-size: 16px; opacity: 0.92; }
+
+.body { padding: 38px 40px; }
+.greeting { font-size: 17px; color: var(--ink-soft); margin-bottom: 22px; }
+.greeting strong { color: var(--ink); }
+
+/* Big date card */
+.datecard { display: flex; align-items: center; gap: 22px; background: linear-gradient(135deg, rgba(74,125,214,0.08), rgba(184,166,232,0.08)); border: 1px solid var(--line); border-radius: 14px; padding: 24px 26px; margin-bottom: 28px; }
+.datecard .day { text-align: center; flex-shrink: 0; }
+.datecard .day .num { font-family: 'Fraunces', serif; font-style: italic; font-size: 48px; line-height: 1; color: var(--blue-deep); }
+.datecard .day .mon { font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-soft); margin-top: 2px; }
+.datecard .det { flex: 1; }
+.datecard .det .t { font-family: 'Fraunces', serif; font-style: italic; font-size: 22px; color: var(--ink); margin-bottom: 4px; }
+.datecard .det .d { font-size: 14.5px; color: var(--ink-soft); }
+
+.section-label { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--lavender-deep); font-weight: 600; margin: 30px 0 14px; }
+
+/* Agenda */
+.agenda { display: flex; flex-direction: column; gap: 10px; }
+.ag-row { display: flex; gap: 18px; padding: 16px 20px; background: var(--bg); border-radius: 10px; border: 1px solid var(--line); }
+.ag-time { font-family: 'Fraunces', serif; font-style: italic; font-size: 17px; color: var(--blue-deep); flex-shrink: 0; width: 78px; }
+.ag-what { flex: 1; }
+.ag-what .w-t { font-weight: 600; color: var(--ink); font-size: 15.5px; margin-bottom: 2px; }
+.ag-what .w-d { font-size: 13.5px; color: var(--ink-soft); }
+
+/* Highlight box (yellow) */
+.highlight-box { background: var(--highlight); border: 2px solid var(--highlight-border); border-radius: 14px; padding: 24px 26px; margin: 28px 0; }
+.highlight-box .hl-label { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #8A6D00; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.highlight-box .hl-title { font-family: 'Fraunces', serif; font-style: italic; font-size: 22px; color: #5C4A00; margin-bottom: 8px; }
+.highlight-box .hl-text { font-size: 15px; color: #6B5500; line-height: 1.55; }
+.highlight-box .hl-text strong { color: #4A3A00; }
+
+/* Prep callout */
+.prep { background: rgba(95,179,163,0.1); border-left: 4px solid var(--teal); border-radius: 0 12px 12px 0; padding: 20px 24px; margin: 24px 0; }
+.prep .p-t { font-weight: 600; color: var(--ink); margin-bottom: 6px; font-size: 15.5px; }
+.prep .p-d { font-size: 14.5px; color: var(--ink-soft); }
+
+/* Tasks */
+.task { display: flex; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.task:last-child { border-bottom: none; }
+.task .dot { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--blue); color: #fff; display: grid; place-items: center; font-size: 13px; font-weight: 700; }
+.task .dot.gold { background: var(--gold); }
+.task .dot.lav { background: var(--lavender-deep); }
+.task .tk-body { flex: 1; }
+.task .tk-t { font-weight: 600; color: var(--ink); font-size: 15px; margin-bottom: 2px; }
+.task .tk-d { font-size: 13.5px; color: var(--ink-soft); }
+.task .tk-d strong { color: var(--blue-deep); }
+
+/* Button */
+.btn-wrap { text-align: center; margin: 32px 0 8px; }
+.btn { display: inline-block; background: var(--blue); color: #fff; text-decoration: none; padding: 16px 36px; border-radius: 100px; font-size: 14px; letter-spacing: 0.08em; font-weight: 600; box-shadow: 0 6px 20px rgba(74,125,214,0.3); }
+
+.footer { text-align: center; padding: 32px 40px 38px; border-top: 1px solid var(--line); }
+.footer .quote { font-family: 'Fraunces', serif; font-style: italic; color: var(--blue-deep); font-size: 17px; line-height: 1.45; margin-bottom: 12px; }
+.footer .sig { font-size: 13px; color: var(--ink-faint); letter-spacing: 0.04em; }
+
+@media (max-width: 600px) {
+  body { padding: 12px; }
+  .header { padding: 32px 24px; } .h-title { font-size: 30px; }
+  .body { padding: 28px 24px; } .footer { padding: 28px 24px; }
+  .datecard { flex-direction: column; text-align: center; gap: 14px; }
+}
+</style>
+</head>
+<body>
+<div class="email">
+
+  <div class="header">
+    <div class="h-brand">EDU 690 · Proyecto TIHA</div>
+    <div class="h-title">¡Nos vemos el jueves!</div>
+    <div class="h-sub">Realidad Virtual, Aumentada y Mixta — en vivo y a todo color</div>
+  </div>
+
+  <div class="body">
+    <p class="greeting">¡Hola a todas y todos! 💛<br><br>Qué emoción contarles que <strong>este jueves 11 nos vemos en persona</strong> en la Universidad del Sagrado Corazón. Llegaré tempranito, porque junto a la Dra. Morel estaré dejando listos los <strong>visores de realidad virtual</strong> que vamos a usar. Aquí les dejo cómo va a ser nuestro encuentro.</p>
+
+    <div class="datecard">
+      <div class="day"><div class="num">11</div><div class="mon">Junio</div></div>
+      <div class="det">
+        <div class="t">Jueves · 5:00 PM</div>
+        <div class="d">Universidad del Sagrado Corazón · Escuela de Salud</div>
+      </div>
+    </div>
+
+    <div class="section-label">Cómo va a ser nuestra tarde</div>
+    <div class="agenda">
+      <div class="ag-row">
+        <div class="ag-time">Antes</div>
+        <div class="ag-what"><div class="w-t">Sesión con la Dra. Marta Gautier Encarnación</div><div class="w-d">Ustedes estarán con ella más temprano, como de costumbre.</div></div>
+      </div>
+      <div class="ag-row">
+        <div class="ag-time">5:15 PM</div>
+        <div class="ag-what"><div class="w-t">Nos encontramos en la Escuela de Salud</div><div class="w-d">Llego a recibirles para comenzar nuestra interacción inmersiva.</div></div>
+      </div>
+      <div class="ag-row">
+        <div class="ag-time">En vivo</div>
+        <div class="ag-what"><div class="w-t">Realidad Virtual, Aumentada y Mixta</div><div class="w-d">Vamos a vivir y explorar estas tecnologías con los visores, de primera mano.</div></div>
+      </div>
+    </div>
+
+    <div class="prep">
+      <div class="p-t">🎒 Vengan preparadas y preparados</div>
+      <div class="p-d">Ya han interactuado con estas tecnologías, así que vengan listos para <strong>explicar a las profesoras</strong> qué es realidad aumentada, realidad virtual y realidad mixta. ¡Ustedes ya saben más de lo que creen!</div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="hl-label">⭐ No olvides · 25 puntos</div>
+      <div class="hl-title">Reflexión · Clase Presencial · Realidad Virtual</div>
+      <div class="hl-text">Después de nuestra actividad del jueves, en el <strong>módulo dos de Canvas</strong> van a encontrar la <strong>Reflexión de la Clase Presencial</strong>. Es corta, pero bien importante — tiene un valor de <strong>25 puntos</strong>. La completan después de vivir la experiencia en la Escuela de Salud.</div>
+    </div>
+
+    <div class="section-label">Mientras tanto · esta semana</div>
+    <div class="task">
+      <div class="dot lav">▶</div>
+      <div class="tk-body"><div class="tk-t">Este miércoles seguimos asincrónicos</div><div class="tk-d">Completen la reflexión de la clase de la semana pasada. ¡Tienen todo el fin de semana!</div></div>
+    </div>
+    <div class="task">
+      <div class="dot">1</div>
+      <div class="tk-body"><div class="tk-t">Reflexión de la clase asincrónica anterior</div><div class="tk-d">Está en el HTML de la semana pasada — con su pestaña de <strong>minuto a minuto</strong> para repasar.</div></div>
+    </div>
+    <div class="task">
+      <div class="dot gold">4</div>
+      <div class="tk-body"><div class="tk-t">Actividad 4 — entrega 17 de junio</div><div class="tk-d">Exploración Inmersiva y Curaduría. La seguimos trabajando — ya veo sus mensajitos en FrameVR. 🌐</div></div>
+    </div>
+    <div class="task">
+      <div class="dot gold">5</div>
+      <div class="tk-body"><div class="tk-t">Actividad 5 — entrega 24 de junio</div><div class="tk-d">Interacción Académica Multimedia (STEAM + XR). Ya está disponible en Canvas.</div></div>
+    </div>
+
+    <div class="btn-wrap">
+      <a class="btn" href="https://mariluzserrano-cmd.github.io/tiha/EDU690sesion3claseasincronica.html" target="_blank">Repasar la clase completa →</a>
+    </div>
+    <p style="text-align:center; font-size:13px; color:var(--ink-faint); margin-top:14px">Ahí tienen el video, la presentación, los prompts del simulador, FrameVR, NotebookLM y la reflexión — todo en un solo lugar.</p>
+  </div>
+
+  <div class="footer">
+    <p class="quote">"No aprendimos herramientas. Aprendimos nuevas maneras de imaginar el aprendizaje."</p>
+    <p class="sig">Con cariño,<br>Dra. Mariluz Serrano-Ortiz · Proyecto TIHA · EDU 690<br>mserrano@sagrado.edu</p>
+  </div>
+
+</div>
+</body>
+</html>
