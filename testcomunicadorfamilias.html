@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Qué tipo de comunicador soy? · Modelo TIHA</title>
+<style>
+  :root{
+    --berry:#6D2E46;
+    --rose:#A26769;
+    --cream:#ECE2D0;
+    --sand:#F6EFE4;
+    --ink:#2C1B22;
+    --gold:#C8923D;
+    --sage:#7E9C8B;
+    --white:#FFFFFF;
+    --shadow:0 10px 30px rgba(45,27,34,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Segoe UI',Calibri,Arial,sans-serif;
+    background:linear-gradient(160deg,#6D2E46 0%,#A26769 55%,#C8923D 100%);
+    color:var(--ink);
+    min-height:100vh;
+    padding:24px 14px;
+    line-height:1.5;
+  }
+  .wrap{max-width:680px;margin:0 auto}
+  .card{
+    background:var(--sand);
+    border-radius:22px;
+    box-shadow:var(--shadow);
+    padding:34px 30px;
+    margin-bottom:20px;
+  }
+  .badge{
+    display:inline-block;
+    background:var(--berry);
+    color:var(--cream);
+    font-size:12px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    padding:6px 14px;
+    border-radius:20px;
+    margin-bottom:16px;
+    font-weight:600;
+  }
+  h1{
+    font-family:Cambria,'Times New Roman',serif;
+    color:var(--berry);
+    font-size:30px;
+    line-height:1.2;
+    margin-bottom:10px;
+  }
+  .sub{color:var(--rose);font-size:16px;margin-bottom:8px;font-weight:600}
+  .lead{color:var(--ink);font-size:15px;opacity:.85}
+  .intro-mini{
+    margin-top:18px;padding:14px 16px;background:rgba(126,156,139,.16);
+    border-radius:12px;font-size:14px;color:#3a4a40
+  }
+  label.field{display:block;font-weight:600;color:var(--berry);margin:18px 0 6px;font-size:14px}
+  input[type=text],input[type=email]{
+    width:100%;padding:12px 14px;border:1.5px solid #d8cab4;border-radius:10px;
+    font-size:15px;background:var(--white);color:var(--ink);font-family:inherit;
+  }
+  input:focus{outline:none;border-color:var(--gold)}
+  .progress-track{height:8px;background:#e3d6c2;border-radius:8px;overflow:hidden;margin:6px 0 22px}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--berry),var(--gold));width:0;transition:width .3s ease}
+  .qcount{font-size:13px;color:var(--rose);font-weight:600;margin-bottom:4px}
+  .question{
+    background:var(--white);border-radius:16px;padding:22px 20px;margin-bottom:16px;
+    box-shadow:0 4px 14px rgba(45,27,34,.06);
+  }
+  .qtext{font-weight:600;font-size:16px;color:var(--ink);margin-bottom:14px}
+  .qtext .scenario{display:block;color:var(--rose);font-size:13px;font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+  .options{display:flex;flex-direction:column;gap:9px}
+  .opt{
+    display:flex;align-items:flex-start;gap:11px;padding:13px 14px;border:1.5px solid #e2d6c2;
+    border-radius:11px;cursor:pointer;transition:all .15s ease;background:var(--sand);
+  }
+  .opt:hover{border-color:var(--gold);background:#fbf5ea}
+  .opt.sel{border-color:var(--berry);background:#f3e7ea;box-shadow:inset 0 0 0 1px var(--berry)}
+  .opt input{margin-top:3px;accent-color:var(--berry);flex-shrink:0}
+  .opt span{font-size:14.5px;color:var(--ink)}
+  .btn{
+    display:inline-block;background:var(--berry);color:var(--cream);border:none;
+    padding:15px 30px;border-radius:30px;font-size:16px;font-weight:600;cursor:pointer;
+    font-family:inherit;transition:all .2s ease;width:100%;margin-top:8px;
+  }
+  .btn:hover{background:#5a2439;transform:translateY(-1px)}
+  .btn:disabled{background:#b9a890;cursor:not-allowed;transform:none}
+  .btn.secondary{background:var(--sage)}
+  .btn.secondary:hover{background:#6a8a78}
+  .hidden{display:none}
+  .result-type{
+    text-align:center;padding:10px 0 4px;
+  }
+  .result-emoji{font-size:54px;line-height:1;margin-bottom:8px}
+  .result-name{font-family:Cambria,serif;font-size:28px;color:var(--berry);margin-bottom:6px}
+  .result-tag{color:var(--rose);font-style:italic;font-size:15px;margin-bottom:18px}
+  .bars{margin:22px 0}
+  .bar-row{margin-bottom:12px}
+  .bar-label{display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px}
+  .bar-track{height:14px;background:#e3d6c2;border-radius:8px;overflow:hidden}
+  .bar-fill{height:100%;border-radius:8px;transition:width .8s ease}
+  .desc-block{background:var(--white);border-radius:14px;padding:18px 18px;margin:8px 0;text-align:left}
+  .desc-block h3{color:var(--berry);font-size:16px;margin-bottom:8px;font-family:Cambria,serif}
+  .desc-block p{font-size:14.5px;margin-bottom:8px}
+  .desc-block .tips{margin-top:10px}
+  .desc-block .tips li{margin:5px 0 5px 18px;font-size:14px}
+  .quote{
+    background:rgba(109,46,70,.07);border-radius:12px;padding:16px 18px;margin-top:18px;
+    font-style:italic;color:var(--berry);font-size:14.5px;text-align:center;
+  }
+  .quote small{display:block;font-style:normal;margin-top:8px;color:var(--rose);font-weight:600}
+  .sent-msg{text-align:center;padding:20px;color:var(--sage);font-weight:600;font-size:15px}
+  .footer{text-align:center;color:var(--cream);font-size:12.5px;opacity:.85;padding:8px 0 20px}
+  .footer a{color:var(--cream)}
+  .err{color:#9c2b2b;font-size:13px;margin-top:6px;font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- PANTALLA 1: INTRO -->
+  <div class="card" id="screen-intro">
+    <span class="badge">Modelo TIHA · Taller para familias</span>
+    <h1>¿Qué tipo de comunicador soy en casa?</h1>
+    <p class="sub">Un espejo, no un examen.</p>
+    <p class="lead">No hay respuestas correctas ni incorrectas. Este pequeño autodiagnóstico te ayuda a reconocer tu estilo predominante de comunicación con tus hijos, basado en los cuatro estilos descritos en la literatura: <strong>pasivo, agresivo, pasivo-agresivo y asertivo</strong>.</p>
+    <div class="intro-mini">
+      🪞 Responde pensando en cómo reaccionas <strong>de verdad</strong> en el día a día —no como crees que deberías reaccionar. Ahí está el aprendizaje.
+    </div>
+    <label class="field" for="nombre">Tu nombre (o como quieras identificarte)</label>
+    <input type="text" id="nombre" placeholder="Ej.: Mamá de Sofía">
+    <button class="btn" id="start-btn" style="margin-top:22px">Comenzar mi reflexión →</button>
+  </div>
+
+  <!-- PANTALLA 2: PREGUNTAS -->
+  <div class="card hidden" id="screen-quiz">
+    <div class="qcount" id="qcount">Pregunta 1 de 8</div>
+    <div class="progress-track"><div class="progress-fill" id="progress"></div></div>
+    <div id="questions"></div>
+    <p class="err hidden" id="quiz-err">Por favor responde todas las preguntas antes de continuar.</p>
+    <button class="btn" id="see-result">Ver mi estilo de comunicación →</button>
+  </div>
+
+  <!-- PANTALLA 3: RESULTADO -->
+  <div class="card hidden" id="screen-result">
+    <div class="result-type">
+      <div class="result-emoji" id="r-emoji"></div>
+      <div class="result-name" id="r-name"></div>
+      <div class="result-tag" id="r-tag"></div>
+    </div>
+    <div class="bars" id="bars"></div>
+    <div id="r-desc"></div>
+    <div class="quote">
+      "La inteligencia artificial no reemplaza al ser humano; lo potencia para trascender."
+      <small>Metodología TIHA · Dra. Mariluz Serrano Ortiz</small>
+    </div>
+
+    <form id="send-form" style="margin-top:22px">
+      <label class="field" for="email-dest">¿Quieres recibir tu resultado y los consejos por correo? (opcional)</label>
+      <input type="email" id="email-dest" placeholder="tucorreo@ejemplo.com">
+      <button type="submit" class="btn secondary" id="send-btn">Enviar mi resultado por correo ✉️</button>
+      <p class="err hidden" id="send-err"></p>
+    </form>
+    <div class="sent-msg hidden" id="sent-ok">✓ ¡Listo! Tu reflexión fue registrada. Gracias por participar.</div>
+    <button class="btn" id="restart" style="margin-top:14px;background:#b9a890">↺ Volver a empezar</button>
+  </div>
+
+  <div class="footer">
+    Dra. Mariluz Serrano Ortiz · Modelo TIHA · UPR Río Piedras<br>
+    mariluz.serrano@upr.edu
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   CONFIGURACIÓN DE ENVÍO POR EMAIL
+   ------------------------------------------------------------
+   Las respuestas llegan a: mary.serrano19@gmail.com
+   Mediante Formspree (servicio gratuito, sin servidor).
+
+   >>> PASO ÚNICO PARA ACTIVARLO <<<
+   1. Entra a https://formspree.io y crea una cuenta gratis
+      con el correo mary.serrano19@gmail.com
+   2. Crea un formulario nuevo ("New form").
+   3. Copia el ID que te dan (se ve así: xyzabcd) y pégalo
+      abajo reemplazando TU_FORM_ID.
+   El primer envío te pedirá confirmar el correo una sola vez.
+   ============================================================ */
+   const FORMSPREE_ID = "TU_FORM_ID";  // <-- reemplazar aquí
+
+  const QUESTIONS = [
+    { s:"Tu hijo llega con una mala nota", q:"¿Cómo reaccionas, de verdad, en el primer momento?",
+      o:[
+        {t:"Le digo que está bien, que no se preocupe, y no toco más el tema para no incomodar.",x:"pasivo"},
+        {t:"Le alzo la voz: '¿otra vez? ¡así no vas a llegar a ningún lado!'",x:"agresivo"},
+        {t:"No digo nada, pero suspiro fuerte y pongo cara para que sepa que estoy molesta.",x:"pasivoagresivo"},
+        {t:"Le pregunto qué pasó y cómo se siente, y buscamos juntos qué hacer distinto.",x:"asertivo"}
+      ]},
+    { s:"No recogió su cuarto otra vez", q:"La frase que más se parece a lo que dirías:",
+      o:[
+        {t:"Lo recojo yo para evitar el pleito.",x:"pasivo"},
+        {t:"'¡Eres un desastre, nunca haces nada!'",x:"agresivo"},
+        {t:"'Está bien, déjalo... ya yo me encargo de todo como siempre.'",x:"pasivoagresivo"},
+        {t:"'Cuando no recoges, me siento frustrada. ¿Cómo lo resolvemos?'",x:"asertivo"}
+      ]},
+    { s:"Te quiere contar algo mientras cocinas", q:"¿Qué sueles hacer?",
+      o:[
+        {t:"Asiento sin escuchar mucho, para que termine rápido.",x:"pasivo"},
+        {t:"'Ahora no, ¿no ves que estoy ocupada?'",x:"agresivo"},
+        {t:"Lo escucho a medias y luego le reclamo que nunca me ayuda.",x:"pasivoagresivo"},
+        {t:"Le digo: 'dame dos minutos y te escucho con calma', y lo cumplo.",x:"asertivo"}
+      ]},
+    { s:"Estás en desacuerdo con tu hijo adolescente", q:"Cuando él opina distinto a ti:",
+      o:[
+        {t:"Cedo para no discutir, aunque por dentro no esté de acuerdo.",x:"pasivo"},
+        {t:"'Mientras vivas en esta casa, se hace lo que yo digo.'",x:"agresivo"},
+        {t:"Le digo 'haz lo que quieras' con tono de que no me parece.",x:"pasivoagresivo"},
+        {t:"Escucho su punto, expongo el mío y negociamos un acuerdo.",x:"asertivo"}
+      ]},
+    { s:"Cometiste un error frente a tu hijo", q:"¿Qué haces?",
+      o:[
+        {t:"Lo dejo pasar y no lo menciono.",x:"pasivo"},
+        {t:"Busco una excusa o le echo la culpa a otra cosa.",x:"agresivo"},
+        {t:"Cambio el tema para que no se note.",x:"pasivoagresivo"},
+        {t:"Reconozco mi error y le pido disculpas con naturalidad.",x:"asertivo"}
+      ]},
+    { s:"Tu hijo está triste y callado", q:"Tu manera de acercarte:",
+      o:[
+        {t:"No pregunto, espero que se le pase solo.",x:"pasivo"},
+        {t:"'¿Qué te pasa ahora? No exageres.'",x:"agresivo"},
+        {t:"'Si no me cuentas, no puedo ayudarte'... y lo dejo ahí.",x:"pasivoagresivo"},
+        {t:"Me siento a su lado: 'te noto callado, aquí estoy cuando quieras hablar.'",x:"asertivo"}
+      ]},
+    { s:"Quieres que apague la pantalla", q:"¿Cómo lo planteas?",
+      o:[
+        {t:"Se lo pido varias veces sin que pase nada, y al final me rindo.",x:"pasivo"},
+        {t:"Le quito el aparato de las manos y se acabó.",x:"agresivo"},
+        {t:"'Claro, sigue ahí pegado, total a mí nadie me hace caso.'",x:"pasivoagresivo"},
+        {t:"Acordamos antes un tiempo y se lo recuerdo con firmeza y cariño.",x:"asertivo"}
+      ]},
+    { s:"Tu hijo logró algo importante", q:"¿Cómo se lo expresas?",
+      o:[
+        {t:"Pienso que se siente orgulloso, pero no se lo digo.",x:"pasivo"},
+        {t:"'Bien, pero pudiste hacerlo mejor.'",x:"agresivo"},
+        {t:"'Ajá, qué bien'... sin levantar la vista del teléfono.",x:"pasivoagresivo"},
+        {t:"Lo miro, lo abrazo y le digo lo orgullosa que estoy de él.",x:"asertivo"}
+      ]}
+  ];
+
+  const TYPES = {
+    pasivo:{
+      emoji:"🌧️", name:"Estilo Pasivo", color:"#7E9C8B",
+      tag:"Evitas el conflicto, a veces a costa de tus propias necesidades.",
+      p1:"Tiendes a ceder, callar o restar importancia a lo que sientes con tal de mantener la paz. Tus hijos te perciben como cariñosa, pero pueden no aprender a poner límites ni a reconocer tu voz como guía.",
+      p2:"El reto TIHA para ti: tu voz también importa. Expresar lo que necesitas no rompe el vínculo, lo fortalece.",
+      tips:["Practica una frase de inicio: 'Necesito decirte algo importante para mí...'","Permítete sostener un límite sin disculparte por tenerlo.","Recuerda: tus hijos aprenden a respetarse viéndote respetarte a ti."]
+    },
+    agresivo:{
+      emoji:"🔥", name:"Estilo Agresivo", color:"#A24B3A",
+      tag:"Defiendes tu posición con fuerza, a veces pasando por encima del otro.",
+      p1:"Comunicas con claridad lo que quieres, pero el tono o las palabras pueden herir o generar miedo. Tus hijos quizás obedecen, pero por temor más que por entendimiento, y aprenden que gritar es la forma de resolver.",
+      p2:"El reto TIHA para ti: tu firmeza es valiosa; canalízala con respeto. Puedes ser fuerte y amable a la vez.",
+      tips:["Antes de responder, respira y baja medio tono de voz.","Cambia el 'tú eres...' (ataque) por el 'yo me siento...' (puente).","Corregir sin humillar: el mensaje llega mejor cuando no duele."]
+    },
+    pasivoagresivo:{
+      emoji:"🌫️", name:"Estilo Pasivo-Agresivo", color:"#9C7B3D",
+      tag:"Expresas el malestar de forma indirecta: gestos, silencios, ironías.",
+      p1:"No dices directamente lo que te molesta, pero lo dejas sentir con el tono, la cara o los suspiros. Tus hijos perciben la tensión sin entender la causa, lo que genera confusión y distancia emocional.",
+      p2:"El reto TIHA para ti: lo que callas, igual se comunica. Nombrar lo que sientes de forma directa libera y aclara.",
+      tips:["Cuando notes que vas a 'tirar la indirecta', detente y dilo de frente con calma.","Sustituye el 'no, nada, estoy bien' por lo que realmente sientes.","La claridad es un acto de amor: evita que el otro tenga que adivinar."]
+    },
+    asertivo:{
+      emoji:"🌳", name:"Estilo Asertivo", color:"#6D2E46",
+      tag:"Expresas lo que sientes con claridad, honestidad y respeto.",
+      p1:"Logras decir lo que piensas y necesitas sin agredir ni someterte. Tus hijos se sienten escuchados y aprenden, con tu ejemplo, a expresar sus propias emociones de forma sana. Este es el estilo hacia el que todos caminamos.",
+      p2:"El reto TIHA para ti: ya tienes la base. Sostén este estilo incluso en los días difíciles, cuando el cansancio empuja hacia los otros.",
+      tips:["Sigue modelando: tus hijos aprenden más de lo que ven que de lo que oyen.","En los momentos de tensión, vuelve conscientemente a tu centro asertivo.","Comparte tu estilo: ayuda a otras familias que aún lo están construyendo."]
+    }
+  };
+
+  let answers = {};
+  let userName = "";
+
+  // INTRO -> QUIZ
+  document.getElementById("start-btn").onclick = function(){
+    userName = document.getElementById("nombre").value.trim() || "Participante";
+    document.getElementById("screen-intro").classList.add("hidden");
+    document.getElementById("screen-quiz").classList.remove("hidden");
+    renderQuestions();
+    window.scrollTo(0,0);
+  };
+
+  function renderQuestions(){
+    const c = document.getElementById("questions");
+    c.innerHTML = "";
+    QUESTIONS.forEach((Q,i)=>{
+      const div = document.createElement("div");
+      div.className = "question";
+      let opts = Q.o.map((op,j)=>`
+        <label class="opt" data-q="${i}" data-x="${op.x}">
+          <input type="radio" name="q${i}" value="${op.x}">
+          <span>${op.t}</span>
+        </label>`).join("");
+      div.innerHTML = `<div class="qtext"><span class="scenario">${Q.s}</span>${Q.q}</div>
+        <div class="options">${opts}</div>`;
+      c.appendChild(div);
+    });
+    c.querySelectorAll(".opt").forEach(opt=>{
+      opt.onclick = function(){
+        const q = this.dataset.q;
+        this.parentNode.querySelectorAll(".opt").forEach(o=>o.classList.remove("sel"));
+        this.classList.add("sel");
+        this.querySelector("input").checked = true;
+        answers[q] = this.dataset.x;
+        updateProgress();
+      };
+    });
+  }
+
+  function updateProgress(){
+    const done = Object.keys(answers).length;
+    const pct = (done/QUESTIONS.length)*100;
+    document.getElementById("progress").style.width = pct+"%";
+    document.getElementById("qcount").textContent = `Respondidas: ${done} de ${QUESTIONS.length}`;
+  }
+
+  // QUIZ -> RESULT
+  document.getElementById("see-result").onclick = function(){
+    if(Object.keys(answers).length < QUESTIONS.length){
+      document.getElementById("quiz-err").classList.remove("hidden");
+      return;
+    }
+    document.getElementById("quiz-err").classList.add("hidden");
+    showResult();
+  };
+
+  function showResult(){
+    const counts = {pasivo:0,agresivo:0,pasivoagresivo:0,asertivo:0};
+    Object.values(answers).forEach(x=>counts[x]++);
+    const total = QUESTIONS.length;
+    let top = "asertivo", max=-1;
+    for(const k in counts){ if(counts[k]>max){max=counts[k];top=k;} }
+    const T = TYPES[top];
+
+    document.getElementById("r-emoji").textContent = T.emoji;
+    document.getElementById("r-name").textContent = T.name;
+    document.getElementById("r-tag").textContent = T.tag;
+
+    const order = ["asertivo","pasivo","agresivo","pasivoagresivo"];
+    document.getElementById("bars").innerHTML = order.map(k=>{
+      const pct = Math.round((counts[k]/total)*100);
+      return `<div class="bar-row">
+        <div class="bar-label"><span>${TYPES[k].name}</span><span>${pct}%</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${TYPES[k].color}"></div></div>
+      </div>`;
+    }).join("");
+
+    document.getElementById("r-desc").innerHTML = `
+      <div class="desc-block">
+        <h3>Lo que dice tu estilo predominante</h3>
+        <p>${T.p1}</p>
+        <p><strong>${T.p2}</strong></p>
+        <div class="tips"><strong style="color:#6D2E46">Tres pasos para crecer:</strong>
+          <ul>${T.tips.map(t=>`<li>${t}</li>`).join("")}</ul>
+        </div>
+      </div>`;
+
+    window._resultData = {nombre:userName, estilo:T.name, conteos:counts, respuestas:answers};
+
+    document.getElementById("screen-quiz").classList.add("hidden");
+    document.getElementById("screen-result").classList.remove("hidden");
+    window.scrollTo(0,0);
+  }
+
+  // ENVÍO POR EMAIL
+  document.getElementById("send-form").onsubmit = async function(e){
+    e.preventDefault();
+    const errEl = document.getElementById("send-err");
+    errEl.classList.add("hidden");
+    const btn = document.getElementById("send-btn");
+
+    if(FORMSPREE_ID === "TU_FORM_ID"){
+      errEl.textContent = "⚠ Falta configurar el ID de Formspree (ver instrucciones en el archivo). Aun así, tu resultado se muestra arriba.";
+      errEl.classList.remove("hidden");
+      return;
+    }
+
+    btn.disabled = true; btn.textContent = "Enviando...";
+    const d = window._resultData;
+    const payload = {
+      _subject: "Test TIHA - Estilo de comunicación: " + d.nombre,
+      Nombre: d.nombre,
+      "Correo del participante": document.getElementById("email-dest").value || "(no provisto)",
+      "Estilo predominante": d.estilo,
+      "Conteo Asertivo": d.conteos.asertivo,
+      "Conteo Pasivo": d.conteos.pasivo,
+      "Conteo Agresivo": d.conteos.agresivo,
+      "Conteo Pasivo-Agresivo": d.conteos.pasivoagresivo
+    };
+    try{
+      const res = await fetch("https://formspree.io/f/"+FORMSPREE_ID,{
+        method:"POST",
+        headers:{"Content-Type":"application/json","Accept":"application/json"},
+        body:JSON.stringify(payload)
+      });
+      if(res.ok){
+        document.getElementById("send-form").classList.add("hidden");
+        document.getElementById("sent-ok").classList.remove("hidden");
+      }else{
+        throw new Error("fallo");
+      }
+    }catch(err){
+      errEl.textContent = "No se pudo enviar ahora. Verifica tu conexión o el ID de Formspree.";
+      errEl.classList.remove("hidden");
+      btn.disabled = false; btn.textContent = "Enviar mi resultado por correo ✉️";
+    }
+  };
+
+  document.getElementById("restart").onclick = function(){
+    answers = {};
+    document.getElementById("screen-result").classList.add("hidden");
+    document.getElementById("screen-intro").classList.remove("hidden");
+    document.getElementById("progress").style.width = "0";
+    window.scrollTo(0,0);
+  };
+</script>
+</body>
+</html>
