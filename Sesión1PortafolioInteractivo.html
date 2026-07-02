@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 1 · Portafolio Interactivo TIHA</title>
+<style>
+  :root{
+    --ink:#0B2545;
+    --ink-soft:#4A5A78;
+    --red:#E3263A;
+    --red-soft:#FBE4E6;
+    --gold:#C9A961;
+    --paper:#FAF8F4;
+    --paper-card:#FFFFFF;
+    --line:#E7E1D6;
+    --serif: Georgia, 'Iowan Old Style', 'Palatino Linotype', serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--sans); -webkit-font-smoothing:antialiased;
+    padding-bottom:60px;
+  }
+  .wrap{max-width:640px; margin:0 auto; padding:0 18px;}
+
+  header.top{
+    background:linear-gradient(180deg,#0B2545 0%, #142c56 100%);
+    color:#fff; padding:28px 18px 22px; text-align:center;
+    border-bottom:4px solid var(--red);
+  }
+  header.top .eyebrow{
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--gold); font-weight:600; margin-bottom:8px;
+  }
+  header.top h1{
+    font-family:var(--serif); font-weight:600; font-size:26px; margin:0 0 6px;
+    letter-spacing:.01em;
+  }
+  header.top p{margin:0; font-size:13.5px; color:#C9D2E6;}
+
+  .tabs{
+    display:flex; max-width:640px; margin:16px auto 0; padding:0 18px; gap:8px;
+  }
+  .tab-btn{
+    flex:1; padding:11px 6px; border-radius:10px; border:1.5px solid var(--line);
+    background:var(--paper-card); color:var(--ink-soft); font-size:13.5px; font-weight:600;
+    font-family:var(--sans); cursor:pointer; transition:.15s;
+  }
+  .tab-btn.active{ background:var(--ink); color:#fff; border-color:var(--ink);}
+
+  .view{display:none; padding-top:18px;}
+  .view.active{display:block;}
+
+  .card{
+    background:var(--paper-card); border:1px solid var(--line); border-radius:14px;
+    padding:18px 18px 20px; margin-bottom:16px; box-shadow:0 1px 2px rgba(11,37,69,.04);
+  }
+  .card h2{
+    font-family:var(--serif); font-size:18px; margin:0 0 4px; color:var(--ink);
+  }
+  .card .sub{font-size:12.5px; color:var(--ink-soft); margin:0 0 14px;}
+
+  .res-item{
+    display:flex; gap:12px; align-items:flex-start; padding:10px 0;
+    border-top:1px solid var(--line);
+  }
+  .res-item:first-of-type{border-top:none;}
+  .res-badge{
+    flex:0 0 auto; width:30px; height:30px; border-radius:8px; background:var(--red-soft);
+    color:var(--red); display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:13px; font-family:var(--serif);
+  }
+  .res-item a{color:var(--ink); font-weight:600; font-size:14.5px; text-decoration:none; display:block;}
+  .res-item a:hover{color:var(--red);}
+  .res-item .desc{font-size:12.5px; color:var(--ink-soft); margin-top:2px;}
+
+  label{display:block; font-size:12.5px; font-weight:700; color:var(--ink-soft); margin:14px 0 6px; text-transform:uppercase; letter-spacing:.03em;}
+  label.first{margin-top:0;}
+  input[type=text], select, textarea{
+    width:100%; border:1.5px solid var(--line); border-radius:10px; padding:11px 12px;
+    font-family:var(--sans); font-size:15px; color:var(--ink); background:#fff;
+  }
+  textarea{min-height:74px; resize:vertical; line-height:1.4;}
+  input:focus, select:focus, textarea:focus{outline:none; border-color:var(--red);}
+
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+
+  .submit-btn{
+    width:100%; margin-top:18px; padding:14px; border:none; border-radius:12px;
+    background:var(--red); color:#fff; font-size:15px; font-weight:700; cursor:pointer;
+    font-family:var(--sans); letter-spacing:.01em;
+  }
+  .submit-btn:active{transform:scale(.99);}
+  .submit-btn:disabled{background:#c9c9c9;}
+
+  .stamp{
+    display:none; text-align:center; padding:26px 18px; margin-top:16px;
+    border:2px dashed var(--red); border-radius:14px; background:var(--red-soft);
+  }
+  .stamp.show{display:block;}
+  .stamp .circle{
+    width:64px; height:64px; border-radius:50%; border:2.5px solid var(--red); color:var(--red);
+    display:flex; align-items:center; justify-content:center; margin:0 auto 10px; font-size:28px;
+  }
+  .stamp h3{font-family:var(--serif); color:var(--red); margin:0 0 4px; font-size:17px;}
+  .stamp p{font-size:12.5px; color:var(--ink-soft); margin:0;}
+
+  .quote{
+    font-family:var(--serif); font-style:italic; font-size:13.5px; color:var(--ink-soft);
+    border-left:3px solid var(--gold); padding-left:12px; margin:18px 0 4px;
+  }
+
+  /* facilitator view */
+  .fac-toolbar{display:flex; gap:8px; margin-bottom:14px;}
+  .ghost-btn{
+    flex:1; padding:10px; border-radius:10px; border:1.5px solid var(--ink); background:#fff;
+    color:var(--ink); font-weight:700; font-size:13px; cursor:pointer;
+  }
+  .ghost-btn.primary{background:var(--ink); color:#fff;}
+  .group-label{
+    font-family:var(--serif); font-size:14px; color:var(--red); margin:18px 0 8px; font-weight:700;
+  }
+  .entry{
+    border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-bottom:8px; background:#fff;
+  }
+  .entry .name{font-weight:700; font-size:14px; color:var(--ink);}
+  .entry .meta{font-size:11.5px; color:var(--ink-soft); margin-bottom:6px;}
+  .entry .row{font-size:13px; margin-top:4px; color:var(--ink);}
+  .entry .row b{color:var(--ink-soft); font-weight:600;}
+  .empty-state{text-align:center; padding:30px 10px; color:var(--ink-soft); font-size:13.5px;}
+  .loading{text-align:center; padding:20px; color:var(--ink-soft); font-size:13px;}
+
+  footer{
+    text-align:center; padding:22px 18px 10px; font-size:11.5px; color:var(--ink-soft);
+  }
+  footer .motto{font-family:var(--serif); font-style:italic; color:var(--red); margin-bottom:4px; font-size:12.5px;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="eyebrow">Modelo TIHA · UCC Faculty Academy</div>
+  <h1>Sesión 1 — Portafolio Interactivo</h1>
+  <p>Diagnóstico + Selección de metodología · 2 de julio, 2026</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" id="tabParticipante" onclick="switchTab('participante')">Mi sesión</button>
+  <button class="tab-btn" id="tabFacilitadora" onclick="switchTab('facilitadora')">Panel facilitadora</button>
+</div>
+
+<div class="wrap">
+
+  <!-- PARTICIPANT VIEW -->
+  <div class="view active" id="viewParticipante">
+
+    <div class="card">
+      <h2>Recursos de hoy</h2>
+      <p class="sub">Tenlos a mano en tu teléfono durante la sesión</p>
+      <div class="res-item">
+        <div class="res-badge">N</div>
+        <div><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a>
+          <div class="desc">Sube tu sílabo o materiales del curso para generar un resumen y preguntas de diagnóstico.</div>
+        </div>
+      </div>
+      <div class="res-item">
+        <div class="res-badge">C</div>
+        <div><a href="https://chat.openai.com" target="_blank" rel="noopener">ChatGPT · GPT personalizado TIHA</a>
+          <div class="desc">Búscalo como "Lumi" en tus GPTs, o usa el enlace que te compartirá la Dra. Serrano.</div>
+        </div>
+      </div>
+      <div class="res-item">
+        <div class="res-badge">U</div>
+        <div><a href="https://www.cast.org/impact/universal-design-for-learning-udl" target="_blank" rel="noopener">Guía rápida UDL (CAST)</a>
+          <div class="desc">Principios de Diseño Universal para el Aprendizaje que enmarcan hoy la selección de metodología.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote">"Cuando integramos la inteligencia artificial con intención humanizadora, no solo aprendemos con ella, aprendemos a ser más nosotros mismos." — TIHA, 2026</div>
+
+    <div class="card" style="margin-top:16px;">
+      <h2>Mi portafolio · Sesión 1</h2>
+      <p class="sub">Se guarda al instante — puedes seguir editando hasta que envíes</p>
+
+      <label class="first">Nombre y apellido</label>
+      <input type="text" id="fNombre" placeholder="Ej. Ana Rodríguez">
+
+      <div class="grid2">
+        <div>
+          <label>Grupo</label>
+          <select id="fGrupo">
+            <option value="Grupo 1 (9:00–10:30 am)">Grupo 1</option>
+            <option value="Grupo 2 (11:00 am–12:30 pm)">Grupo 2</option>
+          </select>
+        </div>
+        <div>
+          <label>Curso</label>
+          <input type="text" id="fCurso" placeholder="Ej. Anatomía I">
+        </div>
+      </div>
+
+      <label>Objetivo de mejora profesional</label>
+      <textarea id="fObjetivo" placeholder="¿Qué quieres lograr en tu práctica docente este verano?"></textarea>
+
+      <label>Metodología activa seleccionada</label>
+      <select id="fMetodologia">
+        <option>Team-Based Learning (TBL)</option>
+        <option>Problem-Based Learning (PBL)</option>
+        <option>Case-Based Learning (CBL)</option>
+        <option>Simulación</option>
+        <option>Flipped Classroom</option>
+        <option>Otra</option>
+      </select>
+
+      <label>¿Por qué esta metodología, para este curso?</label>
+      <textarea id="fPorque" placeholder="Una o dos frases sobre el 'punto de fricción' que identificaste con NotebookLM..."></textarea>
+
+      <label>Mi compromiso antes de la Sesión 2</label>
+      <textarea id="fCompromiso" placeholder="La actividad específica que diseñaré y traeré lista para el 9 de julio..."></textarea>
+
+      <button class="submit-btn" id="btnGuardar" onclick="guardarEntrada()">Guardar mi compromiso</button>
+
+      <div class="stamp" id="stamp">
+        <div class="circle">✓</div>
+        <h3>Compromiso registrado</h3>
+        <p id="stampText">Gracias — tu portafolio quedó guardado.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FACILITATOR VIEW -->
+  <div class="view" id="viewFacilitadora">
+    <div class="card">
+      <h2>Panel de la facilitadora</h2>
+      <p class="sub">Registro de medición — Sesión 1, ambos grupos</p>
+      <div class="fac-toolbar">
+        <button class="ghost-btn primary" onclick="cargarRespuestas()">Cargar respuestas</button>
+        <button class="ghost-btn" onclick="descargarCSV()">Descargar CSV</button>
+      </div>
+      <div id="facContent"><div class="empty-state">Presiona "Cargar respuestas" para ver el registro de la sesión.</div></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="motto">"No es usar más tecnología, es usar tecnología para vivir mejor."</div>
+  Dra. Mariluz Serrano Ortiz, Ed.D. · Modelo TIHA · mariluz.serrano@upr.edu
+</footer>
+
+<script>
+const PREFIX = 'tihaucc-s1-';
+let cachedEntries = [];
+
+function switchTab(tab){
+  document.getElementById('viewParticipante').classList.toggle('active', tab==='participante');
+  document.getElementById('viewFacilitadora').classList.toggle('active', tab==='facilitadora');
+  document.getElementById('tabParticipante').classList.toggle('active', tab==='participante');
+  document.getElementById('tabFacilitadora').classList.toggle('active', tab==='facilitadora');
+}
+
+async function guardarEntrada(){
+  const nombre = document.getElementById('fNombre').value.trim();
+  if(!nombre){ alert('Por favor escribe tu nombre antes de guardar.'); return; }
+
+  const btn = document.getElementById('btnGuardar');
+  btn.disabled = true; btn.textContent = 'Guardando...';
+
+  const entry = {
+    nombre,
+    grupo: document.getElementById('fGrupo').value,
+    curso: document.getElementById('fCurso').value.trim(),
+    objetivo: document.getElementById('fObjetivo').value.trim(),
+    metodologia: document.getElementById('fMetodologia').value,
+    porque: document.getElementById('fPorque').value.trim(),
+    compromiso: document.getElementById('fCompromiso').value.trim(),
+    nivelDesempeno: 'Iniciado',
+    timestamp: new Date().toISOString()
+  };
+
+  const key = PREFIX + Date.now() + '-' + Math.random().toString(36).slice(2,7);
+
+  try{
+    const result = await window.storage.set(key, JSON.stringify(entry), true);
+    if(!result) throw new Error('sin resultado');
+    document.getElementById('stampText').textContent =
+      'Gracias, ' + nombre.split(' ')[0] + ' — tu portafolio de la Sesión 1 quedó guardado.';
+    document.getElementById('stamp').classList.add('show');
+    btn.textContent = 'Guardado ✓';
+  }catch(err){
+    console.error('Storage error:', err);
+    alert('Hubo un problema guardando tu respuesta. Verifica tu conexión e intenta de nuevo.');
+    btn.disabled = false; btn.textContent = 'Guardar mi compromiso';
+  }
+}
+
+async function cargarRespuestas(){
+  const content = document.getElementById('facContent');
+  content.innerHTML = '<div class="loading">Cargando respuestas...</div>';
+  try{
+    const listResult = await window.storage.list(PREFIX, true);
+    const keys = (listResult && listResult.keys) ? listResult.keys : [];
+    if(keys.length === 0){
+      content.innerHTML = '<div class="empty-state">Todavía no hay respuestas guardadas.</div>';
+      cachedEntries = [];
+      return;
+    }
+    const entries = [];
+    for(const k of keys){
+      try{
+        const r = await window.storage.get(k, true);
+        if(r && r.value) entries.push(JSON.parse(r.value));
+      }catch(e){ /* clave individual no disponible, se omite */ }
+    }
+    entries.sort((a,b)=> (a.grupo||'').localeCompare(b.grupo||'') || (a.nombre||'').localeCompare(b.nombre||''));
+    cachedEntries = entries;
+    renderEntries(entries);
+  }catch(err){
+    console.error(err);
+    content.innerHTML = '<div class="empty-state">No se pudo cargar el registro. Intenta de nuevo.</div>';
+  }
+}
+
+function renderEntries(entries){
+  const content = document.getElementById('facContent');
+  if(entries.length === 0){
+    content.innerHTML = '<div class="empty-state">Todavía no hay respuestas guardadas.</div>';
+    return;
+  }
+  let html = '';
+  let lastGroup = null;
+  for(const e of entries){
+    if(e.grupo !== lastGroup){
+      html += '<div class="group-label">' + escapeHtml(e.grupo || 'Sin grupo') + '</div>';
+      lastGroup = e.grupo;
+    }
+    html += '<div class="entry">' +
+      '<div class="name">' + escapeHtml(e.nombre) + '</div>' +
+      '<div class="meta">' + escapeHtml(e.curso || '—') + ' · Nivel: ' + escapeHtml(e.nivelDesempeno || '—') + '</div>' +
+      '<div class="row"><b>Metodología:</b> ' + escapeHtml(e.metodologia || '—') + '</div>' +
+      '<div class="row"><b>Objetivo:</b> ' + escapeHtml(e.objetivo || '—') + '</div>' +
+      '<div class="row"><b>Compromiso:</b> ' + escapeHtml(e.compromiso || '—') + '</div>' +
+      '</div>';
+  }
+  content.innerHTML = html;
+}
+
+function escapeHtml(str){
+  if(!str) return '';
+  return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+function descargarCSV(){
+  if(cachedEntries.length === 0){
+    alert('Primero presiona "Cargar respuestas".');
+    return;
+  }
+  const headers = ['Grupo','Nombre','Curso','Metodologia','Objetivo','PorQue','Compromiso','NivelDesempeno','Timestamp'];
+  const rows = cachedEntries.map(e => [
+    e.grupo, e.nombre, e.curso, e.metodologia, e.objetivo, e.porque, e.compromiso, e.nivelDesempeno, e.timestamp
+  ].map(v => '"' + String(v||'').replace(/"/g,'""') + '"').join(','));
+  const csv = headers.join(',') + '\\n' + rows.join('\\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'Sesion1_Registro_UCC_TIHA.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>
