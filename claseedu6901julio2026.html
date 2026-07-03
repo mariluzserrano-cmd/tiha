@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EDU 690 · Bitácora · 1 de julio 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F4F6FB; --bg-soft: #EAEEF8; --card: #FFFFFF;
+  --ink: #1E2A44; --ink-soft: #4A5878; --ink-faint: #8290AE;
+  --blue: #4A7DD6; --blue-deep: #2E5AA8; --lavender: #B8A6E8; --lavender-deep: #8B6FD4;
+  --gold: #C98A3C; --teal: #5FB3A3; --line: rgba(74,125,214,0.16);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse 50% 40% at 8% 5%, rgba(74,125,214,0.08), transparent 60%), radial-gradient(ellipse 45% 35% at 95% 96%, rgba(184,166,232,0.12), transparent 60%); }
+.wrap { position: relative; z-index: 2; max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+.hero { padding: 56px 0 36px; }
+.hero-brand { display: flex; align-items: center; gap: 14px; margin-bottom: 32px; }
+.hero-mark { width: 48px; height: 48px; border: 1px solid var(--blue); border-radius: 50%; display: grid; place-items: center; font-family: 'Fraunces', serif; font-style: italic; font-weight: 900; font-size: 24px; color: var(--blue-deep); background: var(--card); position: relative; }
+.hero-mark::after { content: ''; position: absolute; inset: -5px; border: 1px solid var(--line); border-radius: 50%; }
+.hero-brand-text { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-soft); }
+.hero-brand-text strong { display: block; color: var(--ink); font-weight: 600; font-size: 14px; margin-top: 2px; letter-spacing: 0.04em; }
+.hero-eyebrow { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--lavender-deep); font-weight: 600; margin-bottom: 16px; }
+.hero-title { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; font-variation-settings: 'opsz' 144, 'SOFT' 60; font-size: clamp(36px, 6vw, 68px); line-height: 1.02; letter-spacing: -0.025em; margin-bottom: 20px; }
+.hero-title em { color: var(--blue-deep); }
+.hero-deck { font-size: 18px; color: var(--ink-soft); max-width: 680px; line-height: 1.6; }
+
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 36px; position: sticky; top: 0; z-index: 20; background: var(--bg); padding: 16px 0; border-bottom: 1px solid var(--line); }
+.tab { font-size: 14px; padding: 11px 20px; border-radius: 100px; border: 1px solid var(--line); color: var(--ink-soft); cursor: pointer; transition: all 0.2s ease; background: var(--card); font-weight: 500; display: flex; align-items: center; gap: 8px; }
+.tab:hover { border-color: var(--blue); color: var(--blue-deep); }
+.tab.active { background: var(--blue); color: #fff; border-color: var(--blue); box-shadow: 0 4px 14px rgba(74,125,214,0.25); }
+.tab .ico { font-size: 16px; }
+
+.panel { display: none; animation: fade 0.4s ease both; padding-bottom: 60px; }
+.panel.active { display: block; }
+@keyframes fade { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: translateY(0);} }
+
+.panel-title { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; font-size: clamp(28px, 4vw, 44px); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 16px; }
+.panel-title em { color: var(--blue-deep); }
+.panel-deck { font-size: 17px; color: var(--ink-soft); max-width: 700px; line-height: 1.6; margin-bottom: 28px; }
+.panel-deck strong { color: var(--ink); }
+
+.video-frame { position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(46,90,168,0.14); border: 1px solid var(--line); background: #000; }
+.video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+.linkcard { display: flex; align-items: center; gap: 22px; padding: 24px 28px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; margin-bottom: 16px; text-decoration: none; color: inherit; transition: all 0.25s ease; box-shadow: 0 4px 20px rgba(46,90,168,0.06); position: relative; overflow: hidden; }
+.linkcard::before { content: ''; position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: var(--blue); }
+.linkcard.lav::before { background: var(--lavender-deep); }
+.linkcard.teal::before { background: var(--teal); }
+.linkcard.gold::before { background: var(--gold); }
+.linkcard:hover { transform: translateX(6px); border-color: var(--blue); }
+.linkcard-ico { font-size: 36px; line-height: 1; flex-shrink: 0; }
+.linkcard-body { flex: 1; }
+.linkcard-title { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 22px; color: var(--ink); margin-bottom: 4px; }
+.linkcard-text { font-size: 14.5px; color: var(--ink-soft); line-height: 1.5; }
+.linkcard-arrow { font-size: 22px; color: var(--blue); flex-shrink: 0; }
+
+.cards { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; margin: 24px 0; }
+@media (max-width: 680px) { .cards { grid-template-columns: 1fr; } }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 24px 26px; position: relative; overflow: hidden; box-shadow: 0 4px 18px rgba(46,90,168,0.06); }
+.card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--blue); }
+.card.lav::before { background: var(--lavender-deep); } .card.teal::before { background: var(--teal); } .card.gold::before { background: var(--gold); }
+.card-num { font-family: 'Fraunces', serif; font-style: italic; font-weight: 600; font-size: 18px; color: var(--blue-deep); margin-bottom: 6px; }
+.card-title { font-family: 'Fraunces', serif; font-style: italic; font-size: 21px; margin-bottom: 8px; color: var(--ink); }
+.card-text { font-size: 14.5px; color: var(--ink-soft); line-height: 1.55; }
+.card-text strong { color: var(--blue-deep); }
+
+.callout { background: linear-gradient(135deg, rgba(201,138,60,0.1), rgba(184,166,232,0.08)); border: 1px solid rgba(201,138,60,0.25); border-radius: 14px; padding: 24px 28px; margin: 24px 0; }
+.callout .lbl { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 8px; }
+.callout .txt { font-family: 'Fraunces', serif; font-style: italic; font-size: 19px; color: var(--ink); line-height: 1.4; }
+
+.section-sub { font-family: 'Fraunces', serif; font-style: italic; font-size: 22px; color: var(--blue-deep); margin: 34px 0 14px; }
+.prose p { font-size: 15.5px; color: var(--ink-soft); line-height: 1.7; margin-bottom: 14px; }
+.prose strong { color: var(--ink); }
+
+.timeline { display: flex; flex-direction: column; gap: 0; margin: 24px 0; }
+.tl-item { display: flex; gap: 22px; padding: 18px 16px; border-bottom: 1px solid var(--line); border-radius: 10px; transition: all 0.2s ease; cursor: pointer; text-decoration: none; color: inherit; }
+.tl-item:hover { background: var(--bg-soft); transform: translateX(4px); }
+.tl-item:hover .tl-time { color: var(--lavender-deep); }
+.tl-time { flex-shrink: 0; font-family: 'Fraunces', serif; font-style: italic; font-size: 17px; color: var(--blue-deep); width: 90px; }
+.tl-body { flex: 1; }
+.tl-topic { font-size: 16.5px; color: var(--ink); font-weight: 600; margin-bottom: 3px; }
+.tl-desc { font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
+
+.pend-list { display: flex; flex-direction: column; gap: 12px; margin: 20px 0 32px; }
+.pend-item { display: flex; gap: 16px; align-items: flex-start; padding: 18px 22px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 3px 14px rgba(46,90,168,0.05); }
+.pend-check { flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--teal); display: grid; place-items: center; font-size: 15px; color: var(--teal); background: var(--bg-soft); margin-top: 2px; }
+.pend-name { font-weight: 600; color: var(--ink); font-size: 15.5px; margin-bottom: 3px; }
+.pend-text { font-size: 14.5px; color: var(--ink-soft); line-height: 1.5; }
+
+.foot { text-align: center; padding: 48px 0; border-top: 1px solid var(--line); margin-top: 20px; }
+.foot-quote { font-family: 'Fraunces', serif; font-style: italic; font-size: 19px; color: var(--blue-deep); max-width: 560px; margin: 0 auto 14px; line-height: 1.45; }
+.foot-meta { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); }
+
+@media (max-width: 640px) { .hero { padding: 40px 0 28px; } .linkcard { padding: 20px; gap: 14px; } .linkcard-ico { font-size: 30px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="hero-brand">
+      <div class="hero-mark">↻</div>
+      <div class="hero-brand-text">Proyecto TIHA · EDU 690<strong>Realidades Inmersivas, Simulación y Tecnologías Emergentes</strong></div>
+    </div>
+    <div class="hero-eyebrow">Encuentro sincrónico · Miércoles 1 de julio de 2026</div>
+    <h1 class="hero-title">Del bloqueo <em>al mundo</em> que ya casi terminas.</h1>
+    <p class="hero-deck">Aquí tienes todo lo que vivimos hoy: la grabación completa, un resumen chévere de lo esencial, el minuto a minuto para repasar cualquier momento, los recursos que compartimos en el chat y tus próximos pasos hacia la Actividad 6.</p>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-tab="video"><span class="ico">▶️</span> Video</button>
+    <button class="tab" data-tab="resumen"><span class="ico">📝</span> Resumen</button>
+    <button class="tab" data-tab="minuto"><span class="ico">⏱️</span> Minuto a minuto</button>
+    <button class="tab" data-tab="recursos"><span class="ico">🔗</span> Recursos</button>
+    <button class="tab" data-tab="pendientes"><span class="ico">✅</span> Pendientes</button>
+  </nav>
+
+  <!-- VIDEO -->
+  <section class="panel active" id="panel-video">
+    <h2 class="panel-title">La clase <em>grabada</em></h2>
+    <p class="panel-deck">Mira el encuentro completo cuando quieras, a tu ritmo. Puedes pausar y devolver cuando lo necesites.</p>
+    <div class="video-frame">
+      <iframe src="https://www.youtube.com/embed/OYmovGFhVcg" title="EDU 690 · 1 de julio 2026" allowfullscreen></iframe>
+    </div>
+    <p style="font-size:14px;color:var(--ink-faint);margin-top:14px;text-align:center;">Si el video no carga, míralo directo en <a href="https://youtu.be/OYmovGFhVcg" target="_blank" style="color:var(--blue-deep);">YouTube</a>.</p>
+
+    <div class="callout">
+      <div class="lbl">Del día</div>
+      <div class="txt">"La inteligencia artificial no reemplaza al ser humano; lo potencia para trascender." — Metodología TIHA, Dra. Mariluz Serrano Ortiz</div>
+    </div>
+  </section>
+
+  <!-- RESUMEN -->
+  <section class="panel" id="panel-resumen">
+    <h2 class="panel-title">Lo esencial de <em>hoy</em></h2>
+    <p class="panel-deck">Un ricap chévere de los momentos que de verdad importan — hacia dónde te estoy guiando para que llegues completa y completo a la entrega del 15 de julio.</p>
+
+    <div class="section-sub">Cómo llegamos</div>
+    <div class="prose">
+      <p>Empezamos con una ronda sencilla: cada quien contó por cuál tarea va, cómo se siente y hacia dónde se dirige. Sin juicios — la idea era simplemente tomarle el pulso al grupo después de dos semanas sin vernos sincrónicamente. Salieron nervios normales (Valery, Heysa), entusiasmo (Melanie, a quien celebré por lo mucho que ha crecido) y varias dudas puntuales sobre FrameVR, sobre todo de Verónica y Joan.</p>
+      <p><strong>Las fechas se movieron:</strong> todas las tareas de julio (5, 6, 7 y 8) corrieron hacia el 17 de julio en adelante. La <strong>Actividad 6 quedó fijada para el 15 de julio</strong>, así que hay tiempo real para diseñar el mundo con calma.</p>
+    </div>
+
+    <div class="section-sub">FrameVR: construyendo con intención</div>
+    <div class="prose">
+      <p>Recomendé los mundos <strong>AI Horizon</strong> (porque ya trae IA integrada — Sacha puede interactuar y responder preguntas), <strong>Gallery Large</strong> (para quien quiere meter muchos elementos) y evitar el modelo <strong>Empty</strong>. Mostré cómo editar el perfil y el avatar, cómo activar el modo edición para mover, rotar y rotular objetos, y el truco de diseñar los rótulos y botones en Canva o su IA favorita — no depender de que FrameVR los genere — para mantener la paleta de colores propia.</p>
+      <p>También un tip que no tiene que ver con FrameVR pero que les regalé: <strong>Google Calendar tiene "booking pages"</strong> — un enlace que ustedes comparten y las personas agendan según su disponibilidad real, sincronizado con el teléfono.</p>
+    </div>
+
+    <div class="section-sub">Qué es un OVA (y cómo crear uno hoy mismo)</div>
+    <div class="prose">
+      <p>Un Objeto Virtual de Aprendizaje es cualquier pieza interactiva donde el usuario hace clic y algo le enseña, le explica o le invita a explorar — desde un botón que expande una imagen hasta el HTML minuto a minuto que reciben cada semana. Hicimos el ejercicio en vivo con Joan: un OVA de "vida independiente" para estudiantes con discapacidad intelectual, con historia interactiva y decisiones, construido con Claude.</p>
+      <p><strong>Flujo recomendado:</strong> conversar con Claude (Sonnet, esfuerzo medio, para cuidar los créditos), copiar el código HTML, llevarlo a Canva (que ahora absorbe HTML directamente) o a GitHub Pages, y luego insertarlo en FrameVR con el bloque "Web Browser" usando el enlace público. Tip importante: <strong>nunca subir PDFs directo a Claude</strong> — convertirlos primero a HTML.</p>
+    </div>
+
+    <div class="section-sub">El modelo ADDIE + TPACK aplicado al mundo inmersivo</div>
+    <div class="prose">
+      <p>Expliqué las cinco fases de ADDIE ya conectadas directamente a lo que están construyendo:</p>
+    </div>
+    <div class="cards">
+      <div class="card"><div class="card-num">01 · Análisis</div><div class="card-title">¿Quién habita este mundo?</div><div class="card-text">Antes de poner nada: quién va a estar ahí, qué barreras existen (conectividad, accesibilidad) y qué se espera lograr.</div></div>
+      <div class="card lav"><div class="card-num">02 · Diseño</div><div class="card-title">El plano del arquitecto</div><div class="card-text">Mínimo 3 estaciones con propósito propio, coherentes entre sí — nada de mezclar Picasso con una oficina corporativa.</div></div>
+      <div class="card teal"><div class="card-num">03 · Desarrollo</div><div class="card-title">Curaduría e interacciones</div><div class="card-text">Configurar qué hace Sacha o cada estación cuando el avatar llega — nada improvisado.</div></div>
+      <div class="card gold"><div class="card-num">04 · Implementación</div><div class="card-title">Invitar antes de entregar</div><div class="card-text">Compartir el mundo con al menos 2 compañeras o compañeros antes de que yo lo vea — dejar comentarios en el chat de FrameVR (quedan grabados).</div></div>
+      <div class="card"><div class="card-num">05 · Evaluación</div><div class="card-title">La reflexión pedagógica</div><div class="card-text">¿Se cumplieron los objetivos? ¿Qué ajustaría? Esto es literalmente la Actividad 8.</div></div>
+    </div>
+    <div class="prose">
+      <p>El TPACK entra como el "para qué" — sin él, ADDIE es solo un mapa de ruta sin sentido pedagógico. Les mostré, en vivo, los comentarios reales que ya han dejado en mi propio FrameVR como ejemplo de análisis educativo en tiempo real.</p>
+      <p>Cerramos con <strong>ética e inclusión</strong>: pensar en quién podría necesitar audio, subtítulos o un disclaimer — no volverse loco tratando de cubrirlo todo, sino ser consciente y transparente (la declaratoria de uso de IA generativa).</p>
+    </div>
+
+    <div class="callout">
+      <div class="lbl">Cierre logístico</div>
+      <div class="txt">Nuevos horarios de reunión individual: miércoles de 9:00 a.m. a 9:00 p.m., y viernes de 1:00 a 3:00 p.m. Próxima clase sincrónica: 15 de julio.</div>
+    </div>
+  </section>
+
+  <!-- MINUTO A MINUTO -->
+  <section class="panel" id="panel-minuto">
+    <h2 class="panel-title">La clase <em>minuto a minuto</em></h2>
+    <p class="panel-deck">Salta directo al momento que quieras repasar.</p>
+    <div class="timeline">
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=698" target="_blank"><div class="tl-time">11:38</div><div class="tl-body"><div class="tl-topic">Bienvenida y ronda de check-in</div><div class="tl-desc">Cada quien cuenta por cuál tarea va, cómo se siente y hacia dónde se dirige.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=928" target="_blank"><div class="tl-time">15:28</div><div class="tl-body"><div class="tl-topic">Fechas de julio se mueven</div><div class="tl-desc">Actividades 5, 6, 7 y 8 corren hacia el 17 de julio en adelante.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=1068" target="_blank"><div class="tl-time">17:48</div><div class="tl-body"><div class="tl-topic">Verónica comparte sus dudas</div><div class="tl-desc">Diseñar y crear en FrameVR es una experiencia distinta a solo explorar.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=1178" target="_blank"><div class="tl-time">19:38</div><div class="tl-body"><div class="tl-topic">Actividad 6 pasa al 15 de julio</div><div class="tl-desc">Se introduce el modelo ADDIE como estructura para diseñar el mundo.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=2163" target="_blank"><div class="tl-time">36:03</div><div class="tl-body"><div class="tl-topic">Cómo funciona el minuto a minuto</div><div class="tl-desc">Bárbara pregunta cómo se hace — este HTML es exactamente el recap del que hablamos.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=2364" target="_blank"><div class="tl-time">39:24</div><div class="tl-body"><div class="tl-topic">Editar avatar y perfil</div><div class="tl-desc">Modelos recomendados: AI Horizon y Gallery Large. Evitar Empty.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=2520" target="_blank"><div class="tl-time">42:00</div><div class="tl-body"><div class="tl-topic">Ronda de mundos elegidos</div><div class="tl-desc">Melanie: Modern Art Gallery. Heysa: la ciudad. Joan: Gallery Small.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=2851" target="_blank"><div class="tl-time">47:31</div><div class="tl-body"><div class="tl-topic">Truco: booking pages de Google Calendar</div><div class="tl-desc">Cómo crear un enlace de agenda que se sincroniza con tu horario real.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=3652" target="_blank"><div class="tl-time">1:00:52</div><div class="tl-body"><div class="tl-topic">El mundo espiritual de Verónica</div><div class="tl-desc">Cómo incorporar lo ya creado en NotebookLM directamente en FrameVR.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=3742" target="_blank"><div class="tl-time">1:02:22</div><div class="tl-body"><div class="tl-topic">¿Qué es un OVA?</div><div class="tl-desc">Definición con ejemplos: clics que expanden, explican o invitan a explorar.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=3834" target="_blank"><div class="tl-time">1:03:54</div><div class="tl-body"><div class="tl-topic">Pregunta sobre ThingLink</div><div class="tl-desc">Bárbara valida si permite interactividad gratuita fuera de Canvas.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=3900" target="_blank"><div class="tl-time">1:05:00</div><div class="tl-body"><div class="tl-topic">Ejercicio en vivo: OVA de vida independiente</div><div class="tl-desc">Con Joan, para estudiantes con discapacidad intelectual — historia interactiva con decisiones.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=3978" target="_blank"><div class="tl-time">1:06:18</div><div class="tl-body"><div class="tl-topic">Tip técnico: Claude Sonnet, esfuerzo medio</div><div class="tl-desc">Para cuidar los créditos. Nunca subir PDFs directo — convertir a HTML primero.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=4042" target="_blank"><div class="tl-time">1:07:22</div><div class="tl-body"><div class="tl-topic">Construyendo el OVA en vivo</div><div class="tl-desc">De Claude a Canva (que ahora absorbe HTML) o a GitHub, y de ahí a FrameVR.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=4187" target="_blank"><div class="tl-time">1:09:47</div><div class="tl-body"><div class="tl-topic">Insertar el HTML embebido en Canva</div><div class="tl-desc">Enlace público o enlace para insertar directo en el Web Browser de FrameVR.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=4372" target="_blank"><div class="tl-time">1:12:52</div><div class="tl-body"><div class="tl-topic">¿Se puede usar Lovable?</div><div class="tl-desc">Raysa pregunta — sí, cualquier herramienta donde se sientan cómodas se puede integrar igual.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=4483" target="_blank"><div class="tl-time">1:14:43</div><div class="tl-body"><div class="tl-topic">Demostración: crear rótulos en FrameVR</div><div class="tl-desc">Modo edición, generar imagen de etiqueta, rotar y ubicar el objeto.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=4646" target="_blank"><div class="tl-time">1:17:26</div><div class="tl-body"><div class="tl-topic">¿Se puede trabajar en pareja o grupo?</div><div class="tl-desc">Enid pregunta — sí, se dividen el diseño del OVA y del espacio.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=4729" target="_blank"><div class="tl-time">1:18:49</div><div class="tl-body"><div class="tl-topic">Se forma un grupo</div><div class="tl-desc">Frances, Joan y Valery deciden unirse para apoyarse entre ellas.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=5185" target="_blank"><div class="tl-time">1:26:25</div><div class="tl-body"><div class="tl-topic">Empieza la explicación formal de ADDIE</div><div class="tl-desc">Cómo lo integraría la profesora en este curso, fase por fase.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=5284" target="_blank"><div class="tl-time">1:28:04</div><div class="tl-body"><div class="tl-topic">Fase 1: Análisis</div><div class="tl-desc">¿Quién habita el mundo? Barreras de conectividad y accesibilidad.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=5379" target="_blank"><div class="tl-time">1:29:39</div><div class="tl-body"><div class="tl-topic">Fase 2: Diseño</div><div class="tl-desc">El plano del arquitecto — mínimo 3 estaciones coherentes entre sí.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=5523" target="_blank"><div class="tl-time">1:32:03</div><div class="tl-body"><div class="tl-topic">Fase 3: Desarrollo</div><div class="tl-desc">Curaduría de contenido y configuración de interacciones con Sacha.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=5656" target="_blank"><div class="tl-time">1:34:16</div><div class="tl-body"><div class="tl-topic">Fase 4: Implementación</div><div class="tl-desc">Invitar a al menos 2 compañeras o compañeros a explorar antes de la entrega.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=5722" target="_blank"><div class="tl-time">1:35:22</div><div class="tl-body"><div class="tl-topic">Fase 5: Evaluación</div><div class="tl-desc">La reflexión pedagógica final — esto se convierte en la Actividad 8.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=5881" target="_blank"><div class="tl-time">1:38:01</div><div class="tl-body"><div class="tl-topic">Cómo se conecta el TPACK</div><div class="tl-desc">Sin TPACK, ADDIE es solo un mapa de ruta sin sentido pedagógico.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=6058" target="_blank"><div class="tl-time">1:40:58</div><div class="tl-body"><div class="tl-topic">Tabla comparativa de plataformas</div><div class="tl-desc">FrameVR, Virbela, Mozilla Hubs y Engage VR — insumo para la Actividad 8.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=6204" target="_blank"><div class="tl-time">1:43:24</div><div class="tl-body"><div class="tl-topic">Mundos inmersivos generacionales</div><div class="tl-desc">Reflexión sobre Roblox y diseñar con propósito para la generación alfa.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=6377" target="_blank"><div class="tl-time">1:46:17</div><div class="tl-body"><div class="tl-topic">Ética e inclusión</div><div class="tl-desc">Accesibilidad, disclaimers y la declaratoria del uso de IA generativa.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=6447" target="_blank"><div class="tl-time">1:47:27</div><div class="tl-body"><div class="tl-topic">Ejemplo real de ADDIE + TPACK</div><div class="tl-desc">Se revisan los comentarios que ustedes ya dejaron en mi FrameVR.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=7043" target="_blank"><div class="tl-time">1:57:23</div><div class="tl-body"><div class="tl-topic">Nuevos horarios de reunión</div><div class="tl-desc">Miércoles 9:00 a.m.–9:00 p.m. y viernes 1:00–3:00 p.m.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=7136" target="_blank"><div class="tl-time">1:58:56</div><div class="tl-body"><div class="tl-topic">Cierre general de la clase</div><div class="tl-desc">Nos vemos de nuevo el 15 de julio para revisar dónde estamos.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=7184" target="_blank"><div class="tl-time">1:59:44</div><div class="tl-body"><div class="tl-topic">Reunión individual con Joan</div><div class="tl-desc">Cómo enfocar el mundo en aseo personal para estudiantes con discapacidad intelectual.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=8504" target="_blank"><div class="tl-time">2:21:44</div><div class="tl-body"><div class="tl-topic">Reunión individual con Verónica</div><div class="tl-desc">Su mundo espiritual, TIHA como marco teórico y su posible investigación de maestría.</div></div></a>
+      <a class="tl-item" href="https://youtu.be/OYmovGFhVcg?t=8876" target="_blank"><div class="tl-time">2:27:56</div><div class="tl-body"><div class="tl-topic">Fecha de la propuesta de Verónica</div><div class="tl-desc">Se acuerda entregarla a más tardar el 8 de julio.</div></div></a>
+    </div>
+  </section>
+
+  <!-- RECURSOS -->
+  <section class="panel" id="panel-recursos">
+    <h2 class="panel-title">Recursos <em>compartidos</em></h2>
+    <p class="panel-deck">Todo lo que se envió por el chat durante el encuentro, en un solo lugar.</p>
+
+    <a class="linkcard" href="https://mariluzserrano-cmd.github.io/tiha/EDU690sesion3claseasincronica.html" target="_blank">
+      <div class="linkcard-ico">📄</div>
+      <div class="linkcard-body"><div class="linkcard-title">Repaso de la Sesión 3</div><div class="linkcard-text">La clase asincrónica completa, para quien necesite refrescar los fundamentos de FrameVR.</div></div>
+      <div class="linkcard-arrow">→</div>
+    </a>
+
+    <a class="linkcard teal" href="https://youtu.be/BNWuNQip0Eo?si=0S0SIrFEtcl6oCiO" target="_blank">
+      <div class="linkcard-ico">🎥</div>
+      <div class="linkcard-body"><div class="linkcard-title">Tutorial de FrameVR (compartido por Raysa)</div><div class="linkcard-text">Un tutorial de hace algunos años, pero con herramientas que todavía funcionan.</div></div>
+      <div class="linkcard-arrow">→</div>
+    </a>
+
+    <a class="linkcard lav" href="https://calendar.app.google/GEjh9eMJQmnWzcuy5" target="_blank">
+      <div class="linkcard-ico">📅</div>
+      <div class="linkcard-body"><div class="linkcard-title">Agenda tu reunión individual</div><div class="linkcard-text">Booking page de Google Calendar — elige el horario que tengas disponible.</div></div>
+      <div class="linkcard-arrow">→</div>
+    </a>
+
+    <a class="linkcard gold" href="https://www.perplexity.ai/" target="_blank">
+      <div class="linkcard-ico">🔎</div>
+      <div class="linkcard-body"><div class="linkcard-title">Perplexity</div><div class="linkcard-text">Herramienta de búsqueda con IA mencionada durante la clase.</div></div>
+      <div class="linkcard-arrow">→</div>
+    </a>
+
+    <div class="callout">
+      <div class="lbl">Sobre las herramientas de IA</div>
+      <div class="txt">Claude (Sonnet, esfuerzo medio), Gemini y ChatGPT — cualquiera sirve para construir el OVA. Recuerda: nunca subas un PDF directo, conviértelo primero en HTML.</div>
+    </div>
+  </section>
+
+  <!-- PENDIENTES -->
+  <section class="panel" id="panel-pendientes">
+    <h2 class="panel-title">Hacia la <em>completitud</em></h2>
+    <p class="panel-deck">Lo que sigue, para llegar tranquila y tranquilo al 15 de julio.</p>
+
+    <div class="pend-list">
+      <div class="pend-item"><div class="pend-check">✓</div><div><div class="pend-name">Todo el grupo</div><div class="pend-text">Entregar la Actividad 6 (mundo en FrameVR con al menos 3 estaciones) el <strong>15 de julio</strong>, siguiendo las fases de ADDIE: análisis, diseño, desarrollo, implementación y evaluación.</div></div></div>
+      <div class="pend-item"><div class="pend-check">✓</div><div><div class="pend-name">Todo el grupo</div><div class="pend-text">Antes de entregar, invitar al menos a 2 compañeras o compañeros a explorar el mundo y dejar comentarios en el chat de FrameVR (fase de Implementación).</div></div></div>
+      <div class="pend-item"><div class="pend-check">✓</div><div><div class="pend-name">Todo el grupo</div><div class="pend-text">Preparar la tabla comparativa de plataformas inmersivas para la reflexión final de la Actividad 8.</div></div></div>
+      <div class="pend-item"><div class="pend-check">✓</div><div><div class="pend-name">Raysa</div><div class="pend-text">Recrear el mundo que se borró — ya tiene el contenido, imágenes y fotos organizadas por separado, así que el montaje debería ser más rápido.</div></div></div>
+      <div class="pend-item"><div class="pend-check">✓</div><div><div class="pend-name">Joan</div><div class="pend-text">Definir las estaciones de aseo personal (cepillado, lavado de manos, bañarse, vestirse) dentro de la galería elegida, ya conversado en la reunión individual de hoy.</div></div></div>
+      <div class="pend-item"><div class="pend-check">✓</div><div><div class="pend-name">Verónica</div><div class="pend-text">Enviar la propuesta de investigación de maestría (conectada a TIHA) a más tardar el <strong>8 de julio</strong>, por correo electrónico.</div></div></div>
+      <div class="pend-item"><div class="pend-check">✓</div><div><div class="pend-name">Frances, Joan y Valery</div><div class="pend-text">Coordinar la división del trabajo en grupo: quién construye el OVA, quién el espacio de FrameVR.</div></div></div>
+      <div class="pend-item"><div class="pend-check">✓</div><div><div class="pend-name">Quienes no han compartido acceso a NotebookLM</div><div class="pend-text">Verificar que el enlace de su Notebook esté incluido y accesible para que la profesora pueda revisarlo.</div></div></div>
+    </div>
+
+    <div class="callout">
+      <div class="lbl">No lo olvides</div>
+      <div class="txt">Nuevos horarios de reunión individual: miércoles de 9:00 a.m. a 9:00 p.m., viernes de 1:00 a 3:00 p.m. Agenda con el enlace de Calendar en la pestaña de Recursos.</div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p class="foot-quote">"Cuando integramos la inteligencia artificial con intención humanizadora, no solo aprendemos con ella, aprendemos a ser más nosotros mismos." — TIHA 2026</p>
+    <div class="foot-meta">Dra. Mariluz Serrano-Ortiz · Proyecto TIHA · EDU 690</div>
+  </footer>
+
+</div>
+
+<script>
+const tabs = document.querySelectorAll('.tab');
+const panels = document.querySelectorAll('.panel');
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const target = tab.dataset.tab;
+    tabs.forEach(t => t.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + target).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>
