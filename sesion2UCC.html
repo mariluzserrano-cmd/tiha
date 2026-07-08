@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 2 · Portafolio Interactivo TIHA</title>
+<style>
+  :root{
+    --ink:#0B2545; --ink-soft:#4A5A78; --red:#E3263A; --red-soft:#FBE4E6;
+    --gold:#C9A961; --paper:#FAF8F4; --paper-card:#FFFFFF; --line:#E7E1D6;
+    --serif: Georgia, 'Iowan Old Style', 'Palatino Linotype', serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans); -webkit-font-smoothing:antialiased; padding-bottom:60px;}
+  .wrap{max-width:640px; margin:0 auto; padding:0 18px;}
+
+  header.top{background:linear-gradient(180deg,#0B2545 0%, #142c56 100%); color:#fff; padding:28px 18px 22px; text-align:center; border-bottom:4px solid var(--red);}
+  header.top .eyebrow{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:8px;}
+  header.top h1{font-family:var(--serif); font-weight:600; font-size:26px; margin:0 0 6px;}
+  header.top p{margin:0; font-size:13.5px; color:#C9D2E6;}
+
+  .quote{font-family:var(--serif); font-style:italic; font-size:13.5px; color:var(--ink-soft); border-left:3px solid var(--gold); padding-left:12px; margin:18px 0 4px;}
+
+  .card{background:var(--paper-card); border:1px solid var(--line); border-radius:14px; padding:18px 18px 20px; margin:16px 0; box-shadow:0 1px 2px rgba(11,37,69,.04);}
+  .card h2{font-family:var(--serif); font-size:18px; margin:0 0 4px; color:var(--ink);}
+  .card .sub{font-size:12.5px; color:var(--ink-soft); margin:0 0 14px;}
+
+  label{display:block; font-size:12.5px; font-weight:700; color:var(--ink-soft); margin:14px 0 6px; text-transform:uppercase; letter-spacing:.03em;}
+  label.first{margin-top:0;}
+  input[type=text], input[type=file], select, textarea{
+    width:100%; border:1.5px solid var(--line); border-radius:10px; padding:11px 12px;
+    font-family:var(--sans); font-size:15px; color:var(--ink); background:#fff;
+  }
+  textarea{min-height:70px; resize:vertical; line-height:1.4;}
+  input:focus, select:focus, textarea:focus{outline:none; border-color:var(--red);}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .hint{font-size:11.5px; color:#8A93A0; margin-top:4px;}
+
+  .btn-row{display:flex; flex-direction:column; gap:10px; margin-top:20px;}
+  .submit-btn{
+    width:100%; padding:14px; border:none; border-radius:12px; font-size:15px; font-weight:700;
+    cursor:pointer; font-family:var(--sans); letter-spacing:.01em;
+  }
+  .submit-btn.email{background:var(--red); color:#fff;}
+  .submit-btn.whatsapp{background:#25D366; color:#fff;}
+  .submit-btn:disabled{background:#c9c9c9; cursor:default;}
+  .or-divider{text-align:center; font-size:11.5px; color:#9AA3A8; margin:2px 0;}
+
+  .stamp{display:none; text-align:center; padding:26px 18px; margin-top:16px; border:2px dashed var(--red); border-radius:14px; background:var(--red-soft);}
+  .stamp.show{display:block;}
+  .stamp .circle{width:64px; height:64px; border-radius:50%; border:2.5px solid var(--red); color:var(--red); display:flex; align-items:center; justify-content:center; margin:0 auto 10px; font-size:28px;}
+  .stamp h3{font-family:var(--serif); color:var(--red); margin:0 0 4px; font-size:17px;}
+  .stamp p{font-size:12.5px; color:var(--ink-soft); margin:0;}
+
+  .error-box{display:none; margin-top:14px; padding:12px 14px; border-radius:10px; background:#FDEDEC; border:1px solid #F3C6C6; color:#8A2E2E; font-size:13px;}
+  .error-box.show{display:block;}
+
+  footer{text-align:center; padding:22px 18px 10px; font-size:11.5px; color:var(--ink-soft);}
+  footer .motto{font-family:var(--serif); font-style:italic; color:var(--red); margin-bottom:4px; font-size:12.5px;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="eyebrow">Modelo TIHA · UCC Faculty Academy</div>
+  <h1>Sesión 2 — Portafolio Interactivo</h1>
+  <p>Implementación + Evaluación y retroalimentación · 9 de julio, 2026</p>
+</header>
+
+<div class="wrap">
+
+  <div class="quote">"La inteligencia artificial no reemplaza al ser humano; lo potencia para trascender." — Metodología TIHA</div>
+
+  <div class="card">
+    <h2>Mi portafolio · Sesión 2</h2>
+    <p class="sub">Comparte cómo implementaste tu metodología activa y qué evidencia recogiste</p>
+
+    <form id="portafolioForm">
+      <label class="first">Nombre y apellido</label>
+      <input type="text" name="Nombre" id="fNombre" required placeholder="Ej. Ana Rodríguez">
+
+      <div class="grid2">
+        <div>
+          <label>Grupo</label>
+          <select name="Grupo" id="fGrupo">
+            <option value="Grupo 1">Grupo 1</option>
+            <option value="Grupo 2">Grupo 2</option>
+          </select>
+        </div>
+        <div>
+          <label>Curso</label>
+          <input type="text" name="Curso" id="fCurso" placeholder="Ej. Fisiología">
+        </div>
+      </div>
+
+      <label>Actividad que implementaste</label>
+      <input type="text" name="Actividad" id="fActividad" placeholder="Título breve de tu actividad">
+
+      <label>¿Cómo salió? Evidencia de implementación</label>
+      <textarea name="Evidencia" id="fEvidencia" placeholder="Describe cómo la aplicaste y qué observaste en tu grupo de estudiantes..."></textarea>
+
+      <label>Retroalimentación que practicaste</label>
+      <textarea name="Retroalimentacion" id="fRetro" placeholder="¿Qué retroalimentación diste al estudiantado? ¿Con qué herramienta (Mote, oral, escrita)?"></textarea>
+
+      <label>Foto o captura de evidencia (opcional)</label>
+      <input type="file" name="Adjunto" id="fArchivo" accept="image/*">
+      <div class="hint">Puedes adjuntar una imagen ligera — no es obligatorio.</div>
+
+      <label>Nivel de desempeño</label>
+      <select name="NivelDesempeno" id="fNivel">
+        <option>En progreso</option>
+        <option>Implementado</option>
+      </select>
+
+      <label>Mi compromiso antes de la Sesión 3</label>
+      <textarea name="Compromiso" id="fCompromiso" placeholder="¿Qué evidencia específica recogerás antes del 21 de julio?"></textarea>
+
+      <input type="hidden" name="_subject" value="Portafolio Sesión 2 · TIHA UCC">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+
+      <div class="btn-row">
+        <button type="button" class="submit-btn email" id="btnEmail" onclick="enviarPorEmail()">Enviar por email a la Dra. Serrano</button>
+        <div class="or-divider">— o —</div>
+        <button type="button" class="submit-btn whatsapp" id="btnWhatsapp" onclick="enviarPorWhatsApp()">Enviar por WhatsApp</button>
+      </div>
+
+      <div class="error-box" id="errorBox">No se pudo enviar. Verifica tu conexión e intenta de nuevo, o usa la opción de WhatsApp.</div>
+
+      <div class="stamp" id="stamp">
+        <div class="circle">✓</div>
+        <h3 id="stampTitle">Compromiso registrado</h3>
+        <p id="stampText">Gracias — tu portafolio de la Sesión 2 quedó enviado.</p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="motto">"No es usar más tecnología, es usar tecnología para vivir mejor."</div>
+  Dra. Mariluz Serrano Ortiz, Ed.D. · Modelo TIHA · mariluz.serrano@upr.edu
+</footer>
+
+<script>
+const EMAIL_DESTINO = 'mary.serrano19@gmail.com';
+const WHATSAPP_LINK = 'https://wa.me/message/6UZAI5AT3PR3L1';
+
+function nombreValido(){
+  const nombre = document.getElementById('fNombre').value.trim();
+  if(!nombre){ alert('Por favor escribe tu nombre antes de enviar.'); return false; }
+  return true;
+}
+
+function resumenTexto(){
+  const g = (id) => document.getElementById(id).value.trim();
+  return 'PORTAFOLIO SESIÓN 2 · TIHA UCC\n\n' +
+    'Nombre: ' + g('fNombre') + '\n' +
+    'Grupo: ' + document.getElementById('fGrupo').value + '\n' +
+    'Curso: ' + g('fCurso') + '\n' +
+    'Actividad implementada: ' + g('fActividad') + '\n' +
+    'Evidencia de implementación: ' + g('fEvidencia') + '\n' +
+    'Retroalimentación practicada: ' + g('fRetro') + '\n' +
+    'Nivel de desempeño: ' + document.getElementById('fNivel').value + '\n' +
+    'Compromiso antes de Sesión 3: ' + g('fCompromiso');
+}
+
+async function enviarPorEmail(){
+  if(!nombreValido()) return;
+  const btn = document.getElementById('btnEmail');
+  const errorBox = document.getElementById('errorBox');
+  errorBox.classList.remove('show');
+  btn.disabled = true; btn.textContent = 'Enviando...';
+
+  const form = document.getElementById('portafolioForm');
+  const formData = new FormData(form);
+
+  try{
+    const resp = await fetch('https://formsubmit.co/ajax/' + EMAIL_DESTINO, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    });
+    if(!resp.ok) throw new Error('Respuesta no exitosa');
+
+    document.getElementById('stampTitle').textContent = 'Portafolio enviado';
+    document.getElementById('stampText').textContent =
+      'Gracias, ' + document.getElementById('fNombre').value.split(' ')[0] + ' — tu portafolio de la Sesión 2 llegó a la Dra. Serrano por email.';
+    document.getElementById('stamp').classList.add('show');
+    btn.textContent = 'Enviado ✓';
+  }catch(err){
+    console.error('Email error:', err);
+    errorBox.classList.add('show');
+    btn.disabled = false; btn.textContent = 'Enviar por email a la Dra. Serrano';
+  }
+}
+
+function enviarPorWhatsApp(){
+  if(!nombreValido()) return;
+  const texto = encodeURIComponent(resumenTexto());
+  window.open(WHATSAPP_LINK + '?text=' + texto, '_blank');
+  document.getElementById('stampTitle').textContent = 'Casi listo';
+  document.getElementById('stampText').textContent =
+    'Se abrió WhatsApp con tu portafolio redactado — solo falta que presiones enviar allá.';
+  document.getElementById('stamp').classList.add('show');
+}
+</script>
+
+</body>
+</html>
