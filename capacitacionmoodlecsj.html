@@ -217,15 +217,17 @@
   }
   .timeline-item:last-child { border-bottom: none; }
   .tl-time {
-    min-width: 52px;
+    min-width: 58px;
     background: var(--csj-violet);
     color: #fff; border-radius: 8px;
-    font-size: .75rem; font-weight: 700;
-    text-align: center; padding: 4px 6px;
-    cursor: pointer; transition: background .15s;
-    flex-shrink: 0;
+    font-size: .73rem; font-weight: 700;
+    text-align: center; padding: 5px 7px;
+    cursor: pointer; transition: all .18s;
+    flex-shrink: 0; user-select: none;
+    box-shadow: 0 2px 6px rgba(139,79,184,.25);
   }
-  .tl-time:hover { background: var(--csj-cyan); }
+  .tl-time:hover { background: var(--csj-cyan); transform: scale(1.07); box-shadow: 0 3px 10px rgba(43,184,217,.35); }
+  .tl-time:active { transform: scale(.97); }
   .tl-body { flex: 1; }
   .tl-title { font-size: .87rem; font-weight: 700; color: var(--ink); }
   .tl-desc { font-size: .80rem; color: #555; margin-top: 3px; line-height: 1.45; }
@@ -335,6 +337,41 @@
     border-top: 1px solid var(--border);
   }
 </style>
+
+<!-- YouTube IFrame API -->
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+var ytPlayer = null;
+function onYouTubeIframeAPIReady() {
+  ytPlayer = new YT.Player('mainPlayer', {
+    events: {
+      'onReady': function(e) { console.log('YT Player ready'); }
+    }
+  });
+}
+
+function seekTo(timeStr) {
+  // Convert "m:ss" or "mm:ss" to seconds
+  const parts = timeStr.trim().split(':').map(Number);
+  const seconds = parts.length === 2
+    ? parts[0] * 60 + parts[1]
+    : parts[0] * 3600 + parts[1] * 60 + parts[2];
+  if (ytPlayer && ytPlayer.seekTo) {
+    ytPlayer.seekTo(seconds, true);
+    ytPlayer.playVideo();
+    // Smooth scroll to video
+    document.querySelector('.player-wrap').scrollIntoView({behavior:'smooth', block:'start'});
+  } else {
+    // Fallback: reload iframe with start param
+    const iframe = document.getElementById('mainPlayer');
+    const src = iframe.src.replace(/[?&]start=\d+/, '');
+    const sep = src.includes('?') ? '&' : '?';
+    iframe.src = src + sep + 'start=' + seconds + '&autoplay=1';
+    document.querySelector('.player-wrap').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+}
+</script>
+
 </head>
 <body>
 
@@ -371,7 +408,7 @@
     <!-- PLAYER -->
     <div class="player-wrap">
       <iframe id="mainPlayer"
-        src="https://www.youtube.com/embed/xDSgEupR_M0?si=M1ojB5WovzkcFglE"
+        id="mainPlayer" src="https://www.youtube.com/embed/xDSgEupR_M0?si=M1ojB5WovzkcFglE&enablejsapi=1"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen></iframe>
     </div>
@@ -420,10 +457,7 @@
             <span class="resource-icon">📄</span>
             <span>Documentación: Matricular usuarios en bloque (Moodle.org)</span>
           </a>
-          <a class="resource-card" href="#" onclick="alert('Sube tu plantilla Excel aquí')">
-            <span class="resource-icon">📊</span>
-            <span>Plantilla Excel para carga masiva de usuarios</span>
-          </a>
+          
         </div>
       </div>
 
@@ -554,7 +588,7 @@ function renderTimeline(video) {
     const li = document.createElement('li');
     li.className = 'timeline-item';
     li.innerHTML = `
-      <div class="tl-time" title="Ir a este momento">${item.time}</div>
+      <div class="tl-time" onclick="seekTo('${item.time}')" title="▶ Ir al minuto ${item.time}" style="cursor:pointer;">▶ ${item.time}</div>
       <div class="tl-body">
         <div class="tl-title">${item.title}</div>
         <div class="tl-desc">${item.desc}</div>
@@ -616,7 +650,15 @@ function loadVideo(id) {
   const prev = VIDEOS.find(v => v.id === currentVideoId);
   if (prev) prev._notes = document.getElementById('notesArea').value;
   currentVideoId = id;
-  document.getElementById('mainPlayer').src = video.url;
+  // Update player src and reinitialize YT API
+  const newSrc = video.url.includes('enablejsapi') ? video.url : video.url + (video.url.includes('?') ? '&' : '?') + 'enablejsapi=1';
+  document.getElementById('mainPlayer').src = newSrc;
+  // Re-init YT player after src change
+  setTimeout(() => {
+    ytPlayer = new YT.Player('mainPlayer', {
+      events: { 'onReady': function(e){ console.log('YT ready for new video'); } }
+    });
+  }, 800);
   document.getElementById('currentTitle').textContent = video.title;
   document.getElementById('durationChip').textContent = '⏱ ' + video.duration;
   renderTimeline(video);
