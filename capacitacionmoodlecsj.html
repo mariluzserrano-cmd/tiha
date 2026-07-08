@@ -303,6 +303,25 @@
   .btn-cancel { padding: 8px 18px; border-radius: 8px; border: 1.5px solid var(--border); background: #fff; cursor: pointer; font-size: .84rem; }
   .btn-add { padding: 8px 20px; border-radius: 8px; border: none; background: var(--csj-violet); color: #fff; font-weight: 700; cursor: pointer; font-size: .84rem; }
 
+
+  .resource-card.dl-card { border-color: var(--csj-orange); background: var(--gold-soft); }
+  .resource-card.ai-card { border-color: var(--csj-violet); background: var(--violet-soft); }
+  .prompt-box {
+    background: #1e1e2e; border-radius: 10px; padding: 14px 16px;
+    font-family: monospace; font-size: .77rem; color: #c9d1d9;
+    line-height: 1.65; white-space: pre-wrap; margin: 10px 0; position: relative;
+  }
+  .copy-btn-abs { position:absolute; top:8px; right:8px; padding:4px 10px;
+    border-radius:6px; background:var(--csj-cyan); color:#fff; border:none;
+    font-size:.72rem; font-weight:700; cursor:pointer; }
+  .csv-preview { overflow-x:auto; margin:10px 0; border-radius:8px; border:1px solid var(--border); }
+  .csv-preview table { width:100%; border-collapse:collapse; font-size:.73rem; }
+  .csv-preview th { background:var(--csj-violet); color:#fff; padding:6px 10px; white-space:nowrap; }
+  .csv-preview td { padding:5px 10px; border-bottom:1px solid var(--border); font-family:monospace; }
+  .csv-preview tr:nth-child(even) td { background:var(--light-bg); }
+  .clabel { display:inline-block; padding:2px 8px; border-radius:6px; font-size:.68rem; font-weight:700; margin:2px; }
+  .cr { background:#FFEBEE; color:#C62828; border:1px solid #EF9A9A; }
+  .co { background:#E8F5E9; color:#2E7D32; border:1px solid #81C784; }
   /* ── Scrollbar ────────────────────────────────────────────── */
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
@@ -448,6 +467,23 @@
 </div>
 
 <script>
+
+const CSV_B64 = "77u/dXNlcm5hbWUscGFzc3dvcmQsZmlyc3RuYW1lLGxhc3RuYW1lLGVtYWlsLGNvdXJzZTEscm9sZTENCm1hcmlsdXosQ1NKMjAyNiEsTWFyaWx1eixTZXJyYW5vLG1hcmlsdXpAZW1haWwuY29tLFByb2dyYW1hX0NTSixzdHVkZW50DQpqdWFuMDEsQ1NKMjAyNiEsSnVhbixQw6lyZXosanVhbkBlbWFpbC5jb20sUHJvZ3JhbWFfQ1NKLHN0dWRlbnQNCm1hcmlhMDIsQ1NKMjAyNiEsTWFyw61hLEzDs3BleixtYXJpYS5sb3BlekBlbWFpbC5jb20sUHJvZ3JhbWFfQ1NKLHN0dWRlbnQNCmNhcmxvczAzLENTSjIwMjYhLENhcmxvcyxSaXZlcmEsY2FybG9zLnJpdmVyYUBlbWFpbC5jb20sUHJvZ3JhbWFfQ1NKLHN0dWRlbnQNCnNvZmlhMDQsQ1NKMjAyNiEsU29mw61hLE1vcmFsZXMsc29maWEubW9yYWxlc0BlbWFpbC5jb20sUHJvZ3JhbWFfQ1NKLHN0dWRlbnQNCmx1aXMwNSxDU0oyMDI2ISxMdWlzLEdvbnrDoWxleixsdWlzLmdvbnphbGV6QGVtYWlsLmNvbSxQcm9ncmFtYV9DU0osc3R1ZGVudA0KdmFsZXJpYTA2LENTSjIwMjYhLFZhbGVyaWEsVG9ycmVzLHZhbGVyaWEudG9ycmVzQGVtYWlsLmNvbSxQcm9ncmFtYV9DU0osc3R1ZGVudA0K";
+function downloadCSV(){
+  const a=document.createElement('a');
+  a.href='data:text/csv;base64,'+CSV_B64;
+  a.download='Plantilla_Importacion_Moodle_Usuarios.csv';
+  a.click();
+}
+function showAIPrompt(){ document.getElementById('promptModal').classList.add('open'); }
+function closePromptModal(){ document.getElementById('promptModal').classList.remove('open'); }
+function copyPrompt(){
+  navigator.clipboard.writeText(document.getElementById('aiPromptTxt').textContent).then(()=>{
+    const b=document.querySelector('.copy-btn-abs');
+    b.textContent='✅ Copiado'; setTimeout(()=>b.textContent='📋 Copiar',2200);
+  });
+}
+
 // ── Base de datos de videos ──────────────────────────────────────────────
 const VIDEOS = [
   {
@@ -533,11 +569,41 @@ function renderTimeline(video) {
 function renderRecursos(video) {
   const el = document.getElementById('recursosList');
   el.innerHTML = '';
-  (video.recursos || []).forEach(r => {
-    const a = document.createElement('a');
-    a.className = 'resource-card';
-    a.href = r.href; a.target = '_blank';
-    a.innerHTML = `<span class="resource-icon">${r.icon}</span><span>${r.label}</span>`;
+  const hasCSV = (video.recursos||[]).some(r=>r.href==='CSVDOWNLOAD');
+  if(hasCSV){
+    el.insertAdjacentHTML('beforeend',`
+      <p style="font-size:.81rem;color:#555;margin-bottom:8px;">
+        📌 <strong>Plantilla recomendada</strong> — Descárgala y pídele a tu IA favorita que la complete con los datos reales de tus participantes.
+      </p>
+      <div style="margin-bottom:8px;">
+        <span style="font-size:.73rem;font-weight:700;color:#444;">Columnas:</span>
+        <span class="clabel cr">username</span><span class="clabel cr">password</span>
+        <span class="clabel cr">firstname</span><span class="clabel cr">lastname</span>
+        <span class="clabel cr">email</span>
+        <span class="clabel co">course1</span><span class="clabel co">role1</span>
+      </div>
+      <div class="csv-preview">
+        <table>
+          <tr><th>username</th><th>password</th><th>firstname</th><th>lastname</th><th>email</th><th>course1</th><th>role1</th></tr>
+          <tr><td>mariluz</td><td>CSJ2026!</td><td>Mariluz</td><td>Serrano</td><td>mariluz@email.com</td><td>Programa_CSJ</td><td>student</td></tr>
+          <tr><td>juan01</td><td>CSJ2026!</td><td>Juan</td><td>Pérez</td><td>juan@email.com</td><td>Programa_CSJ</td><td>student</td></tr>
+          <tr><td>maria02</td><td>CSJ2026!</td><td>María</td><td>López</td><td>maria.lopez@email.com</td><td>Programa_CSJ</td><td>student</td></tr>
+          <tr><td colspan="7" style="text-align:center;color:#888;font-style:italic;padding:8px;">… y así con todos tus participantes</td></tr>
+        </table>
+      </div>`);
+  }
+  (video.recursos||[]).forEach(r=>{
+    const a=document.createElement('a');
+    if(r.href==='CSVDOWNLOAD'){
+      a.className='resource-card dl-card'; a.href='#';
+      a.onclick=(e)=>{e.preventDefault();downloadCSV();};
+    } else if(r.href==='AIPROMPT'){
+      a.className='resource-card ai-card'; a.href='#';
+      a.onclick=(e)=>{e.preventDefault();showAIPrompt();};
+    } else {
+      a.className='resource-card'; a.href=r.href; a.target='_blank';
+    }
+    a.innerHTML=`<span class="resource-icon">${r.icon}</span><span>${r.label}</span>`;
     el.appendChild(a);
   });
 }
@@ -626,5 +692,43 @@ function addVideo() {
 renderSidebar();
 renderTimeline(VIDEOS[0]);
 </script>
+
+<!-- MODAL: Prompt IA -->
+<div class="modal-overlay" id="promptModal">
+  <div class="modal-box" style="max-width:640px;">
+    <h3>🤖 Prompt para generar tu CSV con IA</h3>
+    <p style="font-size:.82rem;color:#555;margin-bottom:10px;">
+      Copia este prompt y pégalo en tu IA favorita (Claude, ChatGPT, Gemini…). Reemplaza lo que está entre <strong>[ ]</strong> con los datos de tus participantes.
+    </p>
+    <div class="prompt-box" id="aiPromptTxt">Crea un archivo CSV listo para importar usuarios en Moodle con estas columnas exactas (sin espacios, en este orden):
+
+username,password,firstname,lastname,email,course1,role1
+
+Reglas:
+- username: apellido en minúsculas + 2 primeras letras del nombre + número (ej: perezju01)
+- password: CSJ2026! para todos
+- course1: Programa_CSJ (igual para todos)
+- role1: student (igual para todos)
+- email: si no tienes el real, usa username@csjpr.edu
+- Sin tildes ni caracteres especiales en el username
+
+Participantes:
+[NOMBRE 1] [APELLIDO 1]
+[NOMBRE 2] [APELLIDO 2]
+[NOMBRE 3] [APELLIDO 3]
+(agrega todos los que necesites)
+
+Devuelve SOLO el contenido del CSV, sin explicaciones, listo para guardar como .csv (UTF-8).<button class="copy-btn-abs" onclick="copyPrompt()">📋 Copiar</button></div>
+    <div style="background:var(--cyan-soft);border-radius:8px;padding:10px 14px;font-size:.78rem;color:var(--tiha-slate);margin-top:4px;">
+      💡 <strong>Tip:</strong> Guarda el resultado como <strong>archivo.csv</strong> con codificación <strong>UTF-8</strong> y súbelo en 
+      <em>Administración del sitio → Usuarios → Subir usuarios</em>.
+    </div>
+    <div class="modal-actions" style="margin-top:14px;">
+      <button class="btn-cancel" onclick="closePromptModal()">Cerrar</button>
+      <button class="btn-add" onclick="downloadCSV();closePromptModal();">⬇ Descargar plantilla CSV</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
