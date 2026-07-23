@@ -151,6 +151,19 @@
   .builder-head h2{font-family:'Prata',serif; font-weight:400; font-size:24px; color:var(--navy); margin:0 0 6px;}
   .builder-head p{font-size:14px; color:var(--grey); margin:0; max-width:56ch;}
 
+  .mode-toggle{display:flex; gap:8px; margin:16px 0 14px;}
+  .mode-btn{
+    flex:1; background:var(--cream-2); border:1.5px solid var(--line); color:var(--navy);
+    font-size:13px; font-weight:700; padding:10px 14px; border-radius:10px; cursor:pointer;
+    text-align:center;
+  }
+  .mode-btn.active{background:var(--navy); border-color:var(--navy); color:#fff;}
+  .topic-intro{
+    font-size:13px; color:var(--grey); background:var(--cream-2); border-left:3px solid var(--coral);
+    padding:10px 14px; margin:2px 0 14px; display:none; line-height:1.5;
+  }
+  .topic-intro.visible{display:block;}
+
   .role-scroll{display:flex; gap:10px; overflow-x:auto; padding:4px 0 14px; -webkit-overflow-scrolling:touch; scrollbar-width:none;}
   .role-scroll::-webkit-scrollbar{display:none;}
   .role-chip{
@@ -266,14 +279,20 @@
     </ol>
   </div>
 
-  <!-- CONSTRUCTOR DE PROMPTS POR ROL -->
+  <!-- CONSTRUCTOR DE PROMPTS -->
   <div class="builder-wrap">
     <div class="builder-head">
-      <h2>Constructor de Prompts por Rol</h2>
-      <p>Toca tu rol, luego elige el caso que más se parezca a tu día — se monta solo en el constructor <b>R-C-T-F</b>: Rol · Contexto · Tarea · Formato. Ajusta el texto a tu situación exacta antes de usarlo.</p>
+      <h2>Constructor de Prompts</h2>
+      <p>Elige si quieres armar tu prompt por <b>rol</b> o por <b>tema del taller</b>, toca el caso que más se parezca a tu día, y se monta solo en el constructor <b>R-C-T-F</b>. Ajusta el texto a tu situación exacta antes de usarlo.</p>
+    </div>
+
+    <div class="mode-toggle">
+      <button class="mode-btn active" id="modeBtnRol" onclick="cambiarModo('rol')">Por Rol</button>
+      <button class="mode-btn" id="modeBtnTema" onclick="cambiarModo('tema')">Por Tema del Taller</button>
     </div>
 
     <div class="role-scroll" id="roleScroll"></div>
+    <p class="topic-intro" id="topicIntro"></p>
     <div class="case-gallery" id="caseGallery"></div>
 
     <div class="rctf-card">
@@ -309,134 +328,6 @@
     <p class="role-note">La IA propone; tú confirmas y firmas con tu criterio profesional.</p>
   </div>
 
-  <!-- SECCIÓN 1: INTELIGENCIA EMOCIONAL -->
-  <div class="section">
-    <div class="section-head">
-      <span class="section-num">01</span>
-      <h2 class="section-title">Inteligencia Emocional</h2>
-    </div>
-    <span class="section-tag">Autoconciencia · Regulación · Empatía</span>
-    <p class="section-intro">Ancla directa a lo observado en piso: interrupciones repetidas durante el almuerzo, la persona que regresa a las 2pm a preguntar por algo ya explicado en el flow chart. La causa raíz muchas veces no es falta de interés — es depender solo de la memoria en momentos de presión.</p>
-
-    <div class="card">
-      <div class="scenario">Situación real: <b>me interrumpen constantemente, incluso en mi hora de almuerzo, con preguntas que ya contesté.</b></div>
-      <div class="promptbox"><span class="lbl">Prompt</span>Hoy me interrumpieron durante mi almuerzo con una pregunta que ya había contestado. Ayúdame a pensar: ¿qué tono quiero usar para poner un límite amable pero claro la próxima vez, sin sonar molesto/a?</div>
-      <p class="why"><b>Por qué funciona:</b> separa la emoción del momento (frustración) de la acción (poner el límite), usando la IA solo para preparar el tono — la conversación la das tú.</p>
-    </div>
-
-    <div class="card">
-      <div class="scenario">Situación real: <b>alguien regresa horas después a preguntar "¿quién era la persona del flow chart?"</b></div>
-      <div class="promptbox"><span class="lbl">Prompt</span>Le expliqué algo importante a mi equipo esta mañana y ya alguien olvidó un detalle clave. Dame 3 preguntas que pueda hacerle a esa persona para entender si el problema fue de atención, de memoria, o de que la información no quedó clara.</div>
-      <p class="why"><b>Por qué funciona:</b> convierte la frustración en diagnóstico — antes de asumir descuido, se investiga la causa real.</p>
-    </div>
-
-    <div class="card">
-      <div class="scenario">Ejercicio de autorregulación</div>
-      <div class="promptbox"><span class="lbl">Prompt</span>Describe brevemente un momento de esta semana donde perdiste la paciencia. Pídele a la IA: dame 2 preguntas para reflexionar sobre qué necesitaba yo en ese momento, sin juzgarme.</div>
-      <p class="why"><b>Por qué funciona:</b> practica el hábito de pausar y reflexionar antes de reaccionar — la base de la inteligencia emocional aplicada.</p>
-    </div>
-  </div>
-
-  <!-- SECCIÓN 2: TÉCNICAS DE SUPERVISIÓN -->
-  <div class="section">
-    <div class="section-head">
-      <span class="section-num">02</span>
-      <h2 class="section-title">Técnicas de Supervisión</h2>
-    </div>
-    <span class="section-tag">Delegación · Seguimiento · Consistencia</span>
-    <p class="section-intro">Ancla directa al micromanagement: tener que repetir instrucciones ya establecidas, y la falta de consistencia en cómo se sigue un proceso.</p>
-
-    <div class="card">
-      <div class="scenario">Situación real: <b>tengo que estar encima explicando lo mismo, aunque el proceso ya está establecido.</b></div>
-      <div class="promptbox"><span class="lbl">Prompt</span>Tengo un proceso que ya expliqué una vez, pero sigo teniendo que repetirlo. Ayúdame a redactar una instrucción de una sola página, con pasos numerados, que la persona pueda consultar sola sin tener que preguntarme de nuevo.</div>
-      <p class="why"><b>Por qué funciona:</b> ataca la raíz del micromanagement — no siempre es falta de confianza, a veces es falta de un documento de referencia claro.</p>
-    </div>
-
-    <div class="card">
-      <div class="scenario">Situación real: <b>no hay consistencia — el mismo proceso se hace distinto según quién lo haga.</b></div>
-      <div class="promptbox"><span class="lbl">Prompt</span>Describe los pasos de [nombra el proceso] tal como tú los harías. Pídele a la IA que identifique en qué puntos ese proceso se presta a interpretarse de más de una manera.</div>
-      <p class="why"><b>Por qué funciona:</b> la inconsistencia casi siempre vive en los puntos ambiguos — este ejercicio los hace visibles antes de que causen un error.</p>
-    </div>
-
-    <div class="card">
-      <div class="scenario">Preparación de retroalimentación</div>
-      <div class="promptbox"><span class="lbl">Prompt</span>Necesito darle retroalimentación a alguien de mi equipo sobre [situación específica, sin nombres]. Ayúdame a redactar 3 puntos: qué observé, qué impacto tuvo, y qué espero que cambie.</div>
-      <p class="why"><b>Por qué funciona:</b> estructura la conversación difícil antes de tenerla — el supervisor la humaniza y la entrega en persona.</p>
-    </div>
-  </div>
-
-  <!-- SECCIÓN 3: COMUNICACIÓN EFECTIVA -->
-  <div class="section">
-    <div class="section-head">
-      <span class="section-num">03</span>
-      <h2 class="section-title">Comunicación Efectiva</h2>
-    </div>
-    <span class="section-tag">Claridad · Escucha activa · Vínculos</span>
-    <p class="section-intro">Para supervisores que necesitan que su mensaje llegue igual de claro la primera vez, sin importar quién lo reciba.</p>
-
-    <div class="card">
-      <div class="scenario">Situación real: <b>reuniones sin libreta, y luego nadie recuerda lo acordado.</b></div>
-      <div class="promptbox"><span class="lbl">Prompt</span>Acabo de salir de una reunión. Te voy a dictar de memoria lo que se habló. Organízalo en 3 líneas: qué se decidió, quién lo hace, y para cuándo.</div>
-      <p class="why"><b>Por qué funciona:</b> reemplaza "no traje libreta" con un hábito de 30 segundos desde el mismo teléfono — sin depender solo de la mente.</p>
-    </div>
-
-    <div class="card">
-      <div class="scenario">Situación real: <b>mi mensaje se malinterpreta según quién lo reciba.</b></div>
-      <div class="promptbox"><span class="lbl">Prompt</span>Aquí está el mensaje que quiero enviar: "[pega tu mensaje]". Dime si hay alguna parte que se pueda malinterpretar, y sugiéreme cómo aclararla sin cambiar lo que quiero decir.</div>
-      <p class="why"><b>Por qué funciona:</b> detecta ambigüedad antes de que se convierta en malentendido — conservando la voz propia de quien escribe.</p>
-    </div>
-  </div>
-
-  <!-- SECCIÓN 4: LITERACIA DIGITAL -->
-  <div class="section">
-    <div class="section-head">
-      <span class="section-num">04</span>
-      <h2 class="section-title">Literacia Digital</h2>
-    </div>
-    <span class="section-tag">Herramientas · Hábitos · Adaptación</span>
-    <p class="section-intro">No se trata de aprender más tecnología — se trata de un hábito simple de documentar, sostenible desde el celular de cualquiera.</p>
-
-    <div class="card">
-      <div class="scenario">Situación real: <b>falta de planificación — se llega a reuniones o turnos sin anotar nada.</b></div>
-      <div class="promptbox"><span class="lbl">Prompt</span>Antes de terminar mi turno/reunión de hoy, voy a dictarle a mi teléfono 3 cosas: qué hice, qué falta, y qué necesito mañana. Ayúdame a organizarlo en una nota corta y clara.</div>
-      <p class="why"><b>Por qué funciona:</b> convierte "no tengo libreta" en un hábito de 60 segundos que no requiere ninguna app nueva.</p>
-    </div>
-
-    <div class="card">
-      <div class="scenario">Ejercicio de verificación de información</div>
-      <div class="promptbox"><span class="lbl">Prompt</span>Encontré esta información: "[pega el dato o mensaje]". Ayúdame a pensar en 2 formas de confirmar si es correcta antes de actuar sobre ella.</div>
-      <p class="why"><b>Por qué funciona:</b> construye el hábito de verificar antes de confiar ciegamente — esencial en un entorno donde un dato erróneo cuesta tiempo y dinero.</p>
-    </div>
-  </div>
-
-  <!-- SECCIÓN 5: IA GENERATIVA -->
-  <div class="section">
-    <div class="section-head">
-      <span class="section-num">05</span>
-      <h2 class="section-title">Inteligencia Artificial Generativa</h2>
-    </div>
-    <span class="section-tag">Por rol: supervisores · choferes · administrativos</span>
-    <p class="section-intro">Aplicaciones concretas por rol — el punto de partida para que cada quien vea la IA como algo que ya puede usar hoy, no como un concepto abstracto.</p>
-
-    <div class="card">
-      <div class="scenario">Rol: <b>chofer de remolque</b></div>
-      <div class="promptbox"><span class="lbl">Prompt</span>Voy a dictarle a mi teléfono un problema que tuve en la ruta de hoy (tráfico, retraso, cambio de última hora). Ayúdame a redactarlo en 2 líneas claras para reportarlo.</div>
-      <p class="why"><b>Por qué funciona:</b> transforma una queja verbal en un reporte útil y documentado, sin necesitar destreza de escritura.</p>
-    </div>
-
-    <div class="card">
-      <div class="scenario">Rol: <b>supervisor</b></div>
-      <div class="promptbox"><span class="lbl">Prompt</span>Necesito preparar la agenda de mi próxima reunión de equipo sobre [tema]. Dame una estructura de 4 puntos que pueda ajustar con mis propias palabras.</div>
-      <p class="why"><b>Por qué funciona:</b> ahorra tiempo de organización sin delegar el contenido — el supervisor sigue siendo quien decide qué se dice.</p>
-    </div>
-
-    <div class="card">
-      <div class="scenario">Rol: <b>personal administrativo</b></div>
-      <div class="promptbox"><span class="lbl">Prompt</span>Tengo que escribir un correo para [situación]. Ayúdame a que suene profesional y claro, mantén mi tono natural, no lo hagas sonar como un robot.</div>
-      <p class="why"><b>Por qué funciona:</b> mejora la redacción sin perder la voz personal — la queja más común sobre el uso de IA en textos.</p>
-    </div>
-  </div>
-
   <!-- PUENTE A VALORES ALLIED -->
   <div class="section" style="padding-top:30px;">
     <div class="section-head">
@@ -446,19 +337,19 @@
     <div class="values-grid">
       <div class="value-card">
         <span class="vname">Lealtad</span>
-        <span class="vtext">Documentar lo acordado y darle seguimiento es una forma concreta de lealtad al equipo y al cliente. <span class="vprompt">→ Ver Literacia Digital</span></span>
+        <span class="vtext">Documentar lo acordado y darle seguimiento es una forma concreta de lealtad al equipo y al cliente. <span class="vprompt">→ Constructor: Literacia Digital</span></span>
       </div>
       <div class="value-card">
         <span class="vname">Integridad</span>
-        <span class="vtext">Verificar la información antes de actuar sobre ella es honestidad operacional. <span class="vprompt">→ Ver IA Generativa</span></span>
+        <span class="vtext">Verificar la información antes de actuar sobre ella es honestidad operacional. <span class="vprompt">→ Constructor: IA Generativa</span></span>
       </div>
       <div class="value-card">
         <span class="vname">Excelencia</span>
-        <span class="vtext">Instrucciones claras que no hay que repetir elevan la calidad del servicio interno y externo. <span class="vprompt">→ Ver Técnicas de Supervisión</span></span>
+        <span class="vtext">Instrucciones claras que no hay que repetir elevan la calidad del servicio interno y externo. <span class="vprompt">→ Constructor: Técnicas de Supervisión</span></span>
       </div>
       <div class="value-card">
         <span class="vname">Innovación</span>
-        <span class="vtext">Usar el teléfono que ya tienes en el bolsillo como herramienta de mejora continua. <span class="vprompt">→ Ver Comunicación Efectiva</span></span>
+        <span class="vtext">Usar el teléfono que ya tienes en el bolsillo como herramienta de mejora continua. <span class="vprompt">→ Constructor: Comunicación Efectiva</span></span>
       </div>
     </div>
   </div>
@@ -502,7 +393,7 @@
           title: "Preparar una agenda clara",
           summary: "Tengo una reunión con varios supervisores y quiero que salgamos con acuerdos, no solo con una lista de temas.",
           rol: "Actúa como un asesor de gerencia que ayuda a preparar agendas efectivas para reuniones con supervisores.",
-          contexto: "Tengo una reunión esta semana con supervisores de distintas áreas para revisar el desempeño del mes.",
+          contexto: "Tengo una reunión esta semana con supervisores de distintas áreas (almacén, tráfico, cuentas) para revisar el desempeño del mes.",
           tarea: "Ayúdame a preparar una agenda de 4 puntos que termine en acuerdos concretos, no solo en discusión.",
           formato: "Lista con tiempo estimado por punto y un espacio para 'acuerdo' al final de cada uno."
         },
@@ -512,7 +403,7 @@
           title: "Un mismo protocolo, versiones distintas",
           summary: "Cada supervisor de mi equipo interpreta un mismo procedimiento a su manera, y termino corrigiendo lo mismo una y otra vez en turnos diferentes.",
           rol: "Actúa como un asesor que ayuda a identificar dónde un procedimiento se presta a interpretarse de más de una forma.",
-          contexto: "Noto que un mismo protocolo se ejecuta distinto según el supervisor o el turno, y eso me obliga a corregir lo mismo repetidamente.",
+          contexto: "Noto que un mismo protocolo de cross-dock se ejecuta distinto según el supervisor o el turno, y eso me obliga a corregir lo mismo repetidamente.",
           tarea: "Ayúdame a redactar 3 preguntas que le pueda hacer a mi equipo de supervisores para entender en qué punto exacto se pierde la consistencia.",
           formato: "3 preguntas abiertas, tono de curiosidad, no de señalamiento."
         }
@@ -526,9 +417,9 @@
           id: "a1",
           tag: "Instrucción de proceso",
           title: "Que no me pregunten dos veces",
-          summary: "Ya expliqué un proceso una vez, pero prefiero dejar algo por escrito para no repetirlo.",
+          summary: "Ya expliqué un proceso de pick & pack una vez, pero prefiero dejar algo por escrito para no repetirlo.",
           rol: "Actúa como un asesor de supervisión que ayuda a preparar instrucciones claras para el equipo de almacén.",
-          contexto: "Voy a explicar un proceso nuevo a mi equipo y quiero dejar algo escrito de respaldo.",
+          contexto: "Voy a explicar un cambio en el proceso de pick & pack (recogida y empaque de órdenes) y quiero dejar algo escrito de respaldo.",
           tarea: "Ayúdame a redactar una instrucción de una sola página, con pasos numerados, que la persona pueda consultar sola.",
           formato: "Lista numerada, lenguaje directo, máximo 6 pasos."
         },
@@ -537,8 +428,8 @@
           tag: "Caso menos obvio",
           title: "El cambio que se perdió a media tarde",
           summary: "Expliqué un cambio en el flujo de trabajo por la mañana, y para la tarde alguien ya volvió a hacerlo del modo antiguo.",
-          rol: "Actúa como un asesor de supervisión que ayuda a diagnosticar por qué una instrucción no se sostiene durante el día.",
-          contexto: "Esta mañana expliqué un cambio en cómo se hace una tarea, y en la tarde noté que alguien volvió a hacerla como antes.",
+          rol: "Actúa como un asesor de supervisión que ayuda a diagnosticar por qué una instrucción no se sostiene durante el turno.",
+          contexto: "Esta mañana expliqué un cambio en cómo se organiza el espacio de rack y piso (rack and floor space), y en la tarde noté que alguien volvió a hacerlo como antes.",
           tarea: "Ayúdame a pensar: ¿la información no quedó clara, no quedó documentada, o hubo algo que interrumpió el seguimiento? Dame 3 preguntas para diagnosticarlo antes de asumir descuido.",
           formato: "3 preguntas de diagnóstico, sin culpar a la persona."
         }
@@ -552,9 +443,9 @@
           id: "t1",
           tag: "Cambios de última hora",
           title: "Organizar rutas que cambiaron",
-          summary: "Varias rutas y coordinaciones cambiaron hoy y necesito que el equipo las tenga claras antes de las 2pm.",
+          summary: "Varias rutas de line-haul y coordinaciones cambiaron hoy y necesito que el equipo las tenga claras antes de las 2pm.",
           rol: "Actúa como un asistente de planificación logística, organizado y preciso.",
-          contexto: "Varias rutas y coordinaciones cambiaron hoy y necesito que todo el equipo las tenga claras antes de las 2pm.",
+          contexto: "Varias rutas de line-haul y entregas coordinadas cambiaron hoy y necesito que todo el equipo las tenga claras antes de las 2pm.",
           tarea: "Ayúdame a organizar los cambios en una tabla simple que pueda compartir rápido.",
           formato: "Tabla de 3 columnas: ruta, cambio, responsable. Breve."
         },
@@ -564,7 +455,7 @@
           title: "La reunión sin libreta",
           summary: "Coordiné los cambios de la semana en una reunión, pero nadie tomó notas, y ahora tengo que repetir los detalles uno por uno.",
           rol: "Actúa como un asistente que ayuda a convertir una conversación verbal en un registro que no dependa de la memoria de nadie.",
-          contexto: "Acabo de salir de una reunión donde coordinamos varios cambios de la semana, pero nadie anotó nada.",
+          contexto: "Acabo de salir de una reunión donde coordinamos varios cambios de rutas y horarios de entrega de la semana, pero nadie anotó nada.",
           tarea: "Te voy a dictar de memoria lo que se habló. Organízalo en una lista corta de quién hace qué y para cuándo, para enviarla al grupo hoy mismo.",
           formato: "Lista corta, una línea por persona/tarea."
         }
@@ -616,7 +507,7 @@
           title: "Dos versiones de la misma respuesta",
           summary: "Dos compañeros de mi turno le dieron información distinta al mismo cliente sobre el mismo proceso.",
           rol: "Actúa como un asesor de comunicación interna que ayuda a unificar cómo el equipo explica un mismo proceso.",
-          contexto: "Un cliente recibió dos explicaciones distintas del mismo proceso, de dos compañeros diferentes.",
+          contexto: "Un cliente recibió dos explicaciones distintas del mismo proceso de entrega, de dos compañeros diferentes.",
           tarea: "Ayúdame a redactar una explicación estándar de este proceso que todo el equipo pueda usar igual, sin importar quién conteste.",
           formato: "Un párrafo único de 3-4 líneas, listo para copiar y usar por cualquiera del equipo."
         }
@@ -630,9 +521,9 @@
           id: "c1",
           tag: "Reporte de ruta",
           title: "Documentar un incidente rápido",
-          summary: "Tuve un retraso en mi ruta de hoy por tráfico y un cambio de última hora en la entrega.",
+          summary: "Tuve un retraso en mi ruta de home deliveries hoy por tráfico y un cambio de última hora.",
           rol: "Actúa como un asistente que ayuda a choferes a documentar incidentes de ruta de forma clara y rápida.",
-          contexto: "Tuve un retraso en mi ruta de hoy por tráfico y un cambio de última hora en la entrega.",
+          contexto: "Tuve un retraso en mi ruta de home deliveries hoy por tráfico y un cambio de última hora en la entrega.",
           tarea: "Ayúdame a redactar un reporte corto y claro de lo que pasó para enviárselo a mi supervisor.",
           formato: "En 2 a 3 líneas, lenguaje sencillo, sin tecnicismos."
         },
@@ -642,7 +533,7 @@
           title: "El cambio que se me olvidó anotar",
           summary: "Me avisaron un cambio de última hora mientras manejaba, confié en recordarlo, y llegué al sitio equivocado.",
           rol: "Actúa como un asistente que ayuda a convertir un aviso verbal en una nota rápida antes de que se olvide.",
-          contexto: "Me avisaron un cambio de última hora mientras estaba en ruta, y confié en recordarlo de memoria.",
+          contexto: "Me avisaron un cambio de última hora en la ruta mientras estaba manejando, y confié en recordarlo de memoria.",
           tarea: "Dame una forma rápida de anotar cualquier cambio de última hora en cuanto lo reciba, usando solo la voz o el teclado de mi teléfono, sin tener que parar mucho tiempo.",
           formato: "Un formato de 3 palabras clave para recordar rápido: qué cambió, dónde, a qué hora."
         }
@@ -650,24 +541,188 @@
     }
   ];
 
+  // Temas de taller, con terminología real de Allied Logistics Worldwide
+  const TEMAS = [
+    {
+      id: "ie",
+      label: "Inteligencia Emocional",
+      intro: "Ancla directa a lo observado en piso: interrupciones repetidas durante el almuerzo, la persona que regresa horas después a preguntar algo ya explicado. La causa raíz muchas veces no es falta de interés — es depender solo de la memoria en momentos de presión.",
+      cases: [
+        {
+          id: "ie1",
+          tag: "Interrupciones en el piso",
+          title: "Poner un límite sin sonar molesto",
+          summary: "Me interrumpen constantemente en el área de cross-dock, incluso en mi hora de almuerzo, con preguntas que ya contesté.",
+          rol: "Actúa como un asesor de inteligencia emocional para supervisores de operaciones logísticas.",
+          contexto: "Hoy me interrumpieron durante mi almuerzo con una pregunta sobre el cross-dock que ya había explicado esta mañana.",
+          tarea: "Ayúdame a pensar qué tono usar para poner un límite amable pero claro la próxima vez, sin sonar molesto/a.",
+          formato: "2 a 3 líneas, tono firme pero respetuoso."
+        },
+        {
+          id: "ie2",
+          tag: "Caso menos obvio",
+          title: "Cuando el flow chart no fue suficiente",
+          summary: "Le expliqué a mi equipo un cambio de proceso con un flow chart, y horas después alguien regresó a preguntar un detalle que ya estaba ahí.",
+          rol: "Actúa como un asesor que ayuda a diagnosticar por qué una instrucción visual no se sostuvo durante el turno.",
+          contexto: "Presenté un flow chart con los pasos de un proceso esta mañana, y en la tarde alguien regresó preguntando algo que ya estaba ahí.",
+          tarea: "Dame 3 preguntas que pueda hacerle a esa persona para entender si el problema fue de atención, de memoria, o de que el flow chart no quedó claro — antes de asumir descuido.",
+          formato: "3 preguntas abiertas, sin tono acusatorio."
+        }
+      ]
+    },
+    {
+      id: "ts",
+      label: "Técnicas de Supervisión",
+      intro: "Ancla al micromanagement: tener que repetir instrucciones ya establecidas, y la falta de consistencia en cómo se sigue un proceso entre turnos y departamentos.",
+      cases: [
+        {
+          id: "ts1",
+          tag: "Instrucción de proceso",
+          title: "Que no me pregunten dos veces",
+          summary: "Ya expliqué un proceso de pick & pack una vez, pero prefiero dejarlo por escrito para no repetirlo.",
+          rol: "Actúa como un asesor de supervisión que ayuda a preparar instrucciones claras y verificables.",
+          contexto: "Voy a explicar un cambio en el proceso de pick & pack (recogida y empaque de órdenes) a mi equipo.",
+          tarea: "Ayúdame a redactar una instrucción de una sola página, con pasos numerados, que la persona pueda consultar sola.",
+          formato: "Lista numerada, lenguaje directo, máximo 6 pasos."
+        },
+        {
+          id: "ts2",
+          tag: "Caso menos obvio",
+          title: "El mismo inventario, dos conteos distintos",
+          summary: "El mismo procedimiento de conteo de inventario se hace distinto según el turno, y eso genera diferencias que luego hay que explicar.",
+          rol: "Actúa como un asesor que ayuda a identificar dónde un procedimiento se presta a interpretarse de más de una forma.",
+          contexto: "Noto que el conteo de inventario en rack and floor space se hace distinto según quién esté en el turno.",
+          tarea: "Ayúdame a redactar 3 preguntas para entender en qué paso exacto del conteo se pierde la consistencia, antes de corregir a alguien.",
+          formato: "3 preguntas abiertas, tono de curiosidad, no de señalamiento."
+        }
+      ]
+    },
+    {
+      id: "ce",
+      label: "Comunicación Efectiva",
+      intro: "Para supervisores que necesitan que su mensaje llegue igual de claro la primera vez — en el shift huddle, en una hoja de ruta, o en un mensaje a un cliente.",
+      cases: [
+        {
+          id: "ce1",
+          tag: "Reunión de turno",
+          title: "El shift huddle sin libreta",
+          summary: "Acabo de salir de un shift huddle donde coordinamos cambios de la semana, pero nadie tomó notas.",
+          rol: "Actúa como un asistente que ayuda a convertir una conversación verbal en un registro claro para el equipo.",
+          contexto: "Acabo de salir de un shift huddle donde se coordinaron cambios de rutas y horarios de entrega, pero nadie anotó nada.",
+          tarea: "Te voy a dictar de memoria lo que se habló. Organízalo en 3 líneas: qué se decidió, quién lo hace, y para cuándo.",
+          formato: "3 líneas cortas, listas para compartir por mensaje."
+        },
+        {
+          id: "ce2",
+          tag: "Caso menos obvio",
+          title: "Cuando el mensaje se lee distinto",
+          summary: "Mandé un mensaje sobre un cambio de horario de entrega y dos personas lo entendieron de forma distinta.",
+          rol: "Actúa como un asesor de comunicación que detecta ambigüedad antes de que se convierta en malentendido.",
+          contexto: "Aquí está el mensaje que envié sobre un cambio de horario de entrega: '[pega tu mensaje]'.",
+          tarea: "Dime si hay alguna parte que se pueda malinterpretar, y sugiéreme cómo aclararla sin cambiar lo que quiero decir.",
+          formato: "Lista corta de los puntos ambiguos, con una sugerencia de redacción para cada uno."
+        }
+      ]
+    },
+    {
+      id: "ld",
+      label: "Literacia Digital",
+      intro: "No se trata de aprender más tecnología — se trata de usar mejor lo que Allied ya tiene: WMS, EDI, GPS tracking, y Electronic POD's, con un hábito simple de documentar desde el celular.",
+      cases: [
+        {
+          id: "ld1",
+          tag: "Verificación de datos",
+          title: "Confirmar antes de actuar",
+          summary: "Encontré una diferencia entre lo que dice el WMS y lo que veo físicamente en el piso.",
+          rol: "Actúa como un asistente que ayuda a verificar información antes de actuar sobre ella.",
+          contexto: "El sistema WMS muestra un dato de inventario distinto a lo que veo físicamente en el área de almacén.",
+          tarea: "Ayúdame a pensar en 2 formas de confirmar cuál dato es correcto antes de reportar el problema.",
+          formato: "2 pasos concretos, breves."
+        },
+        {
+          id: "ld2",
+          tag: "Caso menos obvio",
+          title: "La prueba de entrega que nadie completó",
+          summary: "Una entrega se hizo pero el Electronic POD (prueba de entrega electrónica) quedó incompleto, y ahora nadie recuerda los detalles.",
+          rol: "Actúa como un asistente que ayuda a construir el hábito de documentar en el momento, no después.",
+          contexto: "Se completó una entrega pero el Electronic POD quedó incompleto, y ya nadie recuerda los detalles exactos.",
+          tarea: "Ayúdame a crear un recordatorio de 3 pasos para completar el POD en el momento de la entrega, antes de seguir a la próxima parada.",
+          formato: "3 pasos cortos, pensados para hacerse en menos de un minuto."
+        }
+      ]
+    },
+    {
+      id: "ia",
+      label: "IA Generativa",
+      intro: "Aplicaciones concretas por línea de servicio de Allied — Transportation Management, Warehousing, Value Added Services — el punto de partida para que cada quien vea la IA como algo que ya puede usar hoy.",
+      cases: [
+        {
+          id: "ia1",
+          tag: "Transportation Management",
+          title: "De queja verbal a reporte útil",
+          summary: "Tuve un problema en mi ruta hoy (tráfico, retraso, cambio de última hora) y quiero reportarlo bien.",
+          rol: "Actúa como un asistente que ayuda a documentar incidentes de ruta de forma clara y rápida.",
+          contexto: "Tuve un problema en mi ruta de line-haul o home deliveries hoy (tráfico, retraso, cambio de última hora).",
+          tarea: "Ayúdame a redactarlo en 2 líneas claras para reportarlo a mi supervisor.",
+          formato: "2 líneas, lenguaje sencillo, sin tecnicismos."
+        },
+        {
+          id: "ia2",
+          tag: "Warehousing / Value Added Services",
+          title: "Preparar una reunión de consistencia",
+          summary: "Quiero preparar una reunión sobre consistencia en los procesos de pick & pack, repackaging y labeling.",
+          rol: "Actúa como un asesor de gerencia que ayuda a preparar agendas y comunicaciones para supervisores.",
+          contexto: "Tengo una reunión con supervisores sobre consistencia en los procesos de pick & pack, repackaging y labeling.",
+          tarea: "Ayúdame a preparar una agenda de 4 puntos para esa reunión.",
+          formato: "Lista con un tiempo estimado por punto."
+        }
+      ]
+    }
+  ];
+
+  const MODES = { rol: ROLES, tema: TEMAS };
+  let currentMode = 'rol';
+
   const scrollEl = document.getElementById('roleScroll');
   const galleryEl = document.getElementById('caseGallery');
+  const topicIntroEl = document.getElementById('topicIntro');
 
-  ROLES.forEach((r, i) => {
-    const chip = document.createElement('button');
-    chip.className = 'role-chip';
-    chip.textContent = r.label;
-    chip.onclick = () => seleccionarRol(r.id, chip);
-    scrollEl.appendChild(chip);
-  });
+  function cambiarModo(modo) {
+    currentMode = modo;
+    document.getElementById('modeBtnRol').classList.toggle('active', modo === 'rol');
+    document.getElementById('modeBtnTema').classList.toggle('active', modo === 'tema');
+    renderChips();
+    galleryEl.innerHTML = '';
+    galleryEl.classList.remove('visible');
+    topicIntroEl.classList.remove('visible');
+    document.getElementById('resultBox').style.display = 'none';
+  }
 
-  function seleccionarRol(id, chipEl) {
+  function renderChips() {
+    scrollEl.innerHTML = '';
+    MODES[currentMode].forEach((item) => {
+      const chip = document.createElement('button');
+      chip.className = 'role-chip';
+      chip.textContent = item.label;
+      chip.onclick = () => seleccionarItem(item.id, chip);
+      scrollEl.appendChild(chip);
+    });
+  }
+
+  function seleccionarItem(id, chipEl) {
     document.querySelectorAll('.role-chip').forEach(c => c.classList.remove('active'));
     chipEl.classList.add('active');
-    const r = ROLES.find(x => x.id === id);
+    const item = MODES[currentMode].find(x => x.id === id);
+
+    if (currentMode === 'tema' && item.intro) {
+      topicIntroEl.textContent = item.intro;
+      topicIntroEl.classList.add('visible');
+    } else {
+      topicIntroEl.classList.remove('visible');
+    }
 
     galleryEl.innerHTML = '';
-    r.cases.forEach(caso => {
+    item.cases.forEach(caso => {
       const card = document.createElement('div');
       card.className = 'case-card';
       card.innerHTML = `<span class="ctag">${caso.tag}</span><div class="ctitle">${caso.title}</div><div class="csummary">${caso.summary}</div>`;
@@ -722,6 +777,7 @@
     document.querySelectorAll('.role-chip').forEach(c => c.classList.remove('active'));
     document.querySelectorAll('.case-card').forEach(c => c.classList.remove('active'));
     galleryEl.classList.remove('visible');
+    topicIntroEl.classList.remove('visible');
   }
 
   function copiarPrompt() {
@@ -735,6 +791,8 @@
       alert('No se pudo copiar automáticamente. Selecciona el texto manualmente.');
     });
   }
+
+  renderChips();
 </script>
 </body>
 </html>
