@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Banco de Prompts de IA · Allied Logistics × TIHA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#152238;
+    --navy-2:#1F3352;
+    --coral:#E2572B;
+    --coral-dark:#C4451E;
+    --cream:#EFE3D2;
+    --cream-2:#F8F3EA;
+    --paper:#FBF8F3;
+    --ink:#20241F;
+    --grey:#6B6459;
+    --gold:#C9A961;
+    --line:#E4D8C4;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Work Sans',sans-serif; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:640px; margin:0 auto; padding:0 0 60px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%);
+    color:#fff; padding:44px 24px 40px; position:relative; overflow:hidden;
+  }
+  .hero::after{
+    content:""; position:absolute; right:-40px; bottom:-60px; width:220px; height:220px;
+    background: radial-gradient(circle, rgba(226,87,43,0.35) 0%, rgba(226,87,43,0) 70%);
+  }
+  .brandrow{display:flex; align-items:center; gap:10px; margin-bottom:26px; flex-wrap:wrap;}
+  .brand-pill{
+    background:#fff; color:var(--navy); font-weight:700; font-size:12.5px;
+    letter-spacing:.04em; padding:7px 14px; border-radius:999px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .brand-pill .arrow{color:var(--coral); font-weight:800;}
+  .plus{color:rgba(255,255,255,.5); font-size:16px;}
+  .tiha-pill{
+    border:1px solid rgba(255,255,255,.35); color:#fff; font-size:12px; letter-spacing:.08em;
+    padding:6px 12px; border-radius:999px; text-transform:uppercase;
+  }
+  .eyebrow{color:var(--gold); font-size:13px; letter-spacing:.14em; text-transform:uppercase; font-weight:600; margin:0 0 10px;}
+  h1.title{
+    font-family:'Prata',serif; font-weight:400; font-size:clamp(30px,8vw,40px);
+    line-height:1.08; margin:0 0 14px; position:relative; z-index:1;
+  }
+  .hero p.sub{
+    max-width:46ch; color:rgba(255,255,255,.82); font-size:15.5px; margin:0; position:relative; z-index:1;
+  }
+
+  /* ---------- SECTION LABELS ---------- */
+  .section{padding:38px 22px 6px;}
+  .section-head{display:flex; align-items:flex-end; gap:12px; margin-bottom:6px;}
+  .section-num{
+    font-family:'Prata',serif; font-size:34px; color:var(--cream); -webkit-text-stroke:1.4px var(--navy); color:transparent;
+    line-height:1;
+  }
+  h2.section-title{
+    font-family:'Prata',serif; font-weight:400; font-size:24px; color:var(--navy); margin:0; line-height:1.15;
+  }
+  .section-tag{
+    display:inline-block; font-size:12px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--coral-dark); font-weight:600; margin:6px 0 18px;
+  }
+  .section-intro{font-size:14.5px; color:var(--grey); margin:0 0 22px; max-width:56ch;}
+
+  /* ---------- ARROW TAG (signature element, echoes Allied's value chevrons) ---------- */
+  .arrow-tag{
+    position:relative; background:var(--coral); color:#fff; font-weight:600; font-size:13px;
+    padding:8px 16px 8px 20px; display:inline-block; margin-bottom:14px; letter-spacing:.01em;
+  }
+  .arrow-tag::before{
+    content:""; position:absolute; left:-13px; top:0; width:0; height:0;
+    border-top:16.5px solid transparent; border-bottom:16.5px solid transparent; border-right:13px solid var(--coral);
+  }
+  .arrow-tag::after{
+    content:""; position:absolute; right:-13px; top:0; width:0; height:0;
+    border-top:16.5px solid transparent; border-bottom:16.5px solid transparent; border-left:13px solid var(--coral);
+  }
+
+  /* ---------- PROMPT CARD ---------- */
+  .card{
+    background:var(--cream-2); border:1px solid var(--line); border-radius:14px;
+    padding:20px 20px 18px; margin-bottom:18px;
+  }
+  .card .scenario{
+    font-size:12.5px; color:var(--grey); font-style:italic; margin:0 0 12px; line-height:1.5;
+  }
+  .card .scenario b{color:var(--navy); font-style:normal;}
+  .promptbox{
+    background:var(--navy); color:#EFE9DD; border-radius:10px; padding:14px 16px;
+    font-family:'JetBrains Mono',monospace; font-size:13px; line-height:1.6; margin-bottom:12px;
+    white-space:pre-wrap; word-break:break-word;
+  }
+  .promptbox .lbl{color:var(--gold); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; display:block; margin-bottom:6px;}
+  .why{font-size:13.5px; color:var(--ink); margin:0; padding-left:14px; border-left:2px solid var(--coral);}
+  .why b{color:var(--coral-dark);}
+
+  /* ---------- HOW TO USE ---------- */
+  .howto{
+    background:var(--navy); color:#fff; margin:0 22px 8px; border-radius:16px; padding:22px 20px;
+  }
+  .howto h3{font-family:'Prata',serif; font-weight:400; font-size:19px; margin:0 0 12px; color:var(--gold);}
+  .howto ol{margin:0; padding-left:20px; font-size:14px; color:rgba(255,255,255,.9);}
+  .howto li{margin-bottom:8px;}
+
+  /* ---------- VALUES BRIDGE ---------- */
+  .values-grid{display:grid; grid-template-columns:1fr; gap:12px; margin-top:6px;}
+  .value-card{
+    background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px 18px;
+    display:flex; gap:14px; align-items:flex-start;
+  }
+  .value-card .vname{
+    font-family:'Prata',serif; color:var(--navy); font-size:16px; white-space:nowrap; min-width:96px;
+  }
+  .value-card .vtext{font-size:13.5px; color:var(--ink);}
+  .value-card .vtext .vprompt{color:var(--coral-dark); font-weight:600;}
+
+  /* ---------- ETHICS REMINDER ---------- */
+  .ethics{
+    background:var(--cream); border-radius:16px; margin:36px 22px 0; padding:24px 22px;
+    border:1px solid var(--line);
+  }
+  .ethics h3{font-family:'Prata',serif; font-weight:400; color:var(--navy); font-size:20px; margin:0 0 4px;}
+  .ethics .k{font-size:12px; color:var(--coral-dark); letter-spacing:.1em; text-transform:uppercase; font-weight:700; margin-bottom:14px; display:block;}
+  .ethics ul{margin:0; padding:0; list-style:none;}
+  .ethics li{
+    font-size:13.5px; padding:10px 0; border-bottom:1px solid rgba(0,0,0,.08); display:flex; gap:10px;
+  }
+  .ethics li:last-child{border-bottom:none;}
+  .ethics li .n{color:var(--coral); font-weight:700; font-family:'JetBrains Mono',monospace; font-size:12px; flex-shrink:0;}
+
+  /* ---------- QUOTE ---------- */
+  .quote{margin:34px 22px 0; padding:0 0 0 18px; border-left:3px solid var(--coral);}
+  .quote p{font-family:'Prata',serif; font-style:italic; color:var(--navy); font-size:17px; line-height:1.5; margin:0 0 8px;}
+  .quote span{font-size:12.5px; color:var(--grey); letter-spacing:.03em;}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    margin-top:44px; padding:26px 24px 32px; text-align:center; background:var(--navy); color:rgba(255,255,255,.7);
+  }
+  footer .fname{color:#fff; font-weight:600; font-size:14px; margin-bottom:4px;}
+  footer .fmeta{font-size:12px; letter-spacing:.02em;}
+  footer .fmeta a{color:var(--gold); text-decoration:none;}
+
+  @media (min-width:600px){
+    .hero{padding:56px 40px 48px;}
+    .section{padding:44px 40px 6px;}
+    .howto, .ethics, .quote{margin-left:40px; margin-right:40px;}
+    footer{padding:30px 40px 36px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="brandrow">
+      <span class="brand-pill"><span class="arrow">➤</span> ALLIED LOGISTICS WORLDWIDE</span>
+      <span class="plus">×</span>
+      <span class="tiha-pill">Modelo TIHA</span>
+    </div>
+    <p class="eyebrow">Programa de capacitación · Uso práctico desde el teléfono</p>
+    <h1 class="title">Banco de Prompts<br>de Inteligencia Artificial</h1>
+    <p class="sub">Prompts listos para usar en cada taller, anclados a los valores de Allied y a situaciones reales del día a día operacional.</p>
+  </div>
+
+  <!-- HOW TO USE -->
+  <div style="height:26px;"></div>
+  <div class="howto">
+    <h3>Cómo usar este banco</h3>
+    <ol>
+      <li>Cada prompt está listo para copiar y pegar en cualquier IA de tu teléfono (el navegador, Copilot, ChatGPT, o el mismo teclado predictivo).</li>
+      <li>Ajusta el prompt a tu situación real — entre más específico, mejor la respuesta.</li>
+      <li>La IA propone; tú decides. Ninguna respuesta sustituye tu criterio ni una conversación cara a cara cuando se necesita.</li>
+    </ol>
+  </div>
+
+  <!-- SECCIÓN 1: INTELIGENCIA EMOCIONAL -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Inteligencia Emocional</h2>
+    </div>
+    <span class="section-tag">Autoconciencia · Regulación · Empatía</span>
+    <p class="section-intro">Ancla directa a lo observado en piso: interrupciones repetidas durante el almuerzo, la persona que regresa a las 2pm a preguntar por algo ya explicado en el flow chart. La causa raíz muchas veces no es falta de interés — es depender solo de la memoria en momentos de presión.</p>
+
+    <div class="card">
+      <div class="scenario">Situación real: <b>me interrumpen constantemente, incluso en mi hora de almuerzo, con preguntas que ya contesté.</b></div>
+      <div class="promptbox"><span class="lbl">Prompt</span>Hoy me interrumpieron durante mi almuerzo con una pregunta que ya había contestado. Ayúdame a pensar: ¿qué tono quiero usar para poner un límite amable pero claro la próxima vez, sin sonar molesto/a?</div>
+      <p class="why"><b>Por qué funciona:</b> separa la emoción del momento (frustración) de la acción (poner el límite), usando la IA solo para preparar el tono — la conversación la das tú.</p>
+    </div>
+
+    <div class="card">
+      <div class="scenario">Situación real: <b>alguien regresa horas después a preguntar "¿quién era la persona del flow chart?"</b></div>
+      <div class="promptbox"><span class="lbl">Prompt</span>Le expliqué algo importante a mi equipo esta mañana y ya alguien olvidó un detalle clave. Dame 3 preguntas que pueda hacerle a esa persona para entender si el problema fue de atención, de memoria, o de que la información no quedó clara.</div>
+      <p class="why"><b>Por qué funciona:</b> convierte la frustración en diagnóstico — antes de asumir descuido, se investiga la causa real.</p>
+    </div>
+
+    <div class="card">
+      <div class="scenario">Ejercicio de autorregulación</div>
+      <div class="promptbox"><span class="lbl">Prompt</span>Describe brevemente un momento de esta semana donde perdiste la paciencia. Pídele a la IA: dame 2 preguntas para reflexionar sobre qué necesitaba yo en ese momento, sin juzgarme.</div>
+      <p class="why"><b>Por qué funciona:</b> practica el hábito de pausar y reflexionar antes de reaccionar — la base de la inteligencia emocional aplicada.</p>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 2: TÉCNICAS DE SUPERVISIÓN -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Técnicas de Supervisión</h2>
+    </div>
+    <span class="section-tag">Delegación · Seguimiento · Consistencia</span>
+    <p class="section-intro">Ancla directa al micromanagement: tener que repetir instrucciones ya establecidas, y la falta de consistencia en cómo se sigue un proceso.</p>
+
+    <div class="card">
+      <div class="scenario">Situación real: <b>tengo que estar encima explicando lo mismo, aunque el proceso ya está establecido.</b></div>
+      <div class="promptbox"><span class="lbl">Prompt</span>Tengo un proceso que ya expliqué una vez, pero sigo teniendo que repetirlo. Ayúdame a redactar una instrucción de una sola página, con pasos numerados, que la persona pueda consultar sola sin tener que preguntarme de nuevo.</div>
+      <p class="why"><b>Por qué funciona:</b> ataca la raíz del micromanagement — no siempre es falta de confianza, a veces es falta de un documento de referencia claro.</p>
+    </div>
+
+    <div class="card">
+      <div class="scenario">Situación real: <b>no hay consistencia — el mismo proceso se hace distinto según quién lo haga.</b></div>
+      <div class="promptbox"><span class="lbl">Prompt</span>Describe los pasos de [nombra el proceso] tal como tú los harías. Pídele a la IA que identifique en qué puntos ese proceso se presta a interpretarse de más de una manera.</div>
+      <p class="why"><b>Por qué funciona:</b> la inconsistencia casi siempre vive en los puntos ambiguos — este ejercicio los hace visibles antes de que causen un error.</p>
+    </div>
+
+    <div class="card">
+      <div class="scenario">Preparación de retroalimentación</div>
+      <div class="promptbox"><span class="lbl">Prompt</span>Necesito darle retroalimentación a alguien de mi equipo sobre [situación específica, sin nombres]. Ayúdame a redactar 3 puntos: qué observé, qué impacto tuvo, y qué espero que cambie.</div>
+      <p class="why"><b>Por qué funciona:</b> estructura la conversación difícil antes de tenerla — el supervisor la humaniza y la entrega en persona.</p>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 3: COMUNICACIÓN EFECTIVA -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Comunicación Efectiva</h2>
+    </div>
+    <span class="section-tag">Claridad · Escucha activa · Vínculos</span>
+    <p class="section-intro">Para supervisores que necesitan que su mensaje llegue igual de claro la primera vez, sin importar quién lo reciba.</p>
+
+    <div class="card">
+      <div class="scenario">Situación real: <b>reuniones sin libreta, y luego nadie recuerda lo acordado.</b></div>
+      <div class="promptbox"><span class="lbl">Prompt</span>Acabo de salir de una reunión. Te voy a dictar de memoria lo que se habló. Organízalo en 3 líneas: qué se decidió, quién lo hace, y para cuándo.</div>
+      <p class="why"><b>Por qué funciona:</b> reemplaza "no traje libreta" con un hábito de 30 segundos desde el mismo teléfono — sin depender solo de la mente.</p>
+    </div>
+
+    <div class="card">
+      <div class="scenario">Situación real: <b>mi mensaje se malinterpreta según quién lo reciba.</b></div>
+      <div class="promptbox"><span class="lbl">Prompt</span>Aquí está el mensaje que quiero enviar: "[pega tu mensaje]". Dime si hay alguna parte que se pueda malinterpretar, y sugiéreme cómo aclararla sin cambiar lo que quiero decir.</div>
+      <p class="why"><b>Por qué funciona:</b> detecta ambigüedad antes de que se convierta en malentendido — conservando la voz propia de quien escribe.</p>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 4: LITERACIA DIGITAL -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Literacia Digital</h2>
+    </div>
+    <span class="section-tag">Herramientas · Hábitos · Adaptación</span>
+    <p class="section-intro">No se trata de aprender más tecnología — se trata de un hábito simple de documentar, sostenible desde el celular de cualquiera.</p>
+
+    <div class="card">
+      <div class="scenario">Situación real: <b>falta de planificación — se llega a reuniones o turnos sin anotar nada.</b></div>
+      <div class="promptbox"><span class="lbl">Prompt</span>Antes de terminar mi turno/reunión de hoy, voy a dictarle a mi teléfono 3 cosas: qué hice, qué falta, y qué necesito mañana. Ayúdame a organizarlo en una nota corta y clara.</div>
+      <p class="why"><b>Por qué funciona:</b> convierte "no tengo libreta" en un hábito de 60 segundos que no requiere ninguna app nueva.</p>
+    </div>
+
+    <div class="card">
+      <div class="scenario">Ejercicio de verificación de información</div>
+      <div class="promptbox"><span class="lbl">Prompt</span>Encontré esta información: "[pega el dato o mensaje]". Ayúdame a pensar en 2 formas de confirmar si es correcta antes de actuar sobre ella.</div>
+      <p class="why"><b>Por qué funciona:</b> construye el hábito de verificar antes de confiar ciegamente — esencial en un entorno donde un dato erróneo cuesta tiempo y dinero.</p>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 5: IA GENERATIVA -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Inteligencia Artificial Generativa</h2>
+    </div>
+    <span class="section-tag">Por rol: supervisores · choferes · administrativos</span>
+    <p class="section-intro">Aplicaciones concretas por rol — el punto de partida para que cada quien vea la IA como algo que ya puede usar hoy, no como un concepto abstracto.</p>
+
+    <div class="card">
+      <div class="scenario">Rol: <b>chofer de remolque</b></div>
+      <div class="promptbox"><span class="lbl">Prompt</span>Voy a dictarle a mi teléfono un problema que tuve en la ruta de hoy (tráfico, retraso, cambio de última hora). Ayúdame a redactarlo en 2 líneas claras para reportarlo.</div>
+      <p class="why"><b>Por qué funciona:</b> transforma una queja verbal en un reporte útil y documentado, sin necesitar destreza de escritura.</p>
+    </div>
+
+    <div class="card">
+      <div class="scenario">Rol: <b>supervisor</b></div>
+      <div class="promptbox"><span class="lbl">Prompt</span>Necesito preparar la agenda de mi próxima reunión de equipo sobre [tema]. Dame una estructura de 4 puntos que pueda ajustar con mis propias palabras.</div>
+      <p class="why"><b>Por qué funciona:</b> ahorra tiempo de organización sin delegar el contenido — el supervisor sigue siendo quien decide qué se dice.</p>
+    </div>
+
+    <div class="card">
+      <div class="scenario">Rol: <b>personal administrativo</b></div>
+      <div class="promptbox"><span class="lbl">Prompt</span>Tengo que escribir un correo para [situación]. Ayúdame a que suene profesional y claro, mantén mi tono natural, no lo hagas sonar como un robot.</div>
+      <p class="why"><b>Por qué funciona:</b> mejora la redacción sin perder la voz personal — la queja más común sobre el uso de IA en textos.</p>
+    </div>
+  </div>
+
+  <!-- PUENTE A VALORES ALLIED -->
+  <div class="section" style="padding-top:30px;">
+    <div class="section-head">
+      <h2 class="section-title" style="font-size:22px;">Anclado a nuestros valores</h2>
+    </div>
+    <p class="section-intro">Estos prompts no son genéricos — cada uno refuerza un valor que Allied ya vive todos los días.</p>
+    <div class="values-grid">
+      <div class="value-card">
+        <span class="vname">Lealtad</span>
+        <span class="vtext">Documentar lo acordado y darle seguimiento es una forma concreta de lealtad al equipo y al cliente. <span class="vprompt">→ Ver Literacia Digital</span></span>
+      </div>
+      <div class="value-card">
+        <span class="vname">Integridad</span>
+        <span class="vtext">Verificar la información antes de actuar sobre ella es honestidad operacional. <span class="vprompt">→ Ver IA Generativa</span></span>
+      </div>
+      <div class="value-card">
+        <span class="vname">Excelencia</span>
+        <span class="vtext">Instrucciones claras que no hay que repetir elevan la calidad del servicio interno y externo. <span class="vprompt">→ Ver Técnicas de Supervisión</span></span>
+      </div>
+      <div class="value-card">
+        <span class="vname">Innovación</span>
+        <span class="vtext">Usar el teléfono que ya tienes en el bolsillo como herramienta de mejora continua. <span class="vprompt">→ Ver Comunicación Efectiva</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARCO ÉTICO -->
+  <div class="ethics">
+    <span class="k">Recordatorio · Marco ético TIHA</span>
+    <h3>Cinco acuerdos de uso responsable</h3>
+    <ul>
+      <li><span class="n">01</span> El criterio humano decide. La IA sugiere; la persona evalúa y asume la responsabilidad.</li>
+      <li><span class="n">02</span> Confidencialidad primero. No se ingresan datos personales ni disciplinarios de compañeros.</li>
+      <li><span class="n">03</span> Verificación obligatoria. Toda información generada se contrasta antes de usarse.</li>
+      <li><span class="n">04</span> Transparencia. Se reconoce cuándo un texto tuvo apoyo de IA.</li>
+      <li><span class="n">05</span> Voz propia. La IA no reemplaza el estilo ni la presencia de quien comunica.</li>
+    </ul>
+  </div>
+
+  <!-- QUOTE -->
+  <div class="quote">
+    <p>"La inteligencia artificial no reemplaza al ser humano; lo potencia para trascender."</p>
+    <span>— Metodología TIHA, Dra. Mariluz Serrano Ortiz</span>
+  </div>
+
+  <footer>
+    <div class="fname">Dra. Mariluz Serrano Ortiz · Modelo TIHA</div>
+    <div class="fmeta">Programa de capacitación para Allied Logistics Worldwide · <a href="mailto:mariluz.serrano@upr.edu">mariluz.serrano@upr.edu</a></div>
+  </footer>
+
+</div>
+</body>
+</html>
