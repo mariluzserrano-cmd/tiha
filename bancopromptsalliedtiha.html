@@ -161,6 +161,21 @@
   .role-chip:hover{border-color:var(--coral);}
   .role-chip.active{background:var(--coral); border-color:var(--coral); color:#fff;}
 
+  .case-gallery{display:none; flex-direction:column; gap:10px; margin-bottom:18px;}
+  .case-gallery.visible{display:flex;}
+  .case-card{
+    background:#fff; border:1.5px solid var(--line); border-radius:12px; padding:14px 16px;
+    cursor:pointer; transition:border-color .15s, background .15s;
+  }
+  .case-card:hover{border-color:var(--coral);}
+  .case-card.active{border-color:var(--coral); background:var(--cream-2);}
+  .case-card .ctitle{font-size:14px; font-weight:700; color:var(--navy); margin-bottom:4px;}
+  .case-card .csummary{font-size:12.5px; color:var(--grey); line-height:1.45;}
+  .case-card .ctag{
+    display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
+    color:var(--coral-dark); margin-bottom:5px;
+  }
+
   .rctf-card{
     background:var(--navy); border-radius:16px; padding:22px 20px; color:#fff;
   }
@@ -255,10 +270,11 @@
   <div class="builder-wrap">
     <div class="builder-head">
       <h2>Constructor de Prompts por Rol</h2>
-      <p>Toca tu rol para cargar un ejemplo real, ajústalo con tu propia situación, y arma tu prompt con el método <b>R-C-T-F</b>: Rol · Contexto · Tarea · Formato.</p>
+      <p>Toca tu rol, luego elige el caso que más se parezca a tu día — se monta solo en el constructor <b>R-C-T-F</b>: Rol · Contexto · Tarea · Formato. Ajusta el texto a tu situación exacta antes de usarlo.</p>
     </div>
 
     <div class="role-scroll" id="roleScroll"></div>
+    <div class="case-gallery" id="caseGallery"></div>
 
     <div class="rctf-card">
       <div class="rctf-field">
@@ -474,76 +490,204 @@
 </div>
 
 <script>
+  // Roles alineados a los puestos reales de la plantilla de Allied (Sheet1: Gerencia y Supervisión)
   const ROLES = [
     {
-      id: "chofer",
-      label: "Chofer / Transportista",
-      rol: "Actúa como un asistente que ayuda a choferes a documentar incidentes de ruta de forma clara y rápida.",
-      contexto: "Tuve un retraso en mi ruta de hoy por tráfico y un cambio de última hora en la entrega.",
-      tarea: "Ayúdame a redactar un reporte corto y claro de lo que pasó para enviárselo a mi supervisor.",
-      formato: "En 2 a 3 líneas, lenguaje sencillo, sin tecnicismos."
+      id: "gerencia",
+      label: "Gerencia de Operaciones",
+      cases: [
+        {
+          id: "g1",
+          tag: "Reunión de equipo",
+          title: "Preparar una agenda clara",
+          summary: "Tengo una reunión con varios supervisores y quiero que salgamos con acuerdos, no solo con una lista de temas.",
+          rol: "Actúa como un asesor de gerencia que ayuda a preparar agendas efectivas para reuniones con supervisores.",
+          contexto: "Tengo una reunión esta semana con supervisores de distintas áreas para revisar el desempeño del mes.",
+          tarea: "Ayúdame a preparar una agenda de 4 puntos que termine en acuerdos concretos, no solo en discusión.",
+          formato: "Lista con tiempo estimado por punto y un espacio para 'acuerdo' al final de cada uno."
+        },
+        {
+          id: "g2",
+          tag: "Caso menos obvio",
+          title: "Un mismo protocolo, versiones distintas",
+          summary: "Cada supervisor de mi equipo interpreta un mismo procedimiento a su manera, y termino corrigiendo lo mismo una y otra vez en turnos diferentes.",
+          rol: "Actúa como un asesor que ayuda a identificar dónde un procedimiento se presta a interpretarse de más de una forma.",
+          contexto: "Noto que un mismo protocolo se ejecuta distinto según el supervisor o el turno, y eso me obliga a corregir lo mismo repetidamente.",
+          tarea: "Ayúdame a redactar 3 preguntas que le pueda hacer a mi equipo de supervisores para entender en qué punto exacto se pierde la consistencia.",
+          formato: "3 preguntas abiertas, tono de curiosidad, no de señalamiento."
+        }
+      ]
     },
     {
       id: "almacen",
-      label: "Supervisor de Almacén",
-      rol: "Actúa como un asesor de supervisión que ayuda a preparar instrucciones claras para el equipo de almacén.",
-      contexto: "Ya le expliqué un proceso a mi equipo esta mañana, pero alguien volvió a preguntar lo mismo horas después.",
-      tarea: "Ayúdame a redactar una instrucción de una sola página, con pasos numerados, que la persona pueda consultar sola sin tener que preguntarme de nuevo.",
-      formato: "Lista numerada, lenguaje directo, máximo 6 pasos."
+      label: "Supervisión de Almacén",
+      cases: [
+        {
+          id: "a1",
+          tag: "Instrucción de proceso",
+          title: "Que no me pregunten dos veces",
+          summary: "Ya expliqué un proceso una vez, pero prefiero dejar algo por escrito para no repetirlo.",
+          rol: "Actúa como un asesor de supervisión que ayuda a preparar instrucciones claras para el equipo de almacén.",
+          contexto: "Voy a explicar un proceso nuevo a mi equipo y quiero dejar algo escrito de respaldo.",
+          tarea: "Ayúdame a redactar una instrucción de una sola página, con pasos numerados, que la persona pueda consultar sola.",
+          formato: "Lista numerada, lenguaje directo, máximo 6 pasos."
+        },
+        {
+          id: "a2",
+          tag: "Caso menos obvio",
+          title: "El cambio que se perdió a media tarde",
+          summary: "Expliqué un cambio en el flujo de trabajo por la mañana, y para la tarde alguien ya volvió a hacerlo del modo antiguo.",
+          rol: "Actúa como un asesor de supervisión que ayuda a diagnosticar por qué una instrucción no se sostiene durante el día.",
+          contexto: "Esta mañana expliqué un cambio en cómo se hace una tarea, y en la tarde noté que alguien volvió a hacerla como antes.",
+          tarea: "Ayúdame a pensar: ¿la información no quedó clara, no quedó documentada, o hubo algo que interrumpió el seguimiento? Dame 3 preguntas para diagnosticarlo antes de asumir descuido.",
+          formato: "3 preguntas de diagnóstico, sin culpar a la persona."
+        }
+      ]
     },
     {
-      id: "logistica",
-      label: "Coordinador de Logística / Tráfico",
-      rol: "Actúa como un asistente de planificación logística, organizado y preciso.",
-      contexto: "Varias rutas y coordinaciones cambiaron hoy y necesito que todo el equipo las tenga claras antes de las 2pm.",
-      tarea: "Ayúdame a organizar los cambios en una tabla simple que pueda compartir rápido.",
-      formato: "Tabla de 3 columnas: ruta, cambio, responsable. Breve."
+      id: "trafico",
+      label: "Supervisión de Tráfico / Logística",
+      cases: [
+        {
+          id: "t1",
+          tag: "Cambios de última hora",
+          title: "Organizar rutas que cambiaron",
+          summary: "Varias rutas y coordinaciones cambiaron hoy y necesito que el equipo las tenga claras antes de las 2pm.",
+          rol: "Actúa como un asistente de planificación logística, organizado y preciso.",
+          contexto: "Varias rutas y coordinaciones cambiaron hoy y necesito que todo el equipo las tenga claras antes de las 2pm.",
+          tarea: "Ayúdame a organizar los cambios en una tabla simple que pueda compartir rápido.",
+          formato: "Tabla de 3 columnas: ruta, cambio, responsable. Breve."
+        },
+        {
+          id: "t2",
+          tag: "Caso menos obvio",
+          title: "La reunión sin libreta",
+          summary: "Coordiné los cambios de la semana en una reunión, pero nadie tomó notas, y ahora tengo que repetir los detalles uno por uno.",
+          rol: "Actúa como un asistente que ayuda a convertir una conversación verbal en un registro que no dependa de la memoria de nadie.",
+          contexto: "Acabo de salir de una reunión donde coordinamos varios cambios de la semana, pero nadie anotó nada.",
+          tarea: "Te voy a dictar de memoria lo que se habló. Organízalo en una lista corta de quién hace qué y para cuándo, para enviarla al grupo hoy mismo.",
+          formato: "Lista corta, una línea por persona/tarea."
+        }
+      ]
+    },
+    {
+      id: "admin",
+      label: "Supervisión Administrativa",
+      cases: [
+        {
+          id: "ad1",
+          tag: "Cambio de procedimiento",
+          title: "Explicar un cambio sin jerga",
+          summary: "Necesito explicarle a un compañero un cambio en facturación o reporte de horas.",
+          rol: "Actúa como un asistente de redacción administrativa, claro y sin jerga técnica.",
+          contexto: "Hay un cambio en un procedimiento de facturación o de reporte de horas que necesito comunicar.",
+          tarea: "Ayúdame a resumir el cambio en lenguaje sencillo, para que cualquiera lo entienda a la primera lectura.",
+          formato: "3 puntos cortos, sin jerga contable."
+        },
+        {
+          id: "ad2",
+          tag: "Caso menos obvio",
+          title: "Cuando delegar se siente como repetir",
+          summary: "Cada vez que delego una tarea que ya expliqué, la persona regresa a preguntarme paso a paso, como si necesitara que yo estuviera presente.",
+          rol: "Actúa como un asesor que ayuda a diseñar instrucciones que no dependan de la presencia constante de quien delega.",
+          contexto: "Delegué una tarea que ya había explicado antes, y la persona volvió a preguntarme cada paso, como si tuviera que supervisarla de cerca.",
+          tarea: "Ayúdame a redactar la instrucción como una guía de referencia independiente, que responda de antemano las preguntas más probables.",
+          formato: "Guía corta con encabezado 'si tienes dudas, revisa aquí antes de preguntar'."
+        }
+      ]
     },
     {
       id: "servicio",
       label: "Servicio al Cliente",
-      rol: "Actúa como un experto en comunicación con clientes, cálido y profesional.",
-      contexto: "Un cliente está molesto porque su entrega se retrasó y ya escribió por segunda vez.",
-      tarea: "Ayúdame a redactar una respuesta que reconozca el problema y explique el siguiente paso, sin sonar como una excusa.",
-      formato: "Un párrafo corto, tono empático pero profesional."
+      cases: [
+        {
+          id: "s1",
+          tag: "Cliente molesto",
+          title: "Responder sin sonar a excusa",
+          summary: "Un cliente está molesto porque su entrega se retrasó y ya escribió por segunda vez.",
+          rol: "Actúa como un experto en comunicación con clientes, cálido y profesional.",
+          contexto: "Un cliente está molesto porque su entrega se retrasó y ya escribió por segunda vez.",
+          tarea: "Ayúdame a redactar una respuesta que reconozca el problema y explique el siguiente paso, sin sonar como una excusa.",
+          formato: "Un párrafo corto, tono empático pero profesional."
+        },
+        {
+          id: "s2",
+          tag: "Caso menos obvio",
+          title: "Dos versiones de la misma respuesta",
+          summary: "Dos compañeros de mi turno le dieron información distinta al mismo cliente sobre el mismo proceso.",
+          rol: "Actúa como un asesor de comunicación interna que ayuda a unificar cómo el equipo explica un mismo proceso.",
+          contexto: "Un cliente recibió dos explicaciones distintas del mismo proceso, de dos compañeros diferentes.",
+          tarea: "Ayúdame a redactar una explicación estándar de este proceso que todo el equipo pueda usar igual, sin importar quién conteste.",
+          formato: "Un párrafo único de 3-4 líneas, listo para copiar y usar por cualquiera del equipo."
+        }
+      ]
     },
     {
-      id: "admin",
-      label: "Personal Administrativo",
-      rol: "Actúa como un asistente de redacción administrativa, claro y sin jerga técnica.",
-      contexto: "Necesito explicarle a un compañero un cambio en un procedimiento de facturación o de reporte de horas.",
-      tarea: "Ayúdame a resumir el cambio en lenguaje sencillo, para que cualquiera lo entienda a la primera lectura.",
-      formato: "3 puntos cortos, sin jerga contable."
-    },
-    {
-      id: "gerencia",
-      label: "Gerencia de Operaciones",
-      rol: "Actúa como un asesor de gerencia que ayuda a preparar agendas y comunicaciones para supervisores.",
-      contexto: "Tengo una reunión con varios supervisores sobre consistencia en los procesos de almacén y transporte.",
-      tarea: "Ayúdame a preparar una agenda de 4 puntos para esa reunión.",
-      formato: "Lista con un tiempo estimado por punto."
+      id: "chofer",
+      label: "Chofer / Transportista",
+      cases: [
+        {
+          id: "c1",
+          tag: "Reporte de ruta",
+          title: "Documentar un incidente rápido",
+          summary: "Tuve un retraso en mi ruta de hoy por tráfico y un cambio de última hora en la entrega.",
+          rol: "Actúa como un asistente que ayuda a choferes a documentar incidentes de ruta de forma clara y rápida.",
+          contexto: "Tuve un retraso en mi ruta de hoy por tráfico y un cambio de última hora en la entrega.",
+          tarea: "Ayúdame a redactar un reporte corto y claro de lo que pasó para enviárselo a mi supervisor.",
+          formato: "En 2 a 3 líneas, lenguaje sencillo, sin tecnicismos."
+        },
+        {
+          id: "c2",
+          tag: "Caso menos obvio",
+          title: "El cambio que se me olvidó anotar",
+          summary: "Me avisaron un cambio de última hora mientras manejaba, confié en recordarlo, y llegué al sitio equivocado.",
+          rol: "Actúa como un asistente que ayuda a convertir un aviso verbal en una nota rápida antes de que se olvide.",
+          contexto: "Me avisaron un cambio de última hora mientras estaba en ruta, y confié en recordarlo de memoria.",
+          tarea: "Dame una forma rápida de anotar cualquier cambio de última hora en cuanto lo reciba, usando solo la voz o el teclado de mi teléfono, sin tener que parar mucho tiempo.",
+          formato: "Un formato de 3 palabras clave para recordar rápido: qué cambió, dónde, a qué hora."
+        }
+      ]
     }
   ];
 
   const scrollEl = document.getElementById('roleScroll');
+  const galleryEl = document.getElementById('caseGallery');
+
   ROLES.forEach((r, i) => {
     const chip = document.createElement('button');
-    chip.className = 'role-chip' + (i === 0 ? ' active' : '');
+    chip.className = 'role-chip';
     chip.textContent = r.label;
-    chip.onclick = () => cargarRol(r.id, chip);
+    chip.onclick = () => seleccionarRol(r.id, chip);
     scrollEl.appendChild(chip);
   });
 
-  function cargarRol(id, chipEl) {
+  function seleccionarRol(id, chipEl) {
     document.querySelectorAll('.role-chip').forEach(c => c.classList.remove('active'));
     chipEl.classList.add('active');
     const r = ROLES.find(x => x.id === id);
-    document.getElementById('f_rol').value = r.rol;
-    document.getElementById('f_contexto').value = r.contexto;
-    document.getElementById('f_tarea').value = r.tarea;
-    document.getElementById('f_formato').value = r.formato;
+
+    galleryEl.innerHTML = '';
+    r.cases.forEach(caso => {
+      const card = document.createElement('div');
+      card.className = 'case-card';
+      card.innerHTML = `<span class="ctag">${caso.tag}</span><div class="ctitle">${caso.title}</div><div class="csummary">${caso.summary}</div>`;
+      card.onclick = () => cargarCaso(caso, card);
+      galleryEl.appendChild(card);
+    });
+    galleryEl.classList.add('visible');
     document.getElementById('resultBox').style.display = 'none';
-    document.querySelector('.builder-wrap').scrollIntoView({behavior:'smooth', block:'start'});
+    galleryEl.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  function cargarCaso(caso, cardEl) {
+    document.querySelectorAll('.case-card').forEach(c => c.classList.remove('active'));
+    cardEl.classList.add('active');
+    document.getElementById('f_rol').value = caso.rol;
+    document.getElementById('f_contexto').value = caso.contexto;
+    document.getElementById('f_tarea').value = caso.tarea;
+    document.getElementById('f_formato').value = caso.formato;
+    document.getElementById('resultBox').style.display = 'none';
+    document.querySelector('.rctf-card').scrollIntoView({behavior:'smooth', block:'start'});
   }
 
   function armarPrompt() {
@@ -576,6 +720,8 @@
     ['f_rol','f_contexto','f_tarea','f_formato'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('resultBox').style.display = 'none';
     document.querySelectorAll('.role-chip').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.case-card').forEach(c => c.classList.remove('active'));
+    galleryEl.classList.remove('visible');
   }
 
   function copiarPrompt() {
