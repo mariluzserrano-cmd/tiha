@@ -164,8 +164,19 @@
   }
   .topic-intro.visible{display:block;}
 
-  .role-scroll{display:flex; gap:10px; overflow-x:auto; padding:4px 0 14px; -webkit-overflow-scrolling:touch; scrollbar-width:none;}
+  .role-scroll{display:flex; gap:10px; overflow-x:auto; padding:4px 34px 14px 0; -webkit-overflow-scrolling:touch; scrollbar-width:none;}
   .role-scroll::-webkit-scrollbar{display:none;}
+  .role-scroll-wrap{position:relative;}
+  .role-scroll-wrap::after{
+    content:""; position:absolute; top:0; right:0; bottom:14px; width:40px;
+    background:linear-gradient(to right, rgba(251,248,243,0), var(--paper) 75%);
+    pointer-events:none;
+  }
+  .scroll-hint{
+    display:flex; align-items:center; gap:4px; font-size:11px; color:var(--grey);
+    margin:-6px 0 12px; font-style:italic;
+  }
+  .scroll-hint svg{width:13px; height:13px; flex-shrink:0;}
   .role-chip{
     flex:0 0 auto; background:#fff; border:1.5px solid var(--line); color:var(--navy);
     font-size:13px; font-weight:600; padding:10px 16px; border-radius:999px; cursor:pointer;
@@ -291,7 +302,10 @@
       <button class="mode-btn" id="modeBtnTema" onclick="cambiarModo('tema')">Por Tema del Taller</button>
     </div>
 
-    <div class="role-scroll" id="roleScroll"></div>
+    <div class="role-scroll-wrap">
+      <div class="role-scroll" id="roleScroll"></div>
+    </div>
+    <p class="scroll-hint">← desliza para ver más opciones →</p>
     <p class="topic-intro" id="topicIntro"></p>
     <div class="case-gallery" id="caseGallery"></div>
 
@@ -406,6 +420,73 @@
           contexto: "Noto que un mismo protocolo de cross-dock se ejecuta distinto según el supervisor o el turno, y eso me obliga a corregir lo mismo repetidamente.",
           tarea: "Ayúdame a redactar 3 preguntas que le pueda hacer a mi equipo de supervisores para entender en qué punto exacto se pierde la consistencia.",
           formato: "3 preguntas abiertas, tono de curiosidad, no de señalamiento."
+        },
+        {
+          id: "g3",
+          tag: "Reporte a dirección",
+          title: "Resumen ejecutivo de indicadores",
+          summary: "Necesito presentar un resumen del desempeño operacional del mes a la dirección general.",
+          rol: "Actúa como un asesor que ayuda a convertir datos operacionales en un resumen ejecutivo claro.",
+          contexto: "Tengo los números del mes de almacén, tráfico y flota, y necesito presentarlos a la dirección general.",
+          tarea: "Ayúdame a organizar estos datos en un resumen de 4 puntos: qué mejoró, qué empeoró, por qué, y qué se hará al respecto.",
+          formato: "4 puntos cortos, lenguaje ejecutivo, sin tecnicismos innecesarios."
+        },
+        {
+          id: "g4",
+          tag: "Caso menos obvio",
+          title: "La misma queja, en tres departamentos distintos",
+          summary: "Recibo quejas parecidas de almacén, tráfico y servicio al cliente, pero nadie ha conectado que podrían tener la misma causa.",
+          rol: "Actúa como un asesor que ayuda a identificar si varias quejas de distintos departamentos comparten una misma causa raíz.",
+          contexto: "He recibido quejas similares de tres departamentos distintos esta semana, y sospecho que están conectadas.",
+          tarea: "Ayúdame a redactar 3 preguntas que me permitan comparar las quejas y ver si comparten un mismo origen antes de tratarlas por separado.",
+          formato: "3 preguntas de comparación, en tono investigativo."
+        }
+      ]
+    },
+    {
+      id: "gerencia_admin",
+      label: "Gerencia Administrativa",
+      intro: "Para gerencia de Crédito y Cobro, Finanzas, Contabilidad y Servicio al Cliente.",
+      cases: [
+        {
+          id: "ga1",
+          tag: "Comunicado de política",
+          title: "Explicar un cambio de crédito y cobro",
+          summary: "Hay un cambio en la política de crédito y cobro que necesito comunicar a varios departamentos.",
+          rol: "Actúa como un asesor de comunicación gerencial, claro y directo.",
+          contexto: "Hay un cambio en la política de crédito y cobro que afecta cómo Servicio al Cliente y Facturación coordinan con los clientes.",
+          tarea: "Ayúdame a redactar un comunicado breve que explique el cambio y qué debe hacer cada departamento distinto.",
+          formato: "3 párrafos cortos, uno por audiencia (Cobro, Facturación, Servicio al Cliente)."
+        },
+        {
+          id: "ga2",
+          tag: "Caso menos obvio",
+          title: "El sistema dice una cosa, cobro reporta otra",
+          summary: "Hay una diferencia entre lo que el sistema de facturación muestra y lo que el equipo de cobro está reportando.",
+          rol: "Actúa como un asesor que ayuda a diagnosticar diferencias entre lo que dice un sistema y lo que reporta un equipo.",
+          contexto: "Noto una diferencia entre el saldo que muestra el sistema de facturación y lo que mi equipo de cobro me está reportando.",
+          tarea: "Ayúdame a redactar 3 preguntas para entender en qué punto del proceso se genera esa diferencia, antes de asumir un error humano.",
+          formato: "3 preguntas de diagnóstico, sin tono acusatorio."
+        },
+        {
+          id: "ga3",
+          tag: "Resumen mensual",
+          title: "Cuentas por cobrar en lenguaje simple",
+          summary: "Necesito presentar el estatus de cuentas por cobrar a la gerencia general, sin que suene a reporte contable denso.",
+          rol: "Actúa como un asesor financiero que traduce datos contables a lenguaje ejecutivo simple.",
+          contexto: "Tengo el resumen mensual de cuentas por cobrar y necesito presentarlo a la gerencia general de forma clara.",
+          tarea: "Ayúdame a resumirlo en 3 puntos: qué se cobró, qué está pendiente y en riesgo, y qué acción se recomienda.",
+          formato: "3 puntos cortos, sin jerga contable."
+        },
+        {
+          id: "ga4",
+          tag: "Caso menos obvio",
+          title: "La misma queja de facturación, otra vez",
+          summary: "Varios clientes se han quejado del mismo tipo de error de facturación en las últimas semanas, y cada caso se atendió por separado.",
+          rol: "Actúa como un asesor que ayuda a identificar patrones repetidos en quejas de clientes.",
+          contexto: "He recibido quejas de facturación similares de varios clientes distintos, y cada una se trató como un caso aislado.",
+          tarea: "Ayúdame a redactar 3 preguntas para revisar si estos casos comparten el mismo origen en el proceso de facturación.",
+          formato: "3 preguntas de comparación, en tono investigativo."
         }
       ]
     },
@@ -432,6 +513,26 @@
           contexto: "Esta mañana expliqué un cambio en cómo se organiza el espacio de rack y piso (rack and floor space), y en la tarde noté que alguien volvió a hacerlo como antes.",
           tarea: "Ayúdame a pensar: ¿la información no quedó clara, no quedó documentada, o hubo algo que interrumpió el seguimiento? Dame 3 preguntas para diagnosticarlo antes de asumir descuido.",
           formato: "3 preguntas de diagnóstico, sin culpar a la persona."
+        },
+        {
+          id: "a3",
+          tag: "Cierre de turno",
+          title: "Checklist para no dejar cabos sueltos",
+          summary: "Quiero que el cierre de turno de cross-dock quede documentado de forma consistente, sin importar quién lo haga.",
+          rol: "Actúa como un asesor que ayuda a construir checklists operacionales simples.",
+          contexto: "Quiero estandarizar el cierre de turno del área de cross-dock para que cualquier supervisor lo documente igual.",
+          tarea: "Ayúdame a crear un checklist de 5 puntos para el cierre de turno.",
+          formato: "Lista de 5 puntos, tipo casillas para marcar."
+        },
+        {
+          id: "a4",
+          tag: "Caso menos obvio",
+          title: "El conteo no cuadra entre AM y PM",
+          summary: "El inventario que cierra el turno de la mañana (Cross Dock AM) no siempre coincide con lo que abre el turno de la tarde (Cross Dock PM).",
+          rol: "Actúa como un asesor que ayuda a diagnosticar diferencias en el traspaso de turno.",
+          contexto: "Hay diferencias frecuentes entre el conteo que deja el turno AM de cross-dock y lo que encuentra el turno PM.",
+          tarea: "Ayúdame a redactar 3 preguntas para entender si el problema está en el conteo, en el traspaso de información, o en el manejo físico entre turnos.",
+          formato: "3 preguntas de diagnóstico, neutrales."
         }
       ]
     },
@@ -458,6 +559,26 @@
           contexto: "Acabo de salir de una reunión donde coordinamos varios cambios de rutas y horarios de entrega de la semana, pero nadie anotó nada.",
           tarea: "Te voy a dictar de memoria lo que se habló. Organízalo en una lista corta de quién hace qué y para cuándo, para enviarla al grupo hoy mismo.",
           formato: "Lista corta, una línea por persona/tarea."
+        },
+        {
+          id: "t3",
+          tag: "Reporte de cumplimiento",
+          title: "Entregas a tiempo, en números simples",
+          summary: "Necesito preparar un reporte semanal de cumplimiento de rutas (on-time delivery) para gerencia.",
+          rol: "Actúa como un asistente que ayuda a resumir datos operacionales en lenguaje simple.",
+          contexto: "Tengo los datos de la semana sobre rutas de FCL y LTL, algunas a tiempo y otras retrasadas.",
+          tarea: "Ayúdame a organizar esto en un resumen de 3 puntos: cumplimiento general, causas principales de retraso, y una acción sugerida.",
+          formato: "3 puntos cortos, con un número o porcentaje en cada uno si aplica."
+        },
+        {
+          id: "t4",
+          tag: "Caso menos obvio",
+          title: "FCL y LTL le dicen cosas distintas al mismo cliente",
+          summary: "El supervisor de tráfico FCL y el de LTL le han dado información distinta al mismo cliente sobre una misma carga.",
+          rol: "Actúa como un asesor que ayuda a unificar la comunicación entre equipos que atienden al mismo cliente.",
+          contexto: "Un cliente recibió información distinta de nuestros equipos de FCL y LTL sobre el estatus de su carga.",
+          tarea: "Ayúdame a redactar una sola versión clara del estatus que ambos equipos puedan usar al hablar con este cliente.",
+          formato: "Un párrafo corto, listo para que cualquiera de los dos equipos lo use igual."
         }
       ]
     },
@@ -484,6 +605,26 @@
           contexto: "Delegué una tarea que ya había explicado antes, y la persona volvió a preguntarme cada paso, como si tuviera que supervisarla de cerca.",
           tarea: "Ayúdame a redactar la instrucción como una guía de referencia independiente, que responda de antemano las preguntas más probables.",
           formato: "Guía corta con encabezado 'si tienes dudas, revisa aquí antes de preguntar'."
+        },
+        {
+          id: "ad3",
+          tag: "Reporte de horas",
+          title: "Instrucciones claras para nómina",
+          summary: "Quiero que todo mi equipo reporte las horas de la misma forma, sin dudas ni versiones distintas.",
+          rol: "Actúa como un asesor que ayuda a redactar instrucciones administrativas simples y consistentes.",
+          contexto: "Necesito que mi equipo reporte sus horas de un nuevo procedimiento de nómina de la misma manera.",
+          tarea: "Ayúdame a redactar una guía corta de cómo reportar las horas, con un ejemplo incluido.",
+          formato: "Guía de 4 pasos con un ejemplo al final."
+        },
+        {
+          id: "ad4",
+          tag: "Caso menos obvio",
+          title: "Cada oficinista lo registra distinto",
+          summary: "El mismo tipo de dato se registra distinto según quién lo haga en entrada de datos, y eso genera errores más adelante.",
+          rol: "Actúa como un asesor que ayuda a identificar por qué un mismo dato se registra de formas distintas.",
+          contexto: "Noto que el mismo tipo de información se registra de forma distinta según qué persona de entrada de datos lo haga.",
+          tarea: "Ayúdame a redactar 3 preguntas para entender si falta un formato estándar o si la instrucción original no fue clara.",
+          formato: "3 preguntas de diagnóstico, sin señalar a nadie en particular."
         }
       ]
     },
@@ -510,6 +651,26 @@
           contexto: "Un cliente recibió dos explicaciones distintas del mismo proceso de entrega, de dos compañeros diferentes.",
           tarea: "Ayúdame a redactar una explicación estándar de este proceso que todo el equipo pueda usar igual, sin importar quién conteste.",
           formato: "Un párrafo único de 3-4 líneas, listo para copiar y usar por cualquiera del equipo."
+        },
+        {
+          id: "s3",
+          tag: "Demora aduanera",
+          title: "Explicar una demora de FTZ sin tecnicismos",
+          summary: "Necesito explicarle a un cliente por qué su carga está detenida en la zona de comercio exterior (FTZ).",
+          rol: "Actúa como un experto en comunicación con clientes que traduce procesos aduaneros a lenguaje simple.",
+          contexto: "Un cliente pregunta por qué su carga está detenida en la zona de comercio exterior (Foreign Trade Zone).",
+          tarea: "Ayúdame a explicarle la razón y el tiempo estimado, sin usar términos legales o aduaneros complicados.",
+          formato: "Un párrafo corto y claro, tono tranquilizador."
+        },
+        {
+          id: "s4",
+          tag: "Caso menos obvio",
+          title: "El mismo caso, dos seguimientos distintos",
+          summary: "Dos representantes le dieron seguimiento al mismo caso de un cliente, cada uno por su cuenta, sin saber que el otro también lo estaba atendiendo.",
+          rol: "Actúa como un asesor que ayuda a coordinar el seguimiento de un caso entre varias personas.",
+          contexto: "Un mismo caso de cliente está siendo atendido por dos representantes distintos, sin que ninguno sepa del otro.",
+          tarea: "Ayúdame a redactar una nota corta de traspaso que dejaría claro quién sigue el caso y qué se ha hecho hasta ahora.",
+          formato: "Nota de 3 líneas: qué se hizo, qué falta, quién continúa."
         }
       ]
     },
@@ -536,6 +697,73 @@
           contexto: "Me avisaron un cambio de última hora en la ruta mientras estaba manejando, y confié en recordarlo de memoria.",
           tarea: "Dame una forma rápida de anotar cualquier cambio de última hora en cuanto lo reciba, usando solo la voz o el teclado de mi teléfono, sin tener que parar mucho tiempo.",
           formato: "Un formato de 3 palabras clave para recordar rápido: qué cambió, dónde, a qué hora."
+        },
+        {
+          id: "c3",
+          tag: "Inspección pre-ruta",
+          title: "Checklist antes de salir",
+          summary: "Quiero un checklist rápido para revisar el vehículo antes de salir a ruta, sin que tome mucho tiempo.",
+          rol: "Actúa como un asistente que ayuda a crear checklists breves para choferes.",
+          contexto: "Necesito una inspección pre-ruta rápida antes de salir cada día.",
+          tarea: "Ayúdame a crear un checklist de 5 puntos que pueda revisar en menos de 2 minutos.",
+          formato: "Lista de 5 puntos, tipo casillas para marcar."
+        },
+        {
+          id: "c4",
+          tag: "Caso menos obvio",
+          title: "Avisar el cambio antes de llegar tarde",
+          summary: "Cuando surge un cambio de ruta a mitad de camino, muchas veces se avisa a despacho después, no antes, y eso genera confusión.",
+          rol: "Actúa como un asistente que ayuda a comunicar cambios de ruta a tiempo, antes de que generen un problema mayor.",
+          contexto: "Surgió un cambio de ruta a mitad de camino y necesito avisarle a despacho antes de que se genere confusión en la próxima parada.",
+          tarea: "Ayúdame a redactar un mensaje corto para avisar el cambio de inmediato, con la información esencial nada más.",
+          formato: "1 a 2 líneas, listo para enviar por mensaje de texto."
+        }
+      ]
+    },
+    {
+      id: "flota",
+      label: "Flota y Mantenimiento",
+      intro: "Para gerencia de Flota, Supervisor de Taller, mecánicos y técnicos de hojalatería.",
+      cases: [
+        {
+          id: "f1",
+          tag: "Reporte de reparación",
+          title: "Documentar qué se hizo",
+          summary: "Terminé una reparación y quiero dejar un registro claro de qué se hizo, para que quede en el sistema de mantenimiento.",
+          rol: "Actúa como un asistente que ayuda a documentar reparaciones de forma clara y técnica pero breve.",
+          contexto: "Terminé una reparación en un vehículo y necesito documentar qué se hizo para el sistema de mantenimiento.",
+          tarea: "Ayúdame a redactar un reporte corto: qué falló, qué se hizo, y qué revisar en el próximo mantenimiento.",
+          formato: "3 líneas cortas, lenguaje técnico pero directo."
+        },
+        {
+          id: "f2",
+          tag: "Caso menos obvio",
+          title: "El mismo daño, en varios camiones",
+          summary: "He notado el mismo tipo de daño en más de un camión últimamente, pero cada reparación se trató como un caso aparte.",
+          rol: "Actúa como un asesor que ayuda a identificar si varias reparaciones parecidas comparten una misma causa.",
+          contexto: "He reparado el mismo tipo de daño en más de un vehículo en las últimas semanas, y sospecho que hay una causa común.",
+          tarea: "Ayúdame a redactar 3 preguntas para investigar si estos daños comparten el mismo origen (uso, ruta, mantenimiento preventivo) antes de seguir reparando uno por uno.",
+          formato: "3 preguntas de diagnóstico, en tono investigativo."
+        },
+        {
+          id: "f3",
+          tag: "Orden de piezas",
+          title: "Lista clara para la orden de compra",
+          summary: "Hice una inspección y necesito pedir piezas, pero quiero que la lista quede clara para quien procese la orden.",
+          rol: "Actúa como un asistente que ayuda a preparar listas de piezas claras para órdenes de compra.",
+          contexto: "Hice una inspección de varios vehículos y necesito ordenar piezas de reemplazo.",
+          tarea: "Ayúdame a organizar la lista con nombre de la pieza, cantidad, y para qué vehículo, lista para enviar a compras.",
+          formato: "Tabla simple de 3 columnas: pieza, cantidad, vehículo."
+        },
+        {
+          id: "f4",
+          tag: "Caso menos obvio",
+          title: "El siguiente turno repite el diagnóstico",
+          summary: "Un mecánico hace un diagnóstico pero no lo documenta bien, y el siguiente turno vuelve a diagnosticar desde cero el mismo problema.",
+          rol: "Actúa como un asesor que ayuda a construir un hábito simple de documentar diagnósticos en el momento.",
+          contexto: "Hice un diagnóstico de un vehículo pero no alcancé a documentarlo bien, y me preocupa que el siguiente turno tenga que empezar de cero.",
+          tarea: "Ayúdame a crear una nota rápida de traspaso: qué encontré, qué falta confirmar, y qué NO repetir.",
+          formato: "Nota de 3 líneas, lista para dejar en la orden de trabajo."
         }
       ]
     }
@@ -714,7 +942,7 @@
     chipEl.classList.add('active');
     const item = MODES[currentMode].find(x => x.id === id);
 
-    if (currentMode === 'tema' && item.intro) {
+    if (item.intro) {
       topicIntroEl.textContent = item.intro;
       topicIntroEl.classList.add('visible');
     } else {
