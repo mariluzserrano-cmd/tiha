@@ -145,6 +145,70 @@
   .quote p{font-family:'Prata',serif; font-style:italic; color:var(--navy); font-size:17px; line-height:1.5; margin:0 0 8px;}
   .quote span{font-size:12.5px; color:var(--grey); letter-spacing:.03em;}
 
+  /* ---------- ROLE BUILDER ---------- */
+  .builder-wrap{margin:36px 22px 0;}
+  .builder-head{margin-bottom:18px;}
+  .builder-head h2{font-family:'Prata',serif; font-weight:400; font-size:24px; color:var(--navy); margin:0 0 6px;}
+  .builder-head p{font-size:14px; color:var(--grey); margin:0; max-width:56ch;}
+
+  .role-scroll{display:flex; gap:10px; overflow-x:auto; padding:4px 0 14px; -webkit-overflow-scrolling:touch; scrollbar-width:none;}
+  .role-scroll::-webkit-scrollbar{display:none;}
+  .role-chip{
+    flex:0 0 auto; background:#fff; border:1.5px solid var(--line); color:var(--navy);
+    font-size:13px; font-weight:600; padding:10px 16px; border-radius:999px; cursor:pointer;
+    white-space:nowrap; transition:background .15s, color .15s, border-color .15s;
+  }
+  .role-chip:hover{border-color:var(--coral);}
+  .role-chip.active{background:var(--coral); border-color:var(--coral); color:#fff;}
+
+  .rctf-card{
+    background:var(--navy); border-radius:16px; padding:22px 20px; color:#fff;
+  }
+  .rctf-field{margin-bottom:14px;}
+  .rctf-field label{
+    display:flex; align-items:center; gap:8px; font-size:12.5px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--gold); font-weight:700; margin-bottom:6px;
+  }
+  .rctf-field label .letter{
+    background:var(--coral); color:#fff; width:20px; height:20px; border-radius:5px; font-size:11px;
+    display:inline-flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace;
+  }
+  .rctf-field textarea{
+    width:100%; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.2); border-radius:8px;
+    color:#fff; font-family:'Work Sans',sans-serif; font-size:13.5px; padding:10px 12px; resize:vertical;
+    min-height:44px; line-height:1.5;
+  }
+  .rctf-field textarea::placeholder{color:rgba(255,255,255,.4);}
+  .rctf-field textarea:focus{outline:2px solid var(--coral); outline-offset:1px;}
+
+  .rctf-actions{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap;}
+  .btn{
+    border:none; border-radius:999px; font-weight:700; font-size:13.5px; padding:11px 20px; cursor:pointer;
+    font-family:'Work Sans',sans-serif;
+  }
+  .btn-primary{background:var(--coral); color:#fff;}
+  .btn-primary:hover{background:var(--coral-dark);}
+  .btn-ghost{background:transparent; color:rgba(255,255,255,.75); border:1px solid rgba(255,255,255,.3);}
+  .btn-ghost:hover{color:#fff; border-color:#fff;}
+
+  .result-box{
+    margin-top:16px; background:var(--cream-2); border:1px dashed var(--coral); border-radius:12px;
+    padding:16px 16px 14px; color:var(--ink);
+  }
+  .result-box .rlbl{
+    font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--coral-dark); font-weight:700;
+    display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;
+  }
+  .result-box .rtext{
+    font-family:'JetBrains Mono',monospace; font-size:13px; line-height:1.65; white-space:pre-wrap; word-break:break-word;
+  }
+  .copybtn{
+    background:var(--navy); color:#fff; border:none; border-radius:999px; font-size:11.5px; font-weight:700;
+    padding:6px 13px; cursor:pointer;
+  }
+  .copybtn.copied{background:#2E7D46;}
+  .role-note{font-size:12px; color:var(--grey); margin-top:10px; font-style:italic;}
+
   /* ---------- FOOTER ---------- */
   footer{
     margin-top:44px; padding:26px 24px 32px; text-align:center; background:var(--navy); color:rgba(255,255,255,.7);
@@ -185,6 +249,48 @@
       <li>Ajusta el prompt a tu situación real — entre más específico, mejor la respuesta.</li>
       <li>La IA propone; tú decides. Ninguna respuesta sustituye tu criterio ni una conversación cara a cara cuando se necesita.</li>
     </ol>
+  </div>
+
+  <!-- CONSTRUCTOR DE PROMPTS POR ROL -->
+  <div class="builder-wrap">
+    <div class="builder-head">
+      <h2>Constructor de Prompts por Rol</h2>
+      <p>Toca tu rol para cargar un ejemplo real, ajústalo con tu propia situación, y arma tu prompt con el método <b>R-C-T-F</b>: Rol · Contexto · Tarea · Formato.</p>
+    </div>
+
+    <div class="role-scroll" id="roleScroll"></div>
+
+    <div class="rctf-card">
+      <div class="rctf-field">
+        <label><span class="letter">R</span> Rol — ¿quién quieres que sea la IA?</label>
+        <textarea id="f_rol" placeholder="Ej.: Actúa como un asesor de comunicación clara y directa."></textarea>
+      </div>
+      <div class="rctf-field">
+        <label><span class="letter">C</span> Contexto — ¿cuál es la situación?</label>
+        <textarea id="f_contexto" placeholder="Ej.: Tuve un retraso en la ruta de hoy por tráfico."></textarea>
+      </div>
+      <div class="rctf-field">
+        <label><span class="letter">T</span> Tarea — ¿qué necesitas exactamente?</label>
+        <textarea id="f_tarea" placeholder="Ej.: Ayúdame a redactar un reporte corto para mi supervisor."></textarea>
+      </div>
+      <div class="rctf-field">
+        <label><span class="letter">F</span> Formato — ¿cómo lo quieres?</label>
+        <textarea id="f_formato" placeholder="Ej.: En 2 a 3 líneas, lenguaje sencillo."></textarea>
+      </div>
+      <div class="rctf-actions">
+        <button class="btn btn-primary" onclick="armarPrompt()">Armar mi prompt</button>
+        <button class="btn btn-ghost" onclick="limpiarPrompt()">Limpiar</button>
+      </div>
+
+      <div class="result-box" id="resultBox" style="display:none;">
+        <div class="rlbl">
+          <span>Tu prompt listo para usar</span>
+          <button class="copybtn" id="copyBtn" onclick="copiarPrompt()">Copiar</button>
+        </div>
+        <div class="rtext" id="resultText"></div>
+      </div>
+    </div>
+    <p class="role-note">La IA propone; tú confirmas y firmas con tu criterio profesional.</p>
   </div>
 
   <!-- SECCIÓN 1: INTELIGENCIA EMOCIONAL -->
@@ -366,5 +472,123 @@
   </footer>
 
 </div>
+
+<script>
+  const ROLES = [
+    {
+      id: "chofer",
+      label: "Chofer / Transportista",
+      rol: "Actúa como un asistente que ayuda a choferes a documentar incidentes de ruta de forma clara y rápida.",
+      contexto: "Tuve un retraso en mi ruta de hoy por tráfico y un cambio de última hora en la entrega.",
+      tarea: "Ayúdame a redactar un reporte corto y claro de lo que pasó para enviárselo a mi supervisor.",
+      formato: "En 2 a 3 líneas, lenguaje sencillo, sin tecnicismos."
+    },
+    {
+      id: "almacen",
+      label: "Supervisor de Almacén",
+      rol: "Actúa como un asesor de supervisión que ayuda a preparar instrucciones claras para el equipo de almacén.",
+      contexto: "Ya le expliqué un proceso a mi equipo esta mañana, pero alguien volvió a preguntar lo mismo horas después.",
+      tarea: "Ayúdame a redactar una instrucción de una sola página, con pasos numerados, que la persona pueda consultar sola sin tener que preguntarme de nuevo.",
+      formato: "Lista numerada, lenguaje directo, máximo 6 pasos."
+    },
+    {
+      id: "logistica",
+      label: "Coordinador de Logística / Tráfico",
+      rol: "Actúa como un asistente de planificación logística, organizado y preciso.",
+      contexto: "Varias rutas y coordinaciones cambiaron hoy y necesito que todo el equipo las tenga claras antes de las 2pm.",
+      tarea: "Ayúdame a organizar los cambios en una tabla simple que pueda compartir rápido.",
+      formato: "Tabla de 3 columnas: ruta, cambio, responsable. Breve."
+    },
+    {
+      id: "servicio",
+      label: "Servicio al Cliente",
+      rol: "Actúa como un experto en comunicación con clientes, cálido y profesional.",
+      contexto: "Un cliente está molesto porque su entrega se retrasó y ya escribió por segunda vez.",
+      tarea: "Ayúdame a redactar una respuesta que reconozca el problema y explique el siguiente paso, sin sonar como una excusa.",
+      formato: "Un párrafo corto, tono empático pero profesional."
+    },
+    {
+      id: "admin",
+      label: "Personal Administrativo",
+      rol: "Actúa como un asistente de redacción administrativa, claro y sin jerga técnica.",
+      contexto: "Necesito explicarle a un compañero un cambio en un procedimiento de facturación o de reporte de horas.",
+      tarea: "Ayúdame a resumir el cambio en lenguaje sencillo, para que cualquiera lo entienda a la primera lectura.",
+      formato: "3 puntos cortos, sin jerga contable."
+    },
+    {
+      id: "gerencia",
+      label: "Gerencia de Operaciones",
+      rol: "Actúa como un asesor de gerencia que ayuda a preparar agendas y comunicaciones para supervisores.",
+      contexto: "Tengo una reunión con varios supervisores sobre consistencia en los procesos de almacén y transporte.",
+      tarea: "Ayúdame a preparar una agenda de 4 puntos para esa reunión.",
+      formato: "Lista con un tiempo estimado por punto."
+    }
+  ];
+
+  const scrollEl = document.getElementById('roleScroll');
+  ROLES.forEach((r, i) => {
+    const chip = document.createElement('button');
+    chip.className = 'role-chip' + (i === 0 ? ' active' : '');
+    chip.textContent = r.label;
+    chip.onclick = () => cargarRol(r.id, chip);
+    scrollEl.appendChild(chip);
+  });
+
+  function cargarRol(id, chipEl) {
+    document.querySelectorAll('.role-chip').forEach(c => c.classList.remove('active'));
+    chipEl.classList.add('active');
+    const r = ROLES.find(x => x.id === id);
+    document.getElementById('f_rol').value = r.rol;
+    document.getElementById('f_contexto').value = r.contexto;
+    document.getElementById('f_tarea').value = r.tarea;
+    document.getElementById('f_formato').value = r.formato;
+    document.getElementById('resultBox').style.display = 'none';
+    document.querySelector('.builder-wrap').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  function armarPrompt() {
+    const rol = document.getElementById('f_rol').value.trim();
+    const contexto = document.getElementById('f_contexto').value.trim();
+    const tarea = document.getElementById('f_tarea').value.trim();
+    const formato = document.getElementById('f_formato').value.trim();
+
+    if (!rol && !contexto && !tarea && !formato) {
+      alert('Completa al menos una de las cuatro piezas para armar tu prompt.');
+      return;
+    }
+
+    let texto = '';
+    if (rol) texto += rol + '\n\n';
+    if (contexto) texto += 'Contexto: ' + contexto + '\n\n';
+    if (tarea) texto += 'Necesito que: ' + tarea + '\n\n';
+    if (formato) texto += 'Formato de respuesta: ' + formato;
+    texto = texto.trim();
+
+    document.getElementById('resultText').textContent = texto;
+    document.getElementById('resultBox').style.display = 'block';
+    const copyBtn = document.getElementById('copyBtn');
+    copyBtn.textContent = 'Copiar';
+    copyBtn.classList.remove('copied');
+    document.getElementById('resultBox').scrollIntoView({behavior:'smooth', block:'center'});
+  }
+
+  function limpiarPrompt() {
+    ['f_rol','f_contexto','f_tarea','f_formato'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('resultBox').style.display = 'none';
+    document.querySelectorAll('.role-chip').forEach(c => c.classList.remove('active'));
+  }
+
+  function copiarPrompt() {
+    const texto = document.getElementById('resultText').textContent;
+    const btn = document.getElementById('copyBtn');
+    navigator.clipboard.writeText(texto).then(() => {
+      btn.textContent = 'Copiado ✓';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2000);
+    }).catch(() => {
+      alert('No se pudo copiar automáticamente. Selecciona el texto manualmente.');
+    });
+  }
+</script>
 </body>
 </html>
