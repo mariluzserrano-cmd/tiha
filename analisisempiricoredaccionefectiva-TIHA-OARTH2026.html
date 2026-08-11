@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análisis Empírico · Redacción Efectiva con IA · Modelo TIHA</title>
+<style>
+  :root{
+    --tiha:#E3263A;--tiha-dark:#B81C2C;--slate:#44546A;--gold:#C9A961;
+    --ink:#1a1a1a;--muted:#5f6368;--bg:#ffffff;--soft:#fbf2f3;
+    --line:#ececec;--ok:#1b8a5a;--cream:#FAFAF8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+  body{
+    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,"Liberation Sans",Arial,sans-serif;
+    color:var(--ink);background:var(--cream);line-height:1.6;font-size:17px;
+  }
+  .wrap{max-width:820px;margin:0 auto;background:var(--bg);}
+  h1,h2,h3,.serif{font-family:Georgia,"Times New Roman",serif;}
+
+  /* HERO */
+  header{background:linear-gradient(135deg,var(--tiha) 0%,var(--tiha-dark) 100%);color:#fff;padding:44px 30px 38px;}
+  .kicker{font-size:12px;letter-spacing:3px;text-transform:uppercase;font-weight:700;opacity:.9;margin-bottom:14px;}
+  header h1{font-size:32px;line-height:1.2;font-weight:700;letter-spacing:-.4px;}
+  header .sub{margin-top:14px;font-size:16px;opacity:.95;max-width:620px;border-top:1px solid rgba(255,255,255,.3);padding-top:14px;}
+
+  /* KPI band */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);}
+  .kpi{background:#fff;padding:24px 14px;text-align:center;}
+  .kpi .big{font-family:Georgia,serif;font-size:34px;font-weight:700;color:var(--tiha);line-height:1;}
+  .kpi .lbl{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.3;}
+
+  section{padding:34px 30px;border-bottom:1px solid var(--line);}
+  section h2{font-size:23px;color:var(--tiha-dark);margin-bottom:6px;font-weight:700;}
+  section .lead{color:var(--muted);font-size:15.5px;margin-bottom:22px;}
+
+  /* Bars */
+  .bar-row{margin-bottom:18px;}
+  .bar-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+  .bar-top .name{font-weight:600;font-size:15.5px;}
+  .bar-top .val{font-family:Georgia,serif;font-weight:700;color:var(--tiha);font-size:16px;}
+  .bar-track{height:12px;background:#f0e9ea;border-radius:8px;overflow:hidden;}
+  .bar-fill{height:100%;background:linear-gradient(90deg,var(--tiha),var(--tiha-dark));border-radius:8px;}
+  .bar-note{font-size:12.5px;color:#9a9a9a;margin-top:4px;}
+
+  /* Wall of quotes */
+  .quotes{columns:2;column-gap:16px;}
+  .q{break-inside:avoid;background:var(--cream);border-left:3px solid var(--tiha);
+     border-radius:8px;padding:14px 16px;margin-bottom:16px;font-size:14.5px;line-height:1.5;}
+  .q .txt{font-style:italic;color:#333;}
+  .q .who{display:block;margin-top:8px;font-size:12px;color:var(--muted);font-style:normal;font-weight:600;}
+  @media(max-width:640px){.quotes{columns:1;}.kpis{grid-template-columns:repeat(2,1fr);}header h1{font-size:26px;}}
+
+  /* Materials */
+  .mat-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .mat{background:var(--cream);border-radius:12px;padding:18px 20px;}
+  .mat h4{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;color:var(--slate);margin-bottom:12px;font-weight:800;}
+  .mat ul{list-style:none;}
+  .mat li{font-size:13.8px;padding:5px 0 5px 20px;position:relative;color:#444;border-bottom:1px dashed #e6ded0;}
+  .mat li:last-child{border-bottom:none;}
+  .mat li::before{content:"▪";position:absolute;left:2px;color:var(--gold);}
+  @media(max-width:640px){.mat-grid{grid-template-columns:1fr;}}
+
+  /* Findings / reflexion */
+  .find{background:var(--soft);border-radius:12px;padding:20px 22px;margin-bottom:16px;}
+  .find h3{font-size:17px;color:var(--tiha-dark);margin-bottom:8px;font-weight:700;}
+  .find p{font-size:15px;color:#333;}
+  .find.balanced{background:#f3f6f9;}
+  .find.balanced h3{color:var(--slate);}
+
+  .callout{background:var(--ink);color:#fff;border-radius:14px;padding:26px;margin-top:8px;}
+  .callout .k{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#ff8a96;font-weight:700;margin-bottom:10px;}
+  .callout p{font-size:16px;line-height:1.55;}
+  .callout p+p{margin-top:12px;}
+
+  /* method note */
+  .method{font-size:13px;color:#9a9a9a;line-height:1.5;}
+
+  footer{padding:30px;text-align:center;background:var(--cream);}
+  footer .phrase{font-family:Georgia,serif;font-style:italic;font-size:17px;font-weight:600;color:var(--ink);margin-bottom:16px;line-height:1.5;}
+  footer .sig{font-size:13.5px;color:var(--muted);line-height:1.7;}
+  footer .sig b{color:var(--tiha-dark);}
+  .dots{margin:18px auto 0;display:flex;gap:7px;justify-content:center;}
+  .dots span{width:9px;height:9px;border-radius:50%;background:var(--tiha);opacity:.35;}
+  .dots span:nth-child(3){opacity:1;}
+  .tag-pill{display:inline-block;background:var(--gold);color:#3a2e12;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="kicker">Análisis Empírico de Impacto · Modelo TIHA</div>
+    <h1>Redacción Efectiva con IA — Evaluación de Participantes</h1>
+    <div class="sub">Sistematización de las hojas de evaluación de la capacitación ofrecida a personal de agencias gubernamentales a través de la Alianza OATRH–UPR. Data para investigación y mejora continua.</div>
+  </header>
+
+  <div class="kpis">
+    <div class="kpi"><div class="big">41</div><div class="lbl">Evaluaciones analizadas</div></div>
+    <div class="kpi"><div class="big">3.97</div><div class="lbl">Promedio global (escala 1–4)</div></div>
+    <div class="kpi"><div class="big">99.6%</div><div class="lbl">Satisfacción (Bueno + Excelente)</div></div>
+    <div class="kpi"><div class="big">~24</div><div class="lbl">Agencias representadas</div></div>
+  </div>
+
+  <section>
+    <h2>Resultados por criterio</h2>
+    <p class="lead">Promedio de cada dimensión evaluada, en escala de 1 (Deficiente) a 4 (Excelente).</p>
+
+    <div class="bar-row">
+      <div class="bar-top"><span class="name">Dominio de la materia</span><span class="val">4.00</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+      <div class="bar-note">41 de 41 participantes: Excelente</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-top"><span class="name">Disposición y actitud para aclarar dudas</span><span class="val">4.00</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+      <div class="bar-note">41 de 41 participantes: Excelente</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-top"><span class="name">Condición del espacio virtual</span><span class="val">3.98</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:99.5%"></div></div>
+      <div class="bar-note">40 Excelente · 1 Bueno</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-top"><span class="name">Materiales y estrategias de enseñanza</span><span class="val">3.95</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:98.75%"></div></div>
+      <div class="bar-note">39 Excelente · 2 Bueno</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-top"><span class="name">Información clara y organizada</span><span class="val">3.95</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:98.75%"></div></div>
+      <div class="bar-note">39 Excelente · 2 Bueno</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-top"><span class="name">Cumplió con los objetivos del curso</span><span class="val">3.93</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:98.2%"></div></div>
+      <div class="bar-note">39 Excelente · 1 Bueno · 1 Regular</div>
+    </div>
+
+    <p style="margin-top:20px;font-size:15px;color:#333;">
+      <strong>Aplicabilidad al trabajo:</strong> 40 de 41 participantes (97.6&nbsp;%) afirmaron que lo aprendido les ayudará en el desempeño de sus funciones.
+    </p>
+  </section>
+
+  <section>
+    <h2>La voz de los participantes</h2>
+    <p class="lead">Testimonios textuales recogidos en las preguntas abiertas de la evaluación.</p>
+    <div class="quotes">
+      <div class="q"><span class="txt">"El material ofrecido por la profesora, sus conocimientos y empatía con los participantes ha sido excelente. Me encantó, tremendo recurso para nosotros."</span><span class="who">— Participante, ADSEF</span></div>
+      <div class="q"><span class="txt">"Ahora sé que la integración de la IA como herramienta de redacción es poderosa. Me llevo nuevo conocimiento sobre cómo usar las distintas herramientas para distintas funciones. ¡Gracias por los tips!"</span><span class="who">— Participante</span></div>
+      <div class="q"><span class="txt">"Se nota el conocimiento de la profesora, tanto con la IA como en la parte humana."</span><span class="who">— Participante, ADSEF</span></div>
+      <div class="q"><span class="txt">"Podré redactar de una forma más efectiva y clara mis correos electrónicos y cartas."</span><span class="who">— Participante</span></div>
+      <div class="q"><span class="txt">"Dieron herramientas prácticas y útiles para agilizar la tarea."</span><span class="who">— Participante</span></div>
+      <div class="q"><span class="txt">"Añade mucho valor: manejo profesional y mayor eficiencia en nuestras funciones."</span><span class="who">— Participante</span></div>
+      <div class="q"><span class="txt">"Llevo 30 años como secretaria y este adiestramiento es empezar de nuevo. Necesito más como este; gracias por toda su ayuda."</span><span class="who">— Participante</span></div>
+      <div class="q"><span class="txt">"Excelente recurso, comunica muy bien."</span><span class="who">— Participante</span></div>
+      <div class="q"><span class="txt">"Creo que la IA llegó para quedarse. Aprender sobre este tema me ayudará a maximizar el tiempo."</span><span class="who">— Participante</span></div>
+      <div class="q"><span class="txt">"Ayuda para redacción de cartas al personal, informes de trabajo y evaluaciones a los supervisados."</span><span class="who">— Participante</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Diseño instruccional: acompañamiento integral</h2>
+    <p class="lead">Cada participante recibió una biblioteca de recursos antes y después de la sesión, alineada al principio TIHA de aprendizaje continuo más allá del encuentro sincrónico.</p>
+    <div class="mat-grid">
+      <div class="mat">
+        <h4>Materiales pre-capacitación</h4>
+        <ul>
+          <li>Guía de pantalla dividida (trabajo lado a lado)</li>
+          <li>Conectores de párrafo para escritura profesional</li>
+          <li>Manual práctico de cartas comerciales</li>
+          <li>Ruta IA de redacción legal TIHA</li>
+          <li>Cheat sheet de atajos de Teams</li>
+        </ul>
+      </div>
+      <div class="mat">
+        <h4>Materiales post-capacitación</h4>
+        <ul>
+          <li>Cuaderno de ejercicios TIHA</li>
+          <li>Guía y tabla de redacción sin redundancias</li>
+          <li>Mini-guía de errores de la IA al redactar</li>
+          <li>Informe / FAQ de la capacitación</li>
+          <li>Deck completo del taller + herramientas de IA para combinar</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:18px;font-size:14.5px;color:var(--muted);">
+      Este andamiaje documental convierte una sesión puntual en una ruta de aprendizaje sostenida — un rasgo distintivo del Modelo TIHA que fortalece la transferencia al puesto de trabajo.
+    </p>
+  </section>
+
+  <section>
+    <h2>Áreas de mejora identificadas</h2>
+    <p class="lead">La mejora continua es parte del Modelo TIHA. Estos señalamientos, aunque minoritarios, se documentan con rigor para fortalecer futuras ediciones.</p>
+
+    <div class="find balanced">
+      <h3>Profundidad de contenido de redacción</h3>
+      <p>Un participante esperaba mayor desarrollo de elementos específicos de redacción (formatos, conectores, signos de puntuación, estilos modernos). <strong>Oportunidad:</strong> ofrecer un Nivel 2 enfocado en mecánica de redacción, complementario al enfoque de integración de IA de este taller.</p>
+    </div>
+
+    <div class="find balanced">
+      <h3>Balance entre interacción y flujo de contenido</h3>
+      <p>Dos participantes señalaron que la lectura de mensajes del chat, en modalidad virtual, restó fluidez en algunos momentos. <strong>Oportunidad:</strong> reservar momentos específicos para atender el chat (p. ej. antes de cada break) y designar apoyo de moderación, preservando la interacción sin interrumpir el hilo. La interacción constante es un rasgo deliberado de la metodología; el reto es dosificarla, no eliminarla.</p>
+    </div>
+
+    <div class="find balanced">
+      <h3>Nota metodológica sobre un caso atípico</h3>
+      <p>Una evaluación marcó "No" en "¿tomaría otros cursos?", pero en su explicación escribió <em>"completamente convencida"</em> y calificó todos los criterios como Excelente (4). La inconsistencia sugiere un posible error de marcado. Se documenta con transparencia y no se descarta.</p>
+    </div>
+
+    <div class="callout">
+      <div class="k">Reflexión TIHA de la facilitadora</div>
+      <p>La interacción cercana y la atención a la voz de cada participante no son una distracción: son el corazón del enfoque humanizador de TIHA. La retroalimentación recibida no cuestiona ese principio, sino que invita a <strong>dosificarlo con intención</strong> en entornos virtuales de gran grupo.</p>
+      <p>Escuchar a las personas —incluso cuando su comentario incomoda— es precisamente lo que distingue una tecnología humanizada de una automatizada. Estos datos, con su 3.97 de promedio y su testimonio humano, confirman que el modelo funciona; y los pocos señalamientos son la brújula para seguir afinándolo.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Conclusión para investigación</h2>
+    <p style="font-size:15.5px;color:#333;">
+      Los datos sostienen empíricamente la eficacia del Modelo TIHA en contextos de capacitación gubernamental: alta satisfacción transversal (3.97/4.00), dominio y actitud valorados de forma unánime, y una aplicabilidad percibida del 97.6&nbsp;%. El acompañamiento documental pre y post sesión, junto con el enfoque de humanización antes que tecnología, emergen como factores diferenciadores. Los señalamientos minoritarios ofrecen líneas concretas de refinamiento para próximas ediciones y publicaciones.
+    </p>
+    <p class="method" style="margin-top:20px;">
+      <strong>Nota metodológica:</strong> N = 41 evaluaciones de participantes de aproximadamente 24 agencias gubernamentales, recogidas mediante formulario estandarizado de la Alianza OATRH–UPR. Escala Likert de 4 puntos (1 = Deficiente, 4 = Excelente) en seis dimensiones, más tres preguntas abiertas. Los testimonios se reproducen textualmente con leves ajustes ortográficos. Análisis correspondiente a la capacitación "Redacción efectiva de informes, cartas y correos electrónicos".
+    </p>
+  </section>
+
+  <footer>
+    <p class="phrase">"No es usar más tecnología, es usar tecnología para vivir mejor."</p>
+    <p class="sig">
+      <b>Dra. Mariluz Serrano Ortiz</b><br>
+      Modelo TIHA ·<br>
+      mariluz.serrano@upr.edu
+    </p>
+    <div class="dots"><span></span><span></span><span></span><span></span></div>
+  </footer>
+
+</div>
+</body>
+</html>
