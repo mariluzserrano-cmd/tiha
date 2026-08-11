@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>TIHA · Flash: Fundamentos del Sistema Nervioso</title>
+<style>
+  :root{
+    --primary:#3B5673; --deep:#2C4256; --slate:#59778F; --sky:#C2DAE6;
+    --gold:#FFCB64; --ochre:#E0A51D; --white:#FFFFFF; --textd:#3E4B54;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%; background:#000; font-family:Calibri, 'Segoe UI', sans-serif; overflow:hidden;}
+  .stage{position:relative; width:100vw; height:100vh;}
+  .card{
+    position:absolute; inset:0; opacity:0; transition:opacity .6s ease;
+    display:flex; align-items:flex-end;
+  }
+  .card.active{opacity:1; z-index:2;}
+  .bg{
+    position:absolute; inset:0; background-size:cover; background-position:center;
+    filter:saturate(1.05) contrast(1.03);
+  }
+  .scrim{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(44,66,86,.15) 0%, rgba(44,66,86,.15) 40%, rgba(20,30,40,.92) 100%);
+  }
+  .content{position:relative; z-index:3; width:100%; padding:5vh 6vw 6vh;}
+  .eyebrow{
+    display:inline-block; font-size:1.1vw; letter-spacing:.3em; font-weight:700;
+    color:var(--gold); text-transform:uppercase; margin-bottom:1vh; font-family:Cambria, serif;
+  }
+  h1{
+    font-family:Cambria, Georgia, serif; font-weight:700; color:#fff;
+    font-size:5vw; line-height:1.02; margin-bottom:1.2vh; text-shadow:0 4px 24px rgba(0,0,0,.4);
+  }
+  .def{color:#EAF1F5; font-size:1.5vw; max-width:60vw; line-height:1.4; font-style:italic;}
+  .dot{
+    position:absolute; top:6vh; right:5vw; width:1.1vw; height:1.1vw; border-radius:50%;
+    z-index:3;
+  }
+  .credit{
+    position:absolute; bottom:2vh; right:2vw; z-index:3; color:rgba(255,255,255,.55);
+    font-size:.75vw; font-family:Calibri, sans-serif;
+  }
+  .nav{
+    position:fixed; bottom:0; left:0; width:100%; z-index:10;
+    display:flex; justify-content:center; gap:.6vw; padding:2.2vh 0;
+  }
+  .nav button{
+    width:1vw; min-width:12px; height:1vw; min-height:12px; border-radius:50%; border:2px solid rgba(255,255,255,.6);
+    background:rgba(255,255,255,.15); cursor:pointer; transition:.3s;
+  }
+  .nav button.on{background:var(--gold); border-color:var(--gold);}
+  .arrow{
+    position:fixed; top:50%; transform:translateY(-50%); z-index:10; cursor:pointer;
+    width:3.2vw; height:3.2vw; border-radius:50%; background:rgba(20,30,40,.45);
+    display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.6vw;
+    border:1px solid rgba(255,255,255,.25); user-select:none; transition:.2s;
+  }
+  .arrow:hover{background:rgba(20,30,40,.75);}
+  .arrow.left{left:2vw;} .arrow.right{right:2vw;}
+
+  /* Presenter script panel */
+  .scriptToggle{
+    position:fixed; top:2.2vh; left:2vw; z-index:20; background:var(--primary); color:#fff;
+    border:none; padding:.7vh 1.1vw; border-radius:30px; font-size:.85vw; cursor:pointer;
+    font-family:Calibri, sans-serif; letter-spacing:.02em; box-shadow:0 4px 14px rgba(0,0,0,.3);
+  }
+  .scriptPanel{
+    position:fixed; top:0; left:0; height:100%; width:min(420px, 90vw); z-index:19;
+    background:var(--deep); color:#EAF1F5; padding:9vh 2vw 3vh; transform:translateX(-105%);
+    transition:transform .4s ease; overflow-y:auto; box-shadow:6px 0 30px rgba(0,0,0,.4);
+    font-size:.95rem; line-height:1.55;
+  }
+  .scriptPanel.open{transform:translateX(0);}
+  .scriptPanel h3{font-family:Cambria, serif; color:var(--gold); margin-bottom:1rem; font-size:1.15rem;}
+  .scriptPanel p{margin-bottom:.9rem;}
+  .scriptPanel .cue{color:var(--gold); font-weight:700;}
+  .scriptPanel .say{background:rgba(255,255,255,.06); border-left:3px solid var(--ochre); padding:.6rem .8rem; border-radius:4px; font-style:italic;}
+
+  .progress{position:fixed; top:0; left:0; height:4px; background:var(--gold); z-index:21; transition:width .4s ease;}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<button class="scriptToggle" onclick="toggleScript()">📋 Guion (solo para ti)</button>
+<div class="scriptPanel" id="scriptPanel"></div>
+
+<div class="stage" id="stage"></div>
+
+<div class="arrow left" onclick="go(-1)">‹</div>
+<div class="arrow right" onclick="go(1)">›</div>
+<div class="nav" id="nav"></div>
+
+<script>
+const cards = [
+  {
+    tag: "01 · Sistema Nervioso Central",
+    title: "El centro que integra todo",
+    def: "Encéfalo y médula espinal — el asiento de la conciencia, la memoria y la decisión.",
+    img: "https://commons.wikimedia.org/wiki/Special:FilePath/Human_brain_preserved_in_formaldehyde.jpg",
+    dot: "#FFCB64",
+    credit: "Fotografía real · Wikimedia Commons · CC BY-SA 4.0",
+    script: `
+      <h3>SNC — Guion en vivo</h3>
+      <p><span class="cue">Aquí sí comienzas formalmente:</span></p>
+      <p><strong>SNC → SNP → neurona → sinapsis.</strong></p>
+      <p>Pero no conviertas esto en Anatomía 101.</p>
+      <p>Usa <strong>su propio cuerpo</strong>.</p>
+      <p class="say">"Ahora mismo ustedes me están escuchando. ¿Qué tuvo que ocurrir para que mi voz terminara convirtiéndose en significado dentro de ustedes?"</p>
+      <p>BOOM. Déjalos pensar.</p>
+      <p>Sonido → sistema sensorial → procesamiento → redes neuronales → interpretación…</p>
+      <p>Entonces dices:</p>
+      <p class="say">"Eso que parece tan sencillo como escucharme requiere un sistema extraordinariamente complejo."</p>
+      <p>Y enseñas el mapa.</p>
+    `
+  },
+  {
+    tag: "02 · Sistema Nervioso Periférico",
+    title: "Los caminos hacia el cuerpo",
+    def: "Nervios reales, disección anatómica — la red que conecta el centro con cada rincón del cuerpo.",
+    img: "https://commons.wikimedia.org/wiki/Special:FilePath/Tibial_and_fibular_nerve.jpg",
+    dot: "#C2DAE6",
+    credit: "Disección real · Anatomist90 · Wikimedia Commons · CC BY-SA 3.0",
+    script: `
+      <h3>SNP — Guion en vivo</h3>
+      <p>Señala la imagen: esto no es un dibujo, es un nervio real, disecado.</p>
+      <p class="say">"Todo lo que sienten ahora mismo — la silla, la temperatura del cuarto, el peso de su cuerpo — viaja por caminos como este."</p>
+      <p>Pausa. Deja que la imagen incomode un poco — esa incomodidad es atención.</p>
+      <p>Puente: "El SNC decide. El SNP lleva la orden y trae la información. Sin este cable, el cerebro está aislado."</p>
+    `
+  },
+  {
+    tag: "03 · Neurona",
+    title: "La unidad que piensa",
+    def: "Una neurona real, viva, bajo el microscopio — recibe, procesa y transmite.",
+    img: "https://commons.wikimedia.org/wiki/Special:FilePath/Neuron_in_tissue_culture.jpg",
+    dot: "#E0A51D",
+    credit: "Microscopía real · Wikimedia Commons · CC BY-SA 3.0",
+    script: `
+      <h3>Neurona — Guion en vivo</h3>
+      <p>"Esto que ven no es una ilustración de libro. Es una neurona real, viva, fotografiada bajo el microscopio."</p>
+      <p class="say">"Tienen unos 86 mil millones de estas, en este momento, haciendo posible que ustedes existan como ustedes mismos."</p>
+      <p>Pregunta rápida: "¿Alguna vez habían visto una neurona real, y no un dibujo?"</p>
+      <p>Deja 2-3 respuestas. Luego conecta: "Cada una de estas es un punto de decisión. Multiplíquenlo por 86 mil millones."</p>
+    `
+  },
+  {
+    tag: "04 · Sinapsis",
+    title: "Donde ocurre el aprendizaje",
+    def: "Una red de neuronas conectándose — el espacio exacto donde nace el aprendizaje.",
+    img: "https://commons.wikimedia.org/wiki/Special:FilePath/GFP_Neurons.png",
+    dot: "#59778F",
+    credit: "Microscopía de fluorescencia real · Wikimedia Commons",
+    script: `
+      <h3>Sinapsis — Guion en vivo</h3>
+      <p>"Miren estos puntos de contacto entre neuronas. Ahí — justo ahí — es donde ocurre el aprendizaje."</p>
+      <p class="say">"No en la neurona sola. En la conexión. En el espacio entre dos."</p>
+      <p>Cierre del bloque, sembrando semana 2: "Y esa conexión no es fija. Cambia. Se fortalece o se debilita según lo que hacemos con ella. Guarden esa idea — la semana que viene tiene nombre propio: neuroplasticidad."</p>
+    `
+  }
+];
+
+let idx = 0;
+const stage = document.getElementById('stage');
+const nav = document.getElementById('nav');
+const scriptPanel = document.getElementById('scriptPanel');
+const progress = document.getElementById('progress');
+
+cards.forEach((c, i) => {
+  const card = document.createElement('div');
+  card.className = 'card' + (i===0 ? ' active' : '');
+  card.id = 'card'+i;
+  card.innerHTML = `
+    <div class="bg" style="background-image:url('${c.img}')"></div>
+    <div class="scrim"></div>
+    <div class="dot" style="background:${c.dot}"></div>
+    <div class="content">
+      <div class="eyebrow">${c.tag}</div>
+      <h1>${c.title}</h1>
+      <div class="def">${c.def}</div>
+    </div>
+    <div class="credit">${c.credit}</div>
+  `;
+  stage.appendChild(card);
+
+  const dotBtn = document.createElement('button');
+  dotBtn.onclick = () => jump(i);
+  if(i===0) dotBtn.className = 'on';
+  nav.appendChild(dotBtn);
+});
+
+function render(){
+  document.querySelectorAll('.card').forEach((c,i)=>c.classList.toggle('active', i===idx));
+  document.querySelectorAll('.nav button').forEach((b,i)=>b.classList.toggle('on', i===idx));
+  progress.style.width = ((idx+1)/cards.length*100) + '%';
+  if(scriptPanel.classList.contains('open')) renderScript();
+}
+function go(dir){ idx = (idx + dir + cards.length) % cards.length; render(); }
+function jump(i){ idx = i; render(); }
+function renderScript(){ scriptPanel.innerHTML = cards[idx].script; }
+function toggleScript(){
+  scriptPanel.classList.toggle('open');
+  if(scriptPanel.classList.contains('open')) renderScript();
+}
+
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'ArrowRight' || e.key === ' ') go(1);
+  if(e.key === 'ArrowLeft') go(-1);
+  if(e.key === 'g' || e.key === 'G') toggleScript();
+});
+
+render();
+</script>
+</body>
+</html>
