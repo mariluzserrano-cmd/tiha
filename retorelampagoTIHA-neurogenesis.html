@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reto Relámpago · Conceptos Básicos · TIHA</title>
+<style>
+:root{
+  --primary:#3B5673; --deep:#2C4256; --slate:#59778F; --sky:#C2DAE6;
+  --gold:#FFCB64; --ochre:#E0A51D; --card:#EEF3F6; --textd:#3E4B54; --mute:#76838C;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:Calibri,'Segoe UI',system-ui,sans-serif;background:var(--primary);color:#fff;overflow:hidden;}
+
+.screen{position:fixed;inset:0;display:none;flex-direction:column;padding:2.5vh 4vw;}
+.screen.on{display:flex;}
+
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5vh;flex-wrap:wrap;gap:1vh;}
+.brand .bt{font-weight:700;letter-spacing:.14em;font-size:1.05vw;color:var(--gold);}
+.rondaTag{background:var(--gold);color:#5A4410;padding:.5vh 1.4vw;border-radius:20px;font-weight:700;font-size:1vw;}
+
+.hero{flex:1;display:flex;flex-direction:column;justify-content:center;}
+.hero h1{font-family:Cambria,Georgia,serif;font-size:5vw;line-height:1.05;margin-bottom:2vh;}
+.hero .sub{font-size:1.5vw;color:#DCEAF0;margin-bottom:4vh;max-width:62vw;line-height:1.5;}
+.rules{display:flex;gap:1.2vw;margin-bottom:4vh;flex-wrap:wrap;}
+.rule{background:var(--deep);border-radius:12px;padding:2vh 1.6vw;flex:1;min-width:220px;border-top:4px solid var(--gold);}
+.rule:nth-child(2){border-top-color:var(--sky);}
+.rule:nth-child(3){border-top-color:var(--ochre);}
+.rule h3{font-family:Cambria,serif;font-size:1.5vw;margin-bottom:.8vh;}
+.rule p{font-size:1.05vw;color:#DCEAF0;line-height:1.45;}
+
+.btn{background:var(--gold);color:#4A3608;border:none;padding:1.5vh 2.6vw;border-radius:40px;
+  font-family:inherit;font-size:1.25vw;font-weight:700;cursor:pointer;transition:.2s;}
+.btn:hover{background:#ffd684;transform:translateY(-2px);}
+.btn.ghost{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.45);}
+.btn.ghost:hover{background:rgba(255,255,255,.12);transform:none;}
+.btn.sm{font-size:1vw;padding:1.1vh 1.8vw;}
+.btnrow{display:flex;gap:1.2vw;align-items:center;flex-wrap:wrap;}
+
+.stage{flex:1;display:flex;flex-direction:column;justify-content:center;}
+.qbox{background:var(--deep);border-radius:16px;padding:3vh 3vw;border-left:9px solid var(--gold);margin-bottom:2.5vh;}
+.qbox.r2{border-left-color:var(--sky);}
+.qbox.r3{border-left-color:var(--ochre);}
+.qlabel{font-size:.95vw;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:1.2vh;}
+.qtext{font-family:Cambria,Georgia,serif;font-size:2.35vw;line-height:1.28;}
+
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:1.4vh 1.4vw;}
+.opt{background:var(--deep);border:2px solid rgba(255,255,255,.14);border-radius:14px;
+  padding:2vh 1.8vw;cursor:pointer;transition:.18s;display:flex;align-items:center;gap:1.2vw;
+  text-align:left;font-family:inherit;color:#fff;}
+.opt:hover{border-color:var(--gold);background:#33506b;}
+.opt .letter{background:rgba(255,255,255,.16);width:2.4vw;height:2.4vw;min-width:38px;min-height:38px;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:Cambria,serif;font-weight:700;font-size:1.3vw;flex-shrink:0;}
+.opt .txt{font-size:1.35vw;line-height:1.3;}
+.opt.correct{background:#2E6B45;border-color:#7BD69C;}
+.opt.correct .letter{background:#7BD69C;color:#153B24;}
+.opt.wrong{background:#6B2E33;border-color:#E08A8A;opacity:.75;}
+.opt.wrong .letter{background:#E08A8A;color:#3B1518;}
+.opt.dim{opacity:.4;}
+
+.note{background:rgba(255,203,100,.14);border-radius:12px;padding:2vh 2vw;margin-top:2vh;display:none;}
+.note.show{display:block;animation:pop .3s ease;}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.note .nl{font-size:.9vw;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:.8vh;}
+.note .ntext{font-size:1.25vw;color:#fff;line-height:1.45;font-style:italic;}
+
+.bottom{display:flex;justify-content:space-between;align-items:center;gap:1.5vw;margin-top:2vh;flex-wrap:wrap;}
+.progress{font-size:1vw;color:#DCEAF0;}
+.timer{font-family:Cambria,serif;font-size:2.3vw;font-weight:700;color:var(--gold);min-width:110px;text-align:center;}
+.timer.low{color:#FF9E80;}
+.scores{display:flex;gap:.9vw;align-items:center;flex-wrap:wrap;}
+.team{background:var(--deep);border-radius:12px;padding:.9vh 1.1vw;display:flex;align-items:center;gap:.7vw;}
+.team .nm{font-size:.95vw;color:#DCEAF0;}
+.team .pts{font-family:Cambria,serif;font-size:1.55vw;font-weight:700;color:var(--gold);min-width:30px;text-align:center;}
+.team button{background:rgba(255,255,255,.15);border:none;color:#fff;width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:.95rem;line-height:1;}
+.team button:hover{background:var(--gold);color:#4A3608;}
+
+.final{text-align:center;}
+.final h1{font-family:Cambria,serif;font-size:3.8vw;margin-bottom:3vh;}
+.final .quote{background:var(--deep);border-left:8px solid var(--ochre);border-radius:14px;padding:3vh 3vw;max-width:900px;margin:0 auto 3vh;text-align:left;}
+.final .quote p{font-family:Cambria,serif;font-size:1.75vw;font-style:italic;line-height:1.4;}
+.final .quote .at{color:var(--gold);font-weight:700;font-size:1.05vw;text-align:right;margin-top:1.5vh;}
+
+.hint{position:fixed;bottom:.9vh;left:0;width:100%;text-align:center;font-size:.82vw;color:rgba(255,255,255,.38);}
+
+/* ===== TIHA · CAPA INTERACTIVA ===== */
+body{
+  background:
+    radial-gradient(circle at 12% 18%, rgba(194,218,230,.13), transparent 28%),
+    radial-gradient(circle at 88% 72%, rgba(255,203,100,.11), transparent 30%),
+    var(--primary);
+}
+.screen.on{animation:screenIn .48s cubic-bezier(.2,.8,.2,1);}
+@keyframes screenIn{
+  from{opacity:0;transform:scale(.985) translateY(10px)}
+  to{opacity:1;transform:none}
+}
+.hero h1{animation:titleFloat 3.8s ease-in-out infinite;}
+@keyframes titleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+.qbox{position:relative;overflow:hidden;}
+.qbox::after{
+  content:"";position:absolute;inset:0 auto 0 -28%;width:22%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.10),transparent);
+  transform:skewX(-18deg);pointer-events:none;
+}
+.qbox.pulse::after{animation:sweep .65s ease;}
+@keyframes sweep{to{left:118%}}
+
+.opt{position:relative;overflow:hidden;transform-origin:center;}
+.opt.enter{animation:optIn .42s cubic-bezier(.2,.8,.2,1) both;}
+@keyframes optIn{
+  from{opacity:0;transform:translateX(-18px) scale(.97)}
+  to{opacity:1;transform:none}
+}
+.opt.correct{animation:correctPop .55s cubic-bezier(.2,1.3,.3,1);}
+@keyframes correctPop{
+  0%{transform:scale(1)}
+  45%{transform:scale(1.045)}
+  100%{transform:scale(1)}
+}
+.opt.wrong{animation:wrongShake .42s ease;}
+@keyframes wrongShake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-10px)}
+  40%{transform:translateX(8px)}
+  60%{transform:translateX(-5px)}
+  80%{transform:translateX(3px)}
+}
+.rondaTag.bump{animation:bump .5s ease;}
+@keyframes bump{0%{transform:scale(.85)}55%{transform:scale(1.08)}100%{transform:scale(1)}}
+
+.timer.run{animation:timerPulse 1s ease-in-out infinite;}
+@keyframes timerPulse{50%{transform:scale(1.08)}}
+.timer.low{animation:urgent .62s ease-in-out infinite;}
+@keyframes urgent{50%{transform:scale(1.14);filter:brightness(1.25)}}
+
+.team.flash{animation:scoreFlash .5s ease;}
+@keyframes scoreFlash{50%{transform:scale(1.12);box-shadow:0 0 0 5px rgba(255,203,100,.18)}}
+
+#fxLayer{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden;}
+.confetti{
+  position:absolute;width:10px;height:16px;border-radius:3px;opacity:.95;
+  animation:confettiFall 1.65s cubic-bezier(.1,.7,.2,1) forwards;
+}
+@keyframes confettiFall{
+  0%{transform:translate3d(0,-8vh,0) rotate(0deg);opacity:1}
+  100%{transform:translate3d(var(--drift),105vh,0) rotate(var(--spin));opacity:0}
+}
+.spark{
+  position:absolute;width:8px;height:8px;border-radius:50%;
+  background:var(--gold);box-shadow:0 0 14px var(--gold);
+  animation:spark .65s ease-out forwards;
+}
+@keyframes spark{
+  from{transform:translate(0,0) scale(1);opacity:1}
+  to{transform:translate(var(--x),var(--y)) scale(.1);opacity:0}
+}
+.soundCtl{
+  position:fixed;right:1.4vw;bottom:1.2vh;z-index:10000;
+  background:rgba(44,66,86,.85);border:1px solid rgba(255,255,255,.2);
+  color:#fff;border-radius:999px;padding:.65vh 1vw;cursor:pointer;font-weight:700;
+  backdrop-filter:blur(8px);
+}
+.roundSplash{
+  position:fixed;inset:0;z-index:8000;display:flex;align-items:center;justify-content:center;
+  background:rgba(44,66,86,.90);opacity:0;pointer-events:none;
+}
+.roundSplash.show{animation:splash 1s ease both;}
+.roundSplash .inside{text-align:center;}
+.roundSplash .big{font-family:Cambria,serif;font-size:5.2vw;color:var(--gold);font-weight:700;}
+.roundSplash .small{font-size:1.35vw;color:#DCEAF0;margin-top:1vh;}
+@keyframes splash{
+  0%{opacity:0;transform:scale(1.08)}
+  18%,72%{opacity:1;transform:scale(1)}
+  100%{opacity:0;transform:scale(.98)}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;}
+}
+
+</style>
+</head>
+<body>
+
+<div id="fxLayer"></div>
+<div class="roundSplash" id="roundSplash">
+  <div class="inside">
+    <div class="big" id="splashBig">Ronda 1</div>
+    <div class="small" id="splashSmall">Reconocer</div>
+  </div>
+</div>
+<button class="soundCtl" id="soundCtl" onclick="toggleSound()">🔊 Sonido ON</button>
+
+
+<div class="screen on" id="s-intro">
+  <div class="top">
+    <div class="brand"><span class="bt">TIHA</span></div>
+    <div class="rondaTag">Módulo XXI · Sesión 2</div>
+  </div>
+  <div class="hero">
+    <h1>Reto Relámpago</h1>
+    <div class="sub">Conceptos básicos de neurociencia. Tres rondas, exigencia creciente. En equipos.</div>
+    <div class="rules">
+      <div class="rule"><h3>Ronda 1 · Reconocer</h3><p>Doy una definición, ustedes eligen el término. Rápido.</p></div>
+      <div class="rule"><h3>Ronda 2 · Relacionar</h3><p>Doy dos conceptos, ustedes eligen qué los conecta.</p></div>
+      <div class="rule"><h3>Ronda 3 · Aplicar</h3><p>Doy un caso real, ustedes eligen qué concepto lo explica.</p></div>
+    </div>
+    <div class="btnrow">
+      <button class="btn" onclick="start()">Comenzar el reto</button>
+      <span style="font-size:1.1vw;color:var(--gold);font-style:italic;">No se puntúa quién sabe más. Se puntúa quién explica mejor.</span>
+    </div>
+  </div>
+  <div class="hint">Clic en una opción para revelar · Teclas 1-4 eligen · ← → navegan · T cronómetro</div>
+</div>
+
+<div class="screen" id="s-game">
+  <div class="top">
+    <div class="brand"><span class="bt">TIHA</span></div>
+    <div class="rondaTag" id="rondaTag">Ronda 1 · Reconocer</div>
+  </div>
+
+  <div class="stage">
+    <div class="qbox" id="qbox">
+      <div class="qlabel" id="qlabel">Reto 1</div>
+      <div class="qtext" id="qtext"></div>
+    </div>
+    <div class="opts" id="opts"></div>
+    <div class="note" id="note">
+      <div class="nl">Por qué</div>
+      <div class="ntext" id="ntext"></div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="progress" id="progress"></div>
+    <div class="timer" id="timer">0:30</div>
+    <div class="btnrow">
+      <button class="btn ghost sm" onclick="toggleTimer()" id="tbtn">Cronómetro</button>
+      <button class="btn sm" onclick="reveal()">Revelar</button>
+      <button class="btn ghost sm" onclick="next()">Siguiente ›</button>
+    </div>
+  </div>
+
+  <div class="bottom" style="margin-top:1.2vh">
+    <div class="scores" id="scores"></div>
+    <button class="btn ghost sm" onclick="prev()">‹ Anterior</button>
+  </div>
+</div>
+
+<div class="screen" id="s-final">
+  <div class="top">
+    <div class="brand"><span class="bt">TIHA</span></div>
+    <div class="rondaTag">Cierre</div>
+  </div>
+  <div class="stage">
+    <div class="final">
+      <h1>Lo que acabamos de hacer</h1>
+      <div class="quote">
+        <p>Reconocer, relacionar y aplicar no son tres juegos: son tres niveles de profundidad de la misma memoria. Lo que lograron transferir a su campo es lo que de verdad quedó codificado.</p>
+        <div class="at">— Modelo TIHA</div>
+      </div>
+      <div id="finalScores" style="font-size:1.3vw;color:#DCEAF0;margin-bottom:3vh"></div>
+      <button class="btn ghost" onclick="go('s-intro')">Volver al inicio</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+/* ===== AUDIO SIN ARCHIVOS EXTERNOS: Web Audio API ===== */
+let soundOn = true;
+let audioCtx = null;
+
+function ctx(){
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if(audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+function tone(freq=440, dur=.12, type='sine', vol=.055, delay=0){
+  if(!soundOn) return;
+  const c=ctx(), o=c.createOscillator(), g=c.createGain();
+  o.type=type; o.frequency.value=freq;
+  g.gain.setValueAtTime(0.0001,c.currentTime+delay);
+  g.gain.exponentialRampToValueAtTime(vol,c.currentTime+delay+.015);
+  g.gain.exponentialRampToValueAtTime(0.0001,c.currentTime+delay+dur);
+  o.connect(g); g.connect(c.destination);
+  o.start(c.currentTime+delay); o.stop(c.currentTime+delay+dur+.03);
+}
+function sfx(name){
+  if(!soundOn) return;
+  if(name==='start'){ tone(392,.11,'triangle',.06,0); tone(523,.13,'triangle',.06,.10); tone(659,.18,'triangle',.07,.21); }
+  if(name==='click'){ tone(520,.07,'sine',.035,0); }
+  if(name==='correct'){ tone(523,.10,'triangle',.06,0); tone(659,.10,'triangle',.06,.09); tone(784,.22,'triangle',.07,.18); }
+  if(name==='wrong'){ tone(210,.12,'sawtooth',.035,0); tone(155,.2,'sawtooth',.028,.08); }
+  if(name==='tick'){ tone(720,.045,'square',.018,0); }
+  if(name==='time'){ tone(180,.16,'square',.04,0); tone(135,.28,'square',.035,.14); }
+  if(name==='next'){ tone(440,.07,'triangle',.03,0); tone(554,.09,'triangle',.035,.07); }
+  if(name==='score'){ tone(880,.08,'sine',.03,0); }
+  if(name==='finish'){ [523,659,784,1046].forEach((f,k)=>tone(f,.22,'triangle',.055,k*.11)); }
+}
+function toggleSound(){
+  soundOn=!soundOn;
+  document.getElementById('soundCtl').textContent=soundOn?'🔊 Sonido ON':'🔇 Sonido OFF';
+  if(soundOn) sfx('click');
+}
+function confetti(n=70){
+  const layer=document.getElementById('fxLayer');
+  const colors=['#FFCB64','#C2DAE6','#E0A51D','#7BD69C','#ffffff'];
+  for(let k=0;k<n;k++){
+    const d=document.createElement('div'); d.className='confetti';
+    d.style.left=(Math.random()*100)+'vw';
+    d.style.top=(-10-Math.random()*20)+'vh';
+    d.style.background=colors[Math.floor(Math.random()*colors.length)];
+    d.style.setProperty('--drift',((Math.random()*34)-17)+'vw');
+    d.style.setProperty('--spin',((Math.random()*900)-450)+'deg');
+    d.style.animationDelay=(Math.random()*.35)+'s';
+    layer.appendChild(d); setTimeout(()=>d.remove(),2200);
+  }
+}
+function sparks(el){
+  const r=el.getBoundingClientRect(), layer=document.getElementById('fxLayer');
+  const cx=r.left+r.width/2, cy=r.top+r.height/2;
+  for(let k=0;k<16;k++){
+    const s=document.createElement('div'); s.className='spark';
+    const a=Math.PI*2*k/16, dist=45+Math.random()*55;
+    s.style.left=cx+'px'; s.style.top=cy+'px';
+    s.style.setProperty('--x',(Math.cos(a)*dist)+'px');
+    s.style.setProperty('--y',(Math.sin(a)*dist)+'px');
+    layer.appendChild(s); setTimeout(()=>s.remove(),800);
+  }
+}
+function splashRound(r){
+  const spl=document.getElementById('roundSplash');
+  const labels={1:['Ronda 1','Reconocer'],2:['Ronda 2','Relacionar'],3:['Ronda 3','Aplicar']};
+  document.getElementById('splashBig').textContent=labels[r][0];
+  document.getElementById('splashSmall').textContent=labels[r][1];
+  spl.classList.remove('show'); void spl.offsetWidth; spl.classList.add('show');
+  sfx('start');
+}
+
+const RETOS = [
+  {r:1, q:'"Las neuronas que se activan juntas, se conectan juntas."',
+   o:['Regla de Hebb','Ley de Broca','Principio de Cajal','Teoría de Gazzaniga'], c:0,
+   n:'Fundamento de la plasticidad sináptica: el uso fortalece la conexión; el desuso la debilita.'},
+
+  {r:1, q:'Capacidad del cerebro de modificarse y adaptarse en respuesta a la experiencia.',
+   o:['Homeostasis','Neuroplasticidad','Mielinización','Conductividad'], c:1,
+   n:'No es exclusiva de la infancia: persiste durante toda la vida adulta.'},
+
+  {r:1, q:'Formación de neuronas nuevas, sobre todo en el hipocampo.',
+   o:['Sinaptogénesis','Mielinización','Neurogénesis','Brote axonal'], c:2,
+   n:'Se estimula con ejercicio físico, entorno enriquecido y emoción. Ojo: la sinaptogénesis crea sinapsis, no neuronas.'},
+
+  {r:1, q:'Vaina que recubre el axón y acelera la conducción de la señal nerviosa.',
+   o:['Piamadre','Sustancia gris','Mielina','Membrana postsináptica'], c:2,
+   n:'Producida por los oligodendrocitos en el SNC. A mayor mielinización, mayor velocidad de transmisión.'},
+
+  {r:1, q:'Capa protectora intermedia del sistema nervioso central: fina pero resistente.',
+   o:['Duramadre','Aracnoides','Piamadre','Barrera hematoencefálica'], c:1,
+   n:'Las tres meninges, de fuera hacia dentro: duramadre, aracnoides y piamadre.'},
+
+  {r:2, q:'Mielina  ⟷  rendimiento cognitivo',
+   o:['Mayor velocidad de transmisión','Más neuronas disponibles','Mejor riego sanguíneo','Mayor número de sinapsis'], c:0,
+   n:'El engrosamiento de la mielina acelera la señal: pensar más rápido es, literalmente, conducir mejor.'},
+
+  {r:2, q:'Dopamina  ⟷  motivación',
+   o:['Regulación del sueño','Circuito de recompensa','Control muscular fino','Respuesta inmune'], c:1,
+   n:'El ejercicio físico aumenta su liberación: por eso movernos mejora el ánimo y la disposición a aprender.'},
+
+  {r:2, q:'Emoción  ⟷  memoria',
+   o:['La emoción interfiere con el recuerdo','Son procesos independientes','La emoción marca la huella','Solo se relacionan en la infancia'], c:2,
+   n:'Mora: solo se puede aprender aquello que se ama. La emoción abre la atención, y sin atención no hay codificación.'},
+
+  {r:2, q:'Hipocampo  ⟷  ejercicio físico',
+   o:['Neurogénesis','Plasticidad compensatoria','Reflejo condicionado','Sinapsis eléctrica'], c:0,
+   n:'El ejercicio estimula la formación de neuronas nuevas en esta estructura clave de la memoria.'},
+
+  {r:2, q:'Sinapsis química  ⟷  aprendizaje',
+   o:['Sincroniza el ritmo respiratorio','Donde se codifica la experiencia','Transmite solo información motora','Es bidireccional por naturaleza'], c:1,
+   n:'Aprender es modificar la fuerza y el número de estas conexiones. Lo bidireccional es la sinapsis eléctrica.'},
+
+  {r:3, q:'Un paciente recupera parte del habla meses después de un ictus, usando regiones cerebrales distintas a las dañadas.',
+   o:['Neurogénesis','Plasticidad compensatoria','Memoria procedimental','Reflejo pavloviano'], c:1,
+   n:'El cerebro activa otras regiones para suplir la función perdida: uno de los tres mecanismos de recuperación tras lesión.'},
+
+  {r:3, q:'Un estudiante recuerda mucho mejor los números cuando los asocia a un color y a una nota musical.',
+   o:['Estimulación multisensorial','Repetición espaciada','Plasticidad compensatoria','Condicionamiento clásico'], c:0,
+   n:'Cada canal adicional crea un anclaje extra de recuperación. Es la base neurocientífica de la Personalización TIHA.'},
+
+  {r:3, q:'Una persona ciega desarrolla una percepción auditiva y táctil notablemente más fina.',
+   o:['Hipertrofia sensorial','Compensación conductual','Reasignación cortical','Neurogénesis acelerada'], c:2,
+   n:'El córtex visual, sin estímulo lumínico, se reasigna a otras funciones. Plasticidad en estado puro.'},
+
+  {r:3, q:'Un equipo rinde más cuando su líder abre las reuniones con una pregunta que despierta curiosidad.',
+   o:['Atención y curiosidad','Memoria de trabajo','Regulación autonómica','Cognición social'], c:0,
+   n:'La curiosidad es la puerta de la atención. Corresponde al componente Inspiración del modelo TIHA.'},
+
+  {r:3, q:'Alguien sostiene un hábito nuevo solo después de repetirlo con constancia durante varias semanas.',
+   o:['Neurogénesis','Consolidación sináptica','Plasticidad compensatoria','Reasignación cortical'], c:1,
+   n:'La práctica regular estabiliza los circuitos hasta volverlos automáticos. Componente Bienestar del modelo TIHA.'},
+];
+
+const RONDAS = {1:'Ronda 1 · Reconocer', 2:'Ronda 2 · Relacionar', 3:'Ronda 3 · Aplicar'};
+const EQUIPOS = ['Equipo A','Equipo B','Equipo C'];
+const LETRAS = ['A','B','C','D'];
+
+let i=0, pts=[0,0,0], tInt=null, tLeft=30, tOn=false, revealed=false, lastRound=0;
+
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+}
+function start(){ i=0; lastRound=0; sfx('start'); render(); go('s-game'); setTimeout(()=>splashRound(1),180); }
+
+function render(){
+  const q = RETOS[i];
+  revealed = false;
+  const tag=document.getElementById('rondaTag');
+  tag.textContent = RONDAS[q.r];
+  tag.classList.remove('bump'); void tag.offsetWidth; tag.classList.add('bump');
+  if(lastRound && q.r!==lastRound) setTimeout(()=>splashRound(q.r),120);
+  lastRound=q.r;
+  document.getElementById('qbox').classList.add('pulse');
+  setTimeout(()=>document.getElementById('qbox').classList.remove('pulse'),700);
+  document.getElementById('qlabel').textContent = 'Reto ' + (i+1);
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('qbox').className = 'qbox' + (q.r===2?' r2':q.r===3?' r3':'');
+  document.getElementById('ntext').textContent = q.n;
+  document.getElementById('note').classList.remove('show');
+
+  const box = document.getElementById('opts');
+  box.innerHTML = '';
+  q.o.forEach((txt,k)=>{
+    const b = document.createElement('button');
+    b.className = 'opt enter'; b.id = 'opt'+k;
+    b.style.animationDelay=(k*.07)+'s';
+    b.onclick = function(){ sfx('click'); choose(k); };
+    b.innerHTML = '<span class="letter">'+LETRAS[k]+'</span><span class="txt">'+txt+'</span>';
+    box.appendChild(b);
+  });
+
+  document.getElementById('progress').textContent = 'Reto ' + (i+1) + ' de ' + RETOS.length;
+  stopTimer(); tLeft=30; paintTimer(); paintScores();
+}
+
+function choose(k){
+  if(revealed) return;
+  const q = RETOS[i];
+  revealed = true; stopTimer();
+  q.o.forEach(function(_,n){
+    const el = document.getElementById('opt'+n);
+    if(n===q.c) el.classList.add('correct');
+    else if(n===k) el.classList.add('wrong');
+    else el.classList.add('dim');
+  });
+  const chosen=document.getElementById('opt'+k);
+  if(k===q.c){ sfx('correct'); sparks(chosen); }
+  else { sfx('wrong'); }
+  document.getElementById('note').classList.add('show');
+}
+
+function reveal(){
+  if(revealed) return;
+  const q = RETOS[i];
+  revealed = true; stopTimer();
+  q.o.forEach(function(_,n){
+    const el = document.getElementById('opt'+n);
+    if(n===q.c) el.classList.add('correct'); else el.classList.add('dim');
+  });
+  const right=document.getElementById('opt'+q.c); sfx('correct'); sparks(right);
+  document.getElementById('note').classList.add('show');
+}
+
+function next(){ if(i<RETOS.length-1){ sfx('next'); i++; render(); } else finish(); }
+function prev(){ if(i>0){ i--; render(); } }
+
+function finish(){
+  sfx('finish'); confetti(110);
+  document.getElementById('finalScores').textContent = EQUIPOS.map(function(e,k){return e+': '+pts[k];}).join('   ·   ');
+  go('s-final');
+}
+
+function paintScores(){
+  const w = document.getElementById('scores'); w.innerHTML='';
+  EQUIPOS.forEach(function(e,k){
+    const d=document.createElement('div'); d.className='team';
+    d.innerHTML='<span class="nm">'+e+'</span><button onclick="sc('+k+',-1)">−</button>'+
+      '<span class="pts" id="p'+k+'">'+pts[k]+'</span><button onclick="sc('+k+',1)">+</button>';
+    w.appendChild(d);
+  });
+}
+function sc(k,d){
+  pts[k]=Math.max(0,pts[k]+d);
+  document.getElementById('p'+k).textContent=pts[k];
+  const teams=document.querySelectorAll('.team'), el=teams[k];
+  if(el){ el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
+  if(d>0) sfx('score'); else sfx('click');
+}
+
+function paintTimer(){
+  const m=Math.floor(tLeft/60), s=String(tLeft%60).padStart(2,'0');
+  const el=document.getElementById('timer'); el.textContent=m+':'+s;
+  el.classList.toggle('low', tLeft<=10);
+}
+function toggleTimer(){ tOn?stopTimer():startTimer(); }
+function startTimer(){
+  stopTimer(); tOn=true; document.getElementById('tbtn').textContent='Pausar';
+  document.getElementById('timer').classList.add('run');
+  tInt=setInterval(function(){
+    tLeft--; paintTimer();
+    if(tLeft<=10 && tLeft>0) sfx('tick');
+    if(tLeft<=0){ sfx('time'); stopTimer(); }
+  },1000);
+}
+function stopTimer(){ clearInterval(tInt); tOn=false;
+  const timer=document.getElementById('timer'); if(timer) timer.classList.remove('run');
+  const b=document.getElementById('tbtn'); if(b) b.textContent='Cronómetro'; }
+
+document.addEventListener('keydown', function(e){
+  if(!document.getElementById('s-game').classList.contains('on')) return;
+  if(['1','2','3','4'].indexOf(e.key)>-1) choose(parseInt(e.key)-1);
+  if(e.key===' '){ e.preventDefault(); reveal(); }
+  if(e.key==='ArrowRight') next();
+  if(e.key==='ArrowLeft') prev();
+  if(e.key==='t'||e.key==='T') toggleTimer();
+});
+document.addEventListener('pointerdown',()=>{ if(soundOn){ try{ctx();}catch(e){} } },{once:true});
+</script>
+</body>
+</html>
