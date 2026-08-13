@@ -48,6 +48,9 @@ h1{font-size:26px;font-weight:600;margin:0 0 4px;letter-spacing:-.01em}
 border:1px solid var(--coral);background:transparent;color:var(--tp);cursor:pointer;transition:background .2s}
 .btn:hover{background:rgba(255,107,53,.1)}
 #stagelabel{font-size:14px;color:var(--ts)}
+.pillar{font-size:12px;font-weight:600;padding:3px 11px;border-radius:11px;display:inline-block;margin-top:10px}
+.tourquote{margin-top:10px;padding:12px 16px;border-left:3px solid var(--line);font-style:italic;
+font-size:14px;color:var(--ts);transition:border-color .4s;min-height:20px}
 .quote{font-style:italic;font-size:16px;color:var(--tp);border-left:3px solid var(--coral);
 padding:2px 0 2px 16px;margin:26px 0 0}
 .quote span{display:block;font-style:normal;font-size:13px;color:var(--ts);margin-top:6px}
@@ -230,10 +233,9 @@ footer a{color:var(--coral)}
 <button class="btn" id="playbtn">▶ Recorrer el impulso</button>
 <span id="stagelabel">Del cerebro a la punta de los dedos</span>
 </div>
+<div id="pillarrow"></div>
+<div class="tourquote" id="tourquote">Presiona «Recorrer» para ver cómo cada sistema se ancla a un pilar TIHA.</div>
 </div>
-
-<p class="quote">Cuando integramos la inteligencia artificial con intención humanizadora, no solo aprendemos con ella, aprendemos a ser más nosotros mismos.
-<span>TIHA, 2026</span></p>
 
 <footer>
 <p><strong>Dra. Mariluz Serrano Ortiz</strong> · Creadora del Modelo TIHA<br>
@@ -244,14 +246,25 @@ Tecnologías para la Inspiración y Humanización del Aprendizaje<br>
 
 </div>
 <script>
+var PILLARS={
+"Inspiración":{bg:"rgba(255,107,53,.15)",fg:"#B84A1F"},
+"Empatía":{bg:"rgba(232,163,23,.20)",fg:"#8A5A00"},
+"Personalización":{bg:"rgba(139,63,208,.15)",fg:"#6B2FA0"},
+"Bienestar":{bg:"rgba(6,168,125,.16)",fg:"#037A5A"}
+};
+var PHRASES=[
+'«La inteligencia artificial no reemplaza al ser humano; lo potencia para trascender.» — Metodología TIHA, Dra. Mariluz Serrano Ortiz',
+'«No es usar más tecnología, es usar tecnología para vivir mejor.» — Dra. Mariluz Serrano Ortiz, Modelo TIHA',
+'«Cuando integramos la inteligencia artificial con intención humanizadora, no solo aprendemos con ella, aprendemos a ser más nosotros mismos.» — TIHA, 2026'
+];
 var S=[
-{t:[0,0],c:"#FF6B35",l:"Cerebro: aquí nace la orden"},
-{t:[0,112],c:"#FF5D8F",l:"Médula espinal: la autopista principal"},
-{t:[49,150],c:"#E8A317",l:"Nervios periféricos: la señal sale del centro"},
-{t:[-16,324],c:"#06A87D",l:"Sistema somático: llega a la punta del pie"},
-{t:[-6,82],c:"#8B3FD0",l:"Sistema autónomo: late sin pedirte permiso"},
-{t:[-1,138],c:"#06A87D",l:"Sistema entérico: el segundo cerebro"},
-{t:[-24,384],c:"#FF6B35",l:"La neurona: la célula que lo hace posible"}];
+{t:[0,0],c:"#FF6B35",l:"Cerebro: aquí nace la orden",pillar:"Inspiración",phrase:1},
+{t:[0,112],c:"#FF5D8F",l:"Médula espinal: la autopista principal",pillar:"Personalización",phrase:0},
+{t:[49,150],c:"#E8A317",l:"Nervios periféricos: la señal sale del centro",pillar:"Empatía",phrase:2},
+{t:[-16,324],c:"#06A87D",l:"Sistema somático: llega a la punta del pie",pillar:"Personalización",phrase:1},
+{t:[-6,82],c:"#8B3FD0",l:"Sistema autónomo: late sin pedirte permiso",pillar:"Bienestar",phrase:0},
+{t:[-1,138],c:"#06A87D",l:"Sistema entérico: el segundo cerebro",pillar:"Empatía",phrase:2},
+{t:[-24,384],c:"#FF6B35",l:"La neurona: la célula que lo hace posible",pillar:"Inspiración",phrase:0}];
 var i=0,timer=null,running=false;
 function paint(k){for(var n=0;n<7;n++){var r=document.getElementById('row'+n),f=document.getElementById('fan'+n),b=document.getElementById('b'+n);
 if(k<0){r.classList.remove('dim');f.classList.remove('dim');f.classList.remove('hot');b.classList.remove('dim');}
@@ -260,14 +273,25 @@ function go(k){i=k;var s=S[k];
 document.getElementById('pulseG').style.transform='translate('+s.t[0]+'px,'+s.t[1]+'px)';
 document.getElementById('core').setAttribute('fill',s.c);
 document.getElementById('halo').setAttribute('fill',s.c);
-document.getElementById('stagelabel').textContent=s.l;paint(k);}
+document.getElementById('stagelabel').textContent=s.l;
+var p=PILLARS[s.pillar];
+document.getElementById('pillarrow').innerHTML='<span class="pillar" style="background:'+p.bg+';color:'+p.fg+'">Pilar TIHA · '+s.pillar+'</span>';
+var qb=document.getElementById('tourquote');
+qb.textContent=PHRASES[s.phrase];
+qb.style.borderColor=s.c;
+paint(k);}
 function jump(k){if(running){clearInterval(timer);running=false;document.getElementById('playbtn').textContent='▶ Recorrer el impulso';}go(k);}
 function toggleTour(){var b=document.getElementById('playbtn');
 if(running){clearInterval(timer);running=false;paint(-1);b.textContent='▶ Recorrer el impulso';
-document.getElementById('stagelabel').textContent='Del cerebro a la punta de los dedos';return;}
+document.getElementById('stagelabel').textContent='Del cerebro a la punta de los dedos';
+document.getElementById('pillarrow').innerHTML='';
+document.getElementById('tourquote').textContent='Presiona «Recorrer» para ver cómo cada sistema se ancla a un pilar TIHA.';
+document.getElementById('tourquote').style.borderColor='var(--line)';return;}
 running=true;go(0);b.textContent='❙❙ Pausar';
-timer=setInterval(function(){go((i+1)%7);},2200);}
+timer=setInterval(function(){go((i+1)%7);},2600);}
 document.getElementById('playbtn').addEventListener('click',toggleTour);
+document.querySelectorAll('.rowg').forEach(function(el,idx){el.addEventListener('click',function(){jump(idx);});});
+document.querySelectorAll('.bodyg').forEach(function(el,idx){el.addEventListener('click',function(){jump(idx);});});
 </script>
 </body>
 </html>
