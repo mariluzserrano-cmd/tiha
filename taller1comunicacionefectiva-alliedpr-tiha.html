@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller 1 · Comunicación Efectiva para Supervisores · Allied × TIHA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Allied */
+    --navy:#152238; --navy-2:#1F3352; --coral:#E2572B; --coral-dark:#C4451E;
+    /* TIHA */
+    --tiha-red:#E3263A; --tiha-slate:#44546A; --tiha-gold:#C9A961; --cream:#FAFAF8;
+    /* neutros */
+    --paper:#FBF8F3; --cream-2:#F5F0E6; --ink:#20241F; --grey:#6B6459; --line:#E4D8C4;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Work Sans',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:680px;margin:0 auto;padding:0 0 60px;}
+
+  /* HERO */
+  .hero{background:linear-gradient(160deg,var(--navy) 0%,var(--tiha-slate) 100%);color:#fff;padding:40px 24px 36px;position:relative;overflow:hidden;}
+  .hero::after{content:"";position:absolute;right:-50px;bottom:-70px;width:240px;height:240px;background:radial-gradient(circle,rgba(226,87,43,.32) 0%,rgba(226,87,43,0) 70%);}
+  .brandrow{display:flex;align-items:center;gap:10px;margin-bottom:22px;flex-wrap:wrap;}
+  .brand-pill{background:#fff;color:var(--navy);font-weight:700;font-size:12px;letter-spacing:.04em;padding:7px 13px;border-radius:999px;display:inline-flex;align-items:center;gap:6px;}
+  .brand-pill .arrow{color:var(--coral);font-weight:800;}
+  .plus{color:rgba(255,255,255,.5);}
+  .tiha-pill{border:1px solid rgba(255,255,255,.35);color:#fff;font-size:11.5px;letter-spacing:.08em;padding:6px 12px;border-radius:999px;text-transform:uppercase;}
+  .eyebrow{color:var(--tiha-gold);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;margin:0 0 10px;}
+  h1.title{font-family:'Prata',serif;font-weight:400;font-size:clamp(27px,7.5vw,38px);line-height:1.1;margin:0 0 14px;position:relative;z-index:1;}
+  .hero .meta{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:rgba(255,255,255,.85);position:relative;z-index:1;}
+  .hero .meta b{color:#fff;}
+
+  /* SECTIONS */
+  .section{padding:34px 22px 4px;}
+  h2.st{font-family:'Prata',serif;font-weight:400;font-size:23px;color:var(--navy);margin:0 0 6px;line-height:1.2;}
+  .stag{display:inline-block;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--coral-dark);font-weight:700;margin:0 0 14px;}
+  .sintro{font-size:14.5px;color:var(--grey);margin:0 0 20px;}
+
+  /* TIMELINE */
+  .tl{border-left:2px solid var(--line);margin-left:8px;padding-left:0;}
+  .tl-item{position:relative;padding:0 0 4px 20px;margin-bottom:14px;}
+  .tl-item::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--line);border:2px solid var(--paper);}
+  .tl-item.k-humano::before{background:var(--tiha-red);}
+  .tl-item.k-teoria::before{background:var(--navy);}
+  .tl-item.k-practica::before{background:var(--coral);}
+  .tl-item.k-pausa::before{background:var(--tiha-gold);}
+  .tl-time{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--grey);letter-spacing:-.02em;}
+  .tl-name{font-size:15px;font-weight:600;color:var(--navy);margin:2px 0 3px;}
+  .tl-dur{font-size:11.5px;color:var(--coral-dark);font-weight:700;}
+  .tl-note{font-size:13px;color:var(--grey);margin-top:3px;}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 18px;font-size:11.5px;color:var(--grey);}
+  .legend span{display:inline-flex;align-items:center;gap:5px;}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+
+  /* BLOCK CARD */
+  .block{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:18px;}
+  .block-head{display:flex;align-items:baseline;gap:10px;margin-bottom:4px;flex-wrap:wrap;}
+  .block-num{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:#fff;background:var(--navy);padding:3px 8px;border-radius:5px;}
+  .block-title{font-family:'Prata',serif;font-size:18px;color:var(--navy);}
+  .block-time{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--grey);margin-bottom:12px;display:block;}
+  .lbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--coral-dark);margin:14px 0 6px;}
+  .block p{margin:0 0 8px;font-size:14px;}
+  .block ul{margin:0 0 8px;padding-left:18px;font-size:14px;}
+  .block li{margin-bottom:5px;}
+  .say{background:var(--cream-2);border-left:3px solid var(--tiha-gold);padding:12px 14px;font-size:13.5px;font-style:italic;color:var(--navy);border-radius:0 8px 8px 0;margin:0 0 8px;}
+  .say b{font-style:normal;}
+
+  /* ROLE PLAY */
+  .rp{background:var(--navy);color:#fff;border-radius:14px;padding:20px;margin-bottom:18px;}
+  .rp .rp-tag{display:inline-block;background:var(--coral);color:#fff;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:4px;margin-bottom:10px;}
+  .rp h3{font-family:'Prata',serif;font-weight:400;font-size:19px;margin:0 0 4px;color:#fff;}
+  .rp .rp-time{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--tiha-gold);margin-bottom:14px;display:block;}
+  .rp .rl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--tiha-gold);margin:14px 0 6px;}
+  .rp p, .rp li{font-size:13.5px;color:rgba(255,255,255,.9);}
+  .rp ul{margin:0 0 8px;padding-left:18px;}
+  .rp li{margin-bottom:5px;}
+  .card-role{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:9px;padding:12px 14px;margin-bottom:9px;}
+  .card-role .cr-who{font-weight:700;color:var(--tiha-gold);font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;}
+  .card-role .cr-txt{font-size:13.5px;color:rgba(255,255,255,.92);}
+
+  /* MATERIALS / NOTE */
+  .note{background:var(--cream-2);border:1px solid var(--line);border-left:4px solid var(--tiha-red);border-radius:0 12px 12px 0;padding:18px 20px;margin:0 0 18px;}
+  .note h4{font-family:'Prata',serif;font-weight:400;font-size:17px;color:var(--navy);margin:0 0 8px;}
+  .note ul{margin:0;padding-left:18px;font-size:14px;}
+  .note li{margin-bottom:6px;}
+
+  /* TIHA STRIP */
+  .tiha-strip{background:var(--tiha-slate);color:#fff;border-radius:14px;padding:20px;margin:0 0 18px;}
+  .tiha-strip h4{font-family:'Prata',serif;font-weight:400;font-size:18px;margin:0 0 12px;color:var(--tiha-gold);}
+  .tiha-grid{display:grid;grid-template-columns:1fr;gap:10px;}
+  .tiha-item{background:rgba(255,255,255,.08);border-radius:9px;padding:11px 13px;}
+  .tiha-item .ti-n{font-weight:700;font-size:13px;color:var(--tiha-gold);margin-bottom:3px;}
+  .tiha-item .ti-t{font-size:13px;color:rgba(255,255,255,.9);}
+
+  /* QUOTE */
+  .quote{margin:30px 22px 0;padding:0 0 0 18px;border-left:3px solid var(--tiha-red);}
+  .quote p{font-family:'Prata',serif;font-style:italic;color:var(--navy);font-size:16.5px;line-height:1.5;margin:0 0 8px;}
+  .quote span{font-size:12.5px;color:var(--grey);}
+
+  footer{margin-top:40px;padding:26px 24px 32px;text-align:center;background:var(--navy);color:rgba(255,255,255,.7);}
+  footer .fname{color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;}
+  footer .fmeta{font-size:12px;}
+  footer .fmeta a{color:var(--tiha-gold);text-decoration:none;}
+
+  @media(min-width:620px){
+    .hero{padding:52px 40px 46px;}
+    .section{padding:42px 40px 4px;}
+    .quote{margin-left:40px;margin-right:40px;}
+    .tiha-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media print{
+    body{background:#fff;} .hero{background:var(--navy)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .rp,.tiha-strip{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .block,.rp,.note{page-break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+  <div class="brandrow">
+    <span class="brand-pill"><span class="arrow">➤</span> ALLIED LOGISTICS WORLDWIDE</span>
+    <span class="plus">×</span>
+    <span class="tiha-pill">Modelo TIHA</span>
+  </div>
+  <p class="eyebrow">Taller 1 de 4 · Guía de facilitación</p>
+  <h1 class="title">Comunicación Efectiva<br>para Supervisores</h1>
+  <div class="meta">
+    <span><b>Grupo A</b> · martes 25 ago 2026</span>
+    <span><b>Grupo B</b> · jueves 27 ago 2026</span>
+    <span><b>8:30 a.m. – 12:30 p.m.</b></span>
+    <span>4 horas contacto</span>
+  </div>
+</div>
+
+<!-- INTENCIÓN -->
+<div class="section">
+  <h2 class="st">La intención de este taller</h2>
+  <span class="stag">Antes de facilitar, leer esto</span>
+  <p class="sintro">En esta sala hay supervisores de almacén, cross-dock, despacho, tráfico FCL y LTL, logística NVOCC, home deliveries, facilidades, facturación, taller de flota, cuentas, crédito y cobro, y servicio al cliente. Gente que da instrucciones todos los días bajo presión de tiempo. No vienen a aprender teoría de la comunicación: vienen a resolver por qué la instrucción que dieron esta mañana no se ejecutó esta tarde.</p>
+  <div class="note">
+    <h4>Regla de oro del diseño</h4>
+    <ul>
+      <li>Cada concepto se explica en 15–20 minutos máximo y se practica inmediatamente después. Nunca dos conceptos seguidos sin práctica.</li>
+      <li>Todos los casos de práctica salen de la operación real de Allied. Ningún ejemplo genérico de manual.</li>
+      <li>La primera hora es para conocerlos y para que ellos se conozcan entre departamentos. No se salta ni se acorta.</li>
+      <li>El facilitador habla menos de la mitad del tiempo. El resto lo hablan ellos.</li>
+    </ul>
+  </div>
+  <div class="tiha-strip">
+    <h4>Cómo vive TIHA en este taller</h4>
+    <div class="tiha-grid">
+      <div class="tiha-item"><div class="ti-n">Inspiración</div><div class="ti-t">Cada quien descubre que ya comunica bien en algo — se parte de la fortaleza, no del déficit.</div></div>
+      <div class="tiha-item"><div class="ti-n">Empatía</div><div class="ti-t">Los role play obligan a ocupar la silla del otro: el que recibe la instrucción, no solo el que la da.</div></div>
+      <div class="tiha-item"><div class="ti-n">Personalización</div><div class="ti-t">El diagnóstico relámpago ajusta los ejemplos al grupo que efectivamente llegó ese día.</div></div>
+      <div class="tiha-item"><div class="ti-n">Bienestar</div><div class="ti-t">Pausa activa real, ritmo humano, y permiso explícito de no tener todas las respuestas.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ITINERARIO -->
+<div class="section">
+  <h2 class="st">Itinerario de las 4 horas</h2>
+  <span class="stag">8:30 a.m. – 12:30 p.m. · 240 minutos</span>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--tiha-red)"></i> Momento humano</span>
+    <span><i class="dot" style="background:var(--navy)"></i> Concepto</span>
+    <span><i class="dot" style="background:var(--coral)"></i> Práctica</span>
+    <span><i class="dot" style="background:var(--tiha-gold)"></i> Pausa</span>
+  </div>
+  <div class="tl">
+    <div class="tl-item k-humano"><div class="tl-time">8:30 – 9:10 a.m.</div><div class="tl-name">Apertura — Quiénes somos en esta sala</div><div class="tl-dur">40 min</div><div class="tl-note">Bienvenida, encuadre, dinámica de presentación cruzada entre departamentos.</div></div>
+    <div class="tl-item k-humano"><div class="tl-time">9:10 – 9:25 a.m.</div><div class="tl-name">Diagnóstico relámpago — Mi comunicación hoy</div><div class="tl-dur">15 min</div><div class="tl-note">Cada quien identifica su situación real. Define qué ejemplos usará el facilitador el resto del día.</div></div>
+    <div class="tl-item k-teoria"><div class="tl-time">9:25 – 9:45 a.m.</div><div class="tl-name">Concepto 1 — Emisor, mensaje, receptor, ruido</div><div class="tl-dur">20 min</div></div>
+    <div class="tl-item k-practica"><div class="tl-time">9:45 – 10:05 a.m.</div><div class="tl-name">Práctica 1 — Teléfono roto operacional</div><div class="tl-dur">20 min</div></div>
+    <div class="tl-item k-pausa"><div class="tl-time">10:05 – 10:20 a.m.</div><div class="tl-name">Pausa activa</div><div class="tl-dur">15 min</div></div>
+    <div class="tl-item k-teoria"><div class="tl-time">10:20 – 10:40 a.m.</div><div class="tl-name">Concepto 2 — Las barreras que crean malentendidos</div><div class="tl-dur">20 min</div></div>
+    <div class="tl-item k-practica"><div class="tl-time">10:40 – 11:05 a.m.</div><div class="tl-name">Práctica 2 — Role play: la instrucción que no llegó</div><div class="tl-dur">25 min</div></div>
+    <div class="tl-item k-teoria"><div class="tl-time">11:05 – 11:20 a.m.</div><div class="tl-name">Concepto 3 — Escucha activa</div><div class="tl-dur">15 min</div></div>
+    <div class="tl-item k-practica"><div class="tl-time">11:20 – 11:40 a.m.</div><div class="tl-name">Práctica 3 — Parafraseo en pares</div><div class="tl-dur">20 min</div></div>
+    <div class="tl-item k-teoria"><div class="tl-time">11:40 – 11:55 a.m.</div><div class="tl-name">Concepto 4 — Comunicación asertiva</div><div class="tl-dur">15 min</div></div>
+    <div class="tl-item k-practica"><div class="tl-time">11:55 – 12:20 p.m.</div><div class="tl-name">Práctica 4 — Role play: la conversación difícil</div><div class="tl-dur">25 min</div></div>
+    <div class="tl-item k-humano"><div class="tl-time">12:20 – 12:30 p.m.</div><div class="tl-name">Cierre — Mi compromiso de la semana</div><div class="tl-dur">10 min</div></div>
+  </div>
+</div>
+
+<!-- APERTURA -->
+<div class="section">
+  <h2 class="st">Apertura · Quiénes somos en esta sala</h2>
+  <span class="stag">8:30 – 9:10 a.m. · 40 minutos</span>
+
+  <div class="block">
+    <div class="block-head"><span class="block-num">A.1</span><span class="block-title">Bienvenida y encuadre</span></div>
+    <span class="block-time">8:30 – 8:40 a.m. · 10 min</span>
+    <div class="lbl">Qué hace el facilitador</div>
+    <p>Recibir, presentarse brevemente, y encuadrar el propósito del programa completo (4 talleres) y de este primero.</p>
+    <div class="say"><b>Guion sugerido:</b> "Buenos días. Vamos a pasar cuatro mañanas juntos. Hoy no vengo a enseñarles a hablar — ustedes llevan años dando instrucciones que se ejecutan. Vengo a que revisemos juntos por qué a veces el mensaje llega completo y a veces no, y qué está en nuestras manos hacer al respecto."</div>
+    <div class="lbl">Encuadre de seguridad</div>
+    <p>Establecer que lo que se comparte en la sala no sale como señalamiento a nadie. Se habla de situaciones, no de personas.</p>
+  </div>
+
+  <div class="block">
+    <div class="block-head"><span class="block-num">A.2</span><span class="block-title">Presentación cruzada entre departamentos</span></div>
+    <span class="block-time">8:40 – 9:10 a.m. · 30 min</span>
+    <div class="lbl">Por qué esta dinámica y no otra</div>
+    <p>El grupo es mixto a propósito: almacén, tráfico, flota, servicio al cliente y finanzas en la misma sala. Muchos coordinan a diario por teléfono o por sistema sin haberse visto la cara. La dinámica aprovecha eso.</p>
+    <div class="lbl">Instrucciones</div>
+    <ul>
+      <li>Cada persona busca a alguien de <b>otro departamento</b> con quien coordine trabajo pero con quien rara vez converse.</li>
+      <li>En pares, cada quien tiene 4 minutos para contarle al otro: su nombre, su área, y <b>una cosa que su trabajo necesita del área del otro para salir bien.</b></li>
+      <li>Al volver al plenario, <b>cada persona presenta a su pareja</b>, no a sí misma. Nombre, área, y qué necesita de nosotros.</li>
+    </ul>
+    <div class="lbl">Qué escucha el facilitador</div>
+    <p>Anotar en un papelógrafo o pizarra las dependencias que van surgiendo. Ese mapa se usa el resto del día como fuente de ejemplos reales.</p>
+    <div class="say"><b>Cierre de la dinámica:</b> "Fíjense en algo. Todo lo que acabamos de escuchar es comunicación entre departamentos que ya está ocurriendo todos los días. La pregunta de hoy es si está llegando completa."</div>
+  </div>
+</div>
+
+<!-- DIAGNÓSTICO -->
+<div class="section">
+  <h2 class="st">Diagnóstico relámpago</h2>
+  <span class="stag">9:10 – 9:25 a.m. · 15 minutos</span>
+
+  <div class="block">
+    <div class="block-head"><span class="block-num">D</span><span class="block-title">Mi comunicación hoy</span></div>
+    <div class="lbl">Instrucciones</div>
+    <p>Cada participante recibe una tarjeta o usa su teléfono y responde tres preguntas en dos líneas cada una. No se firma.</p>
+    <ul>
+      <li><b>1.</b> Una instrucción que di esta semana y que <b>sí</b> se ejecutó tal como la pensé.</li>
+      <li><b>2.</b> Una instrucción que di esta semana y que <b>no</b> se ejecutó como esperaba.</li>
+      <li><b>3.</b> Si pudiera cambiar una sola cosa de cómo me comunico con mi equipo, ¿cuál sería?</li>
+    </ul>
+    <div class="lbl">Uso inmediato</div>
+    <p>El facilitador recoge las tarjetas, las revisa durante la Práctica 1 y selecciona 3–4 casos reales del grupo para usar en los role play de la segunda mitad. Esto es lo que hace que el taller sea de <b>ellos</b> y no del manual.</p>
+    <div class="say"><b>Nota de facilitación:</b> si el grupo escribe poco, hacerlo verbal en ronda rápida. Lo importante es tener casos reales en mano antes de las 10:40 a.m.</div>
+  </div>
+</div>
+
+<!-- CONCEPTO 1 + PRÁCTICA 1 -->
+<div class="section">
+  <h2 class="st">Concepto 1 · El modelo básico</h2>
+  <span class="stag">9:25 – 9:45 a.m. · 20 minutos</span>
+
+  <div class="block">
+    <div class="block-head"><span class="block-num">C.1</span><span class="block-title">Emisor, mensaje, receptor, ruido</span></div>
+    <div class="lbl">La base teórica, en versión operacional</div>
+    <p>El modelo clásico de comunicación (Shannon y Weaver, adaptado a contextos organizacionales) plantea que todo mensaje atraviesa: un <b>emisor</b> que codifica, un <b>canal</b> por donde viaja, un <b>receptor</b> que decodifica, y <b>ruido</b> que interfiere en cualquier punto.</p>
+    <div class="lbl">Traducción a Allied</div>
+    <ul>
+      <li><b>Emisor:</b> el supervisor que da la instrucción en el shift huddle de la mañana.</li>
+      <li><b>Canal:</b> verbal en el piso, mensaje de texto, correo, o el sistema.</li>
+      <li><b>Receptor:</b> el chofer, el mecánico, el operador de montacargas, el representante de cuentas.</li>
+      <li><b>Ruido:</b> el montacargas andando, tres personas hablando a la vez, el radio, la prisa de la salida, un cambio de turno a media instrucción.</li>
+    </ul>
+    <div class="lbl">El punto que hay que dejar clavado</div>
+    <div class="say">"El mensaje que yo emito y el mensaje que el otro recibe son dos mensajes distintos. Siempre. La pregunta no es si hubo pérdida — la pregunta es cuánta, y qué hago yo para reducirla."</div>
+    <div class="lbl">Retroalimentación como cierre del circuito</div>
+    <p>Introducir aquí el concepto de <b>feedback loop</b>: la comunicación no termina cuando yo hablo, termina cuando confirmo que llegó. Este concepto se practica de inmediato.</p>
+  </div>
+
+  <div class="rp">
+    <span class="rp-tag">Práctica 1</span>
+    <h3>Teléfono roto operacional</h3>
+    <span class="rp-time">9:45 – 10:05 a.m. · 20 minutos</span>
+    <div class="rl">Montaje</div>
+    <p>Grupos de 5 personas en fila. El facilitador entrega al primero de cada fila una instrucción operacional escrita, realista y con varios datos. Se transmite <b>verbalmente y al oído</b>, una sola vez, sin repetir.</p>
+    <div class="rl">Instrucciones para transmitir (una por fila)</div>
+    <div class="card-role"><div class="cr-who">Fila 1 — Almacén</div><div class="cr-txt">"El pedido de la cuenta 4-7-2 se despacha hoy antes de las 3, va en el muelle 6, son 14 tarimas, y las últimas 3 llevan etiqueta de frágil. Si no cabe todo, se queda la tarima de la etiqueta azul, no la roja."</div></div>
+    <div class="card-role"><div class="cr-who">Fila 2 — Tráfico</div><div class="cr-txt">"El contenedor que venía a las 10 llega a las 2. Avísale a Servicio al Cliente, no al cliente directo. Si el chofer ya salió, que espere en el patio, no que regrese. Y el POD de la entrega de ayer todavía está incompleto."</div></div>
+    <div class="card-role"><div class="cr-who">Fila 3 — Flota</div><div class="cr-txt">"La unidad 218 entra al taller mañana, no hoy. Hoy entra la 281. Necesito el estimado de piezas antes de las 4 para meter la orden, y si la pieza no está en inventario, avísame antes de ordenarla afuera."</div></div>
+    <div class="rl">Procesamiento (lo más importante)</div>
+    <p>Comparar en voz alta lo que llegó al final con el original. Luego preguntar:</p>
+    <ul>
+      <li>¿Qué dato se perdió primero? ¿Por qué ese y no otro?</li>
+      <li>¿En qué punto alguien pudo haber preguntado y no preguntó?</li>
+      <li>¿Cuántos de ustedes transmiten instrucciones así, de boca en boca, en un día normal?</li>
+    </ul>
+    <div class="rl">Puente al concepto</div>
+    <p>Aquí se cierra el circuito: si el que recibía hubiera <b>repetido de vuelta</b> lo que entendió, el error se detecta en el primer eslabón. Eso es retroalimentación, y cuesta 10 segundos.</p>
+  </div>
+</div>
+
+<!-- PAUSA -->
+<div class="section">
+  <div class="note">
+    <h4>Pausa activa · 10:05 – 10:20 a.m.</h4>
+    <ul>
+      <li>15 minutos reales. No se acorta para "avanzar contenido".</li>
+      <li>Sugerencia: pedir que se muevan físicamente de asiento y se sienten con personas de otro departamento para la segunda mitad.</li>
+      <li>Café y movimiento. La segunda mitad es la más demandante del día.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- CONCEPTO 2 + PRÁCTICA 2 -->
+<div class="section">
+  <h2 class="st">Concepto 2 · Las barreras</h2>
+  <span class="stag">10:20 – 10:40 a.m. · 20 minutos</span>
+
+  <div class="block">
+    <div class="block-head"><span class="block-num">C.2</span><span class="block-title">Lo que se interpone entre lo que digo y lo que entienden</span></div>
+    <div class="lbl">Las cuatro familias de barreras</div>
+    <ul>
+      <li><b>Físicas:</b> ruido del piso, distancia, radio, prisa, interrupciones.</li>
+      <li><b>Semánticas:</b> la misma palabra significa cosas distintas. "Urgente" para almacén no es "urgente" para tráfico. "Listo" puede ser listo-para-cargar o listo-para-facturar.</li>
+      <li><b>Personales:</b> supuestos sobre lo que el otro ya sabe, historia previa entre las dos personas, estado de ánimo.</li>
+      <li><b>Organizacionales:</b> la instrucción pasa por tres niveles antes de llegar a quien la ejecuta, y en cada nivel se edita.</li>
+    </ul>
+    <div class="lbl">La barrera más cara en operaciones</div>
+    <div class="say">"El supuesto. Yo asumo que el otro sabe lo que yo sé. Y como lo asumo, no lo digo. Y como no lo digo, el otro no lo sabe."</div>
+    <div class="lbl">Anclaje real</div>
+    <p>Usar aquí uno o dos de los casos recogidos en el diagnóstico relámpago. Leerlos en voz alta sin identificar a nadie y preguntar al grupo: <b>¿qué barrera creen que actuó aquí?</b></p>
+  </div>
+
+  <div class="rp">
+    <span class="rp-tag">Práctica 2 · Role play</span>
+    <h3>La instrucción que no llegó</h3>
+    <span class="rp-time">10:40 – 11:05 a.m. · 25 minutos</span>
+    <div class="rl">Montaje</div>
+    <p>Tríos. Dos actúan, uno observa con una hoja de observación. Se rotan los papeles en cada ronda para que todos pasen por las tres sillas.</p>
+    <div class="rl">Escenario A — Cross-dock</div>
+    <div class="card-role"><div class="cr-who">Supervisor</div><div class="cr-txt">Explicaste esta mañana un cambio en cómo se organiza el rack, con un flow chart. Es la tercera vez este mes que te preguntan lo mismo. Estás a mitad de tu almuerzo.</div></div>
+    <div class="card-role"><div class="cr-who">Empleado</div><div class="cr-txt">Escuchaste la explicación pero estabas terminando otra tarea. Entendiste la mitad. Ahora tienes que ejecutar y no quieres equivocarte, pero también te da pena preguntar otra vez.</div></div>
+    <div class="card-role"><div class="cr-who">Observador</div><div class="cr-txt">Anota: ¿el supervisor preguntó qué entendió el otro, o solo repitió? ¿El empleado dijo qué parte no entendió, o solo dijo "ok"?</div></div>
+    <div class="rl">Escenario B — Tráfico y Servicio al Cliente</div>
+    <div class="card-role"><div class="cr-who">Supervisor de Tráfico</div><div class="cr-txt">Necesitas que Servicio al Cliente no le prometa al cliente una hora de entrega que tú no puedes cumplir. Ya pasó dos veces esta semana.</div></div>
+    <div class="card-role"><div class="cr-who">Servicio al Cliente</div><div class="cr-txt">El cliente presiona por una hora exacta. Tú das la mejor estimación que tienes con la información que te llega, que a veces llega tarde o incompleta.</div></div>
+    <div class="card-role"><div class="cr-who">Observador</div><div class="cr-txt">Anota: ¿alguno de los dos preguntó qué información necesita el otro para hacer bien su trabajo? ¿O cada uno defendió su posición?</div></div>
+    <div class="rl">Escenario C — Flota</div>
+    <div class="card-role"><div class="cr-who">Supervisor de Taller</div><div class="cr-txt">Necesitas que el diagnóstico de una unidad quede documentado antes del cambio de turno, porque el turno siguiente está repitiendo trabajo ya hecho.</div></div>
+    <div class="card-role"><div class="cr-who">Mecánico</div><div class="cr-txt">Estás a 20 minutos de terminar tu turno y todavía tienes la unidad abierta. Documentar te toma tiempo que sientes que no tienes.</div></div>
+    <div class="card-role"><div class="cr-who">Observador</div><div class="cr-txt">Anota: ¿el supervisor reconoció la presión de tiempo del otro? ¿Se acordó algo concreto o quedó en el aire?</div></div>
+    <div class="rl">Procesamiento en plenario</div>
+    <ul>
+      <li>¿Qué barrera apareció con más fuerza en tu escenario?</li>
+      <li>¿Qué hizo la diferencia cuando la conversación funcionó?</li>
+      <li>A los que hicieron de empleado o mecánico: <b>¿cómo se sintió estar del otro lado?</b></li>
+    </ul>
+  </div>
+</div>
+
+<!-- CONCEPTO 3 + PRÁCTICA 3 -->
+<div class="section">
+  <h2 class="st">Concepto 3 · Escucha activa</h2>
+  <span class="stag">11:05 – 11:20 a.m. · 15 minutos</span>
+
+  <div class="block">
+    <div class="block-head"><span class="block-num">C.3</span><span class="block-title">Escuchar no es esperar mi turno de hablar</span></div>
+    <div class="lbl">Los tres niveles de escucha</div>
+    <ul>
+      <li><b>Nivel 1 — Escucho para responder.</b> Ya estoy armando mi respuesta mientras el otro habla.</li>
+      <li><b>Nivel 2 — Escucho para entender el contenido.</b> Capto los datos, pero no lo que hay detrás.</li>
+      <li><b>Nivel 3 — Escucho para entender a la persona.</b> Capto el dato, la preocupación y lo que no se está diciendo.</li>
+    </ul>
+    <div class="lbl">Las cuatro herramientas concretas</div>
+    <ul>
+      <li><b>Parafrasear:</b> "Déjame ver si entendí: lo que necesitas es..."</li>
+      <li><b>Preguntar en vez de asumir:</b> "¿Qué parte te quedó menos clara?" en vez de "¿Entendiste?"</li>
+      <li><b>Silencio de tres segundos:</b> esperar antes de responder. Ahí es donde aparece lo que faltaba.</li>
+      <li><b>Confirmar el acuerdo:</b> "Entonces quedamos en que tú haces X y yo Y, antes de las 3."</li>
+    </ul>
+    <div class="say"><b>Contraste clave para supervisores:</b> "¿Entendiste?" casi siempre produce un "sí" automático. "¿Qué vas a hacer primero?" produce información real.</div>
+  </div>
+
+  <div class="rp">
+    <span class="rp-tag">Práctica 3</span>
+    <h3>Parafraseo en pares</h3>
+    <span class="rp-time">11:20 – 11:40 a.m. · 20 minutos</span>
+    <div class="rl">Montaje</div>
+    <p>Pares, preferiblemente de departamentos distintos. Tres rondas de 5 minutos, alternando quién habla.</p>
+    <div class="rl">Regla única</div>
+    <p>Antes de responder cualquier cosa, quien escucha <b>debe parafrasear</b> lo que oyó y esperar confirmación. Solo cuando el otro dice "sí, eso es", puede responder.</p>
+    <div class="rl">Temas para cada ronda</div>
+    <ul>
+      <li><b>Ronda 1:</b> Cuéntale a tu pareja algo de tu trabajo que casi nadie de otro departamento entiende bien.</li>
+      <li><b>Ronda 2:</b> Cuéntale una situación reciente donde te sentiste malinterpretado.</li>
+      <li><b>Ronda 3:</b> Cuéntale qué necesitarías del área de tu pareja para que tu trabajo saliera mejor.</li>
+    </ul>
+    <div class="rl">Procesamiento</div>
+    <ul>
+      <li>¿Cuántas veces tuviste que corregir el parafraseo de tu pareja? Eso mide la brecha real.</li>
+      <li>¿Qué se sintió distinto al ser parafraseado, comparado con una conversación normal?</li>
+      <li>¿Dónde en su día a día podrían usar esto sin que tome más tiempo?</li>
+    </ul>
+  </div>
+</div>
+
+<!-- CONCEPTO 4 + PRÁCTICA 4 -->
+<div class="section">
+  <h2 class="st">Concepto 4 · Comunicación asertiva</h2>
+  <span class="stag">11:40 – 11:55 a.m. · 15 minutos</span>
+
+  <div class="block">
+    <div class="block-head"><span class="block-num">C.4</span><span class="block-title">Firme con el asunto, cuidadoso con la persona</span></div>
+    <div class="lbl">Los tres estilos</div>
+    <ul>
+      <li><b>Pasivo:</b> no digo lo que necesito, lo aguanto, y explota después.</li>
+      <li><b>Agresivo:</b> lo digo, pero de forma que la otra persona se cierra o se defiende.</li>
+      <li><b>Asertivo:</b> digo lo que necesito con claridad, sin atacar a la persona.</li>
+    </ul>
+    <div class="lbl">Fórmula práctica de tres partes</div>
+    <div class="say"><b>Observación + Impacto + Petición.</b><br>"Cuando el POD llega incompleto <i>(observación)</i>, tengo que llamar al cliente sin información completa <i>(impacto)</i>. Necesito que se complete antes de salir de la parada <i>(petición)</i>."</div>
+    <div class="lbl">La diferencia que hay que hacer visible</div>
+    <ul>
+      <li>Agresivo: "Nunca completas los PODs."</li>
+      <li>Pasivo: no decir nada y completarlo uno mismo cada vez.</li>
+      <li>Asertivo: la fórmula de arriba, dicha una vez, con claridad.</li>
+    </ul>
+    <p>Señalar que <b>asertivo no es suave</b>. Es directo sin ser hiriente. Un supervisor puede ser exigente y asertivo al mismo tiempo.</p>
+  </div>
+
+  <div class="rp">
+    <span class="rp-tag">Práctica 4 · Role play</span>
+    <h3>La conversación difícil</h3>
+    <span class="rp-time">11:55 a.m. – 12:20 p.m. · 25 minutos</span>
+    <div class="rl">Montaje</div>
+    <p>Pares. Cada quien trae <b>su propio caso real</b> — el que escribió en el diagnóstico de la mañana como "la instrucción que no se ejecutó como esperaba".</p>
+    <div class="rl">Secuencia</div>
+    <ul>
+      <li><b>Paso 1 (5 min):</b> cada quien escribe su conversación usando la fórmula Observación + Impacto + Petición.</li>
+      <li><b>Paso 2 (8 min):</b> A ensaya su conversación con B, que hace de la otra persona y responde con resistencia realista, no fácil.</li>
+      <li><b>Paso 3 (8 min):</b> se invierten los papeles.</li>
+      <li><b>Paso 4 (4 min):</b> cada quien ajusta su redacción después de haberla dicho en voz alta.</li>
+    </ul>
+    <div class="rl">Casos de respaldo (si alguien no trae el suyo)</div>
+    <div class="card-role"><div class="cr-who">Caso 1</div><div class="cr-txt">Un supervisor de otro turno deja el área sin el conteo cerrado, y tú recibes el reclamo cada mañana.</div></div>
+    <div class="card-role"><div class="cr-who">Caso 2</div><div class="cr-txt">Un compañero de otro departamento te escribe siempre a última hora pidiendo cosas urgentes que pudo haber pedido con tiempo.</div></div>
+    <div class="card-role"><div class="cr-who">Caso 3</div><div class="cr-txt">Alguien de tu equipo dice "sí, entendido" y luego ejecuta distinto. Ya pasó tres veces.</div></div>
+    <div class="rl">Procesamiento</div>
+    <ul>
+      <li>¿Qué cambió entre la primera versión escrita y la versión después de decirla en voz alta?</li>
+      <li>¿Qué se sintió al recibir el planteamiento del otro lado?</li>
+      <li>¿Cuál de las tres partes de la fórmula te costó más? Casi siempre es la petición.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- CIERRE -->
+<div class="section">
+  <h2 class="st">Cierre · Mi compromiso de la semana</h2>
+  <span class="stag">12:20 – 12:30 p.m. · 10 minutos</span>
+
+  <div class="block">
+    <div class="block-head"><span class="block-num">Z</span><span class="block-title">De la sala al piso</span></div>
+    <div class="lbl">Instrucción</div>
+    <p>Cada participante escribe en una tarjeta <b>una sola acción concreta</b> que aplicará esta semana, con nombre y fecha. La tarjeta se la lleva. Una copia queda con el facilitador para dar seguimiento en el Taller 2.</p>
+    <div class="say"><b>La pregunta de cierre:</b> "No me digan qué aprendieron. Díganme qué van a hacer distinto el lunes."</div>
+    <div class="lbl">Ronda relámpago</div>
+    <p>Cada quien dice su compromiso en una frase. Sin explicaciones, sin justificaciones. Solo la acción.</p>
+    <div class="lbl">Anuncio del Taller 2</div>
+    <p>Adelantar que el próximo taller es Literacia Digital, y que se conectará directamente con lo de hoy: cómo la documentación y las herramientas digitales reducen las barreras que identificamos.</p>
+  </div>
+
+  <div class="note">
+    <h4>Materiales necesarios</h4>
+    <ul>
+      <li>Tarjetas o papel para el diagnóstico relámpago (una por participante) y para el compromiso de cierre.</li>
+      <li>Papelógrafo o pizarra para el mapa de dependencias entre departamentos.</li>
+      <li>Tres instrucciones del teléfono roto impresas en papel, una por fila.</li>
+      <li>Hojas de observación para los tríos de la Práctica 2.</li>
+      <li>Marcadores, cinta adhesiva, cronómetro visible.</li>
+      <li>Lista de asistencia para la certificación de educación continua.</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <h4>Nota sobre la repetición del jueves</h4>
+    <ul>
+      <li>El Grupo B recibe el mismo taller el jueves 27. La estructura se mantiene idéntica, pero <b>los casos del diagnóstico relámpago serán otros</b> — no reutilizar los del martes.</li>
+      <li>El mapa de dependencias del Grupo B será distinto: hay más gerentes en ese grupo (Flota, Servicio al Cliente, Crédito y Cobro, Operaciones). Ajustar los ejemplos hacia la coordinación inter-gerencial.</li>
+      <li>Anotar después del martes qué funcionó y qué no, para afinar el jueves.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="quote">
+  <p>"La inteligencia artificial no reemplaza al ser humano; lo potencia para trascender."</p>
+  <span>— Metodología TIHA, Dra. Mariluz Serrano Ortiz</span>
+</div>
+
+<footer>
+  <div class="fname">Dra. Mariluz Serrano Ortiz · Creadora, Modelo TIHA</div>
+  <div class="fmeta">Programa de capacitación para Allied Logistics Worldwide · <a href="mailto:mariluz.serrano@upr.edu">mariluz.serrano@upr.edu</a></div>
+</footer>
+
+</div>
+</body>
+</html>
