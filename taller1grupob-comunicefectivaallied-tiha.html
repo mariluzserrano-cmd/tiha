@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller 1 · Grupo B · Comunicación Efectiva · Allied × TIHA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#152238; --navy-2:#1F3352; --coral:#E2572B; --coral-dark:#C4451E;
+    --tiha-red:#E3263A; --tiha-slate:#44546A; --tiha-gold:#C9A961;
+    --paper:#FBF8F3; --cream-2:#F5F0E6; --ink:#20241F; --grey:#6B6459; --line:#E4D8C4;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Work Sans',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:680px;margin:0 auto;padding:0 0 60px;}
+
+  .hero{background:linear-gradient(160deg,var(--navy) 0%,var(--tiha-slate) 100%);color:#fff;padding:40px 24px 36px;position:relative;overflow:hidden;}
+  .hero::after{content:"";position:absolute;right:0;bottom:0;width:170px;height:170px;background:rgba(226,87,43,.26);border-radius:50%;transform:translate(35%,35%);}
+  .brandrow{display:flex;align-items:center;gap:10px;margin-bottom:22px;flex-wrap:wrap;}
+  .brand-pill{background:#fff;color:var(--navy);font-weight:700;font-size:12px;letter-spacing:.04em;padding:7px 13px;border-radius:999px;display:inline-flex;align-items:center;gap:6px;}
+  .brand-pill .arrow{color:var(--coral);font-weight:800;}
+  .plus{color:rgba(255,255,255,.5);}
+  .tiha-pill{border:1px solid rgba(255,255,255,.35);color:#fff;font-size:11.5px;letter-spacing:.08em;padding:6px 12px;border-radius:999px;text-transform:uppercase;}
+  .eyebrow{color:var(--tiha-gold);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;margin:0 0 10px;}
+  h1.title{font-family:'Prata',serif;font-weight:400;font-size:clamp(26px,7vw,36px);line-height:1.1;margin:0 0 12px;position:relative;z-index:1;}
+  .group-badge{display:inline-block;background:var(--coral);color:#fff;font-weight:700;font-size:13.5px;padding:8px 16px;border-radius:999px;position:relative;z-index:1;margin-bottom:14px;}
+  .hero .meta{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:rgba(255,255,255,.85);position:relative;z-index:1;}
+  .hero .meta b{color:#fff;}
+
+  .section{padding:34px 22px 4px;}
+  h2.st{font-family:'Prata',serif;font-weight:400;font-size:23px;color:var(--navy);margin:0 0 6px;line-height:1.2;}
+  .stag{display:inline-block;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--coral-dark);font-weight:700;margin:0 0 14px;}
+  .sintro{font-size:14.5px;color:var(--grey);margin:0 0 20px;}
+
+  /* DIFF CALLOUT */
+  .diff{background:var(--navy);color:#fff;border-radius:14px;padding:20px;margin-bottom:18px;}
+  .diff h4{font-family:'Prata',serif;font-weight:400;font-size:18px;margin:0 0 10px;color:var(--tiha-gold);}
+  .diff p{font-size:13.5px;color:rgba(255,255,255,.9);margin:0 0 8px;}
+  .diff table{width:100%;border-collapse:collapse;margin-top:12px;font-size:12.5px;}
+  .diff th{text-align:left;color:var(--tiha-gold);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.2);}
+  .diff td{padding:7px 8px;border-bottom:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.9);vertical-align:top;}
+
+  /* TIMELINE */
+  .tl{border-left:2px solid var(--line);margin-left:8px;}
+  .tl-item{position:relative;padding:0 0 4px 20px;margin-bottom:14px;}
+  .tl-item::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--line);border:2px solid var(--paper);}
+  .tl-item.k-humano::before{background:var(--tiha-red);}
+  .tl-item.k-teoria::before{background:var(--navy);}
+  .tl-item.k-practica::before{background:var(--coral);}
+  .tl-item.k-pausa::before{background:var(--tiha-gold);}
+  .tl-time{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--grey);}
+  .tl-name{font-size:15px;font-weight:600;color:var(--navy);margin:2px 0 3px;}
+  .tl-dur{font-size:11.5px;color:var(--coral-dark);font-weight:700;}
+  .tl-note{font-size:13px;color:var(--grey);margin-top:3px;}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 18px;font-size:11.5px;color:var(--grey);}
+  .legend span{display:inline-flex;align-items:center;gap:5px;}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+
+  .block{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:18px;}
+  .block-head{display:flex;align-items:baseline;gap:10px;margin-bottom:4px;flex-wrap:wrap;}
+  .block-num{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:#fff;background:var(--navy);padding:3px 8px;border-radius:5px;}
+  .block-title{font-family:'Prata',serif;font-size:18px;color:var(--navy);}
+  .block-time{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--grey);margin-bottom:12px;display:block;}
+  .lbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--coral-dark);margin:14px 0 6px;}
+  .block p{margin:0 0 8px;font-size:14px;}
+  .block ul{margin:0 0 8px;padding-left:18px;font-size:14px;}
+  .block li{margin-bottom:5px;}
+  .say{background:var(--cream-2);border-left:3px solid var(--tiha-gold);padding:12px 14px;font-size:13.5px;font-style:italic;color:var(--navy);border-radius:0 8px 8px 0;margin:0 0 8px;}
+  .say b{font-style:normal;}
+
+  .rp{background:var(--navy);color:#fff;border-radius:14px;padding:20px;margin-bottom:18px;}
+  .rp .rp-tag{display:inline-block;background:var(--coral);color:#fff;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:4px;margin-bottom:10px;}
+  .rp h3{font-family:'Prata',serif;font-weight:400;font-size:19px;margin:0 0 4px;color:#fff;}
+  .rp .rp-time{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--tiha-gold);margin-bottom:14px;display:block;}
+  .rp .rl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--tiha-gold);margin:14px 0 6px;}
+  .rp p,.rp li{font-size:13.5px;color:rgba(255,255,255,.9);}
+  .rp ul{margin:0 0 8px;padding-left:18px;}
+  .rp li{margin-bottom:5px;}
+  .card-role{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:9px;padding:12px 14px;margin-bottom:9px;}
+  .card-role .cr-who{font-weight:700;color:var(--tiha-gold);font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;}
+  .card-role .cr-txt{font-size:13.5px;color:rgba(255,255,255,.92);}
+
+  .note{background:var(--cream-2);border:1px solid var(--line);border-left:4px solid var(--tiha-red);border-radius:0 12px 12px 0;padding:18px 20px;margin:0 0 18px;}
+  .note h4{font-family:'Prata',serif;font-weight:400;font-size:17px;color:var(--navy);margin:0 0 8px;}
+  .note ul{margin:0;padding-left:18px;font-size:14px;}
+  .note li{margin-bottom:6px;}
+
+  .tiha-strip{background:var(--tiha-slate);color:#fff;border-radius:14px;padding:20px;margin:0 0 18px;}
+  .tiha-strip h4{font-family:'Prata',serif;font-weight:400;font-size:18px;margin:0 0 12px;color:var(--tiha-gold);}
+  .tiha-grid{display:grid;grid-template-columns:1fr;gap:10px;}
+  .tiha-item{background:rgba(255,255,255,.08);border-radius:9px;padding:11px 13px;}
+  .tiha-item .ti-n{font-weight:700;font-size:13px;color:var(--tiha-gold);margin-bottom:3px;}
+  .tiha-item .ti-t{font-size:13px;color:rgba(255,255,255,.9);}
+
+  .quote{margin:30px 22px 0;padding:0 0 0 18px;border-left:3px solid var(--tiha-red);}
+  .quote p{font-family:'Prata',serif;font-style:italic;color:var(--navy);font-size:16.5px;line-height:1.5;margin:0 0 8px;}
+  .quote span{font-size:12.5px;color:var(--grey);}
+
+  footer{margin-top:40px;padding:26px 24px 32px;text-align:center;background:var(--navy);color:rgba(255,255,255,.7);}
+  footer .fname{color:#fff;font-weight:600;font-size:14px;margin-bottom:4px;}
+  footer .fmeta{font-size:12px;}
+  footer .fmeta a{color:var(--tiha-gold);text-decoration:none;}
+
+  @media(min-width:620px){
+    .hero{padding:52px 40px 46px;}
+    .section{padding:42px 40px 4px;}
+    .quote{margin-left:40px;margin-right:40px;}
+    .tiha-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media print{
+    body{background:#fff;}
+    .hero,.rp,.tiha-strip,.diff{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .block,.rp,.note{page-break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+  <div class="brandrow">
+    <span class="brand-pill"><span class="arrow">➤</span> ALLIED LOGISTICS WORLDWIDE</span>
+    <span class="plus">×</span>
+    <span class="tiha-pill">Modelo TIHA</span>
+  </div>
+  <p class="eyebrow">Taller 1 de 4 · Guía de facilitación</p>
+  <h1 class="title">Comunicación Efectiva<br>para Supervisores</h1>
+  <span class="group-badge">Grupo B · Jueves 27 de agosto</span>
+  <div class="meta">
+    <span><b>8:30 a.m. – 12:30 p.m.</b></span>
+    <span>4 horas contacto</span>
+    <span>14 participantes · 7 gerentes, 7 supervisores</span>
+  </div>
+</div>
+
+<!-- POR QUÉ ESTE GRUPO ES DISTINTO -->
+<div class="section">
+  <h2 class="st">Por qué este grupo necesita otro diseño</h2>
+  <span class="stag">Leer antes de facilitar</span>
+
+  <div class="diff">
+    <h4>La diferencia estructural</h4>
+    <p>El Grupo A era mayormente supervisión de piso: 14 supervisores y 2 gerentes. El Grupo B está partido a la mitad — <b>7 gerentes y 7 supervisores</b> — y eso cambia el eje del taller.</p>
+    <p>Más importante todavía: <b>seis de los siete gerentes de este grupo supervisan directamente a alguien que ya tomó este taller el martes.</b> Llegan el jueves a una sala donde su propia gente ya salió con un compromiso escrito.</p>
+    <table>
+      <tr><th>Gerente en Grupo B</th><th>Supervisa en Grupo A a</th></tr>
+      <tr><td>Rachel Valentín Valles</td><td>Alberto Oyola Cruz · Jonathan Rosa Arroyo</td></tr>
+      <tr><td>José Rodríguez Maldonado</td><td>Cristal De Dios Rodríguez</td></tr>
+      <tr><td>Michelle Rodríguez Rodríguez</td><td>Jerome Jiménez Ruiz</td></tr>
+      <tr><td>Morayma Fernández Rodríguez</td><td>Raúl Puchales Santiago</td></tr>
+      <tr><td>Érica Díaz Ortiz</td><td>Johanys Martínez Muñoz</td></tr>
+      <tr><td>Ángel Albertorio Nieves</td><td>Luis Pérez Díaz</td></tr>
+    </table>
+  </div>
+
+  <div class="note">
+    <h4>Los tres ejes que cambian</h4>
+    <ul>
+      <li><b>De comunicar hacia abajo, a comunicar en cascada.</b> El Grupo A trabajó la instrucción directa. Este grupo trabaja el mensaje que <i>pasa por ellos</i> y se edita en el camino hacia el piso.</li>
+      <li><b>De supervisor–empleado, a par–par.</b> Cuatro gerentes de Operaciones (Michelle, Morayma, José, Rachel) son pares que reportan a la misma persona. Coordinar entre iguales, sin jerarquía que resuelva, es más difícil que dar una instrucción.</li>
+      <li><b>De hablar, a recibir.</b> Un gerente falla más por lo que no le llega que por lo que no dice. Este grupo trabaja la escucha hacia arriba y hacia los lados.</li>
+    </ul>
+  </div>
+
+  <div class="tiha-strip">
+    <h4>Cómo vive TIHA en la versión del jueves</h4>
+    <div class="tiha-grid">
+      <div class="tiha-item"><div class="ti-n">Inspiración</div><div class="ti-t">Reciben lo que su equipo comprometió el martes — el taller empieza con evidencia de que algo ya se movió.</div></div>
+      <div class="tiha-item"><div class="ti-n">Empatía</div><div class="ti-t">Los role play los ponen del lado del que recibe la cascada, no del que la emite.</div></div>
+      <div class="tiha-item"><div class="ti-n">Personalización</div><div class="ti-t">El diagnóstico usa sus propios mensajes en tránsito, no casos de manual.</div></div>
+      <div class="tiha-item"><div class="ti-n">Bienestar</div><div class="ti-t">Se nombra la carga particular del mando medio: traducir hacia arriba y hacia abajo todo el día.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ITINERARIO -->
+<div class="section">
+  <h2 class="st">Itinerario de las 4 horas</h2>
+  <span class="stag">8:30 a.m. – 12:30 p.m. · 240 minutos</span>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--tiha-red)"></i> Momento humano</span>
+    <span><i class="dot" style="background:var(--navy)"></i> Concepto</span>
+    <span><i class="dot" style="background:var(--coral)"></i> Práctica</span>
+    <span><i class="dot" style="background:var(--tiha-gold)"></i> Pausa</span>
+  </div>
+  <div class="tl">
+    <div class="tl-item k-humano"><div class="tl-time">8:30 – 9:10 a.m.</div><div class="tl-name">Apertura — El eco del martes</div><div class="tl-dur">40 min</div><div class="tl-note">Dinámica del mapa de mando: quién depende de quién en esta sala y fuera de ella.</div></div>
+    <div class="tl-item k-humano"><div class="tl-time">9:10 – 9:25 a.m.</div><div class="tl-name">Diagnóstico — El mensaje que pasó por mí</div><div class="tl-dur">15 min</div><div class="tl-note">Enfocado en mensajes en tránsito, no en instrucciones propias.</div></div>
+    <div class="tl-item k-teoria"><div class="tl-time">9:25 – 9:45 a.m.</div><div class="tl-name">Concepto 1 — El mensaje en cascada</div><div class="tl-dur">20 min</div></div>
+    <div class="tl-item k-practica"><div class="tl-time">9:45 – 10:05 a.m.</div><div class="tl-name">Práctica 1 — La cascada de tres niveles</div><div class="tl-dur">20 min</div></div>
+    <div class="tl-item k-pausa"><div class="tl-time">10:05 – 10:20 a.m.</div><div class="tl-name">Pausa activa</div><div class="tl-dur">15 min</div></div>
+    <div class="tl-item k-teoria"><div class="tl-time">10:20 – 10:40 a.m.</div><div class="tl-name">Concepto 2 — Barreras entre pares</div><div class="tl-dur">20 min</div></div>
+    <div class="tl-item k-practica"><div class="tl-time">10:40 – 11:05 a.m.</div><div class="tl-name">Práctica 2 — Mesa de negociación entre departamentos</div><div class="tl-dur">25 min</div></div>
+    <div class="tl-item k-teoria"><div class="tl-time">11:05 – 11:20 a.m.</div><div class="tl-name">Concepto 3 — Escucha hacia arriba y hacia los lados</div><div class="tl-dur">15 min</div></div>
+    <div class="tl-item k-practica"><div class="tl-time">11:20 – 11:40 a.m.</div><div class="tl-name">Práctica 3 — La mala noticia que nadie quiere dar</div><div class="tl-dur">20 min</div></div>
+    <div class="tl-item k-teoria"><div class="tl-time">11:40 – 11:55 a.m.</div><div class="tl-name">Concepto 4 — Asertividad sin jerarquía</div><div class="tl-dur">15 min</div></div>
+    <div class="tl-item k-practica"><div class="tl-time">11:55 – 12:20 p.m.</div><div class="tl-name">Práctica 4 — La conversación entre iguales</div><div class="tl-dur">25 min</div></div>
+    <div class="tl-item k-humano"><div class="tl-time">12:20 – 12:30 p.m.</div><div class="tl-name">Cierre — Mi compromiso como enlace</div><div class="tl-dur">10 min</div></div>
+  </div>
+</div>
+
+<!-- APERTURA -->
+<div class="section">
+  <h2 class="st">Apertura · El eco del martes</h2>
+  <span class="stag">8:30 – 9:10 a.m. · 40 minutos</span>
+
+  <div class="block">
+    <div class="block-head"><span class="block-num">A.1</span><span class="block-title">Bienvenida y encuadre</span></div>
+    <span class="block-time">8:30 – 8:40 a.m. · 10 min</span>
+    <div class="lbl">El gancho de apertura</div>
+    <p>A diferencia del martes, aquí se puede abrir con algo que ya ocurrió: el martes, 16 personas de esta empresa —varias de ellas del equipo directo de los que están en esta sala— salieron con un compromiso escrito sobre cómo van a comunicarse distinto.</p>
+    <div class="say"><b>Guion sugerido:</b> "El martes estuvieron aquí dieciséis personas. Varios de ustedes tienen gente suya entre ellos. Salieron de aquí con un compromiso escrito. Hoy no vamos a repetir lo que ellos hicieron — hoy vamos a trabajar la parte que solo les toca a ustedes: lo que pasa con un mensaje cuando tiene que atravesarlos."</div>
+    <div class="lbl">Encuadre de seguridad</div>
+    <p>Igual que el martes: se habla de situaciones, no de personas. Añadir aquí un elemento extra, porque en esta sala hay pares que compiten por recursos y gerentes que reportan al mismo jefe: <b>lo que se discute aquí no se lleva a la reunión de gerencia como munición.</b></p>
+  </div>
+
+  <div class="block">
+    <div class="block-head"><span class="block-num">A.2</span><span class="block-title">El mapa de mando</span></div>
+    <span class="block-time">8:40 – 9:10 a.m. · 30 min</span>
+    <div class="lbl">Por qué esta dinámica y no la del martes</div>
+    <p>El Grupo A hizo presentación cruzada en pares porque casi no se conocían entre departamentos. Aquí es distinto: <b>estos se conocen</b>. Varios reportan al mismo jefe. Lo que no está claro no es quién es quién, sino <b>por dónde viaja la información entre ellos.</b></p>
+    <div class="lbl">Montaje</div>
+    <ul>
+      <li>Papelógrafo grande o pared con papel. Cada participante escribe su nombre y área en una tarjeta y la pega.</li>
+      <li>Con marcador, cada quien traza <b>una flecha</b> hacia las personas de la sala de quienes necesita información para hacer su trabajo. No hacia quien le cae bien: hacia quien le manda o le debe datos.</li>
+      <li>Al terminar, se observa el mapa completo en silencio 30 segundos antes de comentar.</li>
+    </ul>
+    <div class="lbl">Las preguntas que abren la conversación</div>
+    <ul>
+      <li>¿Quién quedó con más flechas entrantes? Esa persona es un cuello de botella de información, no necesariamente por culpa suya.</li>
+      <li>¿Hay alguna flecha que va en un solo sentido y debería ir en los dos?</li>
+      <li>¿Qué información viaja hoy por WhatsApp o de boca en boca que debería viajar por otro canal?</li>
+    </ul>
+    <div class="lbl">Qué se lleva el facilitador</div>
+    <p>Este mapa se queda pegado toda la mañana y se usa como referencia en las prácticas. Es el equivalente del mapa de dependencias del martes, pero construido desde el mando, no desde el piso.</p>
+    <div class="say"><b>Cierre de la dinámica:</b> "Este mapa es la red de comunicación real de Allied a nivel gerencial. Todo lo que falla aquí arriba llega multiplicado al piso."</div>
+  </div>
+</div>
+
+<!-- DIAGNÓSTICO -->
+<div class="section">
+  <h2 class="st">Diagnóstico relámpago</h2>
+  <span class="stag">9:10 – 9:25 a.m. · 15 minutos</span>
+
+  <div class="block">
+    <div class="block-head"><span class="block-num">D</span><span class="block-title">El mensaje que pasó por mí</span></div>
+    <div class="lbl">Diferencia con el martes</div>
+    <p>El Grupo A escribió sobre instrucciones que <i>dieron</i>. Este grupo escribe sobre mensajes que <b>recibieron y tuvieron que retransmitir</b> — que es la tarea real del mando medio.</p>
+    <div class="lbl">Las tres preguntas</div>
+    <ul>
+      <li><b>1.</b> Un mensaje que recibí de arriba y tuve que bajar a mi equipo. ¿Qué le cambié al traducirlo?</li>
+      <li><b>2.</b> Algo que mi equipo me dijo y que no subí. ¿Por qué no lo subí?</li>
+      <li><b>3.</b> Una información que necesito de otro departamento y que casi siempre me llega tarde o incompleta.</li>
+    </ul>
+    <div class="lbl">Uso inmediato</div>
+    <p>La pregunta 3 alimenta directamente la <b>Práctica 2</b> (mesa de negociación). La pregunta 2 alimenta la <b>Práctica 3</b> (la mala noticia). Recoger, leer durante la Práctica 1, y seleccionar los casos más frecuentes.</p>
+    <div class="say"><b>Nota:</b> la pregunta 2 suele generar silencio incómodo. Es intencional. Ahí está el material más valioso del día.</div>
+  </div>
+</div>
+
+<!-- CONCEPTO 1 + PRÁCTICA 1 -->
+<div class="section">
+  <h2 class="st">Concepto 1 · El mensaje en cascada</h2>
+  <span class="stag">9:25 – 9:45 a.m. · 20 minutos</span>
+
+  <div class="block">
+    <div class="block-head"><span class="block-num">C.1</span><span class="block-title">Lo que le pasa al mensaje cuando atraviesa niveles</span></div>
+    <div class="lbl">La base teórica</div>
+    <p>Se mantiene el modelo emisor–mensaje–receptor–ruido (Shannon y Weaver), pero aplicado a <b>comunicación organizacional descendente</b>: el mensaje no viaja una vez, viaja en etapas, y en cada etapa hay un ser humano que lo interpreta antes de retransmitirlo.</p>
+    <div class="lbl">Los tres efectos documentados de la cascada</div>
+    <ul>
+      <li><b>Nivelación:</b> se pierden detalles. El mensaje se acorta en cada nivel.</li>
+      <li><b>Agudización:</b> lo que sobrevive se exagera. "Hay que cuidar los costos" llega abajo como "van a recortar".</li>
+      <li><b>Asimilación:</b> cada quien ajusta el mensaje a lo que ya creía o a lo que le conviene explicar.</li>
+    </ul>
+    <div class="lbl">El punto para el mando medio</div>
+    <div class="say">"Ustedes no son un cable que transmite. Son un traductor. Y todo traductor toma decisiones. La pregunta es si esas decisiones las están tomando conscientes o en automático."</div>
+    <div class="lbl">La herramienta concreta</div>
+    <p>Introducir el <b>encabezado de intención</b>: antes de retransmitir un mensaje, decir explícitamente qué se espera que el receptor haga con él. "Esto es para que lo sepas" es distinto de "esto es para que actúes hoy" y de "esto es para que lo discutamos".</p>
+  </div>
+
+  <div class="rp">
+    <span class="rp-tag">Práctica 1</span>
+    <h3>La cascada de tres niveles</h3>
+    <span class="rp-time">9:45 – 10:05 a.m. · 20 minutos</span>
+    <div class="rl">Diferencia con el martes</div>
+    <p>El Grupo A hizo teléfono roto horizontal, en fila, todos al mismo nivel. Aquí la distorsión se produce <b>bajando por niveles jerárquicos</b>, que es donde ocurre de verdad.</p>
+    <div class="rl">Montaje</div>
+    <p>Grupos de 4. Se asignan roles: Dirección → Gerente → Supervisor → Personal de piso. Se entrega el mensaje <b>escrito</b> solo al que hace de Dirección. Cada nivel lo lee, lo guarda, y lo transmite <b>verbalmente y con sus propias palabras</b> al siguiente. Prohibido leer textual.</p>
+    <div class="rl">Mensajes para transmitir (uno por grupo)</div>
+    <div class="card-role"><div class="cr-who">Mensaje 1 — Operaciones</div><div class="cr-txt">"A partir del lunes, todas las devoluciones que entren después de las 3:00 p.m. se procesan al día siguiente, excepto las de las tres cuentas prioritarias. Esto no es un cambio de política permanente, es por el volumen de temporada, y se revisa en noviembre. Que nadie le diga al cliente que cambiamos las reglas."</div></div>
+    <div class="card-role"><div class="cr-who">Mensaje 2 — Flota y taller</div><div class="cr-txt">"Las unidades con más de 200 mil millas entran a inspección cada 30 días en vez de cada 45. Empieza con las cinco más antiguas, no con todas a la vez, porque no tenemos capacidad de taller. Si una unidad falla la inspección, se saca de ruta ese mismo día, sin excepción, aunque tengamos entregas comprometidas."</div></div>
+    <div class="card-role"><div class="cr-who">Mensaje 3 — Crédito y servicio</div><div class="cr-txt">"Las cuentas con balance vencido a más de 60 días no se les despacha sin aprobación de Crédito. La lista se actualiza los lunes. Si el cliente llama molesto, no se le explica que es por crédito, se le dice que Servicio al Cliente le devuelve la llamada. Y avísenme a mí antes de que escale."</div></div>
+    <div class="rl">Procesamiento (lo esencial)</div>
+    <ul>
+      <li>Leer el mensaje original en voz alta y compararlo con lo que llegó al nivel 4.</li>
+      <li>¿Qué se <b>niveló</b> (se perdió)? Casi siempre las excepciones y los matices.</li>
+      <li>¿Qué se <b>agudizó</b> (se exageró)? Casi siempre lo que suena a amenaza.</li>
+      <li>¿En qué nivel se perdió el <b>por qué</b>? Ese es el dato que más rápido desaparece y el que más falta hace abajo.</li>
+      <li>Pregunta final: <b>¿cuántos de ustedes recibieron un mensaje así esta semana y lo bajaron sin preguntar el porqué?</b></li>
+    </ul>
+  </div>
+</div>
+
+<!-- PAUSA -->
+<div class="section">
+  <div class="note">
+    <h4>Pausa activa · 10:05 – 10:20 a.m.</h4>
+    <ul>
+      <li>15 minutos reales, igual que el martes.</li>
+      <li>Sugerencia distinta para este grupo: pedir que en la pausa cada quien busque a <b>una persona del mapa con quien tenga una flecha</b> y le pregunte algo que siempre quiso saber sobre cómo trabaja su área.</li>
+      <li>Es una pausa, no una tarea. Si no lo hacen, no pasa nada.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- CONCEPTO 2 + PRÁCTICA 2 -->
+<div class="section">
+  <h2 class="st">Concepto 2 · Barreras entre pares</h2>
+  <span class="stag">10:20 – 10:40 a.m. · 20 minutos</span>
+
+  <div class="block">
+    <div class="block-head"><span class="block-num">C.2</span><span class="block-title">Cuando nadie tiene autoridad sobre el otro</span></div>
+    <div class="lbl">Las cuatro familias, releídas para gerencia</div>
+    <ul>
+      <li><b>Físicas:</b> menos relevantes aquí. Se mencionan y se pasa rápido.</li>
+      <li><b>Semánticas gerenciales:</b> "prioridad", "urgente", "capacidad", "listo" significan cosas distintas en Almacén, Tráfico, Crédito y Servicio al Cliente. Cada área tiene su propio reloj.</li>
+      <li><b>Estructurales:</b> métricas que compiten. Al de Almacén lo miden por despacho, al de Crédito por cobro, al de Servicio por satisfacción. El mismo caso se ve distinto según qué te midan.</li>
+      <li><b>Políticas:</b> lo que no se dice para no quedar mal frente a un par o frente al mismo jefe.</li>
+    </ul>
+    <div class="lbl">La barrera más cara a nivel gerencial</div>
+    <div class="say">"No es que no nos entendamos. Es que cada uno está optimizando algo distinto, y ninguno lo dice en voz alta."</div>
+    <div class="lbl">Anclaje real</div>
+    <p>Usar aquí las respuestas de la <b>pregunta 3 del diagnóstico</b> (información que llega tarde o incompleta de otro departamento). Leerlas sin identificar a nadie. Preguntar: <b>¿qué está optimizando el otro departamento cuando nos manda esto tarde?</b></p>
+  </div>
+
+  <div class="rp">
+    <span class="rp-tag">Práctica 2 · Role play</span>
+    <h3>Mesa de negociación entre departamentos</h3>
+    <span class="rp-time">10:40 – 11:05 a.m. · 25 minutos</span>
+    <div class="rl">Diferencia con el martes</div>
+    <p>El Grupo A hizo tríos supervisor–empleado–observador, con jerarquía clara. Aquí es <b>mesa redonda de pares</b>: nadie manda sobre nadie, y hay que llegar a un acuerdo real.</p>
+    <div class="rl">Montaje</div>
+    <p>Grupos de 4 o 5. Cada quien recibe una tarjeta con un rol y un <b>objetivo privado</b> que no comparte al inicio. Tienen 12 minutos para llegar a una solución acordada. Un observador por mesa toma nota.</p>
+    <div class="rl">Caso: el contenedor del viernes</div>
+    <p>Llegó un contenedor grande de una cuenta importante un viernes a las 2:00 p.m. Todo el mundo lo quiere resolver distinto.</p>
+    <div class="card-role"><div class="cr-who">Gerente de Operaciones / Almacén</div><div class="cr-txt">Tu objetivo privado: no dejar carga sin procesar el fin de semana, pero tu personal ya cumplió horas y pagar overtime te descuadra el mes.</div></div>
+    <div class="card-role"><div class="cr-who">Gerente de Tráfico</div><div class="cr-txt">Tu objetivo privado: los choferes ya tienen ruta asignada para el lunes temprano. Si esto cambia, se cae toda la programación de la semana.</div></div>
+    <div class="card-role"><div class="cr-who">Gerente de Servicio al Cliente</div><div class="cr-txt">Tu objetivo privado: ya le prometiste al cliente entrega el lunes en la mañana. Si falla, es la segunda vez este mes con esta cuenta.</div></div>
+    <div class="card-role"><div class="cr-who">Gerente de Crédito y Cobro</div><div class="cr-txt">Tu objetivo privado: esta cuenta tiene un balance vencido. Técnicamente no debería despacharse sin tu aprobación, pero es un cliente grande y no quieres ser el que frena todo.</div></div>
+    <div class="card-role"><div class="cr-who">Observador</div><div class="cr-txt">Anota: ¿alguien preguntó al otro qué le está costando a él? ¿O cada uno defendió su posición? ¿En qué minuto apareció la primera propuesta que consideraba a más de un área?</div></div>
+    <div class="rl">Procesamiento en plenario</div>
+    <ul>
+      <li>¿Cuánto tardaron en poner los objetivos privados sobre la mesa? ¿Qué habría pasado si empiezan por ahí?</li>
+      <li>¿Alguien cedió, o encontraron una salida que ninguno tenía solo?</li>
+      <li>¿Este caso les sonó conocido? ¿Con qué frecuencia pasa algo así en Allied?</li>
+      <li><b>La pregunta incómoda:</b> cuando esto pasa de verdad, ¿lo resuelven entre ustedes o lo suben para que otro decida?</li>
+    </ul>
+  </div>
+</div>
+
+<!-- CONCEPTO 3 + PRÁCTICA 3 -->
+<div class="section">
+  <h2 class="st">Concepto 3 · Escucha hacia arriba y hacia los lados</h2>
+  <span class="stag">11:05 – 11:20 a.m. · 15 minutos</span>
+
+  <div class="block">
+    <div class="block-head"><span class="block-num">C.3</span><span class="block-title">Lo que tu equipo no te está diciendo</span></div>
+    <div class="lbl">Diferencia con el martes</div>
+    <p>El Grupo A trabajó los tres niveles de escucha en conversación directa. Este grupo trabaja algo más específico del mando medio: <b>el silencio organizacional</b> — la información que existe pero no sube.</p>
+    <div class="lbl">Por qué la gente no sube información</div>
+    <ul>
+      <li><b>Miedo al mensajero:</b> quien trae el problema se convierte en el problema.</li>
+      <li><b>Futilidad:</b> "ya lo dije una vez y no pasó nada".</li>
+      <li><b>Protección del equipo:</b> el supervisor amortigua para que no caiga sobre su gente.</li>
+      <li><b>Sobrecarga percibida:</b> "el jefe ya tiene demasiado, no le voy a añadir esto".</li>
+    </ul>
+    <div class="lbl">Las cuatro herramientas, en versión gerencial</div>
+    <ul>
+      <li><b>Preguntar por lo específico, no por lo general:</b> "¿cómo va todo?" no produce información. "¿Qué se te dañó esta semana que no me contaste?" sí.</li>
+      <li><b>Premiar al mensajero en público:</b> la primera vez que alguien trae un problema temprano, la reacción define si habrá una segunda vez.</li>
+      <li><b>Parafrasear hacia arriba:</b> confirmar con tu propio jefe lo que entendiste antes de bajarlo.</li>
+      <li><b>El silencio de tres segundos:</b> igual que el martes, pero aquí funciona distinto — con un subordinado, el silencio incomoda y llena el espacio con lo que faltaba.</li>
+    </ul>
+    <div class="say"><b>Frase clave:</b> "Si nunca te llegan malas noticias, no es que no las haya. Es que dejaron de dártelas."</div>
+  </div>
+
+  <div class="rp">
+    <span class="rp-tag">Práctica 3</span>
+    <h3>La mala noticia que nadie quiere dar</h3>
+    <span class="rp-time">11:20 – 11:40 a.m. · 20 minutos</span>
+    <div class="rl">Diferencia con el martes</div>
+    <p>El Grupo A hizo parafraseo en pares con temas de su trabajo. Aquí el ejercicio es en <b>tríos con rotación</b> y trabaja específicamente cómo se recibe información difícil.</p>
+    <div class="rl">Montaje</div>
+    <p>Tríos. Roles: quien trae la mala noticia, quien la recibe, y un observador. Tres rondas de 5 minutos, rotando. El que recibe <b>solo puede hacer preguntas</b> durante los primeros 2 minutos — no puede dar instrucciones, ni soluciones, ni justificaciones.</p>
+    <div class="rl">Situaciones para las rondas</div>
+    <div class="card-role"><div class="cr-who">Ronda 1</div><div class="cr-txt">Un supervisor tuyo te dice que un error se viene repitiendo hace tres semanas y no te lo había dicho antes.</div></div>
+    <div class="card-role"><div class="cr-who">Ronda 2</div><div class="cr-txt">Un par de otro departamento te dice que tu área le está causando un problema que tú no sabías que existía.</div></div>
+    <div class="card-role"><div class="cr-who">Ronda 3</div><div class="cr-txt">Alguien de tu equipo te dice que una instrucción que tú bajaste no se puede cumplir como la diste, y que llevan semanas improvisando alrededor de ella.</div></div>
+    <div class="rl">La regla que hace el ejercicio</div>
+    <p>Dos minutos de solo preguntas. Nada de "ok, entonces haz esto". La mayoría de los gerentes encuentra esos dos minutos <b>físicamente difíciles</b>, y ahí está el aprendizaje.</p>
+    <div class="rl">Procesamiento</div>
+    <ul>
+      <li>¿Qué se sintió no poder resolver de inmediato?</li>
+      <li>A los que trajeron la mala noticia: ¿qué hizo la otra persona que te dio ganas de contarle más? ¿Y qué te cerró?</li>
+      <li>¿Cuánta información apareció en el segundo minuto que no habría aparecido si respondes en el primero?</li>
+    </ul>
+  </div>
+</div>
+
+<!-- CONCEPTO 4 + PRÁCTICA 4 -->
+<div class="section">
+  <h2 class="st">Concepto 4 · Asertividad sin jerarquía</h2>
+  <span class="stag">11:40 – 11:55 a.m. · 15 minutos</span>
+
+  <div class="block">
+    <div class="block-head"><span class="block-num">C.4</span><span class="block-title">Cuando no puedes ordenar, tienes que persuadir</span></div>
+    <div class="lbl">Diferencia con el martes</div>
+    <p>Se mantiene la fórmula <b>Observación + Impacto + Petición</b> — es la base y no se cambia. Lo que cambia es el contexto: aquí se usa <b>entre pares y hacia arriba</b>, donde no hay autoridad que respalde la petición.</p>
+    <div class="lbl">Lo que hay que añadir cuando es entre pares</div>
+    <ul>
+      <li><b>Reconocer la presión del otro primero.</b> "Sé que ustedes están corriendo con el cierre de mes" antes de pedir nada.</li>
+      <li><b>Hacer visible el costo compartido.</b> No "me afecta a mí", sino "esto nos está costando a los dos con el mismo cliente".</li>
+      <li><b>Pedir algo específico y pequeño.</b> Entre pares, una petición grande se lee como imposición.</li>
+      <li><b>Ofrecer algo de vuelta.</b> La reciprocidad es lo que sostiene el acuerdo cuando no hay jerarquía.</li>
+    </ul>
+    <div class="lbl">La fórmula ampliada para este grupo</div>
+    <div class="say"><b>Contexto del otro + Observación + Impacto compartido + Petición específica + Oferta.</b><br>"Sé que están con el cierre <i>(contexto)</i>. Cuando la lista de crédito llega los martes en vez de los lunes <i>(observación)</i>, despachamos a cuentas que después hay que reversar, y eso nos cuesta a los dos con el cliente <i>(impacto compartido)</i>. ¿Podríamos tener aunque sea la lista parcial el lunes a mediodía <i>(petición específica)</i>? Yo puedo darte el reporte de despachos el viernes para que te adelantes <i>(oferta)</i>."</div>
+    <div class="lbl">Hacia arriba</div>
+    <p>Mencionar brevemente que la misma estructura funciona con el propio jefe, con una diferencia: <b>llevar la petición con una opción ya pensada</b>, no solo con el problema.</p>
+  </div>
+
+  <div class="rp">
+    <span class="rp-tag">Práctica 4 · Role play</span>
+    <h3>La conversación entre iguales</h3>
+    <span class="rp-time">11:55 a.m. – 12:20 p.m. · 25 minutos</span>
+    <div class="rl">Montaje</div>
+    <p>Pares, <b>emparejando a propósito personas de departamentos que en el mapa de la mañana tienen una flecha entre sí</b>. Cada quien trae su caso real de la pregunta 3 del diagnóstico.</p>
+    <div class="rl">Secuencia</div>
+    <ul>
+      <li><b>Paso 1 (6 min):</b> cada quien redacta su planteamiento con la fórmula ampliada de cinco partes.</li>
+      <li><b>Paso 2 (7 min):</b> A plantea a B. B responde <b>desde la lógica real de su propio departamento</b>, no facilitando las cosas.</li>
+      <li><b>Paso 3 (7 min):</b> se invierten los papeles.</li>
+      <li><b>Paso 4 (5 min):</b> cada par identifica <b>un acuerdo concreto</b> que podrían llevarse de verdad al trabajo. Se escribe.</li>
+    </ul>
+    <div class="rl">Casos de respaldo</div>
+    <div class="card-role"><div class="cr-who">Caso 1</div><div class="cr-txt">Otro departamento te escala directo a tu jefe sin haber hablado contigo primero. Ya pasó dos veces.</div></div>
+    <div class="card-role"><div class="cr-who">Caso 2</div><div class="cr-txt">Un par te pide información con urgencia constante, pero cuando tú le pides algo, tarda días.</div></div>
+    <div class="card-role"><div class="cr-who">Caso 3</div><div class="cr-txt">En la reunión de gerencia todos están de acuerdo, pero al bajar a piso cada área ejecuta distinto y el cliente lo nota.</div></div>
+    <div class="rl">Procesamiento</div>
+    <ul>
+      <li>¿Cuál de las cinco partes de la fórmula te costó más? Con pares suele ser <b>la oferta</b> — cuesta dar algo a cambio.</li>
+      <li>¿Qué acuerdo concreto sacaron? Se comparten en voz alta los que quieran.</li>
+      <li>¿Por qué no habían tenido esta conversación antes?</li>
+    </ul>
+  </div>
+</div>
+
+<!-- CIERRE -->
+<div class="section">
+  <h2 class="st">Cierre · Mi compromiso como enlace</h2>
+  <span class="stag">12:20 – 12:30 p.m. · 10 minutos</span>
+
+  <div class="block">
+    <div class="block-head"><span class="block-num">Z</span><span class="block-title">Doble compromiso</span></div>
+    <div class="lbl">Diferencia con el martes</div>
+    <p>El Grupo A escribió <b>un</b> compromiso. Este grupo escribe <b>dos</b>, porque su rol es de enlace en dos direcciones:</p>
+    <ul>
+      <li><b>Hacia abajo:</b> una cosa que voy a hacer distinto al bajar un mensaje a mi equipo.</li>
+      <li><b>Hacia el lado:</b> una conversación específica que voy a tener con un par de esta sala, con nombre y fecha.</li>
+    </ul>
+    <div class="say"><b>La pregunta de cierre:</b> "El martes su gente se comprometió a algo. Hoy les toca a ustedes. ¿Qué van a hacer distinto para que lo que ellos prometieron pueda sostenerse?"</div>
+    <div class="lbl">Ronda relámpago</div>
+    <p>Cada quien dice solo el compromiso hacia el lado, en voz alta, mencionando a la persona. Que se escuche quién va a hablar con quién. Eso crea responsabilidad mutua.</p>
+    <div class="lbl">Cierre del ciclo con el Grupo A</div>
+    <p>Mencionar que en el Taller 2 se dará seguimiento a ambos grupos, y que varios de ellos verán si el compromiso de su propia gente se sostuvo.</p>
+  </div>
+
+  <div class="note">
+    <h4>Materiales adicionales para el jueves</h4>
+    <ul>
+      <li><b>Tres mensajes de cascada</b> impresos (uno por grupo de 4), distintos a los del teléfono roto del martes.</li>
+      <li><b>Tarjetas de rol con objetivo privado</b> para la mesa de negociación — 5 por mesa, impresas y dobladas.</li>
+      <li><b>Tarjetas en blanco</b> para el mapa de mando (una por participante) y marcador por persona para trazar flechas.</li>
+      <li>Tarjetas de compromiso <b>con dos espacios</b> (hacia abajo / hacia el lado), no uno.</li>
+      <li>El resto de los materiales del martes sirven igual: papelógrafo, cinta, bolígrafos, hojas de observación.</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <h4>Notas de facilitación específicas de este grupo</h4>
+    <ul>
+      <li><b>Cuidado con la mesa de negociación:</b> hay gerentes reales de esas mismas áreas en la sala. Si la tensión se vuelve personal, recordar el encuadre y pasar a procesamiento antes de tiempo.</li>
+      <li><b>Cuatro gerentes de Operaciones son pares directos.</b> No ponerlos a los cuatro en la misma mesa de negociación — repartirlos para que cada mesa tenga mezcla real de funciones.</li>
+      <li><b>Ojo con el silencio en la pregunta 2 del diagnóstico.</b> Admitir lo que uno no subió es vulnerable. No forzar a nadie a compartirlo en voz alta.</li>
+      <li>Este grupo va a tener más facilidad con la teoría y más resistencia a los role play. Nombrarlo con humor al inicio de la primera práctica desactiva la resistencia.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="quote">
+  <p>"Cuando integramos la inteligencia artificial con intención humanizadora, no solo aprendemos con ella, aprendemos a ser más nosotros mismos."</p>
+  <span>— TIHA (2026)</span>
+</div>
+
+<footer>
+  <div class="fname">Dra. Mariluz Serrano Ortiz · Creadora, Modelo TIHA</div>
+  <div class="fmeta">Programa de capacitación para Allied Logistics Worldwide · <a href="mailto:mariluz.serrano@upr.edu">mariluz.serrano@upr.edu</a></div>
+</footer>
+
+</div>
+</body>
+</html>
