@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Neurodecisiones TIHA</title>
+<style>
+:root{
+  --primary:#3B5673; --deep:#2C4256; --slate:#59778F; --sky:#C2DAE6;
+  --gold:#FFCB64; --ochre:#E0A51D; --card:#EEF3F6; --textd:#3E4B54; --mute:#76838C;
+  --green:#4E9D6E; --red:#D2685A;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{font-family:Calibri,'Segoe UI',system-ui,sans-serif;color:var(--textd);
+  background:var(--deep);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;}
+
+/* ---------- SCOREBOARD (siempre visible) ---------- */
+#scoreboard{display:flex;justify-content:center;gap:14px;padding:14px 20px;
+  background:var(--primary);flex-wrap:wrap;}
+.teamcard{background:rgba(255,255,255,.08);border-radius:12px;padding:8px 22px;
+  display:flex;align-items:center;gap:12px;min-width:150px;transition:.25s;}
+.teamcard.pulse{transform:scale(1.08);background:var(--gold);}
+.teamcard .dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
+.teamcard input{background:transparent;border:none;color:#fff;font-weight:700;
+  font-family:Cambria,Georgia,serif;font-size:1.05rem;width:90px;outline:none;}
+.teamcard.pulse input{color:var(--deep);}
+.teamcard .pts{font-size:1.5rem;font-weight:700;color:var(--gold);font-family:Cambria,Georgia,serif;margin-left:auto;}
+.teamcard.pulse .pts{color:var(--deep);}
+
+/* ---------- MAIN STAGE ---------- */
+#stage{flex:1;display:flex;align-items:center;justify-content:center;padding:26px 20px;}
+.screen{display:none;max-width:920px;width:100%;}
+.screen.on{display:block;animation:fade .35s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* START */
+#start{text-align:center;color:#fff;}
+#start .eyebrow{color:var(--gold);letter-spacing:.2em;font-weight:700;font-size:.85rem;text-transform:uppercase;}
+#start h1{font-family:Cambria,Georgia,serif;font-size:2.6rem;margin:10px 0 6px;}
+#start p{color:#DCEAF0;font-size:1.05rem;max-width:560px;margin:0 auto 26px;}
+.setup{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:30px;}
+.setup .col{background:rgba(255,255,255,.06);border-radius:12px;padding:16px 20px;width:170px;}
+.setup .col .dot{width:16px;height:16px;border-radius:50%;margin:0 auto 8px;}
+.setup input{width:100%;text-align:center;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  border-radius:8px;color:#fff;padding:7px 4px;font-family:Cambria,serif;font-weight:700;font-size:1rem;}
+.bigbtn{background:var(--gold);color:var(--deep);border:none;border-radius:30px;padding:16px 46px;
+  font-size:1.15rem;font-weight:700;font-family:Cambria,Georgia,serif;cursor:pointer;transition:.15s;}
+.bigbtn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.25);}
+.bigbtn.small{padding:10px 26px;font-size:.95rem;border-radius:22px;}
+.bigbtn.ghost{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.4);}
+
+/* CASE CARD */
+#casewrap .kicker{color:var(--gold);font-weight:700;letter-spacing:.14em;font-size:.85rem;
+  text-transform:uppercase;text-align:center;margin-bottom:6px;}
+#casewrap .counter{color:#DCEAF0;text-align:center;margin-bottom:16px;font-size:.95rem;}
+.card{background:#fff;border-radius:18px;padding:32px 34px 26px;box-shadow:0 12px 40px rgba(0,0,0,.3);}
+#timerbar{height:9px;border-radius:5px;background:var(--card);overflow:hidden;margin-bottom:20px;}
+#timerfill{height:100%;background:var(--green);width:100%;transition:width 1s linear, background .3s;}
+#timernum{text-align:center;font-family:Cambria,Georgia,serif;font-weight:700;font-size:1.6rem;
+  color:var(--primary);margin-bottom:14px;}
+.scenario{font-family:Cambria,Georgia,serif;font-size:1.25rem;color:var(--primary);
+  line-height:1.5;margin-bottom:22px;text-align:center;}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.opt{background:var(--card);border:2px solid transparent;border-radius:12px;padding:13px 16px;
+  font-size:1rem;color:var(--textd);display:flex;gap:10px;align-items:flex-start;}
+.opt b{color:var(--primary);flex-shrink:0;}
+.opt.correct{background:#E4F3E9;border-color:var(--green);}
+.opt.correct b, .opt.correct{color:#2E6B47;}
+.casebtns{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
+
+/* REVEAL */
+.reveal-box{background:var(--card);border-radius:12px;padding:16px 20px;margin:6px 0 18px;}
+.reveal-box .lbl{color:var(--ochre);font-weight:700;font-size:.82rem;letter-spacing:.08em;
+  text-transform:uppercase;margin-bottom:6px;}
+.reveal-box p{font-size:.98rem;color:var(--textd);}
+.followup{background:var(--primary);color:#fff;border-radius:12px;padding:16px 20px;margin-bottom:20px;}
+.followup .lbl{color:var(--gold);font-weight:700;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;}
+.followup p{font-family:Cambria,Georgia,serif;font-size:1.1rem;font-style:italic;}
+.hintbtn{background:none;border:1px dashed var(--mute);color:var(--mute);border-radius:8px;
+  padding:6px 14px;font-size:.82rem;cursor:pointer;margin-top:4px;}
+.hintbox{display:none;background:#FFF4E0;border-left:4px solid var(--ochre);padding:10px 14px;
+  border-radius:6px;font-size:.88rem;color:var(--textd);margin-top:10px;}
+.hintbox.on{display:block;}
+
+/* SCORING */
+.scoring{margin-top:6px;}
+.scoring .lbl{color:var(--primary);font-weight:700;font-size:.9rem;margin-bottom:10px;text-align:center;}
+.scorerow{display:grid;grid-template-columns:100px 1fr 1fr 1fr;gap:8px;align-items:center;margin-bottom:8px;}
+.scorerow .tname{font-weight:700;color:var(--primary);font-family:Cambria,serif;}
+.chk{background:var(--card);border:2px solid transparent;border-radius:9px;padding:9px 6px;
+  font-size:.82rem;text-align:center;cursor:pointer;color:var(--textd);transition:.15s;}
+.chk.on{background:var(--green);color:#fff;border-color:#2E6B47;font-weight:700;}
+.headerrow{display:grid;grid-template-columns:100px 1fr 1fr 1fr;gap:8px;margin-bottom:6px;}
+.headerrow span{font-size:.72rem;color:var(--mute);text-align:center;text-transform:uppercase;letter-spacing:.04em;}
+
+/* FINAL */
+#final{text-align:center;color:#fff;}
+#final h1{font-family:Cambria,Georgia,serif;font-size:2.2rem;margin:10px 0 22px;}
+.podium{display:flex;justify-content:center;gap:16px;margin-bottom:26px;flex-wrap:wrap;}
+.podiumcard{background:rgba(255,255,255,.08);border-radius:14px;padding:22px 30px;min-width:150px;}
+.podiumcard .pos{font-size:.85rem;color:var(--gold);font-weight:700;letter-spacing:.1em;}
+.podiumcard .nm{font-family:Cambria,serif;font-size:1.3rem;font-weight:700;margin:6px 0;}
+.podiumcard .sc{font-size:2.2rem;font-weight:700;color:var(--gold);font-family:Cambria,serif;}
+
+.skiplink{position:fixed;bottom:16px;right:20px;color:rgba(255,255,255,.5);font-size:.78rem;
+  cursor:pointer;text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<div id="scoreboard"></div>
+
+<div id="stage">
+
+  <!-- ===================== START ===================== -->
+  <div class="screen on" id="start">
+    <div class="eyebrow">Sesión 5 · TIHA</div>
+    <h1>Neurodecisiones</h1>
+    <p>Seis escenarios. 20 segundos. Su equipo decide qué concepto explica mejor lo que está ocurriendo — y por qué.</p>
+    <div class="setup">
+      <div class="col"><div class="dot" style="background:var(--ochre)"></div><input id="nameA" value="Equipo A"></div>
+      <div class="col"><div class="dot" style="background:var(--slate)"></div><input id="nameB" value="Equipo B"></div>
+      <div class="col"><div class="dot" style="background:var(--green)"></div><input id="nameC" value="Equipo C"></div>
+    </div>
+    <button class="bigbtn" onclick="startGame()">Comenzar</button>
+  </div>
+
+  <!-- ===================== CASE ===================== -->
+  <div class="screen" id="casewrap">
+    <div class="kicker" id="kicker">Neurodecisiones</div>
+    <div class="counter" id="counter">Caso 1 de 6</div>
+    <div class="card">
+
+      <div id="timerbar"><div id="timerfill"></div></div>
+      <div id="timernum">20</div>
+
+      <div class="scenario" id="scenarioText"></div>
+      <div class="opts" id="optsWrap"></div>
+
+      <div id="revealArea" style="display:none">
+        <div class="reveal-box">
+          <div class="lbl">Respuesta correcta</div>
+          <p id="explainText"></p>
+        </div>
+        <div class="followup">
+          <div class="lbl">Pregunta doctoral</div>
+          <p>¿Qué dato me faltaría para afirmar esto con mayor seguridad?</p>
+          <button class="hintbtn" onclick="toggleHint()">Ver pista docente</button>
+          <div class="hintbox" id="hintBox"></div>
+        </div>
+        <div class="scoring">
+          <div class="lbl">Otorgar puntos por equipo</div>
+          <div class="headerrow"><span></span><span>+1 identificó</span><span>+1 justificó</span><span>+1 evidencia faltante</span></div>
+          <div id="scoringRows"></div>
+        </div>
+      </div>
+
+      <div class="casebtns" id="caseBtns">
+        <button class="bigbtn small" onclick="revealCase()">Revelar respuesta</button>
+      </div>
+      <div class="casebtns" id="nextBtns" style="display:none;margin-top:16px">
+        <button class="bigbtn small" id="nextBtnLabel" onclick="nextCase()">Siguiente caso</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== FINAL ===================== -->
+  <div class="screen" id="final">
+    <div class="eyebrow" style="color:var(--gold);letter-spacing:.2em;font-weight:700;font-size:.85rem;text-transform:uppercase;">Neurodecisiones TIHA</div>
+    <h1>Cierre de la ronda</h1>
+    <div class="podium" id="podium"></div>
+    <button class="bigbtn ghost" onclick="restartGame()">Jugar de nuevo</button>
+  </div>
+
+</div>
+
+<div class="skiplink" onclick="skipToScoring()">saltar cronómetro</div>
+
+<script>
+const teams = [
+  {id:'A', color:'var(--ochre)', dot:'#E0A51D', score:0},
+  {id:'B', color:'var(--slate)', dot:'#59778F', score:0},
+  {id:'C', color:'var(--green)', dot:'#4E9D6E', score:0}
+];
+
+const cases = [
+  { scenario:'Una persona comienza a estudiar aymara a los 42 años y logra progresar con práctica sostenida.',
+    opts:['Período crítico','Período sensible','Experience-expectant','Imposibilidad neurobiológica'],
+    correct:1,
+    explain:'Período sensible. El aprendizaje adulto de lenguas sigue siendo posible — cuesta más esfuerzo y tiempo, pero la ventana no está cerrada.',
+    hint:'Faltaría saber el nivel de logro alcanzado, el tiempo real de exposición, y con qué métrica se está comparando frente a la adquisición infantil.' },
+
+  { scenario:'Un bebé balbucea. El adulto lo mira, repite el sonido y añade una palabra.',
+    opts:['Experience-expectant','Experience-dependent','Serve and return','Estrés tolerable'],
+    correct:2,
+    explain:'Serve and return. La interacción contingente e inmediata es el estímulo que estabiliza el circuito — no el balbuceo aislado.',
+    hint:'Faltaría observar si esta respuesta contingente es consistente en el tiempo, y no un episodio aislado dentro de un patrón mayoritariamente ausente.' },
+
+  { scenario:'Una niña experimenta la hospitalización de un familiar, pero dispone de una figura estable que la acompaña y ayuda a regularse.',
+    opts:['Estrés positivo','Estrés tolerable','Estrés tóxico','Período crítico'],
+    correct:1,
+    explain:'Estrés tolerable. Es un evento intenso pero acotado y amortiguado por una relación estable — la variable que protege es la relación, no la ausencia del evento.',
+    hint:'Faltaría conocer la duración e intensidad exacta del estresor, y la calidad y consistencia real de esa figura de acompañamiento en el tiempo.' },
+
+  { scenario:'Un niño vive adversidad intensa y prolongada sin apoyo adulto estable.',
+    opts:['Estrés positivo','Estrés tolerable','Estrés tóxico','Experience-dependent'],
+    correct:2,
+    explain:'Estrés tóxico. Intenso, sostenido y sin amortiguación relacional — la combinación que altera la arquitectura cerebral en desarrollo.',
+    hint:'Faltaría descartar apoyo compensatorio de otras figuras no mencionadas en el caso — un docente, un par, un familiar extendido.' },
+
+  { scenario:'Un adulto aprende a tocar violín.',
+    opts:['Período crítico','Experience-expectant','Experience-dependent','Estrés tóxico'],
+    correct:2,
+    explain:'Experience-dependent. El cerebro se reorganiza ante un estímulo que depende de la biografía individual, no de una garantía de la especie.',
+    hint:'Faltaría saber si la meta es virtuosismo profesional —donde el inicio temprano sí da ventajas específicas— o aprendizaje recreativo, donde la ventana práctica sigue abierta.' },
+
+  { scenario:'Privación severa de determinados estímulos sensoriales durante los primeros períodos del desarrollo.',
+    opts:['Experience-dependent','Experience-expectant','Estrés positivo','Serve and return'],
+    correct:1,
+    explain:'Experience-expectant, con matiz: según el sistema concreto puede tratarse de un período crítico (p. ej. visión binocular) o sensible. No todo "expectant" es igual de rígido.',
+    hint:'Faltaría precisar qué sistema sensorial específico y a qué edad exacta ocurrió la privación — el tipo de ventana varía muchísimo entre sistemas.' }
+];
+
+let currentCase = 0;
+let timerInterval = null;
+let timeLeft = 20;
+const TOTAL_TIME = 20;
+
+function renderScoreboard(){
+  const sb = document.getElementById('scoreboard');
+  sb.innerHTML = '';
+  teams.forEach((t,i)=>{
+    const el = document.createElement('div');
+    el.className = 'teamcard';
+    el.id = 'team-'+t.id;
+    el.innerHTML = `<div class="dot" style="background:${t.dot}"></div>
+      <input id="nameDisplay${t.id}" value="${document.getElementById('name'+t.id) ? document.getElementById('name'+t.id).value : 'Equipo '+t.id}">
+      <div class="pts" id="pts-${t.id}">${t.score}</div>`;
+    sb.appendChild(el);
+  });
+}
+
+function startGame(){
+  teams[0].name = document.getElementById('nameA').value || 'Equipo A';
+  teams[1].name = document.getElementById('nameB').value || 'Equipo B';
+  teams[2].name = document.getElementById('nameC').value || 'Equipo C';
+  renderScoreboard();
+  teams.forEach(t=>document.getElementById('nameDisplay'+t.id).value = t.name);
+  switchScreen('casewrap');
+  loadCase(0);
+}
+
+function switchScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+}
+
+function beep(freq, dur){
+  try{
+    const ctx = new (window.AudioContext||window.webkitAudioContext)();
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.frequency.value = freq; o.type='sine';
+    g.gain.setValueAtTime(0.15, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+dur);
+    o.start(); o.stop(ctx.currentTime+dur);
+  }catch(e){}
+}
+
+function loadCase(idx){
+  currentCase = idx;
+  const c = cases[idx];
+  document.getElementById('counter').textContent = `Caso ${idx+1} de ${cases.length}`;
+  document.getElementById('scenarioText').textContent = c.scenario;
+  const letters = ['A','B','C','D'];
+  const optsWrap = document.getElementById('optsWrap');
+  optsWrap.innerHTML = '';
+  c.opts.forEach((o,i)=>{
+    const d = document.createElement('div');
+    d.className = 'opt';
+    d.id = 'opt-'+i;
+    d.innerHTML = `<b>${letters[i]}.</b><span>${o}</span>`;
+    optsWrap.appendChild(d);
+  });
+  document.getElementById('revealArea').style.display = 'none';
+  document.getElementById('caseBtns').style.display = 'flex';
+  document.getElementById('nextBtns').style.display = 'none';
+  document.getElementById('hintBox').classList.remove('on');
+  document.getElementById('hintBox').textContent = c.hint;
+  document.getElementById('nextBtnLabel').textContent = idx === cases.length-1 ? 'Ver cierre de la ronda' : 'Siguiente caso';
+  buildScoringRows();
+  startTimer();
+}
+
+function startTimer(){
+  clearInterval(timerInterval);
+  timeLeft = TOTAL_TIME;
+  const fill = document.getElementById('timerfill');
+  const num = document.getElementById('timernum');
+  fill.style.transition = 'none';
+  fill.style.width = '100%';
+  fill.style.background = 'var(--green)';
+  num.textContent = timeLeft;
+  requestAnimationFrame(()=>{ fill.style.transition = `width ${TOTAL_TIME}s linear, background .3s`; fill.style.width = '0%'; });
+  timerInterval = setInterval(()=>{
+    timeLeft--;
+    num.textContent = timeLeft;
+    if(timeLeft <= 5 && timeLeft > 0){ fill.style.background = 'var(--ochre)'; beep(660,0.12); }
+    if(timeLeft === 0){ fill.style.background = 'var(--red)'; beep(330,0.4); clearInterval(timerInterval); revealCase(); }
+  }, 1000);
+}
+
+function skipToScoring(){
+  clearInterval(timerInterval);
+  if(document.getElementById('revealArea').style.display === 'none' && document.getElementById('casewrap').classList.contains('on')){
+    revealCase();
+  }
+}
+
+function revealCase(){
+  clearInterval(timerInterval);
+  const c = cases[currentCase];
+  document.getElementById('opt-'+c.correct).classList.add('correct');
+  document.getElementById('explainText').textContent = c.explain;
+  document.getElementById('revealArea').style.display = 'block';
+  document.getElementById('caseBtns').style.display = 'none';
+  document.getElementById('nextBtns').style.display = 'flex';
+  beep(523,0.25);
+}
+
+function toggleHint(){
+  document.getElementById('hintBox').classList.toggle('on');
+}
+
+function buildScoringRows(){
+  const wrap = document.getElementById('scoringRows');
+  wrap.innerHTML = '';
+  teams.forEach(t=>{
+    const row = document.createElement('div');
+    row.className = 'scorerow';
+    row.innerHTML = `
+      <div class="tname">${t.name||('Equipo '+t.id)}</div>
+      <div class="chk" onclick="toggleScore(this,'${t.id}',1)">Identificó</div>
+      <div class="chk" onclick="toggleScore(this,'${t.id}',1)">Justificó</div>
+      <div class="chk" onclick="toggleScore(this,'${t.id}',1)">Evidencia</div>
+    `;
+    wrap.appendChild(row);
+  });
+}
+
+function toggleScore(el, teamId, amount){
+  const team = teams.find(t=>t.id===teamId);
+  const wasOn = el.classList.contains('on');
+  el.classList.toggle('on');
+  team.score += wasOn ? -amount : amount;
+  document.getElementById('pts-'+teamId).textContent = team.score;
+  const card = document.getElementById('team-'+teamId);
+  card.classList.add('pulse');
+  setTimeout(()=>card.classList.remove('pulse'), 400);
+}
+
+function nextCase(){
+  if(currentCase < cases.length - 1){
+    loadCase(currentCase+1);
+  } else {
+    showFinal();
+  }
+}
+
+function showFinal(){
+  switchScreen('final');
+  const sorted = [...teams].sort((a,b)=>b.score-a.score);
+  const podium = document.getElementById('podium');
+  const medals = ['1º lugar','2º lugar','3º lugar'];
+  podium.innerHTML = '';
+  sorted.forEach((t,i)=>{
+    const d = document.createElement('div');
+    d.className = 'podiumcard';
+    d.innerHTML = `<div class="pos">${medals[i]}</div><div class="nm">${t.name}</div><div class="sc">${t.score}</div>`;
+    podium.appendChild(d);
+  });
+}
+
+function restartGame(){
+  teams.forEach(t=>t.score=0);
+  switchScreen('start');
+}
+</script>
+</body>
+</html>
