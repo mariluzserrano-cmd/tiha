@@ -30,7 +30,8 @@
   .tiha-pill{border:1px solid rgba(255,255,255,.35);color:#fff;font-size:11.5px;letter-spacing:.08em;padding:6px 12px;border-radius:999px;text-transform:uppercase;}
   .eyebrow{color:var(--tiha-gold);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;margin:0 0 10px;}
   h1.title{font-family:'Prata',serif;font-weight:400;font-size:clamp(27px,7.5vw,38px);line-height:1.1;margin:0 0 14px;position:relative;z-index:1;}
-  .hero .meta{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:rgba(255,255,255,.85);position:relative;z-index:1;}
+  .hero .meta{display:flex;flex-wrap:wrap;font-size:13px;color:rgba(255,255,255,.85);position:relative;z-index:1;}
+  .hero .meta span{margin-right:16px;margin-bottom:4px;display:inline-block;}
   .hero .meta b{color:#fff;}
 
   /* SECTIONS */
@@ -51,8 +52,9 @@
   .tl-name{font-size:15px;font-weight:600;color:var(--navy);margin:2px 0 3px;}
   .tl-dur{font-size:11.5px;color:var(--coral-dark);font-weight:700;}
   .tl-note{font-size:13px;color:var(--grey);margin-top:3px;}
-  .legend{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 18px;font-size:11.5px;color:var(--grey);}
-  .legend span{display:inline-flex;align-items:center;gap:5px;}
+  .legend{display:flex;flex-wrap:wrap;margin:0 0 18px;font-size:11.5px;color:var(--grey);}
+  .legend span{margin-right:14px;margin-bottom:4px;}
+  .legend span{display:inline-flex;align-items:center;} .legend .dot{margin-right:5px;}
   .dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
 
   /* BLOCK CARD */
@@ -130,10 +132,9 @@
   <p class="eyebrow">Taller 1 de 4 · Guía de facilitación</p>
   <h1 class="title">Comunicación Efectiva<br>para Supervisores</h1>
   <div class="meta">
-    <span><b>Grupo A</b> · martes 25 ago 2026</span>
-    <span><b>Grupo B</b> · jueves 27 ago 2026</span>
-    <span><b>8:30 a.m. – 12:30 p.m.</b></span>
-    <span>4 horas contacto</span>
+    <span><b>Grupo A</b> · martes 25 de agosto de 2026</span>
+    <span><b>9:00 a.m. – 12:00 p.m.</b></span>
+    <span>3 horas de facilitación · convocatoria 8:30 a.m.</span>
   </div>
 </div>
 
@@ -143,11 +144,20 @@
   <span class="stag">Antes de facilitar, leer esto</span>
   <p class="sintro">En esta sala hay supervisores de almacén, cross-dock, despacho, tráfico FCL y LTL, logística NVOCC, home deliveries, facilidades, facturación, taller de flota, cuentas, crédito y cobro, y servicio al cliente. Gente que da instrucciones todos los días bajo presión de tiempo. No vienen a aprender teoría de la comunicación: vienen a resolver por qué la instrucción que dieron esta mañana no se ejecutó esta tarde.</p>
   <div class="note">
+    <h4>Convocatoria 8:30 · Arranque real 9:00</h4>
+    <ul>
+      <li>El grupo está convocado a las 8:30 a.m., pero la facilitación arranca a las <b>9:00 a.m.</b> y cierra a las <b>12:00 p.m.</b> — 3 horas de facilitación, no 4.</li>
+      <li>Todo el itinerario de esta guía ya está recalculado a 180 minutos. Los cuatro pares concepto→práctica se mantienen completos; lo que se acortó fue el tiempo dentro de cada uno, no el contenido.</li>
+      <li>Los 30 minutos entre las 8:30 y las 9:00 son margen para que el grupo llegue, se sirva café, y tú termines de montar la sala sin presión.</li>
+    </ul>
+  </div>
+
+  <div class="note">
     <h4>Regla de oro del diseño</h4>
     <ul>
       <li>Cada concepto se explica en 15–20 minutos máximo y se practica inmediatamente después. Nunca dos conceptos seguidos sin práctica.</li>
       <li>Todos los casos de práctica salen de la operación real de Allied. Ningún ejemplo genérico de manual.</li>
-      <li>La primera hora es para conocerlos y para que ellos se conozcan entre departamentos. No se salta ni se acorta.</li>
+      <li>La apertura y el diagnóstico son lo primero que se protege dentro de lo posible — pero con 3 horas, se comprimieron a 35 minutos combinados. Sé disciplinada con el reloj aquí especialmente.</li>
       <li>El facilitador habla menos de la mitad del tiempo. El resto lo hablan ellos.</li>
     </ul>
   </div>
@@ -164,8 +174,8 @@
 
 <!-- ITINERARIO -->
 <div class="section">
-  <h2 class="st">Itinerario de las 4 horas</h2>
-  <span class="stag">8:30 a.m. – 12:30 p.m. · 240 minutos</span>
+  <h2 class="st">Itinerario de las 3 horas</h2>
+  <span class="stag">9:00 a.m. – 12:00 p.m. · 180 minutos · convocatoria 8:30 a.m.</span>
   <div class="legend">
     <span><i class="dot" style="background:var(--tiha-red)"></i> Momento humano</span>
     <span><i class="dot" style="background:var(--navy)"></i> Concepto</span>
@@ -173,29 +183,29 @@
     <span><i class="dot" style="background:var(--tiha-gold)"></i> Pausa</span>
   </div>
   <div class="tl">
-    <div class="tl-item k-humano"><div class="tl-time">8:30 – 9:10 a.m.</div><div class="tl-name">Apertura — Quiénes somos en esta sala</div><div class="tl-dur">40 min</div><div class="tl-note">Bienvenida, encuadre, dinámica de presentación cruzada entre departamentos.</div></div>
-    <div class="tl-item k-humano"><div class="tl-time">9:10 – 9:25 a.m.</div><div class="tl-name">Diagnóstico relámpago — Mi comunicación hoy</div><div class="tl-dur">15 min</div><div class="tl-note">Cada quien identifica su situación real. Define qué ejemplos usará el facilitador el resto del día.</div></div>
-    <div class="tl-item k-teoria"><div class="tl-time">9:25 – 9:45 a.m.</div><div class="tl-name">Concepto 1 — Emisor, mensaje, receptor, ruido</div><div class="tl-dur">20 min</div></div>
-    <div class="tl-item k-practica"><div class="tl-time">9:45 – 10:05 a.m.</div><div class="tl-name">Práctica 1 — Teléfono roto operacional</div><div class="tl-dur">20 min</div></div>
-    <div class="tl-item k-pausa"><div class="tl-time">10:05 – 10:20 a.m.</div><div class="tl-name">Pausa activa</div><div class="tl-dur">15 min</div></div>
-    <div class="tl-item k-teoria"><div class="tl-time">10:20 – 10:40 a.m.</div><div class="tl-name">Concepto 2 — Las barreras que crean malentendidos</div><div class="tl-dur">20 min</div></div>
-    <div class="tl-item k-practica"><div class="tl-time">10:40 – 11:05 a.m.</div><div class="tl-name">Práctica 2 — Role play: la instrucción que no llegó</div><div class="tl-dur">25 min</div></div>
-    <div class="tl-item k-teoria"><div class="tl-time">11:05 – 11:20 a.m.</div><div class="tl-name">Concepto 3 — Escucha activa</div><div class="tl-dur">15 min</div></div>
-    <div class="tl-item k-practica"><div class="tl-time">11:20 – 11:40 a.m.</div><div class="tl-name">Práctica 3 — Parafraseo en pares</div><div class="tl-dur">20 min</div></div>
-    <div class="tl-item k-teoria"><div class="tl-time">11:40 – 11:55 a.m.</div><div class="tl-name">Concepto 4 — Comunicación asertiva</div><div class="tl-dur">15 min</div></div>
-    <div class="tl-item k-practica"><div class="tl-time">11:55 – 12:20 p.m.</div><div class="tl-name">Práctica 4 — Role play: la conversación difícil</div><div class="tl-dur">25 min</div></div>
-    <div class="tl-item k-humano"><div class="tl-time">12:20 – 12:30 p.m.</div><div class="tl-name">Cierre — Mi compromiso de la semana</div><div class="tl-dur">10 min</div></div>
+    <div class="tl-item k-humano"><div class="tl-time">9:00 – 9:25 a.m.</div><div class="tl-name">Apertura — Quiénes somos en esta sala</div><div class="tl-dur">25 min</div><div class="tl-note">Bienvenida, encuadre, dinámica de presentación cruzada entre departamentos.</div></div>
+    <div class="tl-item k-humano"><div class="tl-time">9:25 – 9:35 a.m.</div><div class="tl-name">Diagnóstico relámpago — Mi comunicación hoy</div><div class="tl-dur">10 min</div><div class="tl-note">Cada quien identifica su situación real. Define qué ejemplos usará el facilitador el resto del día.</div></div>
+    <div class="tl-item k-teoria"><div class="tl-time">9:35 – 9:50 a.m.</div><div class="tl-name">Concepto 1 — Emisor, mensaje, receptor, ruido</div><div class="tl-dur">15 min</div></div>
+    <div class="tl-item k-practica"><div class="tl-time">9:50 – 10:05 a.m.</div><div class="tl-name">Práctica 1 — Teléfono roto operacional</div><div class="tl-dur">15 min</div></div>
+    <div class="tl-item k-pausa"><div class="tl-time">10:05 – 10:15 a.m.</div><div class="tl-name">Pausa activa</div><div class="tl-dur">10 min</div></div>
+    <div class="tl-item k-teoria"><div class="tl-time">10:15 – 10:30 a.m.</div><div class="tl-name">Concepto 2 — Las barreras que crean malentendidos</div><div class="tl-dur">15 min</div></div>
+    <div class="tl-item k-practica"><div class="tl-time">10:30 – 10:50 a.m.</div><div class="tl-name">Práctica 2 — Role play: la instrucción que no llegó</div><div class="tl-dur">20 min</div></div>
+    <div class="tl-item k-teoria"><div class="tl-time">10:50 – 11:00 a.m.</div><div class="tl-name">Concepto 3 — Escucha activa</div><div class="tl-dur">10 min</div></div>
+    <div class="tl-item k-practica"><div class="tl-time">11:00 – 11:15 a.m.</div><div class="tl-name">Práctica 3 — Parafraseo en pares</div><div class="tl-dur">15 min</div></div>
+    <div class="tl-item k-teoria"><div class="tl-time">11:15 – 11:25 a.m.</div><div class="tl-name">Concepto 4 — Comunicación asertiva</div><div class="tl-dur">10 min</div></div>
+    <div class="tl-item k-practica"><div class="tl-time">11:25 – 11:45 a.m.</div><div class="tl-name">Práctica 4 — Role play: la conversación difícil</div><div class="tl-dur">20 min</div></div>
+    <div class="tl-item k-humano"><div class="tl-time">11:45 a.m. – 12:00 p.m.</div><div class="tl-name">Cierre — Mi compromiso de la semana (con retrocomunicación)</div><div class="tl-dur">15 min</div></div>
   </div>
 </div>
 
 <!-- APERTURA -->
 <div class="section">
   <h2 class="st">Apertura · Quiénes somos en esta sala</h2>
-  <span class="stag">8:30 – 9:10 a.m. · 40 minutos</span>
+  <span class="stag">9:00 – 9:25 a.m. · 25 minutos</span>
 
   <div class="block">
     <div class="block-head"><span class="block-num">A.1</span><span class="block-title">Bienvenida y encuadre</span></div>
-    <span class="block-time">8:30 – 8:40 a.m. · 10 min</span>
+    <span class="block-time">9:00 – 9:07 a.m. · 7 min</span>
     <div class="lbl">Qué hace el facilitador</div>
     <p>Recibir, presentarse brevemente, y encuadrar el propósito del programa completo (4 talleres) y de este primero.</p>
     <div class="say"><b>Guion sugerido:</b> "Buenos días. Vamos a pasar cuatro mañanas juntos. Hoy no vengo a enseñarles a hablar — ustedes llevan años dando instrucciones que se ejecutan. Vengo a que revisemos juntos por qué a veces el mensaje llega completo y a veces no, y qué está en nuestras manos hacer al respecto."</div>
@@ -205,15 +215,16 @@
 
   <div class="block">
     <div class="block-head"><span class="block-num">A.2</span><span class="block-title">Presentación cruzada entre departamentos</span></div>
-    <span class="block-time">8:40 – 9:10 a.m. · 30 min</span>
+    <span class="block-time">9:07 – 9:25 a.m. · 18 min</span>
     <div class="lbl">Por qué esta dinámica y no otra</div>
     <p>El grupo es mixto a propósito: almacén, tráfico, flota, servicio al cliente y finanzas en la misma sala. Muchos coordinan a diario por teléfono o por sistema sin haberse visto la cara. La dinámica aprovecha eso.</p>
     <div class="lbl">Instrucciones</div>
     <ul>
-      <li>Cada persona busca a alguien de <b>otro departamento</b> con quien coordine trabajo pero con quien rara vez converse.</li>
-      <li>En pares, cada quien tiene 4 minutos para contarle al otro: su nombre, su área, y <b>una cosa que su trabajo necesita del área del otro para salir bien.</b></li>
-      <li>Al volver al plenario, <b>cada persona presenta a su pareja</b>, no a sí misma. Nombre, área, y qué necesita de nosotros.</li>
+      <li>Cada persona busca a alguien de <b>otro departamento</b> con quien coordine trabajo pero con quien rara vez converse. <i>(1 min)</i></li>
+      <li>En pares, cada quien tiene <b>90 segundos</b> para contarle al otro: su nombre, su área, y <b>una cosa que su trabajo necesita del área del otro para salir bien.</b> <i>(3 min total en pares)</i></li>
+      <li>Al volver al plenario, <b>cada persona presenta a su pareja</b> en una sola frase — nombre, área, y qué necesita de nosotros. Nada de historias largas. <i>(≈14 min para 16 personas)</i></li>
     </ul>
+    <div class="say" style="border-left-color:#C4451E;"><b>Ritmo:</b> con 18 minutos totales no hay margen de sobra. Si alguien se extiende en el plenario, corta con calidez: "Perfecto, siguiente pareja."</div>
     <div class="lbl">Qué escucha el facilitador</div>
     <p>Anotar en un papelógrafo o pizarra las dependencias que van surgiendo. Ese mapa se usa el resto del día como fuente de ejemplos reales.</p>
     <div class="say"><b>Cierre de la dinámica:</b> "Fíjense en algo. Todo lo que acabamos de escuchar es comunicación entre departamentos que ya está ocurriendo todos los días. La pregunta de hoy es si está llegando completa."</div>
@@ -223,7 +234,7 @@
 <!-- DIAGNÓSTICO -->
 <div class="section">
   <h2 class="st">Diagnóstico relámpago</h2>
-  <span class="stag">9:10 – 9:25 a.m. · 15 minutos</span>
+  <span class="stag">9:25 – 9:35 a.m. · 10 minutos</span>
 
   <div class="block">
     <div class="block-head"><span class="block-num">D</span><span class="block-title">Mi comunicación hoy</span></div>
@@ -236,14 +247,14 @@
     </ul>
     <div class="lbl">Uso inmediato</div>
     <p>El facilitador recoge las tarjetas, las revisa durante la Práctica 1 y selecciona 3–4 casos reales del grupo para usar en los role play de la segunda mitad. Esto es lo que hace que el taller sea de <b>ellos</b> y no del manual.</p>
-    <div class="say"><b>Nota de facilitación:</b> si el grupo escribe poco, hacerlo verbal en ronda rápida. Lo importante es tener casos reales en mano antes de las 10:40 a.m.</div>
+    <div class="say"><b>Nota de facilitación:</b> si el grupo escribe poco, hacerlo verbal en ronda rápida. Lo importante es tener casos reales en mano antes de las 10:30 a.m.</div>
   </div>
 </div>
 
 <!-- CONCEPTO 1 + PRÁCTICA 1 -->
 <div class="section">
   <h2 class="st">Concepto 1 · El modelo básico</h2>
-  <span class="stag">9:25 – 9:45 a.m. · 20 minutos</span>
+  <span class="stag">9:35 – 9:50 a.m. · 15 minutos</span>
 
   <div class="block">
     <div class="block-head"><span class="block-num">C.1</span><span class="block-title">Emisor, mensaje, receptor, ruido</span></div>
@@ -265,7 +276,7 @@
   <div class="rp">
     <span class="rp-tag">Práctica 1</span>
     <h3>Teléfono roto operacional</h3>
-    <span class="rp-time">9:45 – 10:05 a.m. · 20 minutos</span>
+    <span class="rp-time">9:50 – 10:05 a.m. · 15 minutos</span>
     <div class="rl">Montaje</div>
     <p>Grupos de 5 personas en fila. El facilitador entrega al primero de cada fila una instrucción operacional escrita, realista y con varios datos. Se transmite <b>verbalmente y al oído</b>, una sola vez, sin repetir.</p>
     <div class="rl">Instrucciones para transmitir (una por fila)</div>
@@ -287,7 +298,7 @@
 <!-- PAUSA -->
 <div class="section">
   <div class="note">
-    <h4>Pausa activa · 10:05 – 10:20 a.m.</h4>
+    <h4>Pausa activa · 10:05 – 10:15 a.m.</h4>
     <ul>
       <li>15 minutos reales. No se acorta para "avanzar contenido".</li>
       <li>Sugerencia: pedir que se muevan físicamente de asiento y se sienten con personas de otro departamento para la segunda mitad.</li>
@@ -299,7 +310,7 @@
 <!-- CONCEPTO 2 + PRÁCTICA 2 -->
 <div class="section">
   <h2 class="st">Concepto 2 · Las barreras</h2>
-  <span class="stag">10:20 – 10:40 a.m. · 20 minutos</span>
+  <span class="stag">10:15 – 10:30 a.m. · 15 minutos</span>
 
   <div class="block">
     <div class="block-head"><span class="block-num">C.2</span><span class="block-title">Lo que se interpone entre lo que digo y lo que entienden</span></div>
@@ -319,7 +330,7 @@
   <div class="rp">
     <span class="rp-tag">Práctica 2 · Role play</span>
     <h3>La instrucción que no llegó</h3>
-    <span class="rp-time">10:40 – 11:05 a.m. · 25 minutos</span>
+    <span class="rp-time">10:30 – 10:50 a.m. · 20 minutos</span>
     <div class="rl">Montaje</div>
     <p>Tríos. Dos actúan, uno observa con una hoja de observación. Se rotan los papeles en cada ronda para que todos pasen por las tres sillas.</p>
     <div class="rl">Escenario A — Cross-dock</div>
@@ -346,7 +357,7 @@
 <!-- CONCEPTO 3 + PRÁCTICA 3 -->
 <div class="section">
   <h2 class="st">Concepto 3 · Escucha activa</h2>
-  <span class="stag">11:05 – 11:20 a.m. · 15 minutos</span>
+  <span class="stag">10:50 – 11:00 a.m. · 10 minutos</span>
 
   <div class="block">
     <div class="block-head"><span class="block-num">C.3</span><span class="block-title">Escuchar no es esperar mi turno de hablar</span></div>
@@ -369,7 +380,7 @@
   <div class="rp">
     <span class="rp-tag">Práctica 3</span>
     <h3>Parafraseo en pares</h3>
-    <span class="rp-time">11:20 – 11:40 a.m. · 20 minutos</span>
+    <span class="rp-time">11:00 – 11:15 a.m. · 15 minutos</span>
     <div class="rl">Montaje</div>
     <p>Pares, preferiblemente de departamentos distintos. Tres rondas de 5 minutos, alternando quién habla.</p>
     <div class="rl">Regla única</div>
@@ -392,7 +403,7 @@
 <!-- CONCEPTO 4 + PRÁCTICA 4 -->
 <div class="section">
   <h2 class="st">Concepto 4 · Comunicación asertiva</h2>
-  <span class="stag">11:40 – 11:55 a.m. · 15 minutos</span>
+  <span class="stag">11:15 – 11:25 a.m. · 10 minutos</span>
 
   <div class="block">
     <div class="block-head"><span class="block-num">C.4</span><span class="block-title">Firme con el asunto, cuidadoso con la persona</span></div>
@@ -416,14 +427,14 @@
   <div class="rp">
     <span class="rp-tag">Práctica 4 · Role play</span>
     <h3>La conversación difícil</h3>
-    <span class="rp-time">11:55 a.m. – 12:20 p.m. · 25 minutos</span>
+    <span class="rp-time">11:25 – 11:45 a.m. · 20 minutos</span>
     <div class="rl">Montaje</div>
     <p>Pares. Cada quien trae <b>su propio caso real</b> — el que escribió en el diagnóstico de la mañana como "la instrucción que no se ejecutó como esperaba".</p>
     <div class="rl">Secuencia</div>
     <ul>
-      <li><b>Paso 1 (5 min):</b> cada quien escribe su conversación usando la fórmula Observación + Impacto + Petición.</li>
-      <li><b>Paso 2 (8 min):</b> A ensaya su conversación con B, que hace de la otra persona y responde con resistencia realista, no fácil.</li>
-      <li><b>Paso 3 (8 min):</b> se invierten los papeles.</li>
+      <li><b>Paso 1 (4 min):</b> cada quien escribe su conversación usando la fórmula Observación + Impacto + Petición.</li>
+      <li><b>Paso 2 (6 min):</b> A ensaya su conversación con B, que hace de la otra persona y responde con resistencia realista, no fácil.</li>
+      <li><b>Paso 3 (6 min):</b> se invierten los papeles.</li>
       <li><b>Paso 4 (4 min):</b> cada quien ajusta su redacción después de haberla dicho en voz alta.</li>
     </ul>
     <div class="rl">Casos de respaldo (si alguien no trae el suyo)</div>
@@ -442,7 +453,7 @@
 <!-- CIERRE -->
 <div class="section">
   <h2 class="st">Cierre · Mi compromiso de la semana</h2>
-  <span class="stag">12:20 – 12:30 p.m. · 10 minutos</span>
+  <span class="stag">11:45 a.m. – 12:00 p.m. · 15 minutos</span>
 
   <div class="block">
     <div class="block-head"><span class="block-num">Z</span><span class="block-title">De la sala al piso</span></div>
