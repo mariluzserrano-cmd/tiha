@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Neuroteca TIHA · Mural de Neurociencia en Video</title>
+<style>
+:root{
+  --primary:#3B5673; --deep:#2C4256; --slate:#59778F; --sky:#C2DAE6;
+  --gold:#FFCB64; --ochre:#E0A51D; --card:#EEF3F6; --textd:#3E4B54; --mute:#76838C;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Calibri,'Segoe UI',system-ui,sans-serif;color:var(--textd);background:#F7F9FB;line-height:1.6;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px 70px;}
+
+header{background:var(--primary);color:#fff;padding:40px 0 34px;}
+.eyebrow{color:var(--gold);font-weight:700;letter-spacing:.18em;font-size:.78rem;text-transform:uppercase;}
+h1{font-family:Cambria,Georgia,serif;font-size:2.1rem;line-height:1.15;margin:8px 0;}
+header .sub{color:#DCEAF0;font-size:.98rem;max-width:640px;}
+.meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;}
+.chip{background:rgba(255,255,255,.13);border-radius:20px;padding:5px 14px;font-size:.82rem;color:#DCEAF0;}
+
+.quote{background:#fff;border-left:5px solid var(--ochre);padding:16px 20px;border-radius:6px;font-style:italic;color:var(--primary);margin:26px 0;box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.quote .attr{display:block;text-align:right;font-style:normal;font-weight:700;color:var(--ochre);font-size:.85rem;margin-top:8px;}
+
+h2{font-family:Cambria,Georgia,serif;color:var(--primary);font-size:1.4rem;margin:6px 0 18px;padding-bottom:9px;border-bottom:2px solid var(--sky);}
+
+.mural{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:22px;
+  margin-bottom:10px;
+}
+
+.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.08);display:flex;flex-direction:column;border-top:4px solid var(--sky);}
+.card.filled{border-top-color:var(--gold);}
+.embed{position:relative;width:100%;padding-top:56.25%;background:#0d1620;}
+.embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
+
+.card-body{padding:16px 18px 20px;flex:1;display:flex;flex-direction:column;}
+.tag{display:inline-block;align-self:flex-start;background:var(--card);color:var(--primary);font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:12px;margin-bottom:9px;}
+.tag.ok{background:var(--gold);color:var(--deep);}
+.ctitle{font-family:Cambria,Georgia,serif;font-size:1.08rem;color:var(--primary);font-weight:700;margin-bottom:6px;}
+.cdesc{font-size:.88rem;color:var(--textd);margin-bottom:10px;}
+.cwhy{font-size:.82rem;color:var(--mute);border-top:1px dashed #DCE5EA;padding-top:9px;margin-top:auto;}
+.cwhy b{color:var(--ochre);}
+.placeholder{color:#A6B2BA;font-style:italic;}
+
+.legend{background:var(--card);border-radius:10px;padding:16px 20px;margin:24px 0 30px;font-size:.9rem;}
+.legend b{color:var(--primary);}
+
+footer{text-align:center;color:var(--mute);font-size:.83rem;border-top:1px solid #DCE5EA;margin-top:44px;padding-top:20px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Neurociencia e Intervención · Recurso permanente</div>
+    <h1>Neuroteca TIHA — Mural de Neurociencia en Video</h1>
+    <div class="sub">Una curaduría de videos sobre neurociencia, aprendizaje y cerebro, disponible durante todo el módulo — y más allá de él.</div>
+    <div class="meta">
+      <span class="chip">🎬 13 videos</span>
+      <span class="chip">🧠 Tema: neurociencia y aprendizaje</span>
+      <span class="chip">📚 Curaduría: Dra. Mariluz Serrano Ortiz</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="quote">
+    "No es usar más tecnología, es usar tecnología para vivir mejor."
+    <span class="attr">Dra. Mariluz Serrano Ortiz</span>
+  </div>
+
+  <div class="legend">
+    <b>Cómo usar esta página:</b> un video ya tiene ficha completa (marcado en dorado) — sirve de modelo de formato. Los demás están incrustados y listos para reproducirse; solo falta escribir el título, la descripción y la relevancia de cada uno en los espacios marcados en <span class="placeholder">cursiva gris</span>. Reemplace ese texto por el definitivo cuando lo tenga.
+  </div>
+
+  <h2>Videos de la colección</h2>
+
+  <div class="mural">
+
+    <!-- ============ VIDEO VERIFICADO ============ -->
+    <div class="card filled">
+      <div class="embed"><iframe src="https://www.youtube.com/embed/uQTyqPoyL98" title="Video de neurociencia" allowfullscreen></iframe></div>
+      <div class="card-body">
+        <span class="tag ok">✓ Ficha completa</span>
+        <div class="ctitle">Tu cerebro está envejeciendo. Esto es lo que puedes hacer</div>
+        <div class="cdesc">Canal de divulgación científica (Jefillysh) sobre los cambios que experimenta el cerebro con la edad y qué hábitos pueden proteger la función cognitiva a largo plazo.</div>
+        <div class="cwhy"><b>Por qué importa para el curso:</b> conecta directamente con neuroplasticidad aplicada y con la discusión abierta desde la Sesión 1 sobre el alcance real de la neurogénesis adulta.</div>
+      </div>
+    </div>
+
+    <!-- ============ 12 VIDEOS POR COMPLETAR ============ -->
+    <div class="card">
+      <div class="embed"><iframe src="https://www.youtube.com/embed/XLo-LBkHU5w" title="Video de neurociencia" allowfullscreen></iframe></div>
+      <div class="card-body">
+        <span class="tag">Por completar</span>
+        <div class="ctitle placeholder">[Título del video]</div>
+        <div class="cdesc placeholder">[Breve descripción: de qué trata y quién lo presenta]</div>
+        <div class="cwhy placeholder"><b>Por qué importa:</b> [conexión con el módulo]</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="embed"><iframe src="https://www.youtube.com/embed/tc5JeKXae08" title="Video de neurociencia" allowfullscreen></iframe></div>
+      <div class="card-body">
+        <span class="tag">Por completar</span>
+        <div class="ctitle placeholder">[Título del video]</div>
+        <div class="cdesc placeholder">[Breve descripción: de qué trata y quién lo presenta]</div>
+        <div class="cwhy placeholder"><b>Por qué importa:</b> [conexión con el módulo]</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="embed"><iframe src="https://www.youtube.com/embed/imUle1eMWTg" title="Video de neurociencia" allowfullscreen></iframe></div>
+      <div class="card-body">
+        <span class="tag">Por completar</span>
+        <div class="ctitle placeholder">[Título del video]</div>
+        <div class="cdesc placeholder">[Breve descripción: de qué trata y quién lo presenta]</div>
+        <div class="cwhy placeholder"><b>Por qué importa:</b> [conexión con el módulo]</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="embed"><iframe src="https://www.youtube.com/embed/SMwh1nIqw8k" title="Video de neurociencia" allowfullscreen></iframe></div>
+      <div class="card-body">
+        <span class="tag">Por completar</span>
+        <div class="ctitle placeholder">[Título del video]</div>
+        <div class="cdesc placeholder">[Breve descripción: de qué trata y quién lo presenta]</div>
+        <div class="cwhy placeholder"><b>Por qué importa:</b> [conexión con el módulo]</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="embed"><iframe src="https://www.youtube.com/embed/2lriPI5gGL8" title="Video de neurociencia" allowfullscreen></iframe></div>
+      <div class="card-body">
+        <span class="tag">Por completar</span>
+        <div class="ctitle placeholder">[Título del video]</div>
+        <div class="cdesc placeholder">[Breve descripción: de qué trata y quién lo presenta]</div>
+        <div class="cwhy placeholder"><b>Por qué importa:</b> [conexión con el módulo]</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="embed"><iframe src="https://www.youtube.com/embed/87W7RY4nzjE" title="Video de neurociencia" allowfullscreen></iframe></div>
+      <div class="card-body">
+        <span class="tag">Por completar</span>
+        <div class="ctitle placeholder">[Título del video]</div>
+        <div class="cdesc placeholder">[Breve descripción: de qué trata y quién lo presenta]</div>
+        <div class="cwhy placeholder"><b>Por qué importa:</b> [conexión con el módulo]</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="embed"><iframe src="https://www.youtube.com/embed/jaTb1R1yQzQ" title="Video de neurociencia" allowfullscreen></iframe></div>
+      <div class="card-body">
+        <span class="tag">Por completar</span>
+        <div class="ctitle placeholder">[Título del video]</div>
+        <div class="cdesc placeholder">[Breve descripción: de qué trata y quién lo presenta]</div>
+        <div class="cwhy placeholder"><b>Por qué importa:</b> [conexión con el módulo]</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="embed"><iframe src="https://www.youtube.com/embed/Qnz4Esh6WNg" title="Video de neurociencia" allowfullscreen></iframe></div>
+      <div class="card-body">
+        <span class="tag">Por completar</span>
+        <div class="ctitle placeholder">[Título del video]</div>
+        <div class="cdesc placeholder">[Breve descripción: de qué trata y quién lo presenta]</div>
+        <div class="cwhy placeholder"><b>Por qué importa:</b> [conexión con el módulo]</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="embed"><iframe src="https://www.youtube.com/embed/8kDFEx5qycE" title="Video de neurociencia" allowfullscreen></iframe></div>
+      <div class="card-body">
+        <span class="tag">Por completar</span>
+        <div class="ctitle placeholder">[Título del video]</div>
+        <div class="cdesc placeholder">[Breve descripción: de qué trata y quién lo presenta]</div>
+        <div class="cwhy placeholder"><b>Por qué importa:</b> [conexión con el módulo]</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="embed"><iframe src="https://www.youtube.com/embed/w-0b3uGpA0Q" title="Video de neurociencia" allowfullscreen></iframe></div>
+      <div class="card-body">
+        <span class="tag">Por completar</span>
+        <div class="ctitle placeholder">[Título del video]</div>
+        <div class="cdesc placeholder">[Breve descripción: de qué trata y quién lo presenta]</div>
+        <div class="cwhy placeholder"><b>Por qué importa:</b> [conexión con el módulo]</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="embed"><iframe src="https://www.youtube.com/embed/uS5V09Lpu9A" title="Video de neurociencia" allowfullscreen></iframe></div>
+      <div class="card-body">
+        <span class="tag">Por completar</span>
+        <div class="ctitle placeholder">[Título del video]</div>
+        <div class="cdesc placeholder">[Breve descripción: de qué trata y quién lo presenta]</div>
+        <div class="cwhy placeholder"><b>Por qué importa:</b> [conexión con el módulo]</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="embed"><iframe src="https://www.youtube.com/embed/EtChAC7MYTI" title="Video de neurociencia (transmisión en vivo)" allowfullscreen></iframe></div>
+      <div class="card-body">
+        <span class="tag">Por completar · Live</span>
+        <div class="ctitle placeholder">[Título del video]</div>
+        <div class="cdesc placeholder">[Breve descripción: de qué trata y quién lo presenta — este fue compartido como transmisión en vivo]</div>
+        <div class="cwhy placeholder"><b>Por qué importa:</b> [conexión con el módulo]</div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <strong style="color:var(--primary)">Modelo TIHA</strong> — Tecnologías para la Inspiración y Humanización del Aprendizaje<br>
+    Dra. Mariluz Serrano Ortiz · mariluz.serrano@upr.edu<br>
+    <em style="font-size:.8rem">"La inteligencia artificial no reemplaza al ser humano; lo potencia para trascender."</em>
+  </footer>
+
+</div>
+</body>
+</html>
