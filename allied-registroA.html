@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Registro · Grupo A · Allied × TIHA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#152238; --tiha-slate:#44546A; --coral:#E2572B; --coral-dark:#C4451E;
+    --tiha-gold:#C9A961; --paper:#FBF8F3; --cream-2:#F5F0E6; --ink:#20241F; --grey:#6B6459; --line:#E4D8C4;
+    --green:#2E7D46;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Work Sans',sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:520px;margin:0 auto;padding:0 0 50px;}
+
+  .hero{background:linear-gradient(160deg,var(--navy) 0%,var(--tiha-slate) 100%);color:#fff;padding:28px 22px 24px;}
+  .brandrow{display:flex;align-items:center;flex-wrap:wrap;margin-bottom:14px;}
+  .brand-pill{background:#fff;color:var(--navy);font-weight:700;font-size:11px;letter-spacing:.03em;padding:6px 12px;border-radius:999px;margin-right:8px;margin-bottom:4px;}
+  .tiha-pill{border:1px solid rgba(255,255,255,.35);color:#fff;font-size:10.5px;letter-spacing:.06em;padding:5px 11px;border-radius:999px;text-transform:uppercase;}
+  h1{font-family:'Prata',serif;font-weight:400;font-size:24px;margin:0 0 6px;}
+  .hero p{font-size:13px;color:rgba(255,255,255,.8);margin:0;}
+
+  .counter{
+    margin:-18px 18px 0; background:#fff; border:1px solid var(--line); border-radius:14px;
+    padding:14px 18px; box-shadow:0 6px 18px rgba(21,34,56,.1); display:flex; justify-content:space-between; align-items:center; position:relative; z-index:2;
+  }
+  .counter .num{font-family:'Prata',serif; font-size:26px; color:var(--navy);}
+  .counter .lbl{font-size:11px; color:var(--grey); text-transform:uppercase; letter-spacing:.04em;}
+  .counter .side{text-align:right;}
+
+  .searchwrap{padding:22px 18px 6px;}
+  #search{
+    width:100%; padding:13px 16px; border:1.5px solid var(--line); border-radius:12px;
+    font-size:15px; font-family:'Work Sans',sans-serif; background:#fff;
+  }
+  #search:focus{outline:2px solid var(--coral); border-color:var(--coral);}
+
+  .list{padding:8px 18px 20px;}
+  .row{
+    background:#fff; border:1px solid var(--line); border-radius:12px; padding:13px 15px;
+    margin-bottom:9px; display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .row .name{font-size:14.5px; font-weight:600; color:var(--navy);}
+  .row .status{font-size:11.5px; color:var(--grey); margin-top:2px;}
+  .row.present{border-color:var(--green); background:#F1F8F3;}
+  .row.left{border-color:var(--tiha-gold); background:#FBF6EA;}
+  .actions{display:flex; gap:6px; flex-shrink:0;}
+  .btn{
+    border:none; border-radius:8px; padding:9px 12px; font-size:12px; font-weight:700;
+    font-family:'Work Sans',sans-serif; cursor:pointer; white-space:nowrap;
+  }
+  .btn-in{background:var(--coral); color:#fff;}
+  .btn-in:disabled{background:var(--green); color:#fff; opacity:.9;}
+  .btn-out{background:var(--navy); color:#fff;}
+  .btn-out:disabled{background:var(--tiha-gold); color:#fff; opacity:.9;}
+  .empty{text-align:center; color:var(--grey); font-size:13px; padding:30px 10px;}
+
+  footer{margin-top:20px;padding:20px 22px 26px;text-align:center;background:var(--navy);color:rgba(255,255,255,.65);}
+  footer .fname{color:#fff;font-weight:600;font-size:13px;margin-bottom:3px;}
+  footer .fmeta{font-size:11px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="brandrow">
+      <span class="brand-pill">ALLIED LOGISTICS WORLDWIDE</span>
+      <span class="tiha-pill">Modelo TIHA</span>
+    </div>
+    <h1>Registro de Asistencia</h1>
+    <p>Grupo A · Martes · Busca tu nombre y marca tu hora</p>
+  </div>
+
+  <div class="counter">
+    <div>
+      <div class="num" id="countPresent">0</div>
+      <div class="lbl">Presentes ahora</div>
+    </div>
+    <div class="side">
+      <div class="num" id="countTotal">16</div>
+      <div class="lbl">Total del grupo</div>
+    </div>
+  </div>
+
+  <div class="searchwrap">
+    <input type="text" id="search" placeholder="Busca tu nombre..." autocomplete="off">
+  </div>
+
+  <div class="list" id="list"></div>
+
+  <footer>
+    <div class="fname">Dra. Mariluz Serrano Ortiz · Modelo TIHA</div>
+    <div class="fmeta">Allied Logistics Worldwide · Taller 1 · Grupo A</div>
+  </footer>
+
+</div>
+
+<script>
+  // ===== CONFIGURA ESTO =====
+  const API_URL = "PEGA_AQUI_TU_URL_DE_APPS_SCRIPT";
+  const GRUPO = "GrupoA";
+  // ===========================
+
+  const NOMBRES = [
+    "Oscar Castrodad Vázquez",
+    "Nelson Centeno Ortiz",
+    "Cristal De Dios Rodríguez",
+    "Margarita Fred Valentín",
+    "Emilio González González",
+    "Roberto Guzmán De Jesús",
+    "Jerome Jiménez Ruiz",
+    "Samuel López Espada",
+    "Johanys Martínez Muñoz",
+    "Emmanuel Miranda Velázquez",
+    "Alberto Oyola Cruz",
+    "Luis Pérez Díaz",
+    "Raúl Puchales Santiago",
+    "Carlos Rivera Díaz",
+    "Jonathan Rosa Arroyo",
+    "Ivelisse Vega Ocasio"
+  ];
+
+  let estado = {};
+
+  function apiUrl(params) {
+    const p = new URLSearchParams({ grupo: GRUPO, ...params });
+    return `${API_URL}?${p.toString()}`;
+  }
+
+  async function cargarEstado() {
+    try {
+      const res = await fetch(apiUrl({}));
+      estado = await res.json();
+    } catch (err) {
+      estado = estado || {};
+    }
+    render();
+  }
+
+  async function marcar(nombre, accion) {
+    try {
+      const res = await fetch(apiUrl({ action: accion, name: nombre }));
+      estado = await res.json();
+    } catch (err) {
+      alert("No se pudo guardar. Revisa tu conexión e intenta de nuevo.");
+    }
+    render();
+  }
+
+  function render() {
+    const q = document.getElementById('search').value.trim().toLowerCase();
+    const listEl = document.getElementById('list');
+    const filtrados = NOMBRES.filter(n => n.toLowerCase().includes(q));
+
+    let presentes = 0;
+    NOMBRES.forEach(n => {
+      const e = estado[n];
+      if (e && e.entrada && !e.salida) presentes++;
+    });
+    document.getElementById('countPresent').textContent = presentes;
+    document.getElementById('countTotal').textContent = NOMBRES.length;
+
+    if (filtrados.length === 0) {
+      listEl.innerHTML = '<div class="empty">No encontramos ese nombre. Verifica cómo está escrito.</div>';
+      return;
+    }
+
+    listEl.innerHTML = filtrados.map(nombre => {
+      const e = estado[nombre] || {};
+      const tieneEntrada = !!e.entrada;
+      const tieneSalida = !!e.salida;
+      let rowClass = 'row';
+      let statusText = 'Sin marcar';
+      if (tieneEntrada && !tieneSalida) { rowClass += ' present'; statusText = `Entrada ${e.entrada}`; }
+      if (tieneEntrada && tieneSalida) { rowClass += ' left'; statusText = `Entrada ${e.entrada} · Salida ${e.salida}`; }
+
+      return `
+        <div class="${rowClass}">
+          <div>
+            <div class="name">${nombre}</div>
+            <div class="status">${statusText}</div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-in" ${tieneEntrada ? 'disabled' : ''} onclick="marcar('${nombre.replace(/'/g,"\\'")}','checkin')">
+              ${tieneEntrada ? '✓ Entró' : 'Entrada'}
+            </button>
+            <button class="btn btn-out" ${(!tieneEntrada || tieneSalida) ? 'disabled' : ''} onclick="marcar('${nombre.replace(/'/g,"\\'")}','checkout')">
+              ${tieneSalida ? '✓ Salió' : 'Salida'}
+            </button>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  document.getElementById('search').addEventListener('input', render);
+
+  cargarEstado();
+  setInterval(cargarEstado, 15000); // refresca cada 15 segundos
+</script>
+</body>
+</html>
