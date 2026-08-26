@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guion de Facilitación · Yaliness · Taller 1 Grupo B</title>
+
+<style>
+:root{
+  --navy:#152238; --slate:#44546A; --coral:#E2572B; --coral-d:#C4451E;
+  --gold:#C9A961; --red:#E3263A;
+  --paper:#FBF8F3; --cream:#F5F0E6; --ink:#20241F; --grey:#6B6459; --line:#E4D8C4;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  line-height:1.65;-webkit-font-smoothing:antialiased;font-size:19px;}
+.wrap{max-width:760px;margin:0 auto;padding:0 0 70px;}
+
+.hero{background:linear-gradient(160deg,var(--navy),var(--slate));color:#fff;padding:44px 28px 38px;position:relative;overflow:hidden;}
+.hero::after{content:"";position:absolute;right:0;bottom:0;width:180px;height:180px;background:rgba(226,87,43,.26);border-radius:50%;transform:translate(35%,35%);}
+.brandrow{display:flex;align-items:center;flex-wrap:wrap;margin-bottom:22px;position:relative;z-index:1;}
+.pill{background:#fff;color:var(--navy);font-weight:700;font-size:13px;letter-spacing:.03em;padding:8px 15px;border-radius:999px;margin-right:9px;margin-bottom:5px;}
+.pill-o{border:1px solid rgba(255,255,255,.4);color:#fff;font-size:12.5px;letter-spacing:.07em;padding:7px 14px;border-radius:999px;text-transform:uppercase;}
+.eyebrow{color:var(--gold);font-size:13.5px;letter-spacing:.15em;text-transform:uppercase;font-weight:600;margin:0 0 10px;position:relative;z-index:1;}
+h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(30px,7vw,42px);line-height:1.12;margin:0 0 14px;position:relative;z-index:1;}
+.hero .sub{font-size:17px;color:rgba(255,255,255,.88);margin:0;position:relative;z-index:1;}
+.facil{display:inline-block;margin-top:18px;background:var(--coral);color:#fff;font-weight:700;font-size:16px;padding:10px 20px;border-radius:999px;position:relative;z-index:1;}
+
+.part{background:var(--navy);color:#fff;padding:30px 28px;margin-top:38px;}
+.part .pnum{color:var(--gold);font-size:13.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:8px;}
+.part h2{font-family:Georgia,serif;font-weight:400;font-size:31px;margin:0 0 8px;}
+.part .ptime{font-size:16px;color:rgba(255,255,255,.75);margin:0;}
+
+.section{padding:32px 28px 4px;}
+h3{font-family:Georgia,serif;font-weight:400;font-size:25px;color:var(--navy);margin:34px 0 16px;padding-bottom:9px;border-bottom:2px solid var(--line);}
+h3:first-child{margin-top:0;}
+h4{font-size:15px;letter-spacing:.09em;text-transform:uppercase;color:var(--coral-d);font-weight:700;margin:26px 0 12px;}
+
+.say{background:#fff;border-left:5px solid var(--coral);border-radius:0 12px 12px 0;
+  padding:20px 24px;margin:0 0 15px;font-size:20px;line-height:1.6;color:var(--ink);}
+.say.big{font-size:22px;}
+
+.cue{display:inline-block;background:var(--cream);border:1px solid var(--line);color:var(--grey);
+  font-size:14px;letter-spacing:.09em;text-transform:uppercase;font-weight:700;
+  padding:7px 15px;border-radius:8px;margin:6px 0 16px;}
+
+.plain{font-size:18px;color:var(--ink);margin:0 0 14px;}
+ul.q{margin:0 0 18px;padding-left:0;list-style:none;}
+ul.q li{background:#fff;border:1px solid var(--line);border-radius:11px;padding:15px 20px;margin-bottom:10px;font-size:18.5px;}
+ul.plainlist{margin:0 0 18px;padding-left:24px;font-size:18px;}
+ul.plainlist li{margin-bottom:9px;}
+
+.word{background:var(--navy);color:#fff;border-radius:14px;padding:26px 28px;margin:0 0 16px;}
+.word .wn{color:var(--gold);font-size:14px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:6px;}
+.word h5{font-family:Georgia,serif;font-weight:400;font-size:30px;margin:0 0 14px;color:#fff;letter-spacing:.04em;}
+.word .say{background:rgba(255,255,255,.09);border-left-color:var(--gold);color:rgba(255,255,255,.95);}
+
+.note{background:var(--cream);border:1px solid var(--line);border-left:5px solid var(--red);
+  border-radius:0 12px 12px 0;padding:20px 24px;margin:20px 0;font-size:17.5px;}
+.note b{color:var(--navy);}
+
+.fourwords{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0;}
+.fw{background:var(--navy);color:var(--gold);font-family:Georgia,serif;font-size:24px;
+  text-align:center;padding:22px 10px;border-radius:12px;letter-spacing:.06em;}
+
+footer{margin-top:48px;padding:30px 28px 36px;text-align:center;background:var(--navy);color:rgba(255,255,255,.7);}
+footer .fn{color:#fff;font-weight:600;font-size:17px;margin-bottom:5px;}
+footer .fm{font-size:14.5px;}
+
+@media(min-width:640px){
+  .hero{padding:56px 46px 48px;}
+  .part{padding:34px 46px;}
+  .section{padding:38px 46px 4px;}
+}
+@media print{
+  body{background:#fff;font-size:12pt;}
+  .hero,.part,.word,.fw{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .say,.word,.note{page-break-inside:avoid;}
+}
+</style></head><body><div class="wrap">
+
+<div class="hero">
+  <div class="brandrow">
+    <span class="pill">ALLIED LOGISTICS WORLDWIDE</span>
+    <span class="pill-o">Modelo TIHA</span>
+  </div>
+  <p class="eyebrow">Taller 1 · Grupo B · Jueves 27 de agosto</p>
+  <h1>Guion de Facilitación</h1>
+  <p class="sub">Mesa de negociación + Asertividad sin jerarquía<br>Guion palabra por palabra</p>
+  <span class="facil">Facilita: Yaliness</span>
+</div>
+
+
+<div class="part">
+  <div class="pnum">Parte I</div>
+  <h2>Mesa de Negociación</h2>
+  <p class="ptime">10:40 – 11:05 a.m.</p>
+</div>
+<div class="section">
+
+<h3>Apertura</h3>
+<div class="say">"Bien. Hasta este momento hemos estado hablando de las barreras que pueden surgir en la comunicación entre áreas."</div>
+<div class="say">"Ahora queremos llevar esa conversación a la práctica."</div>
+<div class="say">"Y antes de comenzar, quiero que pensemos en algo."</div>
+<div class="say">"Dentro de una organización podemos estar trabajando hacia un mismo propósito y, sin embargo, estar mirando una misma situación desde perspectivas completamente diferentes."</div>
+<div class="say">"Cada área tiene sus responsabilidades. Tiene sus prioridades. Tiene unas necesidades que atender. Y también tiene unas presiones que quizás las demás áreas no conocen."</div>
+<div class="cue">Pausa</div>
+<div class="say">"Muchas veces nosotros conocemos muy bien nuestra realidad. Sabemos qué necesitamos. Sabemos qué nos preocupa. Sabemos qué puede ocurrir si algo no se atiende."</div>
+<div class="say big">"Pero… ¿cuánto conocemos de la realidad del otro?"</div>
+<div class="cue">Pausa · mirar al grupo</div>
+<div class="say">"Y ahí es donde la comunicación se vuelve particularmente importante."</div>
+<div class="say">"Porque cuando no tenemos toda la información, comenzamos a llenar esos espacios. Interpretamos. Asumimos. Y en ocasiones reaccionamos desde lo que creemos que está ocurriendo, sin necesariamente conocer la realidad completa."</div>
+<h3>Presentación del ejercicio</h3>
+<div class="say">"Así que vamos a trabajar una situación."</div>
+<div class="say">"Estamos un viernes. Son las dos de la tarde. Acaba de llegar un contenedor de una cuenta importante y tenemos que determinar cómo vamos a manejar la situación."</div>
+<div class="say">"En esta conversación están representadas tres áreas: Operaciones, Tráfico y Servicio."</div>
+<div class="say">"Cada área tiene una realidad particular, unas responsabilidades que atender y una perspectiva distinta sobre esta misma situación."</div>
+<div class="cue">Entregar tarjetas</div>
+<div class="say">"Voy a entregarles una tarjeta. Cada persona va a leer solamente la información correspondiente a su área."</div>
+<div class="say">"No compartan la tarjeta. Lo importante es que esa información vaya apareciendo naturalmente durante la conversación."</div>
+<div class="cue">Dar tiempo para leer</div>
+<h3>Instrucciones</h3>
+<div class="say">"Van a tener doce minutos para conversar y llegar a una solución acordada."</div>
+<div class="say">"Pero quiero hacerles una invitación."</div>
+<div class="cue">Pausa</div>
+<div class="say">"No entren únicamente pensando: '¿Cómo resuelvo mi parte?' Traten también de descubrir qué está ocurriendo en las otras áreas."</div>
+<div class="say">"Escuchen. Pregunten. Expliquen su realidad. Y permitan que la información vaya apareciendo."</div>
+<div class="say">"Al final necesitamos una respuesta a esta situación que considere las tres áreas involucradas."</div>
+<div class="say">"¿Estamos listos? Comenzamos."</div>
+<h3>Durante la dinámica</h3>
+<div class="cue">Observar sin intervenir inmediatamente</div>
+<h4>Qué observar</h4>
+<ul class="q">
+<li>¿Cada participante defiende solamente su posición?</li>
+<li>¿Hacen preguntas?</li>
+<li>¿Cuándo aparecen las necesidades de cada área?</li>
+<li>¿En qué momento comienzan a considerar el impacto sobre las demás áreas?</li>
+<li>¿Aparece una propuesta construida entre varios?</li>
+</ul>
+<h4>Si necesitan un impulso</h4>
+<div class="say">"¿Qué información todavía necesitan conocer?"</div>
+<div class="say">"¿Ya conocemos qué necesita cada área?"</div>
+<div class="say">"¿Hay alguna pregunta que todavía no se han hecho?"</div>
+<h3>Procesamiento</h3>
+<div class="say">"Muy bien. Vamos a detenernos aquí."</div>
+<div class="cue">Pausa</div>
+<div class="say">"Antes de que me cuenten cuál fue la solución, quiero mirar otra cosa."</div>
+<div class="say">"Quiero mirar qué ocurrió durante la conversación."</div>
+<h4>Pregunta 1 — ¿Cuándo apareció la información?</h4>
+<div class="say">"¿Cuánto tiempo pasó antes de que comenzaran a conocer lo que realmente necesitaban las otras áreas?"</div>
+<div class="cue">Escuchar</div>
+<div class="say">"¿Fue información que apareció desde el principio o fue apareciendo poco a poco?"</div>
+<div class="cue">Escuchar</div>
+<div class="say">"¿Y hubo alguna información que, una vez la conocieron, cambió la forma en que estaban viendo la situación?"</div>
+<div class="cue">Escuchar 2–3 participaciones</div>
+<div class="say">"Eso es importante. Porque la solución que yo considero correcta desde mi área puede cambiar cuando comienzo a conocer el impacto que esa misma decisión tiene sobre otra."</div>
+<h4>Pregunta 2 — ¿Qué cambió al conocer la realidad del otro?</h4>
+<div class="say">"Ahora les hago otra pregunta."</div>
+<div class="say">"¿Alguien tuvo que abandonar completamente lo que necesitaba… o lograron construir alguna alternativa que inicialmente no estaba sobre la mesa?"</div>
+<div class="cue">Escuchar</div>
+<div class="say">"Ahí hay algo interesante. Cuando conocemos solamente nuestra necesidad, nuestras opciones pueden parecer limitadas."</div>
+<div class="say">"Cuando conocemos la realidad de los demás, pueden comenzar a aparecer alternativas que antes no veíamos."</div>
+<h4>Pregunta 3 — Llevarlo a la realidad</h4>
+<div class="say">"Ahora vamos a salir del ejercicio por un momento."</div>
+<div class="cue">Pausa</div>
+<div class="say">"Pensemos en lo que ocurre realmente en el trabajo."</div>
+<div class="say">"Cuando aparece una situación entre dos áreas… cuando necesitamos algo y no está ocurriendo… cuando sentimos que otro departamento está afectando nuestro proceso…"</div>
+<div class="cue">Pausa</div>
+<div class="say big">"¿Qué hacemos?"</div>
+<div class="cue">Escuchar</div>
+<div class="say">"¿Conversamos primero? ¿Preguntamos qué está ocurriendo? ¿Explicamos el impacto? ¿O en ocasiones esperamos hasta que la situación ya se ha complicado?"</div>
+<div class="cue">Dejarlos reflexionar</div>
+<h4>Pregunta importante — Antes de escalar</h4>
+<div class="say">"Y les voy a dejar una pregunta un poquito más incómoda."</div>
+<div class="cue">Pausa</div>
+<div class="say big">"Cuando una situación entre áreas llega a otro nivel para que alguien más intervenga… ¿siempre era necesario llevarla hasta allí? ¿O había una conversación que todavía nos correspondía tener?"</div>
+<div class="cue">Silencio — no responder por ellos</div>
+<div class="say">"Y no significa que nunca tengamos que escalar una situación. Hay situaciones que requieren hacerlo."</div>
+<div class="say">"La pregunta es: antes de llegar ahí, ¿ocurrió la conversación que tenía que ocurrir?"</div>
+<h3>Cierre ampliado</h3>
+<div class="say">"Porque trabajar entre áreas requiere ampliar nuestra mirada."</div>
+<div class="say">"Y quiero detenerme un momento aquí, porque quizás este es uno de los aprendizajes más importantes de este ejercicio."</div>
+<div class="cue">Pausa</div>
+<div class="say">"Cada uno entró a esta conversación con una información distinta."</div>
+<div class="say">"Cada uno sabía lo que necesitaba proteger desde su función."</div>
+<div class="say">"Y desde esa información, probablemente su posición tenía sentido."</div>
+<div class="cue">Pausa</div>
+<div class="say big">"Ese es el punto."</div>
+<div class="say">"Muchas veces, en el trabajo, la otra persona no está necesariamente tratando de dificultar mi proceso."</div>
+<div class="say">"Puede estar respondiendo a una realidad que yo todavía no conozco."</div>
+<div class="cue">Pausa</div>
+<div class="say">"Y cuando no conozco esa realidad, ¿qué hago? La interpreto."</div>
+<div class="say">"Pienso: 'No me están dando prioridad.' 'No entienden lo que necesito.' 'Siempre pasa lo mismo con esa área.' 'No están viendo la urgencia que tenemos nosotros.'"</div>
+<div class="cue">Pausa</div>
+<div class="say">"Pero cuando comenzamos a preguntar… cuando ponemos información sobre la mesa… cuando explicamos qué estamos tratando de proteger… la conversación puede cambiar."</div>
+<h4>Interdependencia</h4>
+<div class="say">"Y aquí quisiera que pensemos en algo: ¿realmente podemos hablar de áreas completamente independientes dentro de una misma operación?"</div>
+<div class="cue">Escuchar</div>
+<div class="say">"Probablemente no."</div>
+<div class="say">"Porque mi proceso puede terminar en mi escritorio… pero el impacto de lo que hice no necesariamente termina ahí."</div>
+<div class="cue">Pausa</div>
+<div class="say">"Lo que Operaciones decide puede tener una consecuencia para Tráfico. Lo que Tráfico puede o no puede hacer tiene una consecuencia para Servicio. Y lo que Servicio comunica o acuerda con un cliente puede generar una necesidad para otras partes de la operación."</div>
+<div class="say">"Entonces, aunque tengamos funciones distintas, estamos trabajando dentro de un sistema que está conectado."</div>
+<h4>Responsabilidad sin culpa</h4>
+<div class="say">"Y quiero hacer otra distinción importante."</div>
+<div class="say">"Reconocer esa conexión no significa buscar culpables."</div>
+<div class="cue">Pausa</div>
+<div class="say">"No se trata de: '¿Quién falló?' '¿Quién debió hacerlo?' '¿De quién era la responsabilidad?'"</div>
+<div class="say">"Claro que cada rol tiene responsabilidades. Pero cuando estamos tratando de resolver una situación, quizás hay una pregunta que nos ayuda mucho más."</div>
+<div class="cue">Pausa</div>
+<div class="say big">"En lugar de comenzar con: <b>'¿Quién causó esto?'</b> podemos comenzar con: <b>'¿Qué necesitamos comprender para poder atenderlo?'</b>"</div>
+<div class="cue">Pausa</div>
+<div class="say">"Eso cambia el tipo de conversación que podemos tener."</div>
+<h4>Volver al centro: comunicación</h4>
+<div class="say">"Y fíjense que, al final, esta dinámica que llamamos Mesa de Negociación nos vuelve a traer al tema central de esta mañana: la comunicación."</div>
+<div class="say">"Porque para negociar necesito comunicar lo que necesito. Pero también necesito escuchar lo que el otro necesita."</div>
+<div class="say">"Necesito explicar mi realidad… pero también hacer preguntas sobre la suya."</div>
+<div class="say">"Necesito poder decir qué impacto estoy viendo… pero también estar dispuesto a descubrir un impacto que quizás no había considerado."</div>
+<div class="cue">Pausa</div>
+<div class="say">"Y, sobre todo, necesito evitar asumir que la otra persona ya sabe lo que yo sé."</div>
+<h4>Pregunta de conciencia</h4>
+<div class="say">"Así que quiero hacerles una pregunta."</div>
+<div class="cue">Pausa</div>
+<div class="say">"Piensen en alguna situación real de trabajo que hayan tenido recientemente con otra área."</div>
+<div class="cue">Dar 3–5 segundos</div>
+<div class="say">"No tienen que compartirla. Solamente piénsenla."</div>
+<div class="cue">Pausa</div>
+<div class="say big">"Ahora pregúntense: ¿qué estaba tratando de proteger yo en esa conversación?"</div>
+<div class="cue">Pausa</div>
+<div class="say big">"Y ahora la segunda: ¿sé realmente qué estaba tratando de proteger la otra persona?"</div>
+<div class="cue">Pausa más larga</div>
+<div class="say">"Si la respuesta es 'no'… quizás ahí todavía hay una conversación pendiente."</div>
+<h4>Responsabilidad antes de escalar</h4>
+<div class="say">"Por eso, cuando una situación se complica entre áreas, antes de llevarla a otro nivel podemos hacernos algunas preguntas."</div>
+<ul class="q">
+<li>¿Ya pregunté?</li>
+<li>¿Ya expliqué claramente lo que necesito?</li>
+<li>¿Entendí qué necesita la otra área?</li>
+<li>¿Pusimos sobre la mesa la información necesaria?</li>
+<li>¿Exploramos alguna alternativa?</li>
+</ul>
+<div class="cue">Pausa</div>
+<div class="say">"Y si después de todo eso la situación necesita escalarse, se escala."</div>
+<div class="say">"Pero entonces estamos escalando una situación que ya fue conversada, no sustituyendo con el escalamiento una conversación que todavía no ocurrió."</div>
+<h4>Mensaje central</h4>
+<div class="say">"Porque nuestro rol no es solamente responder por nuestra parte del proceso."</div>
+<div class="cue">Pausa</div>
+<div class="say">"También tenemos una responsabilidad sobre cómo nuestra parte se conecta con las demás."</div>
+<div class="say">"Mi área forma parte de algo mayor. Mi decisión genera un efecto. Mi comunicación genera un efecto. Mi silencio también puede generar un efecto."</div>
+<div class="say">"Y la manera en que respondo a la necesidad de otra área puede facilitar o dificultar lo que ocurre después."</div>
+<div class="say big">"Mi trabajo puede tener unos límites definidos. Mi impacto no necesariamente los tiene."</div>
+<div class="cue">Pausa</div>
+<div class="say">"Por eso, además de preguntarme: '¿Qué necesito de la otra área?', puedo comenzar a preguntarme:"</div>
+<ul class="q">
+<li>¿Qué necesita conocer la otra área de mi realidad?</li>
+<li>¿Qué necesito conocer yo de la suya?</li>
+<li>¿Qué impacto estamos tratando de evitar o atender?</li>
+<li>¿Y qué podemos construir a partir de esa información?</li>
+</ul>
+<div class="say">"Porque cuando ampliamos la información, ampliamos también nuestras posibilidades de respuesta."</div>
+<div class="say">"Y muchas veces una conversación que comienza desde: 'Esto es lo que yo necesito' puede transformarse en: 'Vamos a entender qué necesitamos para que esto funcione.'"</div>
+<div class="cue">Pausa</div>
+<div class="say">"Y esa diferencia, aunque parezca pequeña, puede cambiar completamente la manera en que trabajamos entre áreas."</div>
+</div>
+
+<div class="part">
+  <div class="pnum">Parte II</div>
+  <h2>Asertividad sin Jerarquía</h2>
+  <p class="ptime">11:40 – 11:55 a.m.</p>
+</div>
+<div class="section">
+
+<h3>Apertura</h3>
+<div class="say">"Ahora quiero retomar algo que ocurrió hace un momento."</div>
+<div class="say">"En la mesa de negociación ustedes tuvieron que expresar necesidades, escuchar otras perspectivas y tratar de construir una solución."</div>
+<div class="say">"Pero en nuestra realidad cotidiana esas conversaciones no siempre son fáciles."</div>
+<div class="cue">Pausa</div>
+<div class="say">"Hay conversaciones que sabemos que tenemos que tener… y las posponemos."</div>
+<div class="say">"Hay algo que necesitamos pedir… y no sabemos exactamente cómo plantearlo."</div>
+<div class="say">"Hay una situación que nos está afectando… pero no queremos que la conversación se convierta en un conflicto."</div>
+<div class="say">"Y ahí entra la asertividad."</div>
+<h3>¿Qué entendemos por asertividad?</h3>
+<div class="say">"Cuando hablamos de asertividad, no estamos hablando de hablar más fuerte."</div>
+<div class="say">"No estamos hablando de imponer nuestra posición."</div>
+<div class="say">"Y tampoco estamos hablando de quedarnos callados para evitar una situación incómoda."</div>
+<div class="cue">Pausa</div>
+<div class="say big">"Estamos hablando de poder expresar con claridad lo que estamos observando, explicar su impacto y plantear lo que necesitamos… sin perder de vista la realidad de la otra persona."</div>
+<h3>La estructura de cinco elementos</h3>
+<div class="say">"Para ayudarnos a hacer eso, vamos a trabajar con cinco elementos."</div>
+<ul class="q">
+<li><b>1.</b> Contexto del otro</li>
+<li><b>2.</b> Observación</li>
+<li><b>3.</b> Impacto compartido</li>
+<li><b>4.</b> Petición específica</li>
+<li><b>5.</b> Oferta</li>
+</ul>
+<div class="say">"Vamos a mirarlos uno por uno."</div>
+<h4>1 — Contexto del otro</h4>
+<div class="say">"El primero es el contexto del otro."</div>
+<div class="say">"Antes de entrar directamente con lo que necesito, reconozco que la otra persona también está manejando una realidad."</div>
+<div class="say">"Por ejemplo: 'Sé que están manejando varias prioridades…'"</div>
+<div class="cue">Pausa</div>
+<div class="say">"Fíjense en algo. Todavía no he pedido nada. Simplemente estoy diciendo: veo que tú también estás manejando algo."</div>
+<div class="say">"Reconocer la realidad del otro no elimina mi necesidad. Pero cambia desde dónde comienzo la conversación."</div>
+<div class="say">"Mi realidad no es la única realidad presente en esta conversación."</div>
+<h4>2 — Observación</h4>
+<div class="say">"Después viene la observación."</div>
+<div class="say">"Y aquí tenemos que hacer una diferencia importante entre observar e interpretar."</div>
+<div class="say">"No es lo mismo decir: 'Ustedes siempre envían la información tarde', que decir: 'Cuando recibimos la información el martes en vez del lunes…'"</div>
+<div class="cue">Preguntar</div>
+<div class="say big">"¿Qué diferencia escuchan?"</div>
+<div class="cue">Escuchar</div>
+<div class="say">"Exactamente. Una expresión coloca una característica sobre la persona o el área. La otra describe una situación concreta."</div>
+<div class="say">"Hablemos de la situación, no de la persona."</div>
+<h4>3 — Impacto compartido</h4>
+<div class="say">"Luego viene el impacto. Pero aquí hay una palabra importante: <b>compartido</b>."</div>
+<div class="say">"Porque es fácil explicar: 'Esto me está afectando a mí.' El reto es ampliar la mirada."</div>
+<div class="say">"Por ejemplo: 'Cuando recibimos esa información el martes en vez del lunes, tenemos que hacer ajustes de último momento y eso termina afectando tanto nuestros procesos como la respuesta que recibe el cliente.'"</div>
+<div class="cue">Pausa</div>
+<div class="say">"¿Qué ocurrió ahí?"</div>
+<div class="say">"El problema dejó de ser solamente: 'tú no me estás dando algo que necesito'… y comenzamos a mirar: 'tenemos una situación que nos está impactando a ambos'."</div>
+<div class="say big">"El problema deja de estar entre nosotros y lo colocamos frente a nosotros."</div>
+<h4>4 — Petición específica</h4>
+<div class="say">"Entonces hacemos una petición. Pero tiene que ser clara."</div>
+<div class="say">"No: 'Necesito que ustedes mejoren ese proceso.' Eso puede significar muchas cosas."</div>
+<div class="say">"Sino: '¿Podríamos recibir una actualización preliminar el lunes al mediodía?'"</div>
+<div class="cue">Pausa</div>
+<div class="say">"Ahora sabemos exactamente qué estamos conversando. La otra persona sabe qué necesito y puede responder a algo concreto."</div>
+<div class="say big">"La claridad también es una forma de respeto."</div>
+<h4>5 — Oferta</h4>
+<div class="say">"Y finalmente tenemos la oferta."</div>
+<div class="cue">Pausa</div>
+<div class="say">"Esta parte nos invita a hacernos una pregunta que puede cambiar completamente la conversación."</div>
+<div class="say big">"¿Qué puedo hacer yo para contribuir a que esto funcione?"</div>
+<div class="say">"Por ejemplo: 'Yo puedo enviarte la información que necesitas desde el viernes para que tengas mayor tiempo para trabajarla.'"</div>
+<div class="cue">Pausa</div>
+<div class="say">"Fíjense cómo cambia la conversación."</div>
+<div class="say">"Ya no estoy llegando solamente con: 'Esto es lo que necesito de ti.' También estoy diciendo: 'Esto es lo que yo puedo aportar para facilitar que lleguemos a un acuerdo.'"</div>
+<h3>Ejemplo completo</h3>
+<div class="say">"Vamos a escucharlo ahora completo."</div>
+<div class="cue">Leer despacio</div>
+<div class="say big">"Sé que están manejando varias prioridades. Cuando recibimos la información el martes en vez del lunes, tenemos que hacer ajustes de último momento y eso termina afectando nuestros procesos y la respuesta que recibe el cliente. ¿Podríamos recibir una actualización preliminar el lunes al mediodía? Yo puedo enviarte desde el viernes la información que necesitas de nuestra parte para que tengas mayor tiempo para trabajarla."</div>
+<div class="cue">Pausa</div>
+<div class="say">"¿Qué escuchan diferente en esta manera de plantear la conversación?"</div>
+<div class="cue">Escuchar</div>
+<h3>Reflexión</h3>
+<div class="say">"Hay algo importante aquí."</div>
+<div class="say">"Yo no puedo controlar cómo la otra persona va a responder."</div>
+<div class="cue">Pausa</div>
+<div class="say big">"Pero sí puedo asumir responsabilidad sobre cómo yo entro a la conversación."</div>
+<div class="say">"Puedo decidir si entro desde una acusación… o desde una observación."</div>
+<div class="say">"Si asumo lo que está ocurriendo del otro lado… o pregunto."</div>
+<div class="say">"Si solamente explico cómo me afecta a mí… o identifico el impacto que compartimos."</div>
+<div class="say">"Si hago una petición general… o soy claro sobre lo que necesito."</div>
+<div class="say">"Y si solamente espero algo del otro… o también identifico qué puedo aportar."</div>
+<h3>Transición a la práctica</h3>
+<div class="say">"Y ahora vamos a llevarlo a una situación real."</div>
+<div class="say">"Van a tomar una de esas situaciones que identificaron esta mañana."</div>
+<div class="say">"Antes de conversar, organicen su planteamiento utilizando estas cinco partes."</div>
+<ul class="q">
+<li><b>Contexto del otro:</b> ¿Qué realidad puede estar manejando?</li>
+<li><b>Observación:</b> ¿Qué está ocurriendo concretamente?</li>
+<li><b>Impacto compartido:</b> ¿Dónde nos está afectando a ambos?</li>
+<li><b>Petición:</b> ¿Qué necesito específicamente?</li>
+<li><b>Oferta:</b> ¿Qué puedo aportar yo?</li>
+</ul>
+<div class="cue">Pausa</div>
+<div class="say">"Y recuerden: no estamos buscando tener una conversación perfecta."</div>
+<div class="say">"Estamos practicando una manera distinta de entrar a una conversación necesaria."</div>
+</div>
+
+<div class="part">
+  <div class="pnum">Cierre</div>
+  <h2>Cuatro Distinciones</h2>
+  <p class="ptime">Introducir únicamente al final</p>
+</div>
+<div class="section">
+
+<div class="say">"Antes de cerrar, quiero dejarles cuatro palabras."</div>
+<div class="cue">Pausa</div>
+<div class="say">"No como cuatro conceptos adicionales que tengan que memorizar."</div>
+<div class="say">"Quiero proponerlas como distinciones que podemos comenzar a incorporar en nuestro lenguaje de trabajo."</div>
+<div class="say">"Palabras sencillas que nos pueden ayudar a detenernos, mirar una situación y preguntarnos cómo nos estamos comunicando."</div>
+<div class="word">
+<div class="wn">Palabra 1</div><h5>URGENCIA</h5>
+<div class="say">"La primera es: URGENCIA."</div>
+<div class="say">"Y cuando hablamos de urgencia, no necesariamente estamos hablando de prisa."</div>
+<div class="say">"Estamos hablando de reconocer cuándo una conversación necesaria ya no debe seguir esperando."</div>
+<div class="say">"Hay situaciones que podemos atender mañana. Pero hay conversaciones que, mientras más las posponemos, más complejo se vuelve atender lo que está ocurriendo."</div>
+<div class="say">"Así que podemos comenzar a preguntarnos: ¿Esta conversación tiene urgencia?"</div>
+</div>
+<div class="word">
+<div class="wn">Palabra 2</div><h5>FIDELIDAD</h5>
+<div class="say">"La segunda palabra es: FIDELIDAD. Fidelidad al mensaje."</div>
+<div class="say">"Que cuando una información pase por nosotros conserve su intención, su contexto y aquello que la otra persona necesita conocer para poder comprender y actuar."</div>
+<div class="say">"Recordemos algo que vimos durante la mañana: cuando un mensaje pasa de una persona a otra, se pueden perder detalles, excepciones y hasta el porqué."</div>
+<div class="say">"Así que podemos preguntarnos: ¿Estamos siendo fieles al mensaje que necesitamos comunicar?"</div>
+</div>
+<div class="word">
+<div class="wn">Palabra 3</div><h5>TRANSPARENCIA</h5>
+<div class="say">"La tercera es: TRANSPARENCIA."</div>
+<div class="say">"¿Está sobre la mesa la información que necesitamos para comprender lo que está ocurriendo?"</div>
+<div class="say">"Transparencia no significa decir todo de cualquier manera."</div>
+<div class="say">"Significa no dejar fuera aquella información que puede cambiar la manera en que comprendemos o atendemos una situación."</div>
+<div class="say">"Podemos preguntarnos: ¿Qué necesitamos poner sobre la mesa para poder tener esta conversación?"</div>
+</div>
+<div class="word">
+<div class="wn">Palabra 4</div><h5>COMPROMISO</h5>
+<div class="say">"Y la cuarta palabra es: COMPROMISO."</div>
+<div class="say">"Porque después de conversar… después de escuchar… después de pedir… y después de llegar a un acuerdo… queda una pregunta."</div>
+<div class="say">"¿Qué me corresponde a mí?"</div>
+<div class="say">"¿Qué voy a hacer? ¿Qué voy a sostener? ¿A qué le voy a dar seguimiento?"</div>
+<div class="say">"Porque el compromiso no termina cuando llegamos a un acuerdo. El compromiso comienza cuando tenemos que sostenerlo."</div>
+</div>
+<h3>Cierre final</h3>
+<div class="say">"Así que quiero dejarles estas cuatro palabras."</div>
+<div class="cue">Decir despacio</div>
+<div class="fourwords">
+<div class="fw">URGENCIA</div><div class="fw">FIDELIDAD</div>
+<div class="fw">TRANSPARENCIA</div><div class="fw">COMPROMISO</div>
+</div>
+<div class="cue">Pausa</div>
+<div class="say">"Y quizás, poco a poco, puedan comenzar a formar parte de nuestro lenguaje cotidiano."</div>
+<div class="say">"¿Esta conversación tiene urgencia?"</div>
+<div class="say">"¿Estamos siendo fieles al mensaje?"</div>
+<div class="say">"¿Tenemos la transparencia necesaria para comprender lo que está ocurriendo?"</div>
+<div class="say">"¿Y cuál es nuestro compromiso después de esta conversación?"</div>
+<div class="cue">Pausa más larga</div>
+<div class="say big">"Porque la comunicación efectiva no depende solamente de que la otra persona se comunique mejor."</div>
+<div class="say big">"También requiere que cada uno de nosotros pueda mirar su parte y preguntarse: ¿qué me corresponde hacer para que la información llegue, la conversación ocurra y el acuerdo pueda sostenerse?"</div>
+</div>
+
+<footer>
+  <div class="fn">Guion de facilitación · Yaliness</div>
+  <div class="fm">Taller 1 · Grupo B · Allied Logistics Worldwide × Modelo TIHA</div>
+</footer>
+</div></body></html>
