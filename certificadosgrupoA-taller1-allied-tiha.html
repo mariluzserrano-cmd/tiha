@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Certificados · Taller 1 · Grupo A · Allied × TIHA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#152238; --slate:#44546A; --coral:#E2572B; --coral-dark:#C4451E;
+    --gold:#C9A961; --paper:#FBF8F3; --cream:#F5F0E6; --ink:#20241F; --grey:#6B6459; --line:#E4D8C4;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Work Sans',sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:560px;margin:0 auto;padding:0 0 60px;}
+
+  .hero{background:linear-gradient(160deg,var(--navy) 0%,var(--slate) 100%);color:#fff;padding:34px 24px 30px;position:relative;overflow:hidden;}
+  .hero::after{content:"";position:absolute;right:0;bottom:0;width:160px;height:160px;background:rgba(226,87,43,.26);border-radius:50%;transform:translate(35%,35%);}
+  .brandrow{display:flex;align-items:center;flex-wrap:wrap;margin-bottom:16px;position:relative;z-index:1;}
+  .pill{background:#fff;color:var(--navy);font-weight:700;font-size:11.5px;padding:6px 12px;border-radius:999px;margin-right:8px;margin-bottom:4px;}
+  .pill-o{border:1px solid rgba(255,255,255,.35);color:#fff;font-size:11px;letter-spacing:.05em;padding:6px 12px;border-radius:999px;text-transform:uppercase;}
+  h1{font-family:'Prata',serif;font-weight:400;font-size:26px;margin:0 0 6px;position:relative;z-index:1;}
+  .hero p{font-size:14px;color:rgba(255,255,255,.85);margin:0;position:relative;z-index:1;}
+
+  .searchwrap{padding:24px 22px 6px;}
+  #search{
+    width:100%; padding:14px 18px; border:1.5px solid var(--line); border-radius:12px;
+    font-size:16px; font-family:'Work Sans',sans-serif; background:#fff;
+  }
+  #search:focus{outline:2px solid var(--coral); border-color:var(--coral);}
+
+  .list{padding:10px 22px 20px;}
+  .row{
+    background:#fff; border:1px solid var(--line); border-radius:12px; padding:15px 18px;
+    margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; gap:12px;
+  }
+  .row .name{font-size:15px; font-weight:600; color:var(--navy);}
+  .row .sub{font-size:11.5px; color:var(--grey); margin-top:2px;}
+  .btn-dl{
+    flex-shrink:0; background:var(--coral); color:#fff; text-decoration:none; border-radius:999px;
+    padding:10px 18px; font-size:13px; font-weight:700; white-space:nowrap;
+  }
+  .btn-dl:hover{background:var(--coral-dark);}
+  .empty{text-align:center; color:var(--grey); font-size:14px; padding:30px 10px;}
+
+  .note{margin:8px 22px 0; background:var(--cream); border-left:4px solid var(--gold); border-radius:0 10px 10px 0; padding:14px 18px; font-size:13px; color:var(--ink);}
+
+  footer{margin-top:20px;padding:22px 24px 28px;text-align:center;background:var(--navy);color:rgba(255,255,255,.65);}
+  footer .fname{color:#fff;font-weight:600;font-size:13.5px;margin-bottom:3px;}
+  footer .fmeta{font-size:11.5px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="brandrow">
+      <span class="pill">ALLIED LOGISTICS WORLDWIDE</span>
+      <span class="pill-o">Modelo TIHA</span>
+    </div>
+    <h1>Tu Certificado</h1>
+    <p>Taller 1 · Comunicación Efectiva para Supervisores · Grupo A</p>
+  </div>
+
+  <div class="searchwrap">
+    <input type="text" id="search" placeholder="Busca tu nombre..." autocomplete="off">
+  </div>
+
+  <div class="list" id="list"></div>
+
+  <div class="note">
+    TIHA · Tecnologías para la Inspiración y la Humanización del Aprendizaje
+  </div>
+
+  <footer>
+    <div class="fname">Dra. Mariluz Serrano Ortiz · Creadora, Modelo TIHA</div>
+    <div class="fmeta">Programa de capacitación para Allied Logistics Worldwide</div>
+  </footer>
+
+</div>
+
+<script>
+  const CERTIFICADOS = [
+    { nombre: "Ivelisse Vega Ocasio", archivo: "Certificado_Ivelisse_Vega_Ocasio.pdf" },
+    { nombre: "Alberto Oyola Cruz", archivo: "Certificado_Alberto_Oyola_Cruz.pdf" },
+    { nombre: "Emmanuel Miranda Velázquez", archivo: "Certificado_Emmanuel_Miranda_Velazquez.pdf" },
+    { nombre: "Jonathan Rosa Arroyo", archivo: "Certificado_Jonathan_Rosa_Arroyo.pdf" },
+    { nombre: "Margarita Fred Valentín", archivo: "Certificado_Margarita_Fred_Valentin.pdf" },
+    { nombre: "Roberto Guzmán De Jesús", archivo: "Certificado_Roberto_Guzman_De_Jesus.pdf" },
+    { nombre: "Raúl Puchales Santiago", archivo: "Certificado_Raul_Puchales_Santiago.pdf" },
+    { nombre: "Cristal De Dios Rodríguez", archivo: "Certificado_Cristal_De_Dios_Rodriguez.pdf" },
+    { nombre: "Carlos Rivera Díaz", archivo: "Certificado_Carlos_Rivera_Diaz.pdf" },
+    { nombre: "Emilio González González", archivo: "Certificado_Emilio_Gonzalez_Gonzalez.pdf" },
+    { nombre: "Johanys Martínez Muñoz", archivo: "Certificado_Johanys_Martinez_Munoz.pdf" },
+    { nombre: "Jerome Jiménez Ruiz", archivo: "Certificado_Jerome_Jimenez_Ruiz.pdf" },
+    { nombre: "Samuel López Espada", archivo: "Certificado_Samuel_Lopez_Espada.pdf" }
+  ];
+
+  function render() {
+    const q = document.getElementById('search').value.trim().toLowerCase();
+    const listEl = document.getElementById('list');
+    const filtrados = CERTIFICADOS.filter(c => c.nombre.toLowerCase().includes(q));
+
+    if (filtrados.length === 0) {
+      listEl.innerHTML = '<div class="empty">No encontramos ese nombre. Verifica cómo está escrito.</div>';
+      return;
+    }
+
+    listEl.innerHTML = filtrados.map(c => `
+      <div class="row">
+        <div>
+          <div class="name">${c.nombre}</div>
+          <div class="sub">Taller 1 · 25 de agosto de 2026</div>
+        </div>
+        <a class="btn-dl" href="${c.archivo}" download>Descargar</a>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('search').addEventListener('input', render);
+  render();
+</script>
+</body>
+</html>
