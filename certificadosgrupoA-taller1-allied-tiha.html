@@ -83,19 +83,19 @@
 
 <script>
   const CERTIFICADOS = [
-    { nombre: "Ivelisse Vega Ocasio", archivo: "Certificado_Ivelisse_Vega_Ocasio.pdf" },
-    { nombre: "Alberto Oyola Cruz", archivo: "Certificado_Alberto_Oyola_Cruz.pdf" },
-    { nombre: "Emmanuel Miranda Velázquez", archivo: "Certificado_Emmanuel_Miranda_Velazquez.pdf" },
-    { nombre: "Jonathan Rosa Arroyo", archivo: "Certificado_Jonathan_Rosa_Arroyo.pdf" },
-    { nombre: "Margarita Fred Valentín", archivo: "Certificado_Margarita_Fred_Valentin.pdf" },
-    { nombre: "Roberto Guzmán De Jesús", archivo: "Certificado_Roberto_Guzman_De_Jesus.pdf" },
-    { nombre: "Raúl Puchales Santiago", archivo: "Certificado_Raul_Puchales_Santiago.pdf" },
-    { nombre: "Cristal De Dios Rodríguez", archivo: "Certificado_Cristal_De_Dios_Rodriguez.pdf" },
-    { nombre: "Carlos Rivera Díaz", archivo: "Certificado_Carlos_Rivera_Diaz.pdf" },
-    { nombre: "Emilio González González", archivo: "Certificado_Emilio_Gonzalez_Gonzalez.pdf" },
-    { nombre: "Johanys Martínez Muñoz", archivo: "Certificado_Johanys_Martinez_Munoz.pdf" },
-    { nombre: "Jerome Jiménez Ruiz", archivo: "Certificado_Jerome_Jimenez_Ruiz.pdf" },
-    { nombre: "Samuel López Espada", archivo: "Certificado_Samuel_Lopez_Espada.pdf" }
+    { nombre: "Ivelisse Vega Ocasio", archivo: "https://sistemaupr-my.sharepoint.com/:f:/g/personal/mariluz_serrano_upr_edu/IgCC7_idD_CFTYarpuq2UmI9AZSNzg2vZRPNqooezT3nK68?e=PfX8XI" },
+    { nombre: "Alberto Oyola Cruz", archivo: "https://sistemaupr-my.sharepoint.com/:f:/g/personal/mariluz_serrano_upr_edu/IgCC7_idD_CFTYarpuq2UmI9AZSNzg2vZRPNqooezT3nK68?e=PfX8XI" },
+    { nombre: "Emmanuel Miranda Velázquez", archivo: "https://sistemaupr-my.sharepoint.com/:f:/g/personal/mariluz_serrano_upr_edu/IgCC7_idD_CFTYarpuq2UmI9AZSNzg2vZRPNqooezT3nK68?e=PfX8XI" },
+    { nombre: "Jonathan Rosa Arroyo", archivo: "https://sistemaupr-my.sharepoint.com/:f:/g/personal/mariluz_serrano_upr_edu/IgCC7_idD_CFTYarpuq2UmI9AZSNzg2vZRPNqooezT3nK68?e=PfX8XI" },
+    { nombre: "Margarita Fred Valentín", archivo: "https://sistemaupr-my.sharepoint.com/:f:/g/personal/mariluz_serrano_upr_edu/IgCC7_idD_CFTYarpuq2UmI9AZSNzg2vZRPNqooezT3nK68?e=PfX8XI" },
+    { nombre: "Roberto Guzmán De Jesús", archivo: "https://sistemaupr-my.sharepoint.com/:f:/g/personal/mariluz_serrano_upr_edu/IgCC7_idD_CFTYarpuq2UmI9AZSNzg2vZRPNqooezT3nK68?e=PfX8XI" },
+    { nombre: "Raúl Puchales Santiago", archivo: "https://sistemaupr-my.sharepoint.com/:f:/g/personal/mariluz_serrano_upr_edu/IgCC7_idD_CFTYarpuq2UmI9AZSNzg2vZRPNqooezT3nK68?e=PfX8XI" },
+    { nombre: "Cristal De Dios Rodríguez", archivo: "https://sistemaupr-my.sharepoint.com/:f:/g/personal/mariluz_serrano_upr_edu/IgCC7_idD_CFTYarpuq2UmI9AZSNzg2vZRPNqooezT3nK68?e=PfX8XI" },
+    { nombre: "Carlos Rivera Díaz", archivo: "https://sistemaupr-my.sharepoint.com/:f:/g/personal/mariluz_serrano_upr_edu/IgCC7_idD_CFTYarpuq2UmI9AZSNzg2vZRPNqooezT3nK68?e=PfX8XI" },
+    { nombre: "Emilio González González", archivo: "https://sistemaupr-my.sharepoint.com/:f:/g/personal/mariluz_serrano_upr_edu/IgCC7_idD_CFTYarpuq2UmI9AZSNzg2vZRPNqooezT3nK68?e=PfX8XI" },
+    { nombre: "Johanys Martínez Muñoz", archivo: "https://sistemaupr-my.sharepoint.com/:f:/g/personal/mariluz_serrano_upr_edu/IgCC7_idD_CFTYarpuq2UmI9AZSNzg2vZRPNqooezT3nK68?e=PfX8XI" },
+    { nombre: "Jerome Jiménez Ruiz", archivo: "https://sistemaupr-my.sharepoint.com/:f:/g/personal/mariluz_serrano_upr_edu/IgCC7_idD_CFTYarpuq2UmI9AZSNzg2vZRPNqooezT3nK68?e=PfX8XI" },
+    { nombre: "Samuel López Espada", archivo: "https://sistemaupr-my.sharepoint.com/:f:/g/personal/mariluz_serrano_upr_edu/IgCC7_idD_CFTYarpuq2UmI9AZSNzg2vZRPNqooezT3nK68?e=PfX8XI" }
   ];
 
   function render() {
@@ -114,7 +114,7 @@
           <div class="name">${c.nombre}</div>
           <div class="sub">Taller 1 · 25 de agosto de 2026</div>
         </div>
-        <a class="btn-dl" href="${c.archivo}" download>Descargar</a>
+        <a class="btn-dl" href="${c.archivo}" target="_blank" rel="noopener">Descargar</a>
       </div>
     `).join('');
   }
