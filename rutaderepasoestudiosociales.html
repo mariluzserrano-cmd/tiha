@@ -209,7 +209,7 @@
     <div class="login-card">
       <span class="badge">📚 Ruta de Repaso · Estudios Sociales</span>
       <h1>Aprende, practica y certifica tu logro.</h1>
-      <p class="lead">Completa los seis juegos de WordWall. Marca cada actividad como vista, registra la puntuación obtenida y alcanza <strong>80 puntos o más en cada juego</strong> para desbloquear tu certificado final.</p>
+      <p class="lead">Completa los seis juegos de WordWall. Marca cada actividad como vista y registra cuántos ejercicios acertaste. La plataforma convierte cada resultado a una escala de 100. Para aprobar cada juego necesitas <strong>B (80–89) o A (90–100)</strong>.</p>
       <div class="field">
         <label for="studentName">Nombre del estudiante</label>
         <input id="studentName" type="text" autocomplete="name" placeholder="Ej. Victoria Cuevas" maxlength="60" />
@@ -241,9 +241,9 @@
     <main>
       <section class="hero">
         <div>
-          <span class="badge" style="background:rgba(255,255,255,.14);color:#fff">🎯 Meta: 80+ en cada actividad</span>
+          <span class="badge" style="background:rgba(255,255,255,.14);color:#fff">🎯 Meta: B o A en cada actividad</span>
           <h2>Tu ruta de aprendizaje</h2>
-          <p class="lead">Juega cada actividad, marca que la viste y registra el resultado que WordWall te muestra al finalizar. Si alguna queda por debajo de 80, puedes repetirla hasta dominarla.</p>
+          <p class="lead">Juega cada actividad, marca que la viste y registra cuántos ejercicios acertaste. La plataforma convierte automáticamente el resultado a una escala de 100. Si obtienes C (70–79) o menos, repite el juego hasta alcanzar B o A.</p>
         </div>
         <div class="progress-card">
           <div class="progress-row">
@@ -265,6 +265,17 @@
         </div>
       </section>
 
+      <section style="margin-top:22px;background:#fff;border:1px solid var(--border);border-radius:20px;padding:16px 18px;box-shadow:0 8px 26px rgba(15,23,42,.05)">
+        <strong>Escala de calificación</strong>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;font-weight:800">
+          <span style="padding:7px 10px;border-radius:999px;background:#dcfce7;color:#166534">90–100 = A</span>
+          <span style="padding:7px 10px;border-radius:999px;background:#dbeafe;color:#1d4ed8">80–89 = B</span>
+          <span style="padding:7px 10px;border-radius:999px;background:#fef3c7;color:#92400e">70–79 = C · repetir</span>
+          <span style="padding:7px 10px;border-radius:999px;background:#fee2e2;color:#991b1b">Menos de 70 · repetir</span>
+        </div>
+        <div class="footnote">La plataforma no muestra D ni F. Para desbloquear el certificado, cada juego debe terminar en B o A.</div>
+      </section>
+
       <div class="section-head">
         <div>
           <h2>Actividades</h2>
@@ -279,7 +290,7 @@
           <div class="lock-icon">🔒</div>
           <div>
             <strong>Certificado bloqueado</strong>
-            <div class="footnote" id="lockReason">Necesitas marcar los 6 juegos como vistos y obtener 80 o más en cada uno.</div>
+            <div class="footnote" id="lockReason">Necesitas marcar los 6 juegos como vistos y alcanzar B o A en cada uno.</div>
           </div>
         </div>
 
@@ -289,8 +300,8 @@
             <h2 style="font-family:Georgia,serif;font-size:2.1rem;margin:14px 0 4px">Ruta de Repaso · Estudios Sociales</h2>
             <p>Se certifica que</p>
             <div id="certName" class="cert-name"></div>
-            <p>completó satisfactoriamente las seis actividades de repaso y alcanzó al menos <strong>80/100</strong> en cada una.</p>
-            <div class="cert-grade">Calificación final: <span id="certAverage"></span>/100</div>
+            <p>completó satisfactoriamente las seis actividades de repaso y alcanzó una calificación de <strong>B o A</strong> en cada una.</p>
+            <div class="cert-grade">Calificación final: <span id="certAverage"></span></div>
             <p class="cert-meta">Fecha: <span id="certDate"></span></p>
             <div class="cert-actions">
               <button id="printCertificate" class="primary">Imprimir / Guardar PDF</button>
@@ -298,7 +309,7 @@
             </div>
           </div>
         </div>
-        <p class="footnote">Nota: la calificación final del certificado es el promedio de las seis puntuaciones registradas.</p>
+        <p class="footnote">Nota: cada juego se convierte primero a una escala de 100 según su cantidad total de ejercicios. La calificación final es el promedio de esas seis puntuaciones normalizadas.</p>
       </section>
     </main>
   </section>
@@ -310,26 +321,32 @@
 const games = [
   {
     title:"Juego 1 · Repaso general",
+    totalItems:36,
     src:"https://wordwall.net/es/embed/fc5c2d85a89d430b92965560c174b665?themeId=6&templateId=5&fontStackId=0"
   },
   {
     title:"Juego 2 · Cierto o falso",
+    totalItems:20,
     src:"https://wordwall.net/es/embed/e58cc25e03e34a388654df7c50a0cd47?themeId=4&templateId=35&fontStackId=0"
   },
   {
     title:"Juego 3 · Pareo",
+    totalItems:21,
     src:"https://wordwall.net/es/embed/c52dafc98bcb450cb6eb277e97f65436?themeId=57&templateId=3&fontStackId=0"
   },
   {
     title:"Juego 4 · Completa la oración",
+    totalItems:21,
     src:"https://wordwall.net/es/embed/640f223d7c0445648b3ffab3a9b4f9f5?themeId=58&templateId=36&fontStackId=0"
   },
   {
     title:"Juego 5 · Continentes y océanos",
+    totalItems:12,
     src:"https://wordwall.net/es/embed/169e7ccfa7654aec885e548f5076433f?themeId=1&templateId=22&fontStackId=0"
   },
   {
     title:"Juego 6 · Reto final",
+    totalItems:18,
     src:"https://wordwall.net/es/embed/fe27199753c84bc6a13c2b40d190a3b6?themeId=21&templateId=69&fontStackId=0"
   }
 ];
@@ -341,8 +358,27 @@ const studentName = $("#studentName");
 const gameGrid = $("#gameGrid");
 const PASS = 80;
 
+function toPercent(correct,total){
+  if(correct===null || correct===undefined || correct==="") return null;
+  return Math.round((Number(correct)/Number(total))*100);
+}
+function letterGrade(percent){
+  if(percent === null || percent === undefined) return "";
+  if(percent >= 90) return "A";
+  if(percent >= 80) return "B";
+  if(percent >= 70) return "C";
+  return "Repetir";
+}
+function gradeLabel(percent){
+  const g = letterGrade(percent);
+  if(g==="A") return "A · Excelente / Sobresaliente";
+  if(g==="B") return "B · Bueno / Por encima del promedio";
+  if(g==="C") return "C · Satisfactorio · Debe repetir para llegar a B o A";
+  return "Debe repetir · Aún no alcanza C";
+}
+
 let currentStudent = "";
-let state = {games:games.map(()=>({seen:false,score:null}))};
+let state = {games:games.map(()=>({seen:false,correct:null}))};
 
 function normalizeName(n){
   return n.trim().replace(/\s+/g," ");
@@ -360,12 +396,20 @@ function load(name){
     try{
       const parsed = JSON.parse(raw);
       if(parsed && Array.isArray(parsed.games) && parsed.games.length === games.length){
-        state = parsed;
+        // Compatibilidad con la versión anterior que guardaba "score" 0-100.
+        state = {games: parsed.games.map((g,i)=>{
+          if(Object.prototype.hasOwnProperty.call(g,"correct")) return g;
+          if(typeof g.score === "number"){
+            const approx = Math.round((g.score/100)*games[i].totalItems);
+            return {seen:!!g.seen, correct:approx};
+          }
+          return {seen:!!g.seen, correct:null};
+        })};
         return;
       }
     }catch(e){}
   }
-  state = {games:games.map(()=>({seen:false,score:null}))};
+  state = {games:games.map(()=>({seen:false,correct:null}))};
 }
 function toast(msg){
   const t=$("#toast"); t.textContent=msg; t.classList.add("show");
@@ -406,9 +450,9 @@ function renderGames(){
         </label>
         <div class="score-row">
           <div>
-            <label for="score-${i}">Puntuación obtenida (0–100)</label>
-            <input id="score-${i}" type="number" min="0" max="100" step="1" placeholder="Ej. 92" value="${s.score ?? ""}" ${!s.seen?"disabled":""}>
-            <small>Meta: 80 o más.</small>
+            <label for="score-${i}">Aciertos obtenidos</label>
+            <input id="score-${i}" type="number" min="0" max="${g.totalItems}" step="1" placeholder="0–${g.totalItems}" value="${s.correct ?? ""}" ${!s.seen?"disabled":""}>
+            <small>Este juego tiene ${g.totalItems} ejercicios. Se convertirá automáticamente a escala de 100.</small>
           </div>
           <button id="save-${i}" class="secondary" ${!s.seen?"disabled":""}>Registrar</button>
         </div>
@@ -422,21 +466,23 @@ function renderGames(){
       scoreEl.disabled=!seenEl.checked;
       saveBtn.disabled=!seenEl.checked;
       if(!seenEl.checked){
-        state.games[i].score=null;
+        state.games[i].correct=null;
         scoreEl.value="";
       }
       save(); updateGameStatus(i); updateSummary();
     });
     saveBtn.addEventListener("click",()=>{
       const val=Number(scoreEl.value);
-      if(!Number.isFinite(val)||val<0||val>100){
-        toast("Escribe una puntuación entre 0 y 100.");
+      if(!Number.isFinite(val)||val<0||val>g.totalItems||!Number.isInteger(val)){
+        toast(`Escribe un número entero entre 0 y ${g.totalItems}.`);
         scoreEl.focus(); return;
       }
-      state.games[i].score=Math.round(val);
-      scoreEl.value=state.games[i].score;
+      state.games[i].correct=val;
+      scoreEl.value=val;
       save(); updateGameStatus(i); updateSummary();
-      toast(state.games[i].score>=PASS ? "¡Actividad aprobada! 🎉" : "Guardado. Puedes repetirla para llegar a 80.");
+      const pct=toPercent(val,g.totalItems);
+      const grade=letterGrade(pct);
+      toast(pct>=PASS ? `¡Actividad aprobada con ${grade}! 🎉` : `Resultado ${pct}/100 (${grade}). Repítela para llegar a B o A.`);
     });
     scoreEl.addEventListener("keydown",(e)=>{ if(e.key==="Enter") saveBtn.click(); });
     updateGameStatus(i);
@@ -444,56 +490,91 @@ function renderGames(){
 }
 function updateGameStatus(i){
   const s=state.games[i];
+  const g=games[i];
   const pill=$("#status-"+i), msg=$("#msg-"+i);
   pill.className="status-pill"; msg.className="score-msg";
+
   if(!s.seen){
-    pill.textContent="Pendiente"; msg.textContent=""; return;
+    pill.textContent="Pendiente";
+    msg.textContent="";
+    return;
   }
-  if(s.score===null){
-    pill.textContent="Visto · falta puntuación";
-    msg.textContent="Registra la puntuación que obtuviste en WordWall.";
-    msg.classList.add("warn"); return;
+  if(s.correct===null || s.correct===undefined){
+    pill.textContent="Visto · faltan aciertos";
+    msg.textContent=`Registra cuántos ejercicios acertaste de ${g.totalItems}.`;
+    msg.classList.add("warn");
+    return;
   }
-  if(s.score>=PASS){
-    pill.textContent=`Aprobado · ${s.score}/100`; pill.classList.add("pass");
-    msg.textContent="¡Excelente! Superaste la meta de 80.";
+
+  const pct=toPercent(s.correct,g.totalItems);
+  const grade=letterGrade(pct);
+
+  if(pct>=PASS){
+    pill.textContent=`Aprobado · ${grade} · ${pct}/100`;
+    pill.classList.add("pass");
+    msg.textContent=`${s.correct}/${g.totalItems} correctos · ${gradeLabel(pct)}.`;
     msg.classList.add("ok");
   }else{
-    pill.textContent=`Repetir · ${s.score}/100`; pill.classList.add("retry");
-    msg.textContent=`Faltan ${PASS-s.score} puntos para llegar a 80.`;
+    pill.textContent=`Repetir · ${grade} · ${pct}/100`;
+    pill.classList.add("retry");
+    if(grade==="C"){
+      msg.textContent=`${s.correct}/${g.totalItems} correctos · C. Buen intento, pero debe repetir hasta alcanzar B o A.`;
+    }else{
+      msg.textContent=`${s.correct}/${g.totalItems} correctos · todavía debe repetir hasta alcanzar B o A.`;
+    }
     msg.classList.add("danger");
   }
 }
 function updateSummary(){
   const seen=state.games.filter(x=>x.seen).length;
-  const scored=state.games.filter(x=>typeof x.score==="number");
-  const passed=state.games.filter(x=>typeof x.score==="number" && x.score>=PASS).length;
-  const avg=scored.length ? Math.round(scored.reduce((a,b)=>a+b.score,0)/scored.length) : null;
+
+  const normalized = state.games.map((x,i)=>{
+    if(typeof x.correct!=="number") return null;
+    return toPercent(x.correct,games[i].totalItems);
+  });
+
+  const scored=normalized.filter(x=>typeof x==="number");
+  const passed=normalized.filter(x=>typeof x==="number" && x>=PASS).length;
+  const avg=scored.length ? Math.round(scored.reduce((a,b)=>a+b,0)/scored.length) : null;
+
   $("#seenCount").textContent=seen;
   $("#passedCount").textContent=passed;
   $("#pendingCount").textContent=games.length-passed;
   $("#completedCount").textContent=passed;
-  $("#averageScore").textContent=avg===null?"—":avg+"/100";
+  $("#averageScore").textContent=avg===null?"—":`${avg}/100 · ${letterGrade(avg)}`;
   $("#progressFill").style.width=(passed/games.length*100)+"%";
 
   const allSeen=state.games.every(x=>x.seen);
-  const allScored=state.games.every(x=>typeof x.score==="number");
-  const allPassed=state.games.every(x=>typeof x.score==="number" && x.score>=PASS);
+  const allScored=state.games.every(x=>typeof x.correct==="number");
+  const allPassed=normalized.every(x=>typeof x==="number" && x>=PASS);
 
   const lock=$("#certificateLocked"), cert=$("#certificateBlock"), reason=$("#lockReason");
+
   if(allSeen && allScored && allPassed){
-    lock.classList.add("hidden"); cert.classList.remove("hidden");
-    const finalAvg=Math.round(state.games.reduce((a,b)=>a+b.score,0)/games.length);
+    lock.classList.add("hidden");
+    cert.classList.remove("hidden");
+    const finalAvg=Math.round(normalized.reduce((a,b)=>a+b,0)/games.length);
+    const finalGrade=letterGrade(finalAvg);
+
     $("#certName").textContent=currentStudent;
-    $("#certAverage").textContent=finalAvg;
+    $("#certAverage").textContent=`${finalAvg} · ${finalGrade}`;
     $("#certDate").textContent=new Intl.DateTimeFormat("es-PR",{dateStyle:"long"}).format(new Date());
   }else{
-    lock.classList.remove("hidden"); cert.classList.add("hidden");
-    if(!allSeen) reason.textContent=`Falta marcar ${games.length-seen} actividad(es) como vista(s).`;
-    else if(!allScored) reason.textContent="Ya viste todas las actividades. Falta registrar alguna puntuación.";
-    else{
-      const low=state.games.map((x,i)=>({i,score:x.score})).filter(x=>x.score<PASS);
-      reason.textContent=`Debes repetir ${low.length} actividad(es) que están por debajo de 80.`;
+    lock.classList.remove("hidden");
+    cert.classList.add("hidden");
+
+    if(!allSeen){
+      reason.textContent=`Falta marcar ${games.length-seen} actividad(es) como vista(s).`;
+    }else if(!allScored){
+      reason.textContent="Ya viste todas las actividades. Falta registrar los aciertos de alguna actividad.";
+    }else{
+      const low=normalized.map((pct,i)=>({i,pct,grade:letterGrade(pct)})).filter(x=>x.pct<PASS);
+      const cCount=low.filter(x=>x.grade==="C").length;
+      const belowC=low.length-cCount;
+      let parts=[];
+      if(cCount) parts.push(`${cCount} actividad(es) con C`);
+      if(belowC) parts.push(`${belowC} actividad(es) por debajo de C`);
+      reason.textContent=`Debe repetir ${low.length} actividad(es) hasta alcanzar B o A (${parts.join(" y ")}).`;
     }
   }
 }
