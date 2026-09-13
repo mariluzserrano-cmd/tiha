@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Estudios Sociales · Ruta de Repaso</title>
+  <meta name="description" content="Mini LMS de repaso con juegos de WordWall y certificado final." />
+  <style>
+    :root{
+      --bg:#f5f7fb;
+      --surface:#ffffff;
+      --surface-2:#eef4ff;
+      --text:#17324d;
+      --muted:#64748b;
+      --brand:#1769aa;
+      --brand-2:#0e8a83;
+      --accent:#f59e0b;
+      --ok:#15803d;
+      --warn:#b45309;
+      --danger:#b91c1c;
+      --border:#dbe4ef;
+      --shadow:0 14px 40px rgba(30,64,175,.10);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 0 0, rgba(23,105,170,.10), transparent 28rem),
+        radial-gradient(circle at 100% 0, rgba(14,138,131,.10), transparent 26rem),
+        var(--bg);
+      color:var(--text);
+    }
+    button,input{font:inherit}
+    button{cursor:pointer}
+    .hidden{display:none!important}
+    .app{min-height:100vh}
+    .screen{
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:28px;
+    }
+    .login-card{
+      width:min(760px,100%);
+      background:rgba(255,255,255,.94);
+      border:1px solid var(--border);
+      border-radius:32px;
+      padding:clamp(28px,5vw,54px);
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .login-card:before{
+      content:"";
+      position:absolute; inset:0 0 auto 0; height:9px;
+      background:linear-gradient(90deg,var(--brand),var(--brand-2),var(--accent));
+    }
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;
+      background:var(--surface-2); color:var(--brand); font-weight:800; font-size:.86rem;
+    }
+    h1,h2,h3,p{margin-top:0}
+    h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.03;margin:18px 0 14px}
+    .lead{font-size:1.08rem;color:var(--muted);line-height:1.65}
+    .field{display:grid;gap:8px;margin-top:28px}
+    label{font-weight:800}
+    input[type="text"],input[type="number"]{
+      width:100%;padding:15px 16px;border:1.5px solid var(--border);border-radius:14px;
+      background:#fff;color:var(--text);outline:none;transition:.2s;
+    }
+    input:focus{border-color:var(--brand);box-shadow:0 0 0 4px rgba(23,105,170,.10)}
+    .primary,.secondary,.ghost{
+      border:0;border-radius:14px;padding:13px 18px;font-weight:850;transition:.2s;
+    }
+    .primary{background:linear-gradient(135deg,var(--brand),#0a75c8);color:white;box-shadow:0 10px 25px rgba(23,105,170,.22)}
+    .primary:hover{transform:translateY(-1px)}
+    .secondary{background:#e8f4f2;color:#08736d}
+    .ghost{background:#fff;border:1px solid var(--border);color:var(--text)}
+    .login-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+    .helper{font-size:.9rem;color:var(--muted);margin-top:10px}
+
+    .dashboard{display:none;min-height:100vh}
+    .dashboard.active{display:block}
+    header{
+      position:sticky;top:0;z-index:20;
+      background:rgba(245,247,251,.88);backdrop-filter:blur(14px);
+      border-bottom:1px solid rgba(219,228,239,.8);
+    }
+    .topbar{
+      width:min(1220px,calc(100% - 32px));margin:auto;
+      display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;
+    }
+    .brand{display:flex;align-items:center;gap:12px;font-weight:900}
+    .brand-logo{
+      width:42px;height:42px;border-radius:14px;display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;font-size:1.2rem;
+      box-shadow:0 8px 22px rgba(23,105,170,.20)
+    }
+    .student-chip{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .student-chip strong{font-size:.95rem}
+    main{width:min(1220px,calc(100% - 32px));margin:0 auto;padding:30px 0 60px}
+    .hero{
+      display:grid;grid-template-columns:1.55fr .8fr;gap:24px;
+      background:linear-gradient(135deg,#0c4e85,#107d84);
+      color:#fff;border-radius:28px;padding:clamp(24px,4vw,42px);box-shadow:var(--shadow);
+    }
+    .hero .lead{color:rgba(255,255,255,.82)}
+    .hero h2{font-size:clamp(1.7rem,3vw,2.7rem);margin-bottom:10px}
+    .progress-card{
+      align-self:stretch;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.20);
+      border-radius:22px;padding:20px;display:flex;flex-direction:column;justify-content:center;
+    }
+    .progress-row{display:flex;justify-content:space-between;align-items:end;gap:12px}
+    .progress-big{font-size:2.4rem;font-weight:950}
+    .progress-track{height:12px;background:rgba(255,255,255,.16);border-radius:999px;overflow:hidden;margin-top:12px}
+    .progress-fill{height:100%;width:0;background:#fbbf24;border-radius:999px;transition:.35s}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+    .stat{background:rgba(255,255,255,.10);padding:12px;border-radius:15px}
+    .stat b{display:block;font-size:1.25rem}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:34px 0 16px}
+    .section-head h2{margin:0}
+    .section-head p{margin:5px 0 0;color:var(--muted)}
+    .game-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+    .game-card{
+      background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+      overflow:hidden;box-shadow:0 8px 30px rgba(15,23,42,.06)
+    }
+    .game-header{padding:18px 18px 14px;display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+    .game-number{
+      width:38px;height:38px;border-radius:12px;display:grid;place-items:center;flex:0 0 auto;
+      background:var(--surface-2);color:var(--brand);font-weight:950;
+    }
+    .game-title-wrap{flex:1}
+    .game-title{font-weight:950;font-size:1.1rem;margin:0 0 4px}
+    .status-pill{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:850;padding:6px 9px;border-radius:999px;background:#f1f5f9;color:#64748b}
+    .status-pill.pass{background:#dcfce7;color:#166534}
+    .status-pill.retry{background:#ffedd5;color:#9a3412}
+    .embed-wrap{background:#eef2f7;border-top:1px solid var(--border);border-bottom:1px solid var(--border);aspect-ratio:500/380}
+    .embed-wrap iframe{width:100%;height:100%;display:block}
+    .game-controls{padding:16px 18px 18px;display:grid;gap:12px}
+    .seen-row{display:flex;align-items:center;gap:10px}
+    .seen-row input{width:19px;height:19px;accent-color:var(--brand)}
+    .score-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
+    .score-row small{display:block;color:var(--muted);margin-top:6px}
+    .score-msg{font-weight:800;font-size:.9rem;min-height:1.2rem}
+    .score-msg.ok{color:var(--ok)}
+    .score-msg.warn{color:var(--warn)}
+    .score-msg.danger{color:var(--danger)}
+    .certificate-panel{
+      margin-top:32px;background:var(--surface);border:1px solid var(--border);border-radius:28px;
+      padding:24px;box-shadow:0 10px 35px rgba(15,23,42,.06)
+    }
+    .certificate-lock{
+      display:flex;gap:16px;align-items:center;padding:16px;border-radius:18px;background:#f8fafc;border:1px dashed #cbd5e1
+    }
+    .lock-icon{font-size:2rem}
+    .certificate{
+      border:10px double #d5a321;border-radius:10px;padding:44px 36px;text-align:center;
+      background:
+        radial-gradient(circle at 10% 10%,rgba(213,163,33,.08),transparent 12rem),
+        radial-gradient(circle at 90% 90%,rgba(23,105,170,.08),transparent 14rem),
+        #fffef9;
+      position:relative;
+    }
+    .certificate:after{
+      content:"";position:absolute;inset:14px;border:1px solid rgba(213,163,33,.55);pointer-events:none
+    }
+    .cert-kicker{letter-spacing:.18em;text-transform:uppercase;font-weight:900;color:#8a6513}
+    .cert-name{font-family:Georgia,serif;font-size:clamp(2rem,5vw,3.7rem);margin:18px 0 10px;color:#17324d}
+    .cert-grade{font-size:2rem;font-weight:950;color:var(--brand);margin:16px 0}
+    .cert-meta{color:#475569}
+    .cert-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+    .footnote{font-size:.86rem;color:var(--muted);line-height:1.5;margin-top:14px}
+    .toast{
+      position:fixed;right:18px;bottom:18px;background:#102a43;color:#fff;padding:13px 16px;border-radius:14px;
+      box-shadow:var(--shadow);opacity:0;transform:translateY(10px);pointer-events:none;transition:.25s;z-index:50
+    }
+    .toast.show{opacity:1;transform:translateY(0)}
+    @media(max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .game-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:560px){
+      .screen{padding:16px}
+      .topbar{width:min(100% - 20px,1220px)}
+      main{width:min(100% - 20px,1220px)}
+      .student-chip span{display:none}
+      .score-row{grid-template-columns:1fr}
+      .stats{grid-template-columns:1fr}
+      .certificate{padding:34px 20px}
+    }
+    @media print{
+      body *{visibility:hidden!important}
+      #certificateBlock,#certificateBlock *{visibility:visible!important}
+      #certificateBlock{position:absolute;left:0;top:0;width:100%;margin:0}
+      #certificateBlock .cert-actions{display:none!important}
+      #certificateBlock{border:none;box-shadow:none}
+      @page{size:landscape;margin:12mm}
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <section id="loginScreen" class="screen">
+    <div class="login-card">
+      <span class="badge">📚 Ruta de Repaso · Estudios Sociales</span>
+      <h1>Aprende, practica y certifica tu logro.</h1>
+      <p class="lead">Completa los seis juegos de WordWall. Marca cada actividad como vista, registra la puntuación obtenida y alcanza <strong>80 puntos o más en cada juego</strong> para desbloquear tu certificado final.</p>
+      <div class="field">
+        <label for="studentName">Nombre del estudiante</label>
+        <input id="studentName" type="text" autocomplete="name" placeholder="Ej. Victoria Cuevas" maxlength="60" />
+      </div>
+      <div class="login-actions">
+        <button id="startBtn" class="primary">Comenzar mi ruta</button>
+      </div>
+      <div class="helper">Tu progreso se guarda en este dispositivo para que puedas continuar después.</div>
+    </div>
+  </section>
+
+  <section id="dashboard" class="dashboard">
+    <header>
+      <div class="topbar">
+        <div class="brand">
+          <div class="brand-logo">✦</div>
+          <div>
+            <div>Estudios Sociales</div>
+            <small style="color:var(--muted);font-weight:700">Mini LMS · WordWall</small>
+          </div>
+        </div>
+        <div class="student-chip">
+          <span>Estudiante:</span> <strong id="studentDisplay"></strong>
+          <button id="changeStudent" class="ghost">Cambiar</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <span class="badge" style="background:rgba(255,255,255,.14);color:#fff">🎯 Meta: 80+ en cada actividad</span>
+          <h2>Tu ruta de aprendizaje</h2>
+          <p class="lead">Juega cada actividad, marca que la viste y registra el resultado que WordWall te muestra al finalizar. Si alguna queda por debajo de 80, puedes repetirla hasta dominarla.</p>
+        </div>
+        <div class="progress-card">
+          <div class="progress-row">
+            <div>
+              <div style="font-weight:800;opacity:.82">Progreso general</div>
+              <div class="progress-big"><span id="completedCount">0</span>/6</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-weight:800;opacity:.82">Promedio</div>
+              <div style="font-size:1.5rem;font-weight:950"><span id="averageScore">—</span></div>
+            </div>
+          </div>
+          <div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
+          <div class="stats">
+            <div class="stat"><b id="seenCount">0</b><span>vistos</span></div>
+            <div class="stat"><b id="passedCount">0</b><span>aprobados</span></div>
+            <div class="stat"><b id="pendingCount">6</b><span>pendientes</span></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-head">
+        <div>
+          <h2>Actividades</h2>
+          <p>Completa las seis para desbloquear el certificado.</p>
+        </div>
+      </div>
+
+      <section id="gameGrid" class="game-grid"></section>
+
+      <section class="certificate-panel">
+        <div id="certificateLocked" class="certificate-lock">
+          <div class="lock-icon">🔒</div>
+          <div>
+            <strong>Certificado bloqueado</strong>
+            <div class="footnote" id="lockReason">Necesitas marcar los 6 juegos como vistos y obtener 80 o más en cada uno.</div>
+          </div>
+        </div>
+
+        <div id="certificateBlock" class="hidden">
+          <div class="certificate">
+            <div class="cert-kicker">Certificado de logro</div>
+            <h2 style="font-family:Georgia,serif;font-size:2.1rem;margin:14px 0 4px">Ruta de Repaso · Estudios Sociales</h2>
+            <p>Se certifica que</p>
+            <div id="certName" class="cert-name"></div>
+            <p>completó satisfactoriamente las seis actividades de repaso y alcanzó al menos <strong>80/100</strong> en cada una.</p>
+            <div class="cert-grade">Calificación final: <span id="certAverage"></span>/100</div>
+            <p class="cert-meta">Fecha: <span id="certDate"></span></p>
+            <div class="cert-actions">
+              <button id="printCertificate" class="primary">Imprimir / Guardar PDF</button>
+              <button id="resetProgress" class="ghost">Reiniciar progreso</button>
+            </div>
+          </div>
+        </div>
+        <p class="footnote">Nota: la calificación final del certificado es el promedio de las seis puntuaciones registradas.</p>
+      </section>
+    </main>
+  </section>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+const games = [
+  {
+    title:"Juego 1 · Repaso general",
+    src:"https://wordwall.net/es/embed/fc5c2d85a89d430b92965560c174b665?themeId=6&templateId=5&fontStackId=0"
+  },
+  {
+    title:"Juego 2 · Cierto o falso",
+    src:"https://wordwall.net/es/embed/e58cc25e03e34a388654df7c50a0cd47?themeId=4&templateId=35&fontStackId=0"
+  },
+  {
+    title:"Juego 3 · Pareo",
+    src:"https://wordwall.net/es/embed/c52dafc98bcb450cb6eb277e97f65436?themeId=57&templateId=3&fontStackId=0"
+  },
+  {
+    title:"Juego 4 · Completa la oración",
+    src:"https://wordwall.net/es/embed/640f223d7c0445648b3ffab3a9b4f9f5?themeId=58&templateId=36&fontStackId=0"
+  },
+  {
+    title:"Juego 5 · Continentes y océanos",
+    src:"https://wordwall.net/es/embed/169e7ccfa7654aec885e548f5076433f?themeId=1&templateId=22&fontStackId=0"
+  },
+  {
+    title:"Juego 6 · Reto final",
+    src:"https://wordwall.net/es/embed/fe27199753c84bc6a13c2b40d190a3b6?themeId=21&templateId=69&fontStackId=0"
+  }
+];
+
+const $ = (s)=>document.querySelector(s);
+const loginScreen = $("#loginScreen");
+const dashboard = $("#dashboard");
+const studentName = $("#studentName");
+const gameGrid = $("#gameGrid");
+const PASS = 80;
+
+let currentStudent = "";
+let state = {games:games.map(()=>({seen:false,score:null}))};
+
+function normalizeName(n){
+  return n.trim().replace(/\s+/g," ");
+}
+function storageKey(name){
+  return "wordwallLMS::" + name.toLowerCase();
+}
+function save(){
+  if(!currentStudent) return;
+  localStorage.setItem(storageKey(currentStudent), JSON.stringify(state));
+}
+function load(name){
+  const raw = localStorage.getItem(storageKey(name));
+  if(raw){
+    try{
+      const parsed = JSON.parse(raw);
+      if(parsed && Array.isArray(parsed.games) && parsed.games.length === games.length){
+        state = parsed;
+        return;
+      }
+    }catch(e){}
+  }
+  state = {games:games.map(()=>({seen:false,score:null}))};
+}
+function toast(msg){
+  const t=$("#toast"); t.textContent=msg; t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),1800);
+}
+function start(name){
+  currentStudent = normalizeName(name);
+  if(!currentStudent){ studentName.focus(); toast("Escribe el nombre del estudiante."); return; }
+  load(currentStudent);
+  $("#studentDisplay").textContent = currentStudent;
+  loginScreen.classList.add("hidden");
+  dashboard.classList.add("active");
+  renderGames();
+  updateSummary();
+  window.scrollTo({top:0,behavior:"instant"});
+}
+function renderGames(){
+  gameGrid.innerHTML="";
+  games.forEach((g,i)=>{
+    const s=state.games[i] || {seen:false,score:null};
+    const card=document.createElement("article");
+    card.className="game-card";
+    card.innerHTML=`
+      <div class="game-header">
+        <div class="game-number">${i+1}</div>
+        <div class="game-title-wrap">
+          <div class="game-title">${g.title}</div>
+          <span id="status-${i}" class="status-pill">Pendiente</span>
+        </div>
+      </div>
+      <div class="embed-wrap">
+        <iframe src="${g.src}" frameborder="0" allowfullscreen loading="lazy" title="${g.title}"></iframe>
+      </div>
+      <div class="game-controls">
+        <label class="seen-row">
+          <input id="seen-${i}" type="checkbox" ${s.seen?"checked":""}>
+          <span>Ya jugué / vi esta actividad</span>
+        </label>
+        <div class="score-row">
+          <div>
+            <label for="score-${i}">Puntuación obtenida (0–100)</label>
+            <input id="score-${i}" type="number" min="0" max="100" step="1" placeholder="Ej. 92" value="${s.score ?? ""}" ${!s.seen?"disabled":""}>
+            <small>Meta: 80 o más.</small>
+          </div>
+          <button id="save-${i}" class="secondary" ${!s.seen?"disabled":""}>Registrar</button>
+        </div>
+        <div id="msg-${i}" class="score-msg"></div>
+      </div>`;
+    gameGrid.appendChild(card);
+
+    const seenEl=$("#seen-"+i), scoreEl=$("#score-"+i), saveBtn=$("#save-"+i);
+    seenEl.addEventListener("change",()=>{
+      state.games[i].seen=seenEl.checked;
+      scoreEl.disabled=!seenEl.checked;
+      saveBtn.disabled=!seenEl.checked;
+      if(!seenEl.checked){
+        state.games[i].score=null;
+        scoreEl.value="";
+      }
+      save(); updateGameStatus(i); updateSummary();
+    });
+    saveBtn.addEventListener("click",()=>{
+      const val=Number(scoreEl.value);
+      if(!Number.isFinite(val)||val<0||val>100){
+        toast("Escribe una puntuación entre 0 y 100.");
+        scoreEl.focus(); return;
+      }
+      state.games[i].score=Math.round(val);
+      scoreEl.value=state.games[i].score;
+      save(); updateGameStatus(i); updateSummary();
+      toast(state.games[i].score>=PASS ? "¡Actividad aprobada! 🎉" : "Guardado. Puedes repetirla para llegar a 80.");
+    });
+    scoreEl.addEventListener("keydown",(e)=>{ if(e.key==="Enter") saveBtn.click(); });
+    updateGameStatus(i);
+  });
+}
+function updateGameStatus(i){
+  const s=state.games[i];
+  const pill=$("#status-"+i), msg=$("#msg-"+i);
+  pill.className="status-pill"; msg.className="score-msg";
+  if(!s.seen){
+    pill.textContent="Pendiente"; msg.textContent=""; return;
+  }
+  if(s.score===null){
+    pill.textContent="Visto · falta puntuación";
+    msg.textContent="Registra la puntuación que obtuviste en WordWall.";
+    msg.classList.add("warn"); return;
+  }
+  if(s.score>=PASS){
+    pill.textContent=`Aprobado · ${s.score}/100`; pill.classList.add("pass");
+    msg.textContent="¡Excelente! Superaste la meta de 80.";
+    msg.classList.add("ok");
+  }else{
+    pill.textContent=`Repetir · ${s.score}/100`; pill.classList.add("retry");
+    msg.textContent=`Faltan ${PASS-s.score} puntos para llegar a 80.`;
+    msg.classList.add("danger");
+  }
+}
+function updateSummary(){
+  const seen=state.games.filter(x=>x.seen).length;
+  const scored=state.games.filter(x=>typeof x.score==="number");
+  const passed=state.games.filter(x=>typeof x.score==="number" && x.score>=PASS).length;
+  const avg=scored.length ? Math.round(scored.reduce((a,b)=>a+b.score,0)/scored.length) : null;
+  $("#seenCount").textContent=seen;
+  $("#passedCount").textContent=passed;
+  $("#pendingCount").textContent=games.length-passed;
+  $("#completedCount").textContent=passed;
+  $("#averageScore").textContent=avg===null?"—":avg+"/100";
+  $("#progressFill").style.width=(passed/games.length*100)+"%";
+
+  const allSeen=state.games.every(x=>x.seen);
+  const allScored=state.games.every(x=>typeof x.score==="number");
+  const allPassed=state.games.every(x=>typeof x.score==="number" && x.score>=PASS);
+
+  const lock=$("#certificateLocked"), cert=$("#certificateBlock"), reason=$("#lockReason");
+  if(allSeen && allScored && allPassed){
+    lock.classList.add("hidden"); cert.classList.remove("hidden");
+    const finalAvg=Math.round(state.games.reduce((a,b)=>a+b.score,0)/games.length);
+    $("#certName").textContent=currentStudent;
+    $("#certAverage").textContent=finalAvg;
+    $("#certDate").textContent=new Intl.DateTimeFormat("es-PR",{dateStyle:"long"}).format(new Date());
+  }else{
+    lock.classList.remove("hidden"); cert.classList.add("hidden");
+    if(!allSeen) reason.textContent=`Falta marcar ${games.length-seen} actividad(es) como vista(s).`;
+    else if(!allScored) reason.textContent="Ya viste todas las actividades. Falta registrar alguna puntuación.";
+    else{
+      const low=state.games.map((x,i)=>({i,score:x.score})).filter(x=>x.score<PASS);
+      reason.textContent=`Debes repetir ${low.length} actividad(es) que están por debajo de 80.`;
+    }
+  }
+}
+
+$("#startBtn").addEventListener("click",()=>start(studentName.value));
+studentName.addEventListener("keydown",(e)=>{ if(e.key==="Enter") start(studentName.value); });
+$("#changeStudent").addEventListener("click",()=>{
+  dashboard.classList.remove("active");
+  loginScreen.classList.remove("hidden");
+  studentName.value="";
+  setTimeout(()=>studentName.focus(),50);
+});
+$("#printCertificate").addEventListener("click",()=>window.print());
+$("#resetProgress").addEventListener("click",()=>{
+  if(confirm("¿Deseas borrar el progreso de este estudiante y comenzar de nuevo?")){
+    localStorage.removeItem(storageKey(currentStudent));
+    load(currentStudent); renderGames(); updateSummary(); toast("Progreso reiniciado.");
+  }
+});
+</script>
+</body>
+</html>
