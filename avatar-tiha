@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIHA en vivo · San Lucas Innovation Expo 2026</title>
+<style>
+  :root{
+    --navy:#0A1A3D;
+    --navy-deep:#071026;
+    --gold:#D4AF37;
+    --bienestar:#DAA623;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;}
+  body{
+    background:var(--navy);
+    color:#fff;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:28px 20px;
+    position:relative;
+    overflow:hidden;
+  }
+  body::before{
+    content:"";
+    position:absolute;
+    top:-120px; right:-120px;
+    width:340px; height:340px;
+    border-radius:50%;
+    background:var(--navy-deep);
+    z-index:0;
+  }
+  body::after{
+    content:"";
+    position:absolute;
+    bottom:-140px; left:-140px;
+    width:380px; height:380px;
+    border-radius:50%;
+    background:var(--navy-deep);
+    z-index:0;
+  }
+  .eyebrow{
+    position:relative; z-index:1;
+    font-size:13px;
+    letter-spacing:.04em;
+    color:var(--gold);
+    font-weight:600;
+    margin:0 0 8px;
+    text-align:center;
+  }
+  h1{
+    position:relative; z-index:1;
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:clamp(24px,5vw,32px);
+    margin:0 0 22px;
+    text-align:center;
+    max-width:640px;
+  }
+  .frame{
+    position:relative; z-index:1;
+    width:100%;
+    max-width:900px;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 0 0 1px rgba(212,175,55,.4), 0 20px 60px rgba(0,0,0,.5);
+    background:#000;
+  }
+  .frame iframe{
+    width:100%;
+    aspect-ratio:16/9;
+    border:0;
+    display:block;
+  }
+  .caption{
+    position:relative; z-index:1;
+    margin-top:18px;
+    font-size:14px;
+    color:#B9C1D4;
+    text-align:center;
+  }
+  .caption strong{color:var(--gold);}
+</style>
+</head>
+<body>
+  <p class="eyebrow">San Lucas Innovation Expo 2026</p>
+  <h1>Habla con TIHA antes de comenzar</h1>
+
+  <div class="frame">
+    <iframe
+      src="https://embed.liveavatar.com/v1/69df8b92-66a0-48e9-be43-ab7ef0d78d0e?orientation=horizontal"
+      allow="microphone"
+      title="LiveAvatar Embed">
+    </iframe>
+  </div>
+
+  <p class="caption">Modelo TIHA · <strong>Dra. Mariluz Serrano Ortiz, Ed.D.</strong> — cuando termines, cambia a tu presentación.</p>
+</body>
+</html>
