@@ -176,17 +176,37 @@
     border:1px solid var(--line);
     border-radius:12px;
     padding:18px 18px 16px;
+    margin-bottom:14px;
+    cursor:pointer;
+    transition:border-color .15s ease, box-shadow .15s ease;
   }
+  .example:hover, .example:focus-visible{
+    border-color:var(--bienestar);
+    box-shadow:0 2px 10px rgba(0,0,0,.06);
+  }
+  .example:active{transform:translateY(1px);}
   .example-tag{
     font-size:12px;font-weight:700;color:var(--bienestar);
     margin-bottom:8px;
   }
   .example blockquote{
-    margin:0;
+    margin:0 0 12px;
     font-size:15px;
     font-style:italic;
     color:var(--ink);
     line-height:1.55;
+  }
+  .example-cta{
+    font-size:13px;
+    font-weight:600;
+    color:var(--personalizacion);
+  }
+  .example-cta::after{content:" →";}
+
+  .flash{animation:flash-bg 1.1s ease;}
+  @keyframes flash-bg{
+    0%{box-shadow:0 0 0 3px var(--gold) inset;}
+    100%{box-shadow:0 0 0 0 rgba(212,175,55,0) inset;}
   }
 
   footer{
@@ -253,7 +273,7 @@
     </div>
   </section>
 
-  <section>
+  <section id="constructor">
     <h2>Constrúyelo ahora</h2>
     <p class="lede">Llena los cuatro campos con tu propio caso. El prompt se arma solo, abajo — cópialo y pégalo en tu asistente de IA.</p>
 
@@ -287,48 +307,80 @@
     </div>
   </section>
 
-  <section>
+  <section id="ejemplos">
     <h2>Ejemplos para inspirarte</h2>
-    <p class="lede">Ocho escenarios distintos, la misma estructura de cuatro pasos.</p>
+    <p class="lede">Toca cualquier tarjeta para cargarla en el constructor de arriba.</p>
 
-    <div class="example">
+    <div class="example" tabindex="0" role="button"
+      data-ctx="paciente de 68 años, ansioso, próxima cita de seguimiento cardiológico"
+      data-task="explícale qué esperar en la cita, en lenguaje sencillo y cálido"
+      data-lim="no incluyas diagnóstico ni recomendaciones de tratamiento — solo orientación y tranquilidad">
       <div class="example-tag">CARDIOLOGÍA · SEGUIMIENTO</div>
       <blockquote>“Actúa como asistente de preparación de pacientes. Ayúdame a explicarle a un paciente de 68 años, ansioso, qué esperar en su próxima cita de seguimiento cardiológico, en lenguaje sencillo y cálido. No incluyas diagnóstico ni recomendaciones de tratamiento — solo orientación y tranquilidad.”</blockquote>
+      <div class="example-cta">Usar este ejemplo</div>
     </div>
 
-    <div class="example">
+    <div class="example" tabindex="0" role="button"
+      data-ctx="niño de 4 años, padres ansiosos, antes de una prueba de alergias"
+      data-task="redacta una explicación breve y tranquilizadora sobre qué es la prueba y por qué no duele tanto como parece"
+      data-lim="evita cualquier término que suene alarmante y no sugieras qué alérgenos podría tener el niño">
       <div class="example-tag">PEDIATRÍA · PADRES ANSIOSOS</div>
       <blockquote>“Ayúdame a redactar una explicación breve para los padres de un niño de 4 años sobre qué es una prueba de alergias y por qué no duele tanto como parece. Usa un tono tranquilizador y evita cualquier término que suene alarmante. No sugieras qué alérgenos podría tener el niño.”</blockquote>
+      <div class="example-cta">Usar este ejemplo</div>
     </div>
 
-    <div class="example">
+    <div class="example" tabindex="0" role="button"
+      data-ctx="paciente de 82 años, con dificultad auditiva y que vive sola"
+      data-task="explícale por qué es importante organizar sus medicamentos en un pastillero semanal, con oraciones cortas y tono respetuoso"
+      data-lim="no menciones dosis ni cambios en su tratamiento — eso lo defino yo">
       <div class="example-tag">GERIATRÍA · POLIFARMACIA</div>
       <blockquote>“Necesito explicarle a una paciente de 82 años, con dificultad auditiva y que vive sola, por qué es importante organizar sus medicamentos en un pastillero semanal. Usa oraciones cortas y un tono respetuoso, sin sonar condescendiente. No menciones dosis ni cambios en su tratamiento — eso lo defino yo.”</blockquote>
+      <div class="example-cta">Usar este ejemplo</div>
     </div>
 
-    <div class="example">
+    <div class="example" tabindex="0" role="button"
+      data-ctx="paciente que asiste por primera vez a una evaluación de salud mental, nervioso por el estigma"
+      data-task="redacta un mensaje de bienvenida cálido y validante, sin minimizar su ansiedad"
+      data-lim="no incluyas ningún diagnóstico ni sugerencia de tratamiento">
       <div class="example-tag">SALUD MENTAL · PRIMERA CITA</div>
       <blockquote>“Ayúdame a redactar un mensaje de bienvenida para un paciente que asiste por primera vez a una evaluación de salud mental y se muestra nervioso por el estigma. El tono debe ser cálido y validante, sin minimizar su ansiedad. No incluyas ningún diagnóstico ni sugerencia de tratamiento.”</blockquote>
+      <div class="example-cta">Usar este ejemplo</div>
     </div>
 
-    <div class="example">
+    <div class="example" tabindex="0" role="button"
+      data-ctx="paciente de 55 años, baja alfabetización en salud, tras una cirugía de rodilla"
+      data-task="explica instrucciones de cuidado en casa con lenguaje simple y ejemplos concretos"
+      data-lim="no incluyas dosis de medicamentos ni fechas de seguimiento — esas las confirmo yo con el paciente">
       <div class="example-tag">POSOPERATORIO · ALTA MÉDICA</div>
       <blockquote>“Actúa como apoyo de enfermería para explicar instrucciones de cuidado en casa a un paciente de 55 años tras una cirugía de rodilla, con baja alfabetización en salud. Usa lenguaje simple y ejemplos concretos. No incluyas dosis de medicamentos ni fechas de seguimiento — esas las confirmo yo con el paciente.”</blockquote>
+      <div class="example-cta">Usar este ejemplo</div>
     </div>
 
-    <div class="example">
+    <div class="example" tabindex="0" role="button"
+      data-ctx="persona sin formación médica que debe firmar un consentimiento quirúrgico"
+      data-task="traduce este párrafo de consentimiento a un lenguaje sencillo, manteniendo el significado exacto"
+      data-lim="señálame si alguna frase pierde precisión legal o clínica al simplificarla, para yo revisarla antes de usarla">
       <div class="example-tag">CONSENTIMIENTO INFORMADO</div>
       <blockquote>“Ayúdame a traducir este párrafo de consentimiento quirúrgico a un lenguaje que entienda una persona sin formación médica, manteniendo el significado exacto. Señálame si alguna frase pierde precisión legal o clínica al simplificarla, para yo revisarla antes de usarla.”</blockquote>
+      <div class="example-cta">Usar este ejemplo</div>
     </div>
 
-    <div class="example">
+    <div class="example" tabindex="0" role="button"
+      data-ctx="adolescente recién diagnosticado con diabetes tipo 1"
+      data-task="crea una analogía sencilla, motivadora y apropiada para su edad sobre cómo funciona la insulina en su cuerpo"
+      data-lim="no incluyas esquemas de dosificación — esos los define su endocrinólogo">
       <div class="example-tag">ENFERMEDAD CRÓNICA · DIABETES</div>
       <blockquote>“Ayúdame a crear una analogía sencilla para explicarle a un adolescente recién diagnosticado con diabetes tipo 1 cómo funciona la insulina en su cuerpo. Que sea motivadora, no alarmista, y apropiada para su edad. No incluyas esquemas de dosificación — esos los define su endocrinólogo.”</blockquote>
+      <div class="example-cta">Usar este ejemplo</div>
     </div>
 
-    <div class="example">
+    <div class="example" tabindex="0" role="button"
+      data-ctx="paciente que solicita una teleconsulta hoy, primer contacto virtual"
+      data-task="redacta tres preguntas cálidas y claras para entender por qué solicita la cita hoy, sin sonar a formulario clínico"
+      data-lim="no ofrezcas ninguna orientación médica ni interpretes los síntomas que mencione">
       <div class="example-tag">TELECONSULTA · TRIAGE INICIAL</div>
       <blockquote>“Actúa como primer punto de contacto virtual antes de una teleconsulta. Redacta tres preguntas cálidas y claras para entender por qué el paciente solicita la cita hoy, sin sonar a formulario clínico. No ofrezcas ninguna orientación médica ni interpretes los síntomas que mencione.”</blockquote>
+      <div class="example-cta">Usar este ejemplo</div>
     </div>
   </section>
 
@@ -366,6 +418,30 @@
   }
 
   [c,t,l].forEach(el => el.addEventListener('input', assemble));
+
+  // Cargar un ejemplo al tocarlo
+  document.querySelectorAll('.example').forEach(card => {
+    function loadExample(){
+      c.value = card.dataset.ctx || '';
+      t.value = card.dataset.task || '';
+      l.value = card.dataset.lim || '';
+      assemble();
+
+      document.getElementById('constructor').scrollIntoView({ behavior:'smooth', block:'start' });
+
+      const builder = document.querySelector('.builder');
+      builder.classList.remove('flash');
+      void builder.offsetWidth; // reinicia la animación si se toca dos veces
+      builder.classList.add('flash');
+    }
+    card.addEventListener('click', loadExample);
+    card.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        loadExample();
+      }
+    });
+  });
 
   copyBtn.addEventListener('click', () => {
     const text = out.textContent;
