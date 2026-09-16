@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arquetipo de Prompting Humanizado · TIHA</title>
+<style>
+  :root{
+    --navy:#0A1A3D;
+    --navy-deep:#071026;
+    --gold:#D4AF37;
+    --bienestar:#DAA623;
+    --inspiracion:#F0C64A;
+    --empatia:#8FB8CC;
+    --personalizacion:#6B8CA6;
+    --paper:#F6F5F1;
+    --ink:#1C2430;
+    --muted:#6B7280;
+    --line:#E4E2DA;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:0 20px 64px;}
+
+  /* Hero */
+  header.hero{
+    background:var(--navy);
+    color:#fff;
+    padding:44px 20px 36px;
+    position:relative;
+    overflow:hidden;
+  }
+  header.hero::after{
+    content:"";
+    position:absolute;
+    right:-60px; top:-60px;
+    width:180px; height:180px;
+    border-radius:50%;
+    background:var(--navy-deep);
+  }
+  .hero-inner{max-width:640px;margin:0 auto;position:relative;z-index:1;}
+  .eyebrow{
+    font-size:13px;
+    letter-spacing:.04em;
+    color:var(--gold);
+    font-weight:600;
+    margin:0 0 10px;
+  }
+  h1{
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:clamp(28px,7vw,36px);
+    line-height:1.15;
+    margin:0 0 12px;
+    font-weight:700;
+  }
+  .hero p{
+    color:#D7DCE8;
+    font-size:16px;
+    margin:0;
+    max-width:46ch;
+  }
+  .pillars{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}
+  .pillar-chip{
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--navy-deep);
+    padding:6px 12px;
+    border-radius:999px;
+  }
+
+  /* Sections */
+  section{padding:36px 0;}
+  section + section{border-top:1px solid var(--line);}
+  h2{
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:22px;
+    margin:0 0 6px;
+  }
+  .lede{color:var(--muted);font-size:15px;margin:0 0 22px;}
+
+  /* Steps */
+  .step{
+    display:flex;
+    gap:16px;
+    padding:18px 0;
+  }
+  .step + .step{border-top:1px solid var(--line);}
+  .step-num{
+    flex:0 0 auto;
+    width:38px;height:38px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;
+    font-size:16px;
+    color:#fff;
+  }
+  .step-body h3{margin:2px 0 4px;font-size:16.5px;}
+  .step-body p{margin:0;color:var(--muted);font-size:14.5px;}
+
+  /* Builder */
+  .builder{
+    background:var(--navy);
+    color:#fff;
+    border-radius:14px;
+    padding:24px 22px 26px;
+    margin-top:8px;
+  }
+  .builder h2{color:#fff;}
+  .builder .lede{color:#B9C1D4;}
+  .field{margin-bottom:16px;}
+  label{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    color:var(--gold);
+    margin-bottom:6px;
+  }
+  textarea{
+    width:100%;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:8px;
+    color:#fff;
+    font-family:inherit;
+    font-size:15px;
+    padding:10px 12px;
+    resize:vertical;
+    min-height:44px;
+  }
+  textarea::placeholder{color:#8B93A6;}
+  textarea:focus{outline:2px solid var(--gold);outline-offset:1px;}
+
+  .assembled{
+    margin-top:20px;
+    background:var(--navy-deep);
+    border:1px solid rgba(212,175,55,.4);
+    border-radius:10px;
+    padding:16px 16px 14px;
+  }
+  .assembled-label{
+    font-size:12px;font-weight:700;letter-spacing:.03em;
+    color:var(--gold);margin-bottom:8px;
+  }
+  #output{
+    font-size:15px;
+    line-height:1.55;
+    white-space:pre-wrap;
+    color:#EDEFF4;
+    min-height:24px;
+  }
+  #output .placeholder{color:#6B7488;font-style:italic;}
+  .copy-row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;}
+  button.copy{
+    background:var(--gold);
+    color:var(--navy-deep);
+    border:none;
+    font-weight:700;
+    font-size:14px;
+    padding:11px 18px;
+    border-radius:8px;
+    cursor:pointer;
+  }
+  button.copy:active{transform:translateY(1px);}
+  .copy-note{font-size:13px;color:#B9C1D4;align-self:center;}
+
+  /* Example */
+  .example{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:18px 18px 16px;
+  }
+  .example-tag{
+    font-size:12px;font-weight:700;color:var(--bienestar);
+    margin-bottom:8px;
+  }
+  .example blockquote{
+    margin:0;
+    font-size:15px;
+    font-style:italic;
+    color:var(--ink);
+    line-height:1.55;
+  }
+
+  footer{
+    text-align:center;
+    padding:30px 20px 10px;
+    color:var(--muted);
+    font-size:13px;
+  }
+  footer strong{color:var(--ink);}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">San Lucas Innovation Expo 2026</p>
+    <h1>Arquetipo de Prompting Humanizado</h1>
+    <p>Cuatro pasos para conversar con inteligencia artificial sin perder el criterio clínico. Modelo TIHA — Dra. Mariluz Serrano Ortiz.</p>
+    <div class="pillars">
+      <span class="pillar-chip" style="background:var(--inspiracion)">Inspiración</span>
+      <span class="pillar-chip" style="background:var(--empatia)">Empatía</span>
+      <span class="pillar-chip" style="background:var(--personalizacion);color:#fff">Personalización</span>
+      <span class="pillar-chip" style="background:var(--bienestar)">Bienestar</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section>
+    <h2>Los cuatro pasos</h2>
+    <p class="lede">Antes de escribirle a la IA, recorre esta secuencia. El orden protege lo humano.</p>
+
+    <div class="step">
+      <div class="step-num" style="background:var(--inspiracion);color:var(--navy-deep)">1</div>
+      <div class="step-body">
+        <h3>Contexto humano primero</h3>
+        <p>¿Quién es el paciente? Edad, estado emocional, urgencia real.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num" style="background:var(--empatia);color:var(--navy-deep)">2</div>
+      <div class="step-body">
+        <h3>Tarea clara para la IA</h3>
+        <p>Qué necesitas que haga: explicar, resumir, traducir a lenguaje sencillo.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num" style="background:var(--personalizacion)">3</div>
+      <div class="step-body">
+        <h3>Límite explícito</h3>
+        <p>Qué NO debe decidir la IA: diagnóstico, tratamiento, dosis.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num" style="background:var(--bienestar)">4</div>
+      <div class="step-body">
+        <h3>Verificación final</h3>
+        <p>Tu criterio clínico cierra siempre el ciclo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Constrúyelo ahora</h2>
+    <p class="lede">Llena los cuatro campos con tu propio caso. El prompt se arma solo, abajo — cópialo y pégalo en tu asistente de IA.</p>
+
+    <div class="builder">
+      <div class="field">
+        <label for="contexto">1 · Contexto humano</label>
+        <textarea id="contexto" placeholder="Ej: paciente de 68 años, ansioso, primera cita de seguimiento cardiológico"></textarea>
+      </div>
+      <div class="field">
+        <label for="tarea">2 · Tarea para la IA</label>
+        <textarea id="tarea" placeholder="Ej: explícale en lenguaje sencillo y cálido qué esperar en la cita"></textarea>
+      </div>
+      <div class="field">
+        <label for="limite">3 · Límite explícito</label>
+        <textarea id="limite" placeholder="Ej: no incluyas diagnóstico ni recomendaciones de tratamiento"></textarea>
+      </div>
+      <div class="field">
+        <label for="verificacion">4 · Verificación final (nota para ti, no se envía)</label>
+        <textarea id="verificacion" placeholder="Ej: reviso la respuesta antes de compartirla con el paciente"></textarea>
+      </div>
+
+      <div class="assembled">
+        <div class="assembled-label">TU PROMPT</div>
+        <div id="output"><span class="placeholder">Empieza a escribir arriba — aquí se arma tu prompt.</span></div>
+      </div>
+
+      <div class="copy-row">
+        <button class="copy" id="copyBtn">Copiar prompt</button>
+        <span class="copy-note" id="copyNote"></span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Ejemplos para inspirarte</h2>
+    <p class="lede">Ocho escenarios distintos, la misma estructura de cuatro pasos.</p>
+
+    <div class="example">
+      <div class="example-tag">CARDIOLOGÍA · SEGUIMIENTO</div>
+      <blockquote>“Actúa como asistente de preparación de pacientes. Ayúdame a explicarle a un paciente de 68 años, ansioso, qué esperar en su próxima cita de seguimiento cardiológico, en lenguaje sencillo y cálido. No incluyas diagnóstico ni recomendaciones de tratamiento — solo orientación y tranquilidad.”</blockquote>
+    </div>
+
+    <div class="example">
+      <div class="example-tag">PEDIATRÍA · PADRES ANSIOSOS</div>
+      <blockquote>“Ayúdame a redactar una explicación breve para los padres de un niño de 4 años sobre qué es una prueba de alergias y por qué no duele tanto como parece. Usa un tono tranquilizador y evita cualquier término que suene alarmante. No sugieras qué alérgenos podría tener el niño.”</blockquote>
+    </div>
+
+    <div class="example">
+      <div class="example-tag">GERIATRÍA · POLIFARMACIA</div>
+      <blockquote>“Necesito explicarle a una paciente de 82 años, con dificultad auditiva y que vive sola, por qué es importante organizar sus medicamentos en un pastillero semanal. Usa oraciones cortas y un tono respetuoso, sin sonar condescendiente. No menciones dosis ni cambios en su tratamiento — eso lo defino yo.”</blockquote>
+    </div>
+
+    <div class="example">
+      <div class="example-tag">SALUD MENTAL · PRIMERA CITA</div>
+      <blockquote>“Ayúdame a redactar un mensaje de bienvenida para un paciente que asiste por primera vez a una evaluación de salud mental y se muestra nervioso por el estigma. El tono debe ser cálido y validante, sin minimizar su ansiedad. No incluyas ningún diagnóstico ni sugerencia de tratamiento.”</blockquote>
+    </div>
+
+    <div class="example">
+      <div class="example-tag">POSOPERATORIO · ALTA MÉDICA</div>
+      <blockquote>“Actúa como apoyo de enfermería para explicar instrucciones de cuidado en casa a un paciente de 55 años tras una cirugía de rodilla, con baja alfabetización en salud. Usa lenguaje simple y ejemplos concretos. No incluyas dosis de medicamentos ni fechas de seguimiento — esas las confirmo yo con el paciente.”</blockquote>
+    </div>
+
+    <div class="example">
+      <div class="example-tag">CONSENTIMIENTO INFORMADO</div>
+      <blockquote>“Ayúdame a traducir este párrafo de consentimiento quirúrgico a un lenguaje que entienda una persona sin formación médica, manteniendo el significado exacto. Señálame si alguna frase pierde precisión legal o clínica al simplificarla, para yo revisarla antes de usarla.”</blockquote>
+    </div>
+
+    <div class="example">
+      <div class="example-tag">ENFERMEDAD CRÓNICA · DIABETES</div>
+      <blockquote>“Ayúdame a crear una analogía sencilla para explicarle a un adolescente recién diagnosticado con diabetes tipo 1 cómo funciona la insulina en su cuerpo. Que sea motivadora, no alarmista, y apropiada para su edad. No incluyas esquemas de dosificación — esos los define su endocrinólogo.”</blockquote>
+    </div>
+
+    <div class="example">
+      <div class="example-tag">TELECONSULTA · TRIAGE INICIAL</div>
+      <blockquote>“Actúa como primer punto de contacto virtual antes de una teleconsulta. Redacta tres preguntas cálidas y claras para entender por qué el paciente solicita la cita hoy, sin sonar a formulario clínico. No ofrezcas ninguna orientación médica ni interpretes los síntomas que mencione.”</blockquote>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  Modelo TIHA — Tecnologías para la Inspiración y la Humanización del Aprendizaje<br>
+  <strong>Dra. Mariluz Serrano Ortiz, Ed.D.</strong> · Universidad de Puerto Rico
+</footer>
+
+<script>
+  const c = document.getElementById('contexto');
+  const t = document.getElementById('tarea');
+  const l = document.getElementById('limite');
+  const out = document.getElementById('output');
+  const copyBtn = document.getElementById('copyBtn');
+  const copyNote = document.getElementById('copyNote');
+
+  function assemble(){
+    const ctx = c.value.trim();
+    const task = t.value.trim();
+    const lim = l.value.trim();
+
+    if(!ctx && !task && !lim){
+      out.innerHTML = '<span class="placeholder">Empieza a escribir arriba — aquí se arma tu prompt.</span>';
+      return;
+    }
+
+    let parts = [];
+    if(task) parts.push(task.charAt(0).toUpperCase() + task.slice(1) + (task.endsWith('.') ? '' : '.'));
+    if(ctx) parts.push('Contexto del paciente: ' + ctx + (ctx.endsWith('.') ? '' : '.'));
+    if(lim) parts.push('Importante: ' + lim + (lim.endsWith('.') ? '' : '.'));
+
+    out.textContent = parts.join(' ');
+  }
+
+  [c,t,l].forEach(el => el.addEventListener('input', assemble));
+
+  copyBtn.addEventListener('click', () => {
+    const text = out.textContent;
+    if(!text || out.querySelector('.placeholder')){
+      copyNote.textContent = 'Escribe algo primero.';
+      setTimeout(()=>copyNote.textContent='', 2000);
+      return;
+    }
+    navigator.clipboard.writeText(text).then(() => {
+      copyNote.textContent = '¡Copiado! Pégalo en tu app de IA.';
+      setTimeout(()=>copyNote.textContent='', 2500);
+    }).catch(() => {
+      copyNote.textContent = 'Selecciona y copia el texto manualmente.';
+    });
+  });
+</script>
+
+</body>
+</html>
