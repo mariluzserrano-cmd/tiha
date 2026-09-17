@@ -171,6 +171,15 @@
         <option value="bienvenida">Presentación de bienvenida para personal nuevo</option>
         <option value="resumen">Resumen de una reunión para quienes no pudieron asistir</option>
         <option value="propuesta">Propuesta breve de mejora de un proceso</option>
+        <option value="flota">Reporte de mantenimiento y disponibilidad de flota</option>
+        <option value="cliente">Presentación de servicios para un cliente potencial</option>
+        <option value="incidencia">Informe de una incidencia operativa</option>
+        <option value="capacitacion">Capacitación sobre un procedimiento nuevo</option>
+        <option value="rrhh">Actualización de RRHH: nuevas políticas o beneficios</option>
+        <option value="facturacion">Resumen de facturación y cobros del mes</option>
+        <option value="seguridad">Repaso de seguridad y prevención de accidentes</option>
+        <option value="kpis">Presentación de indicadores (KPIs) del trimestre</option>
+        <option value="despedida">Reconocimiento o despedida de un compañero de equipo</option>
       </select>
       <button class="btn gold" onclick="applyExample()">Aplicar ejemplo completo</button>
     </div>
@@ -314,6 +323,87 @@ const examples = {
     tono: "Ejecutivo y conciso",
     contenido: "Tiempo promedio actual: 35 minutos por camión. Propuesta: reorganizar el orden de carga por ruta. Ahorro estimado: 8 minutos por camión.",
     cierre: "Solicitar aprobación para una prueba piloto de dos semanas."
+  },
+  flota: {
+    tema: "Reporte de mantenimiento y disponibilidad de flota",
+    audiencia: "Otro departamento",
+    objetivo: "Informar",
+    numLaminas: "5 a 7",
+    tono: "Profesional y directo",
+    contenido: "18 de 20 unidades disponibles. 2 en mantenimiento preventivo programado. Próxima revisión general: fin de mes.",
+    cierre: "Confirmar si alguna ruta necesita ajuste por la disponibilidad actual."
+  },
+  cliente: {
+    tema: "Nuestros servicios de logística y distribución",
+    audiencia: "Cliente externo",
+    objetivo: "Informar",
+    numLaminas: "8 a 10",
+    tono: "Profesional y directo",
+    contenido: "Servicios: transportación, almacenaje, manejo de inventario, servicios de valor añadido (empaque, etiquetado), distribución a nivel local.",
+    cierre: "Invitar a agendar una visita a nuestras instalaciones."
+  },
+  incidencia: {
+    tema: "Informe de incidencia: retraso en entrega del 14 de septiembre",
+    audiencia: "Mi supervisor directo",
+    objetivo: "Informar",
+    numLaminas: "3 a 4",
+    tono: "Profesional y directo",
+    contenido: "Causa: falla mecánica menor en unidad 12. Tiempo de retraso: 2 horas. Cliente fue notificado. Entrega completada el mismo día.",
+    cierre: "Recomendación: inspección preventiva adicional para esa unidad."
+  },
+  capacitacion: {
+    tema: "Nuevo procedimiento de recepción de mercancía",
+    audiencia: "Todo el equipo",
+    objetivo: "Capacitar",
+    numLaminas: "8 a 10",
+    tono: "Cercano y conversacional",
+    contenido: "Pasos: verificar sello del contenedor, escanear código de barras, contar unidades, reportar discrepancias de inmediato, firmar recibo digital.",
+    cierre: "Espacio para practicar el procedimiento con un caso de ejemplo."
+  },
+  rrhh: {
+    tema: "Actualización de política de tiempo libre y beneficios",
+    audiencia: "Todo el equipo",
+    objetivo: "Informar",
+    numLaminas: "5 a 7",
+    tono: "Cercano y conversacional",
+    contenido: "Nueva política de días personales entra en vigor el 1 de octubre. Beneficio adicional: seguro dental ampliado.",
+    cierre: "Invitar a dirigir preguntas a Recursos Humanos."
+  },
+  facturacion: {
+    tema: "Resumen de facturación y cobros del mes",
+    audiencia: "Mi supervisor directo",
+    objetivo: "Informar",
+    numLaminas: "5 a 7",
+    tono: "Ejecutivo y conciso",
+    contenido: "Facturado: $482,000. Cobrado: $410,000. Cuentas pendientes mayores a 30 días: 3 clientes.",
+    cierre: "Proponer seguimiento directo a las 3 cuentas pendientes."
+  },
+  seguridad: {
+    tema: "Repaso de seguridad: prevención de accidentes en el almacén",
+    audiencia: "Todo el equipo",
+    objetivo: "Capacitar",
+    numLaminas: "5 a 7",
+    tono: "Cercano y conversacional",
+    contenido: "Puntos clave: uso obligatorio de calzado de seguridad, señalización de pasillos, revisión de montacargas antes de cada turno.",
+    cierre: "Recordar reportar cualquier condición insegura de inmediato."
+  },
+  kpis: {
+    tema: "Indicadores clave (KPIs) del tercer trimestre",
+    audiencia: "Mi supervisor directo",
+    objetivo: "Informar",
+    numLaminas: "8 a 10",
+    tono: "Ejecutivo y conciso",
+    contenido: "Entregas a tiempo: 94%. Incidencias reportadas: 6, todas resueltas. Satisfacción del cliente: 4.6/5.",
+    cierre: "Proponer una meta de 96% de entregas a tiempo para el próximo trimestre."
+  },
+  despedida: {
+    tema: "Reconocimiento a Carlos por sus 5 años en Allied",
+    audiencia: "Todo el equipo",
+    objetivo: "Informar",
+    numLaminas: "3 a 4",
+    tono: "Cercano y conversacional",
+    contenido: "5 años en el departamento de Tráfico. Reconocido por su puntualidad y disposición a ayudar a nuevos compañeros.",
+    cierre: "Invitar al equipo a compartir una anécdota."
   }
 };
 
