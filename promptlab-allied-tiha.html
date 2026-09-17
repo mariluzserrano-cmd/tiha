@@ -200,6 +200,7 @@
       <option>Todo el equipo</option>
       <option>Cliente externo</option>
       <option>Personal nuevo</option>
+      <option>Liderazgo ejecutivo</option>
     </select>
 
     <label>¿Cuál es el objetivo?</label>
@@ -220,6 +221,7 @@
       <option value="3 a 4">3-4 (rápido)</option>
       <option value="5 a 7" selected>5-7 (estándar)</option>
       <option value="8 a 10">8-10 (detallado)</option>
+      <option value="one-pager">One-pager (una sola página)</option>
     </select>
 
     <label>¿Qué debe incluir cada lámina?</label>
@@ -433,10 +435,16 @@ function generatePrompt() {
   const checks = Array.from(document.querySelectorAll('.checkbox-item input:checked')).map(c => c.value);
   const checksText = checks.length ? checks.join(", ") : "un título claro";
 
-  let prompt = `Crea una presentación de ${numLaminas} láminas sobre "${tema}", dirigida a ${audiencia.toLowerCase()}, con el objetivo de ${objetivo}. Cada lámina debe tener ${checksText}. Tono ${tono}.\n\n`;
+  const isOnePager = numLaminas === "one-pager";
+  let prompt;
+  if (isOnePager) {
+    prompt = `Crea un documento de una sola página (one-pager) sobre "${tema}", dirigido a ${audiencia.toLowerCase()}, con el objetivo de ${objetivo}. El documento debe tener ${checksText}, organizado en secciones claras y fáciles de escanear visualmente. Tono ${tono}.\n\n`;
+  } else {
+    prompt = `Crea una presentación de ${numLaminas} láminas sobre "${tema}", dirigida a ${audiencia.toLowerCase()}, con el objetivo de ${objetivo}. Cada lámina debe tener ${checksText}. Tono ${tono}.\n\n`;
+  }
   prompt += `Usa únicamente esta información confirmada: ${contenido}\n\n`;
   if (cierre) {
-    prompt += `Cierra la presentación con: ${cierre}\n\n`;
+    prompt += isOnePager ? `Cierra el documento con: ${cierre}\n\n` : `Cierra la presentación con: ${cierre}\n\n`;
   }
   prompt += `No inventes cifras, fechas o datos que no aparezcan en la información proporcionada.`;
 
