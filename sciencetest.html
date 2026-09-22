@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#5b8f72" />
+  <title>Science Fun Lab | 4th Grade</title>
+  <style>
+    :root{
+      --cream:#fffaf0; --paper:#ffffff; --green:#5b8f72; --green-dark:#2f5d4a;
+      --mint:#dff3e8; --yellow:#ffd76a; --peach:#ffb985; --pink:#f3b6c8;
+      --blue:#a8d8f0; --purple:#cbb9f2; --ink:#24312b; --muted:#6e7b75;
+      --shadow:0 12px 28px rgba(38,74,60,.12); --radius:24px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;color:var(--ink);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(255,215,106,.24) 0 95px, transparent 96px),
+        radial-gradient(circle at 92% 16%, rgba(168,216,240,.22) 0 120px, transparent 121px),
+        linear-gradient(180deg,#fffdf7 0%,#f6fbf8 100%);
+      min-height:100vh;overflow-x:hidden
+    }
+    .floating-shape{position:fixed;z-index:-1;opacity:.25;animation:float 8s ease-in-out infinite;pointer-events:none}
+    .shape1{left:3vw;top:20vh;width:42px;height:42px;border-radius:50%;background:var(--pink)}
+    .shape2{right:5vw;top:42vh;width:52px;height:52px;background:var(--yellow);transform:rotate(18deg);animation-delay:1s}
+    .shape3{left:8vw;bottom:9vh;width:56px;height:28px;border-radius:60% 40% 60% 40%;background:var(--blue);animation-delay:2s}
+    .shape4{right:10vw;bottom:12vh;width:44px;height:44px;border-radius:14px;background:var(--purple);transform:rotate(25deg);animation-delay:3s}
+    @keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-16px) rotate(8deg)}}
+    header{max-width:1200px;margin:0 auto;padding:28px 20px 10px}
+    .hero{background:linear-gradient(135deg,var(--green-dark),var(--green));color:white;border-radius:32px;padding:28px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .hero::after{content:"";position:absolute;right:-35px;top:-35px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.08)}
+    .eyebrow{font-size:.84rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800;opacity:.86}
+    h1{margin:.3rem 0 .25rem;font-size:clamp(2rem,5vw,3.5rem);line-height:1}
+    .hero p{margin:.5rem 0 0;max-width:760px;font-size:1.03rem;line-height:1.55}
+    .badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .badge{background:rgba(255,255,255,.14);padding:8px 12px;border-radius:999px;font-weight:700;font-size:.9rem}
+    main{max-width:1200px;margin:0 auto;padding:18px 20px 48px}
+    .card{background:rgba(255,255,255,.96);border:1px solid rgba(47,93,74,.08);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin:18px 0}
+    .welcome-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+    @media(max-width:850px){.welcome-grid{grid-template-columns:1fr}}
+    label{font-weight:800;display:block;margin-bottom:8px}
+    input[type="text"],input[type="number"]{width:100%;padding:14px 15px;border:2px solid #dbe8e1;border-radius:14px;font-size:1rem;outline:none;background:#fff;transition:.2s}
+    input:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(91,143,114,.12)}
+    .welcome-note{background:linear-gradient(135deg,#fff6cf,#fffdf1);border-radius:18px;padding:16px;border:1px dashed #e7c95e;line-height:1.5}
+    .section-title{display:flex;align-items:center;gap:10px;margin:0 0 6px;font-size:1.45rem}
+    .section-sub{color:var(--muted);margin-top:0;line-height:1.5}
+    .game-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    @media(max-width:1050px){.game-grid{grid-template-columns:1fr}}
+    .game-card{background:#fff;border-radius:22px;overflow:hidden;border:1px solid #e5eee9;box-shadow:0 8px 20px rgba(38,74,60,.08)}
+    .game-top{padding:16px 16px 12px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .game-num{font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:var(--green-dark)}
+    .game-title{font-size:1.1rem;font-weight:900;margin-top:3px}
+    .pill{padding:6px 9px;border-radius:999px;background:var(--mint);font-size:.78rem;font-weight:800;color:var(--green-dark)}
+    .embed-wrap{position:relative;padding-top:76%;background:#f1f6f3}
+    .embed-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .score-box{padding:14px 16px 16px;background:#fbfdfc}
+    .score-line{display:grid;grid-template-columns:1fr 110px;gap:10px;align-items:center}
+    .score-line span{font-weight:800}
+    .score-hint{font-size:.78rem;color:var(--muted);margin-top:7px}
+    .progress-wrap{margin-top:16px}
+    .progress-head{display:flex;justify-content:space-between;gap:15px;font-weight:800;margin-bottom:8px}
+    .progress-track{height:14px;background:#edf3ef;border-radius:999px;overflow:hidden}
+    .progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--green),#8fc2a5);transition:width .4s ease}
+    .results-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:18px;align-items:stretch}
+    @media(max-width:800px){.results-grid{grid-template-columns:1fr}}
+    .score-orb{min-height:220px;border-radius:24px;background:linear-gradient(160deg,var(--mint),#fff);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;border:1px solid #dcebe3}
+    .big-score{font-size:4rem;font-weight:1000;line-height:1;color:var(--green-dark)}
+    .big-score small{font-size:1.2rem}
+    .message{font-size:1.3rem;font-weight:900;margin-top:10px}
+    .submessage{color:var(--muted);margin-top:6px;line-height:1.45}
+    .action-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+    button{border:0;border-radius:14px;padding:13px 16px;font-weight:900;font-size:.95rem;cursor:pointer;transition:.2s;box-shadow:0 6px 14px rgba(38,74,60,.08)}
+    button:hover{transform:translateY(-2px)}
+    .primary{background:var(--green-dark);color:#fff}.secondary{background:var(--yellow);color:#513e00}.soft{background:var(--mint);color:var(--green-dark)}.dangerless{background:#f4f4f4;color:#555}
+    button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+    .tiny{font-size:.78rem;color:var(--muted);line-height:1.4}
+    .certificate{display:none;background:#fffdf7;border:10px double #d5b64d;border-radius:18px;padding:34px;text-align:center;max-width:900px;margin:20px auto 0;position:relative;overflow:hidden}
+    .certificate::before,.certificate::after{content:"★";position:absolute;color:#e1c85f;font-size:42px;opacity:.55}
+    .certificate::before{left:20px;top:12px}.certificate::after{right:20px;bottom:12px}
+    .certificate h2{font-size:2.2rem;margin:.2rem 0;color:var(--green-dark)}
+    .cert-name{font-size:2rem;font-weight:1000;margin:16px 0 4px;color:#2b3b34}
+    .cert-score{font-size:1.3rem;font-weight:900;margin-top:12px}
+    .cert-small{color:#6d746f;margin-top:14px}
+    .confetti{position:fixed;top:-20px;width:10px;height:18px;z-index:9999;animation:fall linear forwards;pointer-events:none}
+    @keyframes fall{to{transform:translate3d(var(--x),110vh,0) rotate(720deg);opacity:.9}}
+    footer{text-align:center;color:var(--muted);font-size:.82rem;padding:12px 20px 34px}
+    @media print{
+      body{background:white}
+      header,main>.card:not(.certificate),footer,.floating-shape{display:none!important}
+      .certificate{display:block!important;box-shadow:none;border:8px double #b89a2d;margin:0;max-width:none}
+      @page{size:landscape;margin:.45in}
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-shape shape1"></div><div class="floating-shape shape2"></div><div class="floating-shape shape3"></div><div class="floating-shape shape4"></div>
+  <header>
+    <section class="hero">
+      <div class="eyebrow">4th Grade Science</div>
+      <h1>🔬 Science Fun Lab</h1>
+      <p>Play, practice, and celebrate your learning. Complete the three activities, enter your final scores, and earn a certificate of completion.</p>
+      <div class="badge-row"><div class="badge">🎮 3 Wordwall Games</div><div class="badge">⭐ Scores out of 100</div><div class="badge">🏅 Completion Certificate</div></div>
+    </section>
+  </header>
+
+  <main>
+    <section class="card welcome-grid">
+      <div>
+        <h2 class="section-title">👋 Welcome, scientist!</h2>
+        <p class="section-sub">Write your name first. Your name will appear on your certificate.</p>
+        <label for="studentName">Your name / Tu nombre</label>
+        <input id="studentName" type="text" maxlength="40" placeholder="Example: Victoria" autocomplete="name" />
+      </div>
+      <div class="welcome-note">
+        <strong>How it works</strong><br>
+        1. Play each game.<br>2. Type the final score shown in Wordwall.<br>3. Complete all three activities.<br>4. Celebrate and create your certificate! 🎉
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">🎯 Learning Games</h2>
+      <p class="section-sub">Take your time. This is practice, not an exam. You can replay any activity whenever you want.</p>
+      <div class="game-grid">
+        <article class="game-card">
+          <div class="game-top"><div><div class="game-num">Activity 1</div><div class="game-title">Science Practice</div></div><div class="pill">Play & Learn</div></div>
+          <div class="embed-wrap"><iframe src="https://wordwall.net/embed/4d0cefa3070e475ab323be23fe511e14?themeId=1&templateId=2&fontStackId=0" allowfullscreen></iframe></div>
+          <div class="score-box"><div class="score-line"><span>Final score</span><input class="score-input" id="score1" type="number" min="0" max="100" inputmode="numeric" placeholder="0–100"></div><div class="score-hint">Enter the final percentage shown in Wordwall.</div></div>
+        </article>
+
+        <article class="game-card">
+          <div class="game-top"><div><div class="game-num">Activity 2</div><div class="game-title">Science Challenge</div></div><div class="pill">Think & Try</div></div>
+          <div class="embed-wrap"><iframe src="https://wordwall.net/embed/9d46273201cf4de5b430399e0e1b43d0?themeId=21&templateId=69&fontStackId=0" allowfullscreen></iframe></div>
+          <div class="score-box"><div class="score-line"><span>Final score</span><input class="score-input" id="score2" type="number" min="0" max="100" inputmode="numeric" placeholder="0–100"></div><div class="score-hint">Any score counts as progress. Practice again if you want!</div></div>
+        </article>
+
+        <article class="game-card">
+          <div class="game-top"><div><div class="game-num">Activity 3</div><div class="game-title">Science Review</div></div><div class="pill">Finish Strong</div></div>
+          <div class="embed-wrap"><iframe src="https://wordwall.net/embed/8ef43233a67a4c81b153efe340562321?themeId=65&templateId=2&fontStackId=0" allowfullscreen></iframe></div>
+          <div class="score-box"><div class="score-line"><span>Final score</span><input class="score-input" id="score3" type="number" min="0" max="100" inputmode="numeric" placeholder="0–100"></div><div class="score-hint">Last one! Add the percentage you earned.</div></div>
+        </article>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-head"><span>🌱 Your progress</span><span id="progressText">0 of 3 scores entered</span></div>
+        <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="results-grid">
+        <div class="score-orb">
+          <div class="big-score"><span id="avgScore">—</span><small id="avgSuffix"></small></div>
+          <div class="message" id="celebrationMessage">Your result will appear here ✨</div>
+          <div class="submessage" id="celebrationSub">Enter all three scores to finish your learning adventure.</div>
+        </div>
+        <div>
+          <h2 class="section-title">🏅 Finish & Celebrate</h2>
+          <p class="section-sub">Your certificate is a <strong>certificate of completion</strong>. The score is shown only as a celebration of your practice—not as an exam grade.</p>
+          <div class="action-row">
+            <button class="primary" id="finishBtn" disabled>🎉 Celebrate My Work</button>
+            <button class="secondary" id="certBtn" disabled>🏅 Create Certificate</button>
+            <button class="soft" id="soundBtn">🔊 Sound On</button>
+            <button class="dangerless" id="resetBtn">↻ Start Over</button>
+          </div>
+          <p class="tiny">Scores are entered manually from Wordwall. The app calculates a simple average out of 100.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="certificate card" id="certificate">
+      <div style="font-size:1rem;font-weight:900;letter-spacing:.16em;color:#9b7e25;">CERTIFICATE OF COMPLETION</div>
+      <h2>Science Fun Lab</h2>
+      <p>This certificate proudly celebrates</p>
+      <div class="cert-name" id="certName">Student</div>
+      <p>for completing all three 4th Grade Science learning activities.</p>
+      <div class="cert-score">Practice Average: <span id="certScore">0</span>/100</div>
+      <p id="certMessage" style="font-size:1.15rem;font-weight:900;color:#2f5d4a;"></p>
+      <p class="cert-small">Keep asking questions, observing carefully, and learning through practice. 🔬✨</p>
+      <p class="cert-small" id="certDate"></p>
+      <div class="action-row" style="justify-content:center;margin-top:20px"><button class="primary" onclick="window.print()">🖨️ Print / Save Certificate</button></div>
+    </section>
+  </main>
+
+  <footer>Made for joyful 4th Grade Science practice • Wordwall activities require internet access.</footer>
+
+<script>
+  const nameInput=document.getElementById('studentName');
+  const scores=[...document.querySelectorAll('.score-input')];
+  const progressBar=document.getElementById('progressBar');
+  const progressText=document.getElementById('progressText');
+  const avgScore=document.getElementById('avgScore');
+  const avgSuffix=document.getElementById('avgSuffix');
+  const finishBtn=document.getElementById('finishBtn');
+  const certBtn=document.getElementById('certBtn');
+  const certificate=document.getElementById('certificate');
+  const celebrationMessage=document.getElementById('celebrationMessage');
+  const celebrationSub=document.getElementById('celebrationSub');
+  let soundOn=true;
+
+  function clampScore(input){
+    if(input.value==='')return;
+    let v=Number(input.value);
+    if(v<0)input.value=0;
+    if(v>100)input.value=100;
+  }
+  function getValues(){return scores.map(s=>s.value===''?null:Number(s.value));}
+  function average(vals){return Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);}
+  function getMessage(avg){
+    if(avg>=90)return["🌟 Amazing work!","You showed excellent focus and effort."];
+    if(avg>=80)return["🎉 Great job!","Your practice is paying off. Keep going!"];
+    if(avg>=70)return["👏 Nice work!","You are building strong science skills."];
+    return["🌱 Keep growing!","You completed the activities. Practice again and watch yourself improve!"];
+  }
+  function updateUI(){
+    scores.forEach(clampScore);
+    const vals=getValues();
+    const completed=vals.filter(v=>v!==null).length;
+    progressText.textContent=`${completed} of 3 scores entered`;
+    progressBar.style.width=`${(completed/3)*100}%`;
+    const ready=completed===3&&nameInput.value.trim().length>0;
+    finishBtn.disabled=!ready; certBtn.disabled=!ready;
+    if(completed===3){
+      const avg=average(vals);
+      avgScore.textContent=avg; avgSuffix.textContent="/100";
+      const [m,s]=getMessage(avg); celebrationMessage.textContent=m; celebrationSub.textContent=s;
+    }else{
+      avgScore.textContent="—"; avgSuffix.textContent="";
+      celebrationMessage.textContent="Your result will appear here ✨";
+      celebrationSub.textContent="Enter all three scores to finish your learning adventure.";
+    }
+    saveState();
+  }
+  function confettiBurst(count=90){
+    const colors=['#ffd76a','#ffb985','#f3b6c8','#a8d8f0','#cbb9f2','#5b8f72'];
+    for(let i=0;i<count;i++){
+      const c=document.createElement('div'); c.className='confetti';
+      c.style.left=Math.random()*100+'vw';
+      c.style.background=colors[Math.floor(Math.random()*colors.length)];
+      c.style.animationDuration=(2.4+Math.random()*2.4)+'s';
+      c.style.setProperty('--x',(Math.random()*180-90)+'px');
+      c.style.transform=`rotate(${Math.random()*180}deg)`;
+      document.body.appendChild(c); setTimeout(()=>c.remove(),5000);
+    }
+  }
+  function chime(){
+    if(!soundOn)return;
+    try{
+      const ctx=new(window.AudioContext||window.webkitAudioContext)();
+      const notes=[523.25,659.25,783.99,1046.5];
+      notes.forEach((f,i)=>{
+        const o=ctx.createOscillator(),g=ctx.createGain();
+        o.frequency.value=f;o.type='sine';
+        g.gain.setValueAtTime(.0001,ctx.currentTime+i*.12);
+        g.gain.exponentialRampToValueAtTime(.16,ctx.currentTime+i*.12+.02);
+        g.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+i*.12+.22);
+        o.connect(g);g.connect(ctx.destination);
+        o.start(ctx.currentTime+i*.12);o.stop(ctx.currentTime+i*.12+.24);
+      });
+    }catch(e){}
+  }
+  finishBtn.addEventListener('click',()=>{
+    confettiBurst(110);chime();
+    const vals=getValues(),avg=average(vals),[m,s]=getMessage(avg);
+    celebrationMessage.textContent=m;
+    celebrationSub.textContent=s+" You completed all three activities!";
+  });
+  certBtn.addEventListener('click',()=>{
+    const vals=getValues(),avg=average(vals),[m]=getMessage(avg);
+    document.getElementById('certName').textContent=nameInput.value.trim();
+    document.getElementById('certScore').textContent=avg;
+    document.getElementById('certMessage').textContent=m.replace(/[🌟🎉👏🌱]/g,'').trim();
+    document.getElementById('certDate').textContent='Completed on '+new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});
+    certificate.style.display='block';
+    certificate.scrollIntoView({behavior:'smooth',block:'center'});
+    confettiBurst(130);chime();
+  });
+  document.getElementById('soundBtn').addEventListener('click',(e)=>{
+    soundOn=!soundOn;e.currentTarget.textContent=soundOn?'🔊 Sound On':'🔇 Sound Off';if(soundOn)chime();
+  });
+  document.getElementById('resetBtn').addEventListener('click',()=>{
+    if(confirm('Start over and clear the name and scores?')){
+      nameInput.value='';scores.forEach(s=>s.value='');certificate.style.display='none';
+      localStorage.removeItem('scienceFunLabState');updateUI();window.scrollTo({top:0,behavior:'smooth'});
+    }
+  });
+  function saveState(){
+    localStorage.setItem('scienceFunLabState',JSON.stringify({name:nameInput.value,scores:scores.map(s=>s.value)}));
+  }
+  function loadState(){
+    try{
+      const data=JSON.parse(localStorage.getItem('scienceFunLabState'));
+      if(!data)return;
+      nameInput.value=data.name||'';
+      if(Array.isArray(data.scores))data.scores.forEach((v,i)=>{if(scores[i])scores[i].value=v});
+    }catch(e){}
+  }
+  nameInput.addEventListener('input',updateUI);scores.forEach(s=>s.addEventListener('input',updateUI));
+  loadState();updateUI();
+</script>
+</body>
+</html>
