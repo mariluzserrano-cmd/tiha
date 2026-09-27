@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tiki · Misión Sustantivos</title>
+<style>
+  :root{
+    --ink:#24324a;
+    --muted:#667085;
+    --cream:#fffaf0;
+    --paper:#ffffff;
+    --lav:#eee8ff;
+    --mint:#e8f7ef;
+    --sun:#fff0b8;
+    --rose:#ffe4ea;
+    --accent:#6b5bd2;
+    --accent2:#2f8f6b;
+    --border:#e6e8ef;
+    --shadow:0 14px 36px rgba(36,50,74,.10);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+    background:
+      radial-gradient(circle at 12% 10%, #fff4cc 0 11%, transparent 12%),
+      radial-gradient(circle at 88% 6%, #eee7ff 0 12%, transparent 13%),
+      linear-gradient(180deg,#fffdf8 0%,#f8fbff 100%);
+    color:var(--ink);
+  }
+  .wrap{max-width:1180px;margin:auto;padding:18px}
+  header{
+    margin:10px 0 22px;
+    padding:28px;
+    background:rgba(255,255,255,.92);
+    border:1px solid var(--border);
+    border-radius:26px;
+    box-shadow:var(--shadow);
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:22px;
+    align-items:center;
+  }
+  .eyebrow{
+    display:inline-block;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    font-size:.78rem;
+    color:var(--accent);
+    background:var(--lav);
+    border-radius:999px;
+    padding:7px 11px;
+  }
+  h1{font-size:clamp(2rem,5vw,4rem);line-height:.98;margin:14px 0 12px}
+  .lead{font-size:1.05rem;line-height:1.6;color:var(--muted);max-width:760px}
+  .hero-card{
+    background:linear-gradient(145deg,var(--lav),var(--mint));
+    border-radius:22px;
+    padding:22px;
+    min-height:210px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .hero-card strong{font-size:1.05rem}
+  .progress{
+    margin:14px 0 8px;
+    height:16px;border-radius:999px;background:#fff;overflow:hidden;border:1px solid #dfe3ec
+  }
+  .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.35s}
+  .progress-label{font-weight:800}
+  nav{
+    position:sticky;top:0;z-index:20;
+    display:flex;gap:10px;flex-wrap:wrap;
+    padding:10px;
+    background:rgba(255,255,255,.88);
+    backdrop-filter:blur(12px);
+    border:1px solid var(--border);
+    border-radius:18px;
+    box-shadow:0 8px 20px rgba(36,50,74,.07);
+    margin-bottom:22px;
+  }
+  nav a, .btn{
+    text-decoration:none;color:var(--ink);font-weight:800;
+    padding:10px 14px;border-radius:12px;border:1px solid var(--border);
+    background:#fff;cursor:pointer;
+  }
+  nav a:hover,.btn:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(36,50,74,.08)}
+  section{
+    background:rgba(255,255,255,.94);
+    border:1px solid var(--border);
+    border-radius:24px;
+    box-shadow:var(--shadow);
+    padding:22px;
+    margin:20px 0;
+  }
+  .section-head{
+    display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:16px
+  }
+  h2{margin:0;font-size:clamp(1.45rem,3vw,2rem)}
+  .tag{
+    padding:7px 10px;border-radius:999px;font-weight:800;font-size:.82rem
+  }
+  .t1{background:var(--sun)}
+  .t2{background:var(--mint)}
+  .t3{background:var(--rose)}
+  .game-shell{
+    border:1px solid var(--border);
+    border-radius:18px;overflow:hidden;background:#f7f8fb
+  }
+  .game-shell iframe{
+    width:100%;height:min(72vh,650px);min-height:440px;border:0;display:block;background:#fff
+  }
+  .controls{
+    display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;align-items:center
+  }
+  .complete{
+    background:#eefaf4;border-color:#cdebdc
+  }
+  .complete.done{
+    background:#d7f4e5;border-color:#9fd7bc;color:#1e6a4e
+  }
+  .open{background:#f5f2ff}
+  .tip{
+    background:#f8fafc;border-left:4px solid var(--accent);padding:12px 14px;border-radius:10px;color:#4b5565
+  }
+  .teacher{
+    background:linear-gradient(145deg,#fffaf0,#fff);
+  }
+  footer{text-align:center;color:var(--muted);padding:28px 0 36px;font-size:.92rem}
+  .confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:50}
+  .piece{position:absolute;width:10px;height:16px;top:-20px;animation:fall 2.7s linear forwards}
+  @keyframes fall{to{transform:translateY(105vh) rotate(900deg);opacity:.2}}
+  @media(max-width:780px){
+    header{grid-template-columns:1fr;padding:20px}
+    .game-shell iframe{min-height:520px;height:72vh}
+    nav{top:6px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <span class="eyebrow">Español · Repaso interactivo</span>
+      <h1>🌟 Misión Sustantivos</h1>
+      <p class="lead">
+        Un solo lugar para que Tiki y sus compañeros practiquen con tres actividades de WordWall.
+        Juega, marca cada misión como completada y llega al 100%.
+      </p>
+    </div>
+    <div class="hero-card" aria-live="polite">
+      <strong>Progreso de la misión</strong>
+      <div class="progress"><div class="bar" id="bar"></div></div>
+      <div class="progress-label" id="progressText">0 de 3 actividades completadas</div>
+      <small style="margin-top:10px;color:#556070">El progreso se guarda en este dispositivo.</small>
+    </div>
+  </header>
+
+  <nav aria-label="Navegación">
+    <a href="#actividad1">🎯 Actividad 1</a>
+    <a href="#actividad2">🧠 Actividad 2</a>
+    <a href="#actividad3">🏆 Actividad 3</a>
+    <a href="#cierre">✨ Cierre</a>
+  </nav>
+
+  <section id="actividad1">
+    <div class="section-head">
+      <div>
+        <span class="tag t1">MISIÓN 1</span>
+        <h2>Actividad 1 · Calentamiento</h2>
+      </div>
+      <span>⏱️ 5–10 min</span>
+    </div>
+    <p class="tip">Lee con calma y completa el juego. Si te equivocas, vuelve a intentarlo: aquí se viene a aprender.</p>
+    <div class="game-shell">
+      <iframe src="https://wordwall.net/es/embed/19230bc6cb554d0ea363295cc2742f4c?themeId=69&templateId=3&fontStackId=0"
+        title="WordWall actividad 1" allowfullscreen></iframe>
+    </div>
+    <div class="controls">
+      <button class="btn complete" data-id="1">✓ Marcar como completada</button>
+      <a class="btn open" target="_blank" rel="noopener" href="https://wordwall.net/es/embed/19230bc6cb554d0ea363295cc2742f4c?themeId=69&templateId=3&fontStackId=0">↗ Abrir grande</a>
+    </div>
+  </section>
+
+  <section id="actividad2">
+    <div class="section-head">
+      <div>
+        <span class="tag t2">MISIÓN 2</span>
+        <h2>Actividad 2 · Practica y clasifica</h2>
+      </div>
+      <span>⏱️ 5–10 min</span>
+    </div>
+    <p class="tip">Busca las pistas en cada palabra y piensa qué clasificación corresponde antes de responder.</p>
+    <div class="game-shell">
+      <iframe src="https://wordwall.net/es/embed/1a35a7ff84164537a850b8315beaa4f6?themeId=21&templateId=69&fontStackId=0"
+        title="WordWall actividad 2" allowfullscreen></iframe>
+    </div>
+    <div class="controls">
+      <button class="btn complete" data-id="2">✓ Marcar como completada</button>
+      <a class="btn open" target="_blank" rel="noopener" href="https://wordwall.net/es/embed/1a35a7ff84164537a850b8315beaa4f6?themeId=21&templateId=69&fontStackId=0">↗ Abrir grande</a>
+    </div>
+  </section>
+
+  <section id="actividad3">
+    <div class="section-head">
+      <div>
+        <span class="tag t3">MISIÓN 3</span>
+        <h2>Actividad 3 · Reto final</h2>
+      </div>
+      <span>⏱️ 5–10 min</span>
+    </div>
+    <p class="tip">Este es el reto final. Intenta hacerlo sin ayuda y revisa cualquier respuesta que te haga dudar.</p>
+    <div class="game-shell">
+      <iframe src="https://wordwall.net/es/embed/3d2e6d50a74b41688263728a51052207?themeId=65&templateId=5&fontStackId=0"
+        title="WordWall actividad 3" allowfullscreen></iframe>
+    </div>
+    <div class="controls">
+      <button class="btn complete" data-id="3">✓ Marcar como completada</button>
+      <a class="btn open" target="_blank" rel="noopener" href="https://wordwall.net/es/embed/3d2e6d50a74b41688263728a51052207?themeId=65&templateId=5&fontStackId=0">↗ Abrir grande</a>
+    </div>
+  </section>
+
+  <section id="cierre" class="teacher">
+    <div class="section-head">
+      <div>
+        <span class="tag t2">CIERRE</span>
+        <h2>✨ ¡Misión completada!</h2>
+      </div>
+    </div>
+    <p>Cuando completes las tres actividades, vuelve a los ejercicios en los que tuviste más dificultad. La meta no es ir rápido: es poder explicar <strong>por qué</strong> una respuesta es correcta.</p>
+    <div class="controls">
+      <button class="btn" id="reset">↺ Reiniciar progreso</button>
+    </div>
+  </section>
+
+  <footer>
+    Preparado para repaso escolar · Los juegos se cargan desde WordWall y requieren conexión a Internet.
+  </footer>
+</div>
+<div class="confetti" id="confetti"></div>
+
+<script>
+const key='tiki_sustantivos_progress_v1';
+let completed = JSON.parse(localStorage.getItem(key) || '[]');
+
+function update(){
+  document.querySelectorAll('.complete').forEach(btn=>{
+    const id=btn.dataset.id;
+    const done=completed.includes(id);
+    btn.classList.toggle('done',done);
+    btn.textContent = done ? '✓ Completada' : '✓ Marcar como completada';
+  });
+  const n=completed.length;
+  document.getElementById('bar').style.width=(n/3*100)+'%';
+  document.getElementById('progressText').textContent=`${n} de 3 actividades completadas`;
+}
+function celebrate(){
+  const box=document.getElementById('confetti');
+  box.innerHTML='';
+  const palette=['#6b5bd2','#2f8f6b','#f2b84b','#e76f91','#4f8dd8'];
+  for(let i=0;i<55;i++){
+    const p=document.createElement('i');
+    p.className='piece';
+    p.style.left=Math.random()*100+'vw';
+    p.style.background=palette[Math.floor(Math.random()*palette.length)];
+    p.style.animationDelay=(Math.random()*.7)+'s';
+    p.style.transform=`rotate(${Math.random()*180}deg)`;
+    box.appendChild(p);
+  }
+  setTimeout(()=>box.innerHTML='',3500);
+}
+document.querySelectorAll('.complete').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const id=btn.dataset.id;
+    if(completed.includes(id)){
+      completed=completed.filter(x=>x!==id);
+    } else {
+      completed.push(id);
+    }
+    localStorage.setItem(key,JSON.stringify(completed));
+    update();
+    if(completed.length===3) celebrate();
+  });
+});
+document.getElementById('reset').addEventListener('click',()=>{
+  completed=[];
+  localStorage.removeItem(key);
+  update();
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+update();
+</script>
+</body>
+</html>
