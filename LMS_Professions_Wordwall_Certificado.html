@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LMS · Professions Practice</title>
+<style>
+:root{
+  --ink:#17324d;--muted:#66788a;--bg:#f5f8fb;--card:#fff;--accent:#7b5cff;
+  --accent2:#15a6a6;--success:#1f9d67;--line:#dfe7ef;--shadow:0 10px 28px rgba(34,59,86,.10)
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg)}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+.hero,.activity,.certificate-gate{background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow)}
+.hero{padding:28px;margin-bottom:22px}
+.tag{display:inline-block;background:#efeafe;color:#5a3bd8;padding:8px 12px;border-radius:999px;font-weight:700;margin-bottom:12px}
+h1{margin:0 0 8px;font-size:clamp(30px,5vw,46px)}
+.hero p,.activity p{color:var(--muted)}
+.student-panel{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end;margin-top:20px}
+label{font-weight:700}
+input{width:100%;padding:13px 14px;border:1px solid #cad7e3;border-radius:14px;font-size:1rem}
+button{border:0;border-radius:14px;padding:12px 16px;font-weight:800;cursor:pointer}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-success{background:var(--success);color:#fff}
+.btn-light{background:#eef3f7;color:#36536e}
+.btn-secondary{background:#e9f6f6;color:#0d6f6f}
+.progress-box{margin-top:18px;padding:16px;border:1px solid var(--line);border-radius:18px;background:#f8fbfe}
+.progress-label{display:flex;justify-content:space-between;font-weight:800;margin-bottom:8px}
+.bar{height:12px;background:#e7edf3;border-radius:999px;overflow:hidden}
+.bar>div{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.3s}
+.grid{display:grid;gap:20px}
+.activity{padding:20px}
+.activity-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.title-row{display:flex;gap:12px;align-items:center}
+.num{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:#efeafe;color:#5b3bd6;font-weight:900}
+.activity h2{margin:0}
+.status{padding:8px 10px;border-radius:999px;background:#eef3f7;color:#617385;font-size:.86rem;font-weight:800}
+.status.done{background:#e4f7ef;color:#14764f}
+.embed{overflow:hidden;border-radius:18px;border:1px solid #dbe4ec}
+iframe{display:block;width:100%;height:520px;border:0}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px}
+.small-note{font-size:.9rem;color:var(--muted)}
+.certificate-gate{padding:22px;margin-top:24px;background:linear-gradient(135deg,#fff9e8,#fff)}
+.locked{opacity:.6}
+.certificate{display:none;margin-top:20px;background:#fffef8;border:10px double #d6b05c;border-radius:12px;padding:48px 36px;text-align:center;min-height:520px}
+.certificate .eyebrow{letter-spacing:.22em;text-transform:uppercase;color:#8e6f2b;font-weight:800}
+.certificate h2{font-family:Georgia,serif;font-size:clamp(36px,6vw,58px);margin:14px 0 8px}
+.certificate .name{font-family:Georgia,serif;font-size:clamp(30px,5vw,46px);font-weight:700;color:#523aa8;margin:24px auto 10px;border-bottom:2px solid #d6b05c;max-width:720px;padding-bottom:8px}
+.certificate p{font-size:1.12rem;color:#43546a}
+.cert-footer{display:flex;justify-content:space-between;gap:20px;margin-top:56px;color:#54677a}
+.cert-line{flex:1;border-top:1px solid #8090a0;padding-top:8px}
+@media(max-width:700px){.student-panel{grid-template-columns:1fr}iframe{height:460px}.cert-footer{flex-direction:column}}
+@media print{
+ body{background:#fff}.hero,.grid,.certificate-gate>h2,.certificate-gate>p,.certificate-gate>.actions{display:none!important}
+ .certificate-gate{border:0;box-shadow:none;padding:0}.certificate{display:block!important;min-height:680px}.wrap{max-width:none;padding:0}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section class="hero">
+  <div class="tag">📚 LMS · Professions</div>
+  <h1>Professions Practice</h1>
+  <p>Completa las tres actividades y desbloquea tu certificado de participación.</p>
+
+  <div class="student-panel">
+    <div>
+      <label for="studentName">Nombre del estudiante</label>
+      <input id="studentName" type="text" placeholder="Escribe tu nombre aquí">
+    </div>
+    <button class="btn-primary" onclick="saveName()">Guardar nombre</button>
+  </div>
+
+  <div class="progress-box">
+    <div class="progress-label"><span>Progreso</span><span id="progressText">0 de 3 completadas</span></div>
+    <div class="bar"><div id="progressBar"></div></div>
+  </div>
+</section>
+
+<main class="grid">
+
+<section class="activity">
+  <div class="activity-head">
+    <div class="title-row">
+      <div class="num">1</div>
+      <div><h2>Actividad 1 · Professions</h2><p>Completa el ejercicio y luego marca la actividad como terminada.</p></div>
+    </div>
+    <span class="status" id="status1">Pendiente</span>
+  </div>
+  <div class="embed">
+    <iframe src="https://wordwall.net/embed/852d4543049342e1bc6a393c1ff78be0?themeId=1&templateId=3&fontStackId=0" allowfullscreen></iframe>
+  </div>
+  <div class="actions">
+    <button class="btn-success" onclick="markDone(1)">✓ He completado esta actividad</button>
+    <span class="small-note">No se registran puntuaciones.</span>
+  </div>
+</section>
+
+<section class="activity">
+  <div class="activity-head">
+    <div class="title-row">
+      <div class="num">2</div>
+      <div><h2>Actividad 2 · Visual Practice</h2><p>Relaciona las profesiones utilizando las pistas visuales del juego.</p></div>
+    </div>
+    <span class="status" id="status2">Pendiente</span>
+  </div>
+  <div class="embed">
+    <iframe src="https://wordwall.net/embed/edf1e0ab13a64564a8c2ca0834302822?themeId=21&templateId=68&fontStackId=0" allowfullscreen></iframe>
+  </div>
+  <div class="actions">
+    <button class="btn-success" onclick="markDone(2)">✓ He completado esta actividad</button>
+    <span class="small-note">Marca completado al terminar el juego.</span>
+  </div>
+</section>
+
+<section class="activity">
+  <div class="activity-head">
+    <div class="title-row">
+      <div class="num">3</div>
+      <div><h2>Actividad 3 · Spelling Challenge</h2><p>Escribe las palabras y completa el último reto.</p></div>
+    </div>
+    <span class="status" id="status3">Pendiente</span>
+  </div>
+  <div class="embed">
+    <iframe src="https://wordwall.net/embed/fa35dc0905c248569aa0d7619c13e636?themeId=1&templateId=89&fontStackId=0" allowfullscreen></iframe>
+  </div>
+  <div class="actions">
+    <button class="btn-success" onclick="markDone(3)">✓ He completado esta actividad</button>
+    <span class="small-note">Al completar las tres actividades se habilita el certificado.</span>
+  </div>
+</section>
+
+</main>
+
+<section class="certificate-gate">
+  <h2>🎓 Certificado de completado</h2>
+  <p id="gateMessage">Completa las tres actividades para desbloquear tu certificado.</p>
+  <div class="actions">
+    <button id="certBtn" class="btn-primary locked" onclick="generateCertificate()" disabled>Generar certificado</button>
+    <button class="btn-light" onclick="resetProgress()">Reiniciar progreso</button>
+  </div>
+
+  <div class="certificate" id="certificate">
+    <div class="eyebrow">Certificate of Completion</div>
+    <h2>Professions Practice</h2>
+    <p>Se certifica que</p>
+    <div class="name" id="certName">Estudiante</div>
+    <p>completó satisfactoriamente las tres actividades de práctica sobre <strong>Professions</strong>.</p>
+    <p>Este certificado reconoce la participación y finalización del repaso.</p>
+    <div class="cert-footer">
+      <div class="cert-line" id="certDate">Fecha</div>
+      <div class="cert-line">English Practice LMS</div>
+    </div>
+  </div>
+
+  <div class="actions" id="printArea" style="display:none">
+    <button class="btn-secondary" onclick="window.print()">🖨️ Imprimir / Guardar certificado en PDF</button>
+  </div>
+</section>
+
+</div>
+
+<script>
+const state={
+ name:localStorage.getItem('professions_student_name')||'',
+ done:JSON.parse(localStorage.getItem('professions_done')||'[false,false,false]')
+};
+const nameInput=document.getElementById('studentName');
+nameInput.value=state.name;
+
+function saveName(){
+ const v=nameInput.value.trim();
+ if(!v){alert('Escribe el nombre del estudiante antes de continuar.');nameInput.focus();return false}
+ state.name=v;localStorage.setItem('professions_student_name',v);updateUI();return true
+}
+function markDone(n){
+ if(!saveName()) return;
+ state.done[n-1]=true;
+ localStorage.setItem('professions_done',JSON.stringify(state.done));
+ updateUI()
+}
+function updateUI(){
+ const completed=state.done.filter(Boolean).length;
+ document.getElementById('progressText').textContent=`${completed} de 3 completadas`;
+ document.getElementById('progressBar').style.width=`${(completed/3)*100}%`;
+ state.done.forEach((d,i)=>{
+   const st=document.getElementById('status'+(i+1));
+   st.textContent=d?'Completada':'Pendiente';
+   st.classList.toggle('done',d)
+ });
+ const btn=document.getElementById('certBtn');
+ if(completed===3 && nameInput.value.trim()){
+   btn.disabled=false;btn.classList.remove('locked');
+   document.getElementById('gateMessage').textContent='¡Excelente! Ya puedes generar el certificado.'
+ }else{
+   btn.disabled=true;btn.classList.add('locked');
+   document.getElementById('gateMessage').textContent='Completa las tres actividades para desbloquear tu certificado.'
+ }
+}
+function generateCertificate(){
+ if(state.done.filter(Boolean).length<3){alert('Debes completar las tres actividades primero.');return}
+ const name=nameInput.value.trim();
+ if(!name){alert('Escribe el nombre del estudiante.');return}
+ document.getElementById('certName').textContent=name;
+ document.getElementById('certDate').textContent=new Date().toLocaleDateString('es-PR',{year:'numeric',month:'long',day:'numeric'});
+ document.getElementById('certificate').style.display='block';
+ document.getElementById('printArea').style.display='flex';
+ document.getElementById('certificate').scrollIntoView({behavior:'smooth'})
+}
+function resetProgress(){
+ if(confirm('¿Deseas reiniciar el progreso de las tres actividades?')){
+   state.done=[false,false,false];
+   localStorage.setItem('professions_done',JSON.stringify(state.done));
+   document.getElementById('certificate').style.display='none';
+   document.getElementById('printArea').style.display='none';
+   updateUI();window.scrollTo({top:0,behavior:'smooth'})
+ }
+}
+updateUI();
+</script>
+</body>
+</html>
