@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tiki · ¡Estás despedida! · Comprensión de lectura</title>
+<style>
+:root{--ink:#24324a;--muted:#6b7280;--line:#e6e8ef;--lav:#eee9ff;--lav2:#6d5bd0;--mint:#e8f7ef;--mint2:#2f8e69;--rose:#ffe7ed;--sun:#fff1b8;--paper:#fff}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:#f7f9fc;color:var(--ink)}
+.app{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+aside{position:sticky;top:0;height:100vh;background:#fff;border-right:1px solid var(--line);padding:18px;overflow:auto}
+.brand{background:linear-gradient(145deg,var(--lav),#fff);padding:16px;border-radius:18px;margin-bottom:16px}
+.brand small{font-weight:900;color:var(--lav2)} .brand h1{font-size:1.35rem;margin:7px 0} .brand p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.4}
+.menu-title{font-size:.75rem;font-weight:900;letter-spacing:.08em;color:#8b93a2;margin:16px 6px 8px;text-transform:uppercase}
+.chapter{width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:13px;padding:10px 12px;margin:4px 0;font-weight:800;color:var(--ink);cursor:pointer}
+.chapter span{display:block;font-size:.76rem;color:var(--muted);margin-top:2px} .chapter.active{background:var(--lav);border-color:#cfc6ff;color:#5644b9} .chapter.locked{opacity:.45;cursor:not-allowed}
+.progress{margin-top:18px;padding:13px;border:1px solid var(--line);border-radius:15px;background:#fafbff}
+.track{height:10px;background:#edf0f5;border-radius:999px;overflow:hidden;margin:8px 0} .fill{height:100%;width:0;background:linear-gradient(90deg,var(--lav2),var(--mint2));transition:.3s}
+main{padding:24px;max-width:1080px;width:100%} .hero,section{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 10px 28px rgba(36,50,74,.08);margin-bottom:18px}
+.kicker{display:inline-block;background:var(--sun);border-radius:999px;padding:6px 9px;font-size:.76rem;font-weight:900} .hero h2{font-size:clamp(1.8rem,4vw,3rem);margin:10px 0 8px;line-height:1}
+.hero p{color:var(--muted);line-height:1.55} .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px} .card b{display:block;margin-bottom:5px}
+.section-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap} h3{margin:0;font-size:1.35rem}
+.tag{padding:6px 9px;border-radius:999px;font-size:.75rem;font-weight:900} .lav{background:var(--lav)} .mint{background:var(--mint)} .rose{background:var(--rose)}
+.question{border:1px solid var(--line);border-radius:15px;padding:14px;margin:11px 0} .question h4{margin:0 0 10px} .options{display:grid;gap:7px}
+.option,.btn{border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px 11px;cursor:pointer;font-weight:700} .option{text-align:left} .option.correct{background:#e8f7ef;border-color:#9ed6b8} .option.wrong{background:#ffe9ee;border-color:#e6a6b5}
+.feedback{display:none;margin-top:8px;font-size:.9rem;font-weight:700} .feedback.show{display:block} .tfrow{display:flex;gap:8px;flex-wrap:wrap} .good{background:var(--mint)}
+.sequence{display:grid;gap:8px} .seq{display:flex;gap:9px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:10px} .seq span{flex:1} .seq button{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.primary{background:var(--lav2);color:#fff;border-color:transparent} .note{padding:13px;border-left:4px solid var(--lav2);background:#f8f9fc;border-radius:10px;margin:8px 0;line-height:1.5}
+.overall{margin-top:10px;padding:10px;border-radius:12px;background:var(--mint)} .mobile{display:none}
+@media(max-width:850px){.app{grid-template-columns:1fr} aside{position:fixed;left:-310px;z-index:50;width:290px;transition:.25s;box-shadow:0 12px 30px rgba(0,0,0,.15)} aside.open{left:0} main{padding:14px} .cards{grid-template-columns:1fr} .mobile{display:flex;position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);padding:10px 14px;border-bottom:1px solid var(--line);justify-content:space-between;align-items:center}}
+</style>
+</head>
+<body>
+<div class="mobile"><b>📘 ¡Estás despedida!</b><button class="btn" id="menuBtn">☰ Capítulos</button></div>
+<div class="app">
+<aside id="side">
+  <div class="brand"><small>Comprensión de lectura · 4.º grado</small><h1>📘 ¡Estás despedida!</h1><p>Rachel Flynn · Ilustraciones de Javier Andrada</p></div>
+  <div class="menu-title">Capítulos</div>
+  <div id="chapterMenu"></div>
+  <div class="progress">
+    <b id="progressTitle">Progreso · Capítulo 1</b>
+    <div class="track"><div class="fill" id="fill"></div></div>
+    <small id="progressText">0% completado</small>
+    <div class="overall"><b>Novela:</b> <span id="overallText">0 de 10 capítulos</span></div>
+  </div>
+</aside>
+
+<main>
+  <div class="hero">
+    <span class="kicker" id="kicker">CAPÍTULO 1</span>
+    <h2 id="chapterTitle"></h2>
+    <p id="chapterIntro"></p>
+  </div>
+
+  <div class="cards">
+    <div class="card"><b>🎯 Reto 1</b><span>Preguntas puntuales de comprensión.</span></div>
+    <div class="card"><b>⚡ Reto 2</b><span>Verdadero o falso.</span></div>
+    <div class="card"><b>🧩 Reto 3</b><span>Ordena acontecimientos.</span></div>
+  </div>
+
+  <section><div class="section-head"><div><span class="tag lav">RETO 1</span><h3>¿Qué comprendiste?</h3></div><small>Contesta sin volver al libro primero.</small></div><div id="quiz"></div></section>
+
+  <section><div class="section-head"><div><span class="tag mint">RETO 2</span><h3>Verdadero o falso</h3></div><small>Piensa en lo que realmente ocurrió.</small></div><div id="tf"></div></section>
+
+  <section><div class="section-head"><div><span class="tag rose">RETO 3</span><h3>Ordena los acontecimientos</h3></div><small>Usa ↑ y ↓ para organizarlos.</small></div><div class="sequence" id="seq"></div><p><button class="btn primary" id="checkSeq">Comprobar orden</button> <span id="seqFb"></span></p></section>
+
+  <section><div class="section-head"><div><span class="tag lav">PIENSO UN POQUITO MÁS</span><h3>Antes de cerrar</h3></div></div><div id="reflection"></div></section>
+
+  <section><div class="section-head"><div><span class="tag mint">MI PROGRESO</span><h3>¿Terminaste este capítulo?</h3></div></div>
+    <button class="btn good" id="complete">✓ Marcar capítulo como completado</button>
+    <button class="btn" id="reset">↺ Reiniciar este capítulo</button>
+  </section>
+</main>
+</div>
+
+<script>
+const chapters={"1":{"title":"A Edward se le acaba la buena vida","intro":"Lee primero el capítulo. Luego completa tres retos cortitos: comprensión, verdadero o falso y orden de acontecimientos.","quiz":[{"q":"¿Con quién vivía Edward van Eek al comienzo del capítulo?","options":["Con sus abuelos","Con su madre y su padre","Con Jane y su familia","Solo en una mansión"],"answer":1,"feedback":"Edward vivía con su madre y su padre en una mansión antigua."},{"q":"¿Qué ocurriría el sábado siguiente?","options":["Edward tendría un examen","La familia se mudaría","Edward celebraría su cumpleaños","Jane iría de viaje"],"answer":2,"feedback":"Su madre había organizado una gran fiesta para celebrar su cumpleaños."},{"q":"¿Qué le recordó Jane a Edward sobre su amistad?","options":["Que solo era su amiga durante las vacaciones","Que era su amiga todo el año, no solo antes de su cumpleaños","Que quería irse temprano de la fiesta","Que nunca había ido a su casa"],"answer":1,"feedback":"Jane le recordó que era su amiga durante todo el año y no solamente unas semanas antes de la fiesta."},{"q":"¿Qué ocurrió con el almuerzo de Edward en el colegio?","options":["Olvidó llevarlo","La mayonesa de su bocadillo pringó las magdalenas","Jane se lo comió","Se le cayó al suelo"],"answer":1,"feedback":"La mayonesa de su bocadillo terminó sobre las dos magdalenas."},{"q":"¿Qué cambio contó Jane que ocurrió en su casa cuando su madre consiguió trabajo?","options":["Dejaron de ir al colegio","Tuvieron que hacer más tareas por sí mismos","Compraron una casa más grande","Contrataron más personas para ayudar"],"answer":1,"feedback":"Jane explicó que tuvieron que cambiar costumbres y hacer por sí mismos varias tareas."},{"q":"¿Qué le dijo Edward finalmente a su madre?","options":["Que quería otro postre","Que estaba castigada","Que estaba despedida","Que quería ir a dormir"],"answer":2,"feedback":"Edward afirmó que la despedía."}],"tf":[{"text":"Edward estaba acostumbrado a que en casa le hicieran muchas cosas por él.","answer":true,"feedback":"Le arreglaban el dormitorio, la ropa aparecía limpia y preparada, y su madre le ayudaba con los deberes."},{"text":"Edward estaba contento con todos los pequeños problemas que tuvo aquel lunes.","answer":false,"feedback":"Ese lunes se sintió fastidiado por varias cosas que no salieron como esperaba."},{"text":"Jane explicó que en su casa todo siguió exactamente igual cuando su madre consiguió trabajo.","answer":false,"feedback":"Jane dijo que tuvieron que cambiar costumbres y asumir varias tareas."},{"text":"La madre de Edward reaccionó con calma cuando él dijo que la despedía.","answer":true,"feedback":"Ella sonrió y respondió con calma."}],"sequence":["Edward descubre una falta de ortografía en sus deberes.","Durante el recreo ve una mancha negra en su plátano.","La mayonesa del bocadillo termina sobre las magdalenas.","Jane le cuenta cómo cambió su casa cuando su madre consiguió trabajo.","Edward le dice a su madre que está despedida."],"reflection":["¿Qué cosas hacía la familia por Edward al principio del capítulo? Explícalo con tus propias palabras.","¿Por qué crees que Jane le contó a Edward lo que cambió en su casa cuando su madre empezó a trabajar?"]},"2":{"title":"¿Qué va a pasar con la fiesta?","intro":"Después de despedir a su madre, Edward empieza a descubrir todo lo que ella hacía por él. Completa los retos para comprobar que entendiste el capítulo.","quiz":[{"q":"¿Qué esperaba Edward que hiciera su madre antes de dormir?","options":["Que le preparara otra cena","Que subiera a arroparlo, leerle y darle las buenas noches","Que le llevara la mochila","Que llamara a Jane"],"answer":1,"feedback":"Edward esperaba la rutina de siempre: que su madre subiera, lo arropase, le leyera y le diera las buenas noches."},{"q":"¿Qué encontró Edward en su cuarto al despertar?","options":["La habitación completamente ordenada","La ropa sucia todavía tirada por el cuarto","Un regalo de cumpleaños","El desayuno servido"],"answer":1,"feedback":"La ropa sucia seguía donde él la había dejado porque su madre no la había recogido."},{"q":"¿Qué descubrió Edward cuando bajó a la cocina?","options":["Que el desayuno estaba listo","Que Jane lo esperaba","Que todavía estaban sobre la mesa los restos de la cena","Que su padre preparaba el almuerzo"],"answer":2,"feedback":"Los restos de la cena ocupaban el lugar donde Edward esperaba encontrar el desayuno."},{"q":"¿Por qué Edward iba a llegar tarde al colegio?","options":["Porque se quedó leyendo","Porque su madre no lo despertó y ya eran casi las nueve","Porque perdió los zapatos","Porque estaba preparando la fiesta"],"answer":1,"feedback":"Edward se dio cuenta tarde de la hora y pensó que su madre no lo había llamado."},{"q":"¿Cómo tuvo que ir Edward al colegio?","options":["En autobús","En bicicleta","Andando","En el coche de la señora Dodson"],"answer":2,"feedback":"Su madre y el coche ya se habían marchado, así que Edward tuvo que caminar."},{"q":"¿Qué hizo Jane cuando Edward le contó que había despedido a su madre?","options":["Se rió y cambió de tema","Le preguntó qué pasaría con su fiesta","Le dijo que cancelara el colegio","Le ofreció su almuerzo y se fue"],"answer":1,"feedback":"Jane pensó enseguida en la fiesta y en quién se encargaría de prepararla."},{"q":"¿Qué imaginó Edward que podría salir mal en su fiesta?","options":["Que llegaran invitados sin encontrar comida y que la fiesta no estuviera preparada","Que Jane no quisiera jugar","Que lloviera durante toda la semana","Que el colegio cerrara"],"answer":0,"feedback":"Edward pensó en los invitados, la comida, el payaso y la cama elástica sin montar."}],"tf":[{"text":"La madre de Edward subió esa noche a leerle como siempre.","answer":false,"feedback":"No apareció, y Edward tuvo que intentar leer por sí mismo."},{"text":"Edward encontró su recipiente del almuerzo limpio y preparado.","answer":false,"feedback":"Lo encontró en el fregadero y todavía estaba pringado de mayonesa."},{"text":"La señora Dodson bromeó con Edward porque iba caminando al colegio.","answer":true,"feedback":"Le hizo una broma sobre ir en el «caballito de San Fernando», es decir, andando."},{"text":"Jane pensó que Edward tendría que volver a contratar a su madre si quería evitar un desastre con la fiesta.","answer":true,"feedback":"Jane se lo dijo seriamente al pensar en todo lo que faltaba por preparar."}],"sequence":["Edward espera que su madre suba a arroparlo, pero ella no aparece.","Al despertar, encuentra la ropa sucia todavía tirada en su cuarto.","Descubre que no hay desayuno preparado y que su madre ya se ha ido.","Edward se da cuenta de que llega tarde y camina hacia el colegio.","Jane le pregunta qué pasará con la fiesta si su madre ya no está encargándose de todo."],"reflection":["¿Qué empieza a descubrir Edward sobre todas las cosas que hacía su madre por él?","¿Por qué la pregunta de Jane sobre la fiesta cambia el ánimo de Edward?"]},"3":{"title":"Edward prepara un plan","intro":"Edward quiere que su madre vuelva a hacer todo como antes. En este capítulo prueba distintas ideas para recuperar su atención. Lee y descubre cuáles funcionan… y cuáles no.","quiz":[{"q":"¿Por qué Edward tuvo que caminar de regreso a casa después de las clases?","options":["Porque quería hacer ejercicio","Porque el coche de su madre no apareció","Porque Jane se llevó el coche","Porque perdió el autobús escolar"],"answer":1,"feedback":"Edward esperó el coche de su madre a la salida, pero no apareció, así que tuvo que caminar hasta casa."},{"q":"¿Cómo encontró Edward a su madre cuando llegó a casa?","options":["Limpiando la cocina","Preparando su merienda","Tumbada en el sofá con un libro, un refresco y algo para picar","Haciendo sus deberes"],"answer":2,"feedback":"La encontró tranquilamente tumbada en el sofá con un libro nuevo, un refresco y algo para picar."},{"q":"¿Qué tuvo que comer Edward al buscar algo en la nevera?","options":["Una zanahoria","Un bocadillo","Una manzana","Un pastel"],"answer":0,"feedback":"Como no encontró nada apetecible, tuvo que conformarse con una zanahoria."},{"q":"¿Qué idea reservó Edward como último recurso para el sábado por la mañana?","options":["Escaparse de casa","Hacer una rabieta delante de los invitados","Cancelar la fiesta","Llamar a su padre"],"answer":1,"feedback":"Pensó en hacer una rabieta para avergonzar a sus padres cuando empezaran a llegar los invitados."},{"q":"¿Qué plan intentó Edward para que su madre volviera a cuidarlo?","options":["Fingir que estaba enfermo","Esconder sus deberes","Dormirse temprano","Invitar a Jane"],"answer":0,"feedback":"Edward recordó que cuando se enfermaba su madre le daba cariño y atención, así que intentó parecer enfermo."},{"q":"¿Qué hizo la madre de Edward mientras él fingía estar enfermo?","options":["Se quedó a cuidarlo","Le preparó comida inmediatamente","Salió y habló con la señora Dodson","Llamó a un médico"],"answer":2,"feedback":"Edward esperaba que ella lo atendiera, pero al mirar descubrió que había salido y estaba hablando con la señora Dodson."},{"q":"¿Qué intentó hacer Edward después para impresionar a su madre?","options":["Tocar el piano","Cocinar la cena","Hacer todos sus deberes","Ordenar toda la casa"],"answer":0,"feedback":"Pensó que quizá todavía podía tocar algo en el piano y que eso podría impresionarla."},{"q":"¿Qué decidió Edward al final del capítulo?","options":["Olvidarse de la fiesta","Pedir consejo a alguien","Volver al colegio","Hacer otra rabieta inmediatamente"],"answer":1,"feedback":"Al ver que sus planes no funcionaban, pensó que tendría que pedir consejo a alguien."}],"tf":[{"text":"Cuando Edward llegó a casa, los restos de la cena anterior ya habían sido recogidos.","answer":false,"feedback":"Los restos de la cena seguían sobre la mesa, igual que por la mañana."},{"text":"Edward pensó que ser muy bueno en algo podría ayudarlo a recuperar la atención de su madre.","answer":true,"feedback":"Consideró que sacar buenas notas, ganar un premio o tocar bien un instrumento podría funcionar."},{"text":"El plan de fingir que estaba enfermo hizo que su madre corriera a cuidarlo.","answer":false,"feedback":"Edward esperaba esa reacción, pero su madre salió de la habitación y se puso a hablar con la señora Dodson."},{"text":"La señora Dodson reconoció la pieza que Edward tocaba en el piano.","answer":true,"feedback":"La identificó como «La chocolatera» y comentó, con sarcasmo, que su hijo la había aprendido a los cuatro años."}],"sequence":["Edward espera el coche de su madre al salir del colegio, pero no aparece.","Camina hasta casa y encuentra a su madre descansando en el sofá.","Al no encontrar comida apetecible y ver sus deberes, empieza a pensar cómo lograr que su madre vuelva a hacer lo de antes.","Edward finge estar enfermo, pero su madre no reacciona como él esperaba.","Edward intenta impresionar tocando el piano y termina pensando que necesita pedir consejo."],"reflection":["¿Por qué crees que Edward quiere que su madre vuelva a sus «tareas habituales» en vez de intentar hacer más cosas por sí mismo?","En este capítulo Edward prueba varias estrategias para conseguir lo que quiere. ¿Cuál te parece la menos efectiva y por qué?"]}};
+const unlocked=[1,2,3];
+let current=1;
+let seq=[];
+
+function keyFor(ch){return "tiki_estas_despedida_cap"+ch+"_v2";}
+function defaultState(){return {quiz:{},tf:{},sequence:false,complete:false};}
+function getState(ch){return JSON.parse(localStorage.getItem(keyFor(ch))||JSON.stringify(defaultState()));}
+function setState(ch,state){localStorage.setItem(keyFor(ch),JSON.stringify(state));updateProgress();}
+function shuffle(a){return [...a].sort(()=>Math.random()-.5);}
+
+function renderMenu(){
+ const menu=document.getElementById("chapterMenu"); menu.innerHTML="";
+ for(let i=1;i<=10;i++){
+   const btn=document.createElement("button");
+   const available=unlocked.includes(i);
+   btn.className="chapter"+(i===current?" active":"")+(available?"":" locked");
+   btn.disabled=!available;
+   const title=available?chapters[i].title:"Próximamente";
+   btn.innerHTML=`${available?"":"🔒 "}${i} · ${title}<span>${available?(getState(i).complete?"Completado":"Disponible"):"Próximamente"}</span>`;
+   if(available)btn.onclick=()=>{current=i;seq=shuffle(chapters[i].sequence);renderAll();if(window.innerWidth<851)document.getElementById("side").classList.remove("open");};
+   menu.appendChild(btn);
+ }
+}
+
+function renderQuiz(){
+ const st=getState(current), data=chapters[current].quiz, box=document.getElementById("quiz"); box.innerHTML="";
+ data.forEach((it,i)=>{
+   const q=document.createElement("div");q.className="question";
+   q.innerHTML=`<h4>${i+1}. ${it.q}</h4><div class="options"></div><div class="feedback"></div>`;
+   const opts=q.querySelector(".options");
+   it.options.forEach((op,j)=>{
+     const b=document.createElement("button");b.className="option";b.textContent=op;
+     if(st.quiz[i]!==undefined){if(j===it.answer)b.classList.add("correct");if(j===st.quiz[i]&&j!==it.answer)b.classList.add("wrong");}
+     b.onclick=()=>{const s=getState(current);s.quiz[i]=j;setState(current,s);renderQuiz();};
+     opts.appendChild(b);
+   });
+   if(st.quiz[i]!==undefined){const f=q.querySelector(".feedback");f.textContent=(st.quiz[i]===it.answer?"✅ Correcto. ":"💡 Revisa: ")+it.feedback;f.classList.add("show");}
+   box.appendChild(q);
+ });
+}
+
+function renderTF(){
+ const st=getState(current), data=chapters[current].tf, box=document.getElementById("tf");box.innerHTML="";
+ data.forEach((it,i)=>{
+   const q=document.createElement("div");q.className="question";
+   q.innerHTML=`<h4>${i+1}. ${it.text}</h4><div class="tfrow"></div><div class="feedback"></div>`;
+   const row=q.querySelector(".tfrow");
+   [["Verdadero",true],["Falso",false]].forEach(([lab,val])=>{
+     const b=document.createElement("button");b.className="btn";b.textContent=lab;
+     if(st.tf[i]!==undefined && st.tf[i]===val && val===it.answer)b.classList.add("good");
+     b.onclick=()=>{const s=getState(current);s.tf[i]=val;setState(current,s);renderTF();};
+     row.appendChild(b);
+   });
+   if(st.tf[i]!==undefined){const f=q.querySelector(".feedback");f.textContent=(st.tf[i]===it.answer?"✅ Correcto. ":"💡 Revisa: ")+it.feedback;f.classList.add("show");}
+   box.appendChild(q);
+ });
+}
+
+function renderSeq(){
+ const box=document.getElementById("seq");box.innerHTML="";
+ seq.forEach((t,i)=>{
+   const r=document.createElement("div");r.className="seq";
+   r.innerHTML=`<b>${i+1}</b><span>${t}</span><button>↑</button><button>↓</button>`;
+   const bs=r.querySelectorAll("button");
+   bs[0].onclick=()=>{if(i>0){[seq[i-1],seq[i]]=[seq[i],seq[i-1]];renderSeq();}};
+   bs[1].onclick=()=>{if(i<seq.length-1){[seq[i+1],seq[i]]=[seq[i],seq[i+1]];renderSeq();}};
+   box.appendChild(r);
+ });
+}
+
+document.getElementById("checkSeq").onclick=()=>{
+ const correct=chapters[current].sequence;
+ const ok=seq.every((x,i)=>x===correct[i]);
+ document.getElementById("seqFb").textContent=ok?"✅ ¡Orden correcto!":"💡 Todavía hay algo fuera de lugar. Intenta otra vez.";
+ const s=getState(current);s.sequence=ok;setState(current,s);
+};
+
+function renderReflection(){
+ const box=document.getElementById("reflection");box.innerHTML="";
+ chapters[current].reflection.forEach((t,i)=>{const d=document.createElement("div");d.className="note";d.innerHTML=`<b>${i+1}.</b> ${t}`;box.appendChild(d);});
+}
+
+function updateProgress(){
+ const st=getState(current), ch=chapters[current];
+ const q=Object.keys(st.quiz).length/ch.quiz.length;
+ const t=Object.keys(st.tf).length/ch.tf.length;
+ const s=st.sequence?1:0;
+ let pct=Math.round((q+t+s)/3*100); if(st.complete)pct=100;
+ document.getElementById("fill").style.width=pct+"%";
+ document.getElementById("progressText").textContent=pct+"% completado";
+ document.getElementById("progressTitle").textContent="Progreso · Capítulo "+current;
+ const completed=unlocked.filter(i=>getState(i).complete).length;
+ document.getElementById("overallText").textContent=completed+" de 10 capítulos";
+ document.getElementById("complete").textContent=st.complete?"✓ Capítulo completado":"✓ Marcar capítulo como completado";
+ renderMenu();
+}
+
+document.getElementById("complete").onclick=()=>{const s=getState(current);s.complete=true;setState(current,s);alert("🌟 ¡Muy bien! Capítulo "+current+" completado.");};
+document.getElementById("reset").onclick=()=>{if(confirm("¿Quieres reiniciar las respuestas de este capítulo?")){localStorage.removeItem(keyFor(current));seq=shuffle(chapters[current].sequence);renderAll();}};
+document.getElementById("menuBtn").onclick=()=>document.getElementById("side").classList.toggle("open");
+
+function renderAll(){
+ document.getElementById("kicker").textContent="CAPÍTULO "+current;
+ document.getElementById("chapterTitle").textContent=chapters[current].title;
+ document.getElementById("chapterIntro").textContent=chapters[current].intro;
+ renderMenu();renderQuiz();renderTF();renderSeq();renderReflection();updateProgress();
+}
+
+seq=shuffle(chapters[current].sequence);
+renderAll();
+</script>
+</body>
+</html>
