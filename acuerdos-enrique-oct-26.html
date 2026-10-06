@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Acuerdos · Reunión Mariluz Serrano y Enrique Corriols · 6 de octubre de 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --morado:#4A1D7A; --morado-cl:#6B3FA0; --naranja:#F26A21; --naranja-cl:#FFF1E8;
+  --tinta:#23262E; --suave:#5C6370; --linea:#E3E0EA; --fondo:#FFFFFF; --panel:#FAF9FC;
+  --verde:#1E7B34; --rojo:#C0392B;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+:root:not([data-theme="light"]){}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --tinta:#ECEAF2; --suave:#A9A6B6; --linea:#3A3545; --fondo:#15131C; --panel:#1E1B28;
+    --naranja-cl:#2E2015; --morado-cl:#B38CE0;
+  }
+}
+:root[data-theme="dark"]{
+  --tinta:#ECEAF2; --suave:#A9A6B6; --linea:#3A3545; --fondo:#15131C; --panel:#1E1B28;
+  --naranja-cl:#2E2015; --morado-cl:#B38CE0;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0; background:var(--fondo); color:var(--tinta);
+  font-family:"Open Sans",-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  font-size:16px; line-height:1.6;
+}
+.wrap{max-width:860px; margin:0 auto; padding:0 20px 70px}
+
+header{background:linear-gradient(135deg,var(--morado) 0%,#2E1150 100%); color:#fff; padding:38px 0 30px; margin-bottom:34px}
+header .wrap{padding-bottom:0}
+.kicker{font-size:12px; letter-spacing:2.2px; text-transform:uppercase; color:#F8D359; font-weight:700; margin:0 0 10px}
+h1{font-size:26px; line-height:1.25; margin:0 0 12px; font-weight:700}
+.meta{font-size:14px; opacity:.88; margin:0}
+.meta b{font-weight:600}
+
+h2{font-size:19px; margin:42px 0 6px; color:var(--morado-cl); font-weight:700; display:flex; align-items:center; gap:10px}
+h2::before{content:""; width:5px; height:22px; background:var(--naranja); border-radius:3px; flex:0 0 5px}
+.sub{font-size:14px; color:var(--suave); margin:0 0 18px 15px}
+
+/* fechas */
+.fechas{display:grid; grid-template-columns:repeat(auto-fit,minmax(185px,1fr)); gap:12px; margin:18px 0 0}
+.f{background:var(--panel); border:1px solid var(--linea); border-left:4px solid var(--naranja); border-radius:8px; padding:14px 16px}
+.f .cuando{font-size:17px; font-weight:700; color:var(--morado-cl); margin:0 0 3px}
+.f .que{font-size:13.5px; color:var(--tinta); margin:0; line-height:1.45}
+.f .quien{font-size:11.5px; color:var(--suave); margin:6px 0 0; text-transform:uppercase; letter-spacing:.6px}
+.f.hot{border-left-color:var(--rojo)}
+.f.hot .cuando{color:var(--rojo)}
+
+/* decisiones */
+.dec{background:var(--naranja-cl); border:1px solid rgba(242,106,33,.35); border-radius:10px; padding:4px 20px 14px; margin-top:16px}
+.dec ul{margin:12px 0 0; padding-left:20px}
+.dec li{margin-bottom:10px; font-size:15px}
+.dec li b{color:var(--morado-cl)}
+
+/* tareas */
+.tarea{display:flex; gap:12px; padding:13px 0; border-bottom:1px solid var(--linea); align-items:flex-start}
+.tarea:last-child{border-bottom:none}
+.box{flex:0 0 17px; height:17px; border:2px solid var(--morado-cl); border-radius:4px; margin-top:4px}
+.tx{flex:1}
+.tx .t{font-weight:600; font-size:15px; margin:0 0 3px}
+.tx .d{font-size:13.5px; color:var(--suave); margin:0}
+.plazo{flex:0 0 auto; font-size:11.5px; font-weight:700; color:#fff; background:var(--morado-cl);
+       padding:3px 9px; border-radius:11px; margin-top:3px; white-space:nowrap}
+.plazo.urg{background:var(--rojo)}
+
+.nota{background:var(--panel); border:1px solid var(--linea); border-radius:10px; padding:16px 20px; margin-top:16px; font-size:14.5px}
+.nota b{color:var(--morado-cl)}
+.alerta{background:#FDF3F3; border:1px solid #E4B9B9; border-left:5px solid var(--rojo); border-radius:8px; padding:14px 18px; margin-top:16px; font-size:14.5px}
+.alerta b{color:var(--rojo)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .alerta{background:#2A1718; border-color:#5A3133}}
+
+.cols{display:grid; grid-template-columns:1fr 1fr; gap:26px}
+@media (max-width:680px){.cols{grid-template-columns:1fr; gap:6px} h1{font-size:22px}}
+
+.ruta{counter-reset:r; margin:16px 0 0; padding:0; list-style:none}
+.ruta li{position:relative; padding:0 0 12px 38px; font-size:14.5px}
+.ruta li::before{counter-increment:r; content:counter(r); position:absolute; left:0; top:0;
+  width:25px; height:25px; border-radius:50%; background:var(--morado-cl); color:#fff;
+  font-size:12.5px; font-weight:700; display:flex; align-items:center; justify-content:center}
+
+footer{margin-top:50px; padding-top:18px; border-top:1px solid var(--linea); font-size:12.5px; color:var(--suave)}
+
+@media print{
+  header{background:#4A1D7A !important; -webkit-print-color-adjust:exact; print-color-adjust:exact}
+  body{font-size:11pt} .wrap{max-width:100%}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <p class="kicker">Juntos Educamos Más LATAM</p>
+    <h1>Acuerdos y próximos pasos<br>Reunión de cierre del Congreso 2026</h1>
+    <p class="meta"><b>Participantes:</b> Enrique Corriols · Dra. Mariluz Serrano Ortiz &nbsp;·&nbsp; <b>Fecha:</b> 6 de octubre de 2026</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+<h2>Decisiones tomadas</h2>
+<p class="sub">Lo que quedó cerrado en esta reunión.</p>
+<div class="dec">
+  <ul>
+    <li><b>Congreso 2027:</b> se celebrará del <b>1 al 3 de julio de 2027</b>.</li>
+    <li><b>Microcredencial:</b> se reprograma a <b>13, 20 y 27 de febrero y 6 de marzo de 2027</b>. El cambio responde a la publicación del libro en 2027.</li>
+    <li><b>Botón de pago:</b> se integrará en la página de aterrizaje. <b>Confirmar el monto</b> (ver nota abajo).</li>
+    <li><b>Modalidad nueva «visitante»</b> para el Congreso 2027, con costo diferenciado, para ampliar la participación más allá de los congresistas.</li>
+  </ul>
+</div>
+
+<div class="alerta">
+  <b>Un punto a confirmar antes de publicar nada.</b> Las notas automáticas registran el botón de pago en <b>$77 USD</b>, pero el costo acordado previamente para la microcredencial era <b>$777 USD</b>. Conviene confirmarlo por escrito antes de que el botón quede activo en la web — una vez publicado, el precio es difícil de corregir sin costo reputacional.
+</div>
+
+<h2>Fechas clave</h2>
+<p class="sub">En orden cronológico.</p>
+<div class="fechas">
+  <div class="f hot">
+    <p class="cuando">15 de octubre 2026</p>
+    <p class="que">Afiche y volante actualizados del Congreso 2027</p>
+    <p class="quien">Enrique</p>
+  </div>
+  <div class="f hot">
+    <p class="cuando">3.ª semana de octubre</p>
+    <p class="que">Reunión general con los equipos virtual y presencial · valoración del Congreso</p>
+    <p class="quien">Enrique y Mariluz</p>
+  </div>
+  <div class="f">
+    <p class="cuando">13 · 20 · 27 febrero 2027</p>
+    <p class="que">Microcredencial TIHA · tres primeras sesiones</p>
+    <p class="quien">Mariluz</p>
+  </div>
+  <div class="f">
+    <p class="cuando">6 de marzo 2027</p>
+    <p class="que">Microcredencial TIHA · sesión de cierre</p>
+    <p class="quien">Mariluz</p>
+  </div>
+  <div class="f">
+    <p class="cuando">1 al 3 de julio 2027</p>
+    <p class="que">IV Congreso Latinoamericano de Educación Superior</p>
+    <p class="quien">Equipo completo</p>
+  </div>
+</div>
+
+<div class="cols">
+<div>
+<h2>Tareas · Mariluz</h2>
+<p class="sub">&nbsp;</p>
+<div class="tarea"><div class="box"></div><div class="tx">
+  <p class="t">Actualizar el formulario de la microcredencial</p>
+  <p class="d">Cambiar a las fechas nuevas: 13, 20 y 27 de febrero y 6 de marzo.</p></div>
+  <span class="plazo urg">Esta semana</span></div>
+<div class="tarea"><div class="box"></div><div class="tx">
+  <p class="t">Actualizar la página del seminario</p>
+  <p class="d">Incorporar los beneficios de la microcredencial y dejar el espacio para el botón de pago.</p></div></div>
+<div class="tarea"><div class="box"></div><div class="tx">
+  <p class="t">Reenviar el enlace del seminario a Enrique</p>
+  <p class="d">Por WhatsApp.</p></div>
+  <span class="plazo urg">Inmediato</span></div>
+<div class="tarea"><div class="box"></div><div class="tx">
+  <p class="t">Crear email blast y videos promocionales</p>
+  <p class="d">Con la paleta de colores de «Juntos Educamos Más».</p></div></div>
+<div class="tarea"><div class="box"></div><div class="tx">
+  <p class="t">Escribir el artículo de la experiencia del Congreso</p>
+  <p class="d">Relato completo, nombrando a los colegas participantes.</p></div></div>
+</div>
+
+<div>
+<h2>Tareas · Enrique</h2>
+<p class="sub">&nbsp;</p>
+<div class="tarea"><div class="box"></div><div class="tx">
+  <p class="t">Diseñar afiche y volante del Congreso 2027</p>
+  <p class="d">Incluir la nueva modalidad «visitante».</p></div>
+  <span class="plazo urg">15 oct</span></div>
+<div class="tarea"><div class="box"></div><div class="tx">
+  <p class="t">Configurar el botón de pago</p>
+  <p class="d">Para integrarlo en la página de aterrizaje. Confirmar monto primero.</p></div></div>
+<div class="tarea"><div class="box"></div><div class="tx">
+  <p class="t">Presentar a Daniel Ospino a Mariluz</p>
+  <p class="d">Para futuras colaboraciones.</p></div></div>
+<div class="tarea"><div class="box"></div><div class="tx">
+  <p class="t">Publicar testimonios y videos de la experiencia virtual</p>
+  <p class="d">En el feed de redes sociales.</p></div></div>
+<div class="tarea"><div class="box"></div><div class="tx">
+  <p class="t">Perfilar la web de «Juntos Educamos Más»</p>
+  <p class="d">Para ofrecer servicios a instituciones.</p></div></div>
+</div>
+</div>
+
+<h2>Tareas conjuntas</h2>
+<p class="sub">Requieren que ambos trabajen sobre el mismo material.</p>
+<div class="tarea"><div class="box"></div><div class="tx">
+  <p class="t">Retomar la lista de revistas académicas internacionales</p>
+  <p class="d">Mariluz ya envió contactos previamente. Buscar opciones que alojen trabajos especializados del clúster de salud, y definir dónde publicar el póster — considerando que Región Científica ya acogió un trabajo anterior.</p></div></div>
+<div class="tarea"><div class="box"></div><div class="tx">
+  <p class="t">Convocar la reunión general de equipos</p>
+  <p class="d">Equipo virtual y presencial juntos, tercera semana de octubre, para la valoración general del Congreso.</p></div></div>
+<div class="tarea"><div class="box"></div><div class="tx">
+  <p class="t">Intensificar las campañas cada dos semanas durante el trimestre</p>
+  <p class="d">La base de datos de «Juntos Educamos Más» inicia campaña de correo el miércoles.</p></div></div>
+
+<h2>Aprendizaje técnico del Congreso</h2>
+<p class="sub">Para no repetirlo en 2027.</p>
+<div class="nota">
+  Las salas de <b>Zoom Enterprise</b> mostraron dos limitaciones concretas: solo permiten <b>dos salas simultáneas</b>, y <b>no graban en los grupos pequeños</b> (breakout rooms). Esto último es una restricción propia de Zoom, no de la configuración: la grabación en la nube únicamente captura la sala principal.
+  <br><br>
+  <b>Acuerdo:</b> para el Congreso 2027 se requiere un equipo de apoyo técnico de <b>cuatro personas</b> — Stephanie, Sara, Mariluz y Sylvia — y revisar el esquema de salas de modo que cada una sea una reunión independiente, condición indispensable para poder grabarlas.
+</div>
+
+<h2>Proyecto nuevo en conversación</h2>
+<p class="sub">Sociedad, niñez y adolescencia · formato completamente en línea.</p>
+<ol class="ruta">
+  <li>Transformaciones de la extensión universitaria en las condiciones de vida infantil.</li>
+  <li>Formación de profesionales y familias sobre el desarrollo cerebral.</li>
+  <li>Acompañamiento universitario y social basado en evidencia para la primera infancia.</li>
+</ol>
+<div class="nota" style="margin-top:14px">
+  <b>Observación.</b> La inteligencia artificial está presente de forma implícita en los núcleos de conversación, pero no figura explícitamente en los ejes temáticos. Vale la pena decidir si se explicita para 2027, junto con las habilidades humanas que el Congreso identificó como centrales: <b>concentración, asombro e introspección</b>.
+</div>
+
+<footer>
+  Resumen elaborado a partir de las notas automáticas de la reunión del 6 de octubre de 2026 y revisado para corregir nombres y precisar acuerdos.<br>
+  Juntos Educamos Más LATAM · Congreso Latinoamericano de Educación Superior
+</footer>
+
+</div>
+</body>
+</html>
