@@ -1,737 +1,351 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simulador · Triple Restricción Ampliada · CaribeTech</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --navy: #0B2545;
-    --navy-deep: #06182E;
-    --teal: #13B5B1;
-    --coral: #EE6C4D;
-    --gold: #F4B860;
-    --ice: #EAF4FB;
-    --ink: #1A2332;
-    --gray: #5A6B7B;
-    --gray-lt: #D9E1E8;
-    --white: #FFFFFF;
-  }
+<title>TIHA — Tecnología con humanidad | Dra. Mariluz Serrano Ortiz</title>
+<meta name="description" content="TIHA: Tecnologías para la Inspiración y Humanización del Aprendizaje. Modelo pedagógico de la Dra. Mariluz Serrano Ortiz que integra inteligencia artificial generativa, neuroeducación y pedagogía humanista.">
+<meta name="author" content="Dra. Mariluz Serrano Ortiz">
+<meta name="keywords" content="TIHA, inteligencia artificial generativa, neuroeducación, pedagogía humanista, diseño instruccional, educación superior, Mariluz Serrano Ortiz, UPR">
+<link rel="canonical" href="https://profmariluzserranoortiz.com/">
+<meta name="theme-color" content="#3a5672">
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_PR">
+<meta property="og:site_name" content="TIHA — Tecnología con humanidad">
+<meta property="og:title" content="TIHA — Tecnología con humanidad">
+<meta property="og:description" content="Un modelo pedagógico que integra inteligencia artificial generativa, neuroeducación y pedagogía humanista. Dra. Mariluz Serrano Ortiz.">
+<meta property="og:url" content="https://profmariluzserranoortiz.com/">
+<meta property="og:image" content="https://profmariluzserranoortiz.com/brand/tiha-logo-oficial.png">
+<meta property="og:image:alt" content="Logotipo oficial del modelo TIHA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TIHA — Tecnología con humanidad">
+<meta name="twitter:description" content="Modelo pedagógico de la Dra. Mariluz Serrano Ortiz: IA generativa con intención humanizadora.">
+<meta name="twitter:image" content="https://profmariluzserranoortiz.com/brand/tiha-logo-oficial.png">
 
-  html, body { background: var(--navy-deep); }
-
-  body {
-    font-family: 'Inter', sans-serif;
-    color: var(--ink);
-    min-height: 100vh;
-    background:
-      radial-gradient(circle at 90% 10%, rgba(19, 181, 177, 0.18) 0%, transparent 40%),
-      radial-gradient(circle at 5% 90%, rgba(238, 108, 77, 0.15) 0%, transparent 40%),
-      var(--navy-deep);
-    padding: 24px 16px 60px;
-  }
-
-  .wrap {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  /* ---------- HEADER ---------- */
-  header {
-    color: var(--white);
-    margin-bottom: 28px;
-    padding: 0 4px;
-  }
-  .eyebrow {
-    color: var(--teal);
-    font-size: 11px;
-    letter-spacing: 4px;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .eyebrow::before {
-    content: "";
-    display: inline-block;
-    width: 28px;
-    height: 3px;
-    background: var(--teal);
-  }
-  h1 {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: clamp(28px, 4vw, 44px);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    margin-bottom: 10px;
-  }
-  h1 em { color: var(--teal); font-style: italic; font-weight: 400; }
-  .subtitle {
-    color: rgba(255,255,255,0.75);
-    font-size: 15px;
-    font-weight: 400;
-    max-width: 720px;
-    line-height: 1.5;
-  }
-
-  /* ---------- SCENARIOS BAR ---------- */
-  .scenarios {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 14px;
-    padding: 16px 18px;
-    margin-bottom: 24px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 10px;
-    align-items: center;
-  }
-  .scenarios-label {
-    color: var(--gold);
-    font-size: 11px;
-    letter-spacing: 3px;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-right: 4px;
-  }
-  .scn-btn {
-    background: rgba(19, 181, 177, 0.08);
-    color: var(--white);
-    border: 1px solid rgba(19, 181, 177, 0.4);
-    padding: 7px 14px;
-    border-radius: 999px;
-    font-size: 13px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  .scn-btn:hover {
-    background: var(--teal);
-    color: var(--navy-deep);
-    transform: translateY(-1px);
-  }
-  .scn-btn.reset {
-    background: transparent;
-    border-color: rgba(255,255,255,0.2);
-    color: rgba(255,255,255,0.6);
-    margin-left: auto;
-  }
-  .scn-btn.reset:hover {
-    background: rgba(255,255,255,0.1);
-    color: var(--white);
-    border-color: rgba(255,255,255,0.4);
-  }
-
-  /* ---------- LAYOUT ---------- */
-  .grid {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 24px;
-  }
-  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
-
-  .card {
-    background: var(--white);
-    border-radius: 18px;
-    padding: 28px;
-    box-shadow: 0 20px 60px rgba(6, 24, 46, 0.4);
-  }
-
-  .card h2 {
-    font-family: 'Fraunces', serif;
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--navy-deep);
-    margin-bottom: 4px;
-    letter-spacing: -0.01em;
-  }
-  .card .hint {
-    color: var(--gray);
-    font-size: 13px;
-    font-style: italic;
-    margin-bottom: 22px;
-  }
-
-  /* ---------- VARIABLES ---------- */
-  .var {
-    margin-bottom: 18px;
-    padding: 14px 16px;
-    background: var(--ice);
-    border-radius: 12px;
-    border-left: 4px solid var(--teal);
-    transition: all 0.3s ease;
-  }
-  .var.locked { border-left-color: var(--gold); background: #FFF8EB; }
-
-  .var-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-  .var-name {
-    font-weight: 700;
-    font-size: 14px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--navy-deep);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .var-q {
-    font-size: 12px;
-    color: var(--gray);
-    font-style: italic;
-    font-weight: 400;
-    text-transform: none;
-    letter-spacing: 0;
-  }
-  .val-pill {
-    background: var(--navy-deep);
-    color: var(--white);
-    padding: 4px 12px;
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    min-width: 60px;
-    text-align: center;
-  }
-
-  /* slider */
-  input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    height: 6px;
-    background: linear-gradient(to right, var(--teal) 0%, var(--gold) 50%, var(--coral) 100%);
-    border-radius: 999px;
-    outline: none;
-    cursor: pointer;
-  }
-  input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 22px;
-    height: 22px;
-    background: var(--white);
-    border: 3px solid var(--navy-deep);
-    border-radius: 50%;
-    cursor: grab;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    transition: transform 0.1s;
-  }
-  input[type="range"]::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.15); }
-  input[type="range"]::-moz-range-thumb {
-    width: 22px;
-    height: 22px;
-    background: var(--white);
-    border: 3px solid var(--navy-deep);
-    border-radius: 50%;
-    cursor: grab;
-  }
-  .var-foot {
-    display: flex;
-    justify-content: space-between;
-    font-size: 10px;
-    color: var(--gray);
-    margin-top: 6px;
-    letter-spacing: 0.5px;
-  }
-  .lock-toggle {
-    background: transparent;
-    border: 1px solid var(--gray-lt);
-    border-radius: 6px;
-    padding: 2px 8px;
-    font-size: 10px;
-    color: var(--gray);
-    cursor: pointer;
-    font-weight: 600;
-    letter-spacing: 1px;
-    transition: all 0.2s;
-  }
-  .lock-toggle:hover { border-color: var(--gold); color: var(--gold); }
-  .var.locked .lock-toggle { background: var(--gold); color: var(--white); border-color: var(--gold); }
-
-  /* ---------- RESULTADO ---------- */
-  .result {
-    position: sticky;
-    top: 16px;
-    align-self: start;
-    background: var(--navy-deep);
-    color: var(--white);
-    border-radius: 18px;
-    padding: 28px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-  }
-  .result h2 { color: var(--white); margin-bottom: 14px; }
-  .health-block {
-    text-align: center;
-    padding: 22px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    margin-bottom: 22px;
-  }
-  .health-score {
-    font-family: 'Fraunces', serif;
-    font-size: 80px;
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: -0.04em;
-    transition: color 0.3s ease;
-  }
-  .health-label {
-    font-size: 11px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.6);
-    margin-top: 6px;
-    font-weight: 700;
-  }
-  .health-status {
-    margin-top: 8px;
-    font-size: 14px;
-    font-weight: 600;
-  }
-
-  .alerts-title {
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-weight: 700;
-    margin-bottom: 10px;
-  }
-  .alerts {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 22px;
-  }
-  .alert {
-    padding: 11px 13px;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.04);
-    border-left: 3px solid var(--teal);
-    font-size: 13px;
-    line-height: 1.45;
-    color: rgba(255,255,255,0.92);
-    animation: slide-in 0.3s ease;
-  }
-  .alert.warn { border-left-color: var(--gold); }
-  .alert.crit { border-left-color: var(--coral); }
-  .alert strong { color: var(--white); }
-  @keyframes slide-in {
-    from { opacity: 0; transform: translateX(-8px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-
-  .ceo-quote {
-    background: rgba(19, 181, 177, 0.08);
-    border: 1px solid rgba(19, 181, 177, 0.25);
-    border-radius: 12px;
-    padding: 16px;
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 15px;
-    line-height: 1.5;
-    color: rgba(255,255,255,0.95);
-    position: relative;
-  }
-  .ceo-quote::before {
-    content: "“";
-    position: absolute;
-    top: -12px;
-    left: 12px;
-    font-size: 50px;
-    color: var(--teal);
-    font-family: 'Fraunces', serif;
-    line-height: 1;
-  }
-  .ceo-attr {
-    margin-top: 10px;
-    font-size: 11px;
-    color: var(--teal);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-style: normal;
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-  }
-
-  footer {
-    text-align: center;
-    color: rgba(255,255,255,0.4);
-    font-size: 12px;
-    margin-top: 36px;
-    line-height: 1.6;
-  }
-  footer strong { color: var(--teal); font-weight: 600; }
-</style>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="brand/tiha-logo-oficial.png">
+<link rel="stylesheet" href="assets/tiha-base.css">
+<link rel="stylesheet" href="assets/tiha-extra.css">
 </head>
 <body>
-<div class="wrap">
+<a class="skip-link" href="#inicio">Saltar al contenido principal</a>
 
-  <header>
-    <div class="eyebrow">Capstone · CaribeTech Manufacturing</div>
-    <h1>Simulador de la <em>Triple Restricción Ampliada</em></h1>
-    <p class="subtitle">Mueve los sliders. Cuando una variable cambia, las demás se ajustan automáticamente. La IA simula los trade-offs en segundos — pero la decisión final pasa por tu criterio.</p>
+<main>
+  <header class="nav-wrap">
+    <a class="brand" href="#inicio" aria-label="TIHA, inicio">
+      <img class="brand-logo" src="brand/tiha-logo-oficial.png" alt="Logotipo oficial de TIHA" width="64" height="64">
+      <span><b>TIHA</b><small>Tecnologías para la Inspiración y Humanización del Aprendizaje</small></span>
+    </a>
+    <button class="menu-button" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-principal">☰</button>
+    <nav class="nav" id="nav-principal" aria-label="Navegación principal">
+      <a href="#modelo">El modelo</a>
+      <a href="#investigacion">Investigación</a>
+      <a href="#laboratorio">Laboratorio</a>
+      <a href="#cursos">Cursos</a>
+      <a href="recursos.html">Biblioteca</a>
+      <a href="#comunidad">Comunidad</a>
+      <a class="nav-cta" href="#contacto">Conversemos <span>↗</span></a>
+    </nav>
   </header>
 
-  <div class="scenarios">
-    <span class="scenarios-label">Escenarios CaribeTech:</span>
-    <button class="scn-btn" data-scn="ceo">CEO pide entregar en 12 meses</button>
-    <button class="scn-btn" data-scn="cfo">CFO recorta presupuesto 30%</button>
-    <button class="scn-btn" data-scn="fda">FDA exige ISO 45001 ya</button>
-    <button class="scn-btn" data-scn="talento">Se va personal técnico clave</button>
-    <button class="scn-btn" data-scn="tarifa">Tarifa aduanera 25% Asia</button>
-    <button class="scn-btn reset" data-scn="reset">↻ Reiniciar</button>
-  </div>
-
-  <div class="grid">
-
-    <!-- COLUMNA IZQUIERDA: VARIABLES -->
-    <div class="card">
-      <h2>Las 6 variables del PMBOK®</h2>
-      <p class="hint">🔒 Bloquea las que NO quieres que se muevan. Mueve una libre y observa qué pasa.</p>
-
-      <!-- ALCANCE -->
-      <div class="var" data-key="alcance">
-        <div class="var-head">
-          <div>
-            <div class="var-name">📦 Alcance <span class="var-q">¿Qué se entrega?</span></div>
-          </div>
-          <div style="display:flex; gap:8px; align-items:center;">
-            <button class="lock-toggle" data-lock="alcance">LIBRE</button>
-            <span class="val-pill" id="val-alcance">100%</span>
-          </div>
-        </div>
-        <input type="range" min="40" max="120" value="100" data-var="alcance">
-        <div class="var-foot"><span>Recortado</span><span>Base</span><span>Expandido</span></div>
+  <!-- ===================== PORTADA ===================== -->
+  <section class="hero" id="inicio">
+    <div class="hero-copy">
+      <div class="eyebrow"><span></span> Un modelo pedagógico para nuestro tiempo</div>
+      <h1>La tecnología puede ser inteligente.<br><em>El aprendizaje debe ser humano.</em></h1>
+      <p>TIHA integra Inteligencia Artificial Generativa, neuroeducación y pedagogía humanista para diseñar experiencias de aprendizaje profundamente significativas.</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#modelo">Conoce el modelo <span>↓</span></a>
+        <button class="button text" type="button" data-lumi-abrir>Conversar con Lumi <span class="pulse"></span></button>
       </div>
-
-      <!-- TIEMPO -->
-      <div class="var" data-key="tiempo">
-        <div class="var-head">
-          <div>
-            <div class="var-name">⏱️ Tiempo <span class="var-q">¿Cuándo está listo?</span></div>
-          </div>
-          <div style="display:flex; gap:8px; align-items:center;">
-            <button class="lock-toggle" data-lock="tiempo">LIBRE</button>
-            <span class="val-pill" id="val-tiempo">18 m</span>
-          </div>
-        </div>
-        <input type="range" min="9" max="27" value="18" data-var="tiempo">
-        <div class="var-foot"><span>9 meses</span><span>18 meses (base)</span><span>27 meses</span></div>
-      </div>
-
-      <!-- COSTO -->
-      <div class="var" data-key="costo">
-        <div class="var-head">
-          <div>
-            <div class="var-name">💰 Costo <span class="var-q">¿Cuánto cuesta?</span></div>
-          </div>
-          <div style="display:flex; gap:8px; align-items:center;">
-            <button class="lock-toggle" data-lock="costo">LIBRE</button>
-            <span class="val-pill" id="val-costo">$2.5M</span>
-          </div>
-        </div>
-        <input type="range" min="125" max="375" value="250" data-var="costo">
-        <div class="var-foot"><span>$1.25M</span><span>$2.5M (base)</span><span>$3.75M</span></div>
-      </div>
-
-      <!-- CALIDAD -->
-      <div class="var" data-key="calidad">
-        <div class="var-head">
-          <div>
-            <div class="var-name">⭐ Calidad <span class="var-q">¿Cumple el estándar?</span></div>
-          </div>
-          <div style="display:flex; gap:8px; align-items:center;">
-            <button class="lock-toggle" data-lock="calidad">LIBRE</button>
-            <span class="val-pill" id="val-calidad">100%</span>
-          </div>
-        </div>
-        <input type="range" min="60" max="120" value="100" data-var="calidad">
-        <div class="var-foot"><span>Mínima viable</span><span>ISO 9001+13485</span><span>Excelencia</span></div>
-      </div>
-
-      <!-- RECURSOS -->
-      <div class="var" data-key="recursos">
-        <div class="var-head">
-          <div>
-            <div class="var-name">👥 Recursos <span class="var-q">¿Personas, equipos, materiales?</span></div>
-          </div>
-          <div style="display:flex; gap:8px; align-items:center;">
-            <button class="lock-toggle" data-lock="recursos">LIBRE</button>
-            <span class="val-pill" id="val-recursos">100%</span>
-          </div>
-        </div>
-        <input type="range" min="60" max="140" value="100" data-var="recursos">
-        <div class="var-foot"><span>Equipo reducido</span><span>320 empleados</span><span>Refuerzo total</span></div>
-      </div>
-
-      <!-- RIESGO -->
-      <div class="var" data-key="riesgo">
-        <div class="var-head">
-          <div>
-            <div class="var-name">⚠️ Riesgo <span class="var-q">¿Qué puede fallar?</span></div>
-          </div>
-          <div style="display:flex; gap:8px; align-items:center;">
-            <button class="lock-toggle" data-lock="riesgo">LIBRE</button>
-            <span class="val-pill" id="val-riesgo">Medio</span>
-          </div>
-        </div>
-        <input type="range" min="10" max="100" value="40" data-var="riesgo">
-        <div class="var-foot"><span>Bajo</span><span>Medio</span><span>Crítico</span></div>
-      </div>
-
-    </div>
-
-    <!-- COLUMNA DERECHA: RESULTADO -->
-    <div class="result">
-      <h2>Salud del proyecto</h2>
-
-      <div class="health-block">
-        <div class="health-score" id="health-score">85</div>
-        <div class="health-label">Project Health Index</div>
-        <div class="health-status" id="health-status">Saludable</div>
-      </div>
-
-      <div class="alerts-title">🚨 Trade-offs detectados</div>
-      <div class="alerts" id="alerts">
-        <div class="alert">
-          <strong>Estado base CaribeTech.</strong> Mueve una variable o usa un escenario para ver qué pasa.
-        </div>
-      </div>
-
-      <div class="ceo-quote">
-        <div id="ceo-text">El plan luce balanceado. Si no movemos nada, el proyecto debe entregar lo aprobado por la junta.</div>
-        <div class="ceo-attr">— Lic. María del Carmen Rivera · CEO CaribeTech</div>
+      <div class="signature">
+        <span>Desarrollado por</span>
+        <strong>Dra. Mariluz Serrano Ortiz</strong>
+        <small>Educadora · Investigadora · Conferenciante</small>
       </div>
     </div>
+    <div class="hero-art" aria-label="Identidad visual oficial del modelo TIHA">
+      <div class="orbit orbit-one"></div>
+      <div class="orbit orbit-two"></div>
+      <div class="portrait-card">
+        <img class="hero-logo" src="brand/tiha-logo-oficial.png" alt="TIHA: silueta humana formada por mariposas y naturaleza" width="1024" height="1024">
+        <span class="hero-word hero-word-inspire">Inspirar</span>
+        <span class="hero-word hero-word-humanize">Humanizar</span>
+        <span class="hero-word hero-word-transform">Transformar</span>
+      </div>
+      <blockquote>“Los humanos necesitan humanos. La tecnología debe acercarnos, nunca sustituirnos.”</blockquote>
+    </div>
+  </section>
 
-  </div>
+  <section class="marquee" aria-label="Áreas de aplicación">
+    <div data-marquesina>EDUCACIÓN <i>✦</i> GOBIERNO <i>✦</i> EMPRESAS <i>✦</i> COMUNIDADES <i>✦</i> EDUCACIÓN <i>✦</i> GOBIERNO <i>✦</i> FAMILIAS <i>✦</i> EDUCACIÓN <i>✦</i> GOBIERNO <i>✦</i> EMPRESAS <i>✦</i> COMUNIDADES</div>
+  </section>
+
+  <!-- ===================== 01 · EL MODELO ===================== -->
+  <section class="section intro" id="modelo">
+    <div class="section-label">01 — EL MODELO</div>
+    <div class="intro-grid">
+      <h2>Tecnología al servicio de lo que nos hace <em>humanos.</em></h2>
+      <div>
+        <p class="lead">TIHA surge de una investigación doctoral y de años formando docentes, servidores públicos y profesionales en el uso ético de la tecnología.</p>
+        <p>Su propósito es demostrar que la Inteligencia Artificial potencia el aprendizaje cuando parte de una intención pedagógica clara y protege el vínculo entre las personas.</p>
+        <a class="inline-link" href="#investigacion">Explorar la historia del modelo <span>↗</span></a>
+      </div>
+    </div>
+    <div class="pillars">
+      <article class="pillar"><span class="pillar-no">01</span><div class="pillar-icon">✦</div><h3>Inspiración</h3><p>Aprender desde el propósito, la curiosidad y la posibilidad.</p></article>
+      <article class="pillar"><span class="pillar-no">02</span><div class="pillar-icon">◎</div><h3>Empatía</h3><p>La IA acompaña el proceso; nunca reemplaza la relación humana.</p></article>
+      <article class="pillar"><span class="pillar-no">03</span><div class="pillar-icon">↗</div><h3>Personalización</h3><p>Cada persona aprende distinto. La tecnología debe reconocerlo.</p></article>
+      <article class="pillar"><span class="pillar-no">04</span><div class="pillar-icon">⌁</div><h3>Bienestar emocional</h3><p>Diseñar para disminuir la ansiedad y aumentar la confianza.</p></article>
+    </div>
+  </section>
+
+  <section class="quote-band">
+    <span class="giant-quote">“</span>
+    <blockquote>No se trata de usar más tecnología.<br>Se trata de usarla con <em>más intención.</em></blockquote>
+    <span class="quote-author">— DRA. MARILUZ SERRANO ORTIZ</span>
+  </section>
+
+  <!-- ===================== 02 · INVESTIGACIÓN ===================== -->
+  <section class="section research" id="investigacion">
+    <div class="section-label light">02 — INVESTIGACIÓN + EVIDENCIA</div>
+    <div class="research-grid">
+      <div>
+        <h2>Una práctica con <em>raíces académicas.</em></h2>
+        <p>El modelo conecta investigación rigurosa con experiencias reales de aprendizaje en universidades, gobierno, empresas y comunidades.</p>
+      </div>
+      <div class="thesis-card">
+        <span>TESIS DOCTORAL</span>
+        <h3>Un estudio fenomenológico descriptivo del docente digital del siglo XXI</h3>
+        <p>“Sé el profesor que quieres tener”</p>
+        <button type="button">Próximamente · Explorar investigación</button>
+      </div>
+    </div>
+    <div class="evidence">
+      <div><strong>+10</strong><span>Años integrando<br>tecnología educativa</span></div>
+      <div><strong>4</strong><span>Contextos de<br>implementación</span></div>
+      <div><strong>∞</strong><span>Posibilidades de<br>aprendizaje humano</span></div>
+    </div>
+    <p class="data-note">Las cifras de talleres y participantes se incorporarán con la evidencia documental validada.</p>
+  </section>
+
+  <section class="frase-band">
+    <blockquote>“La inteligencia artificial no reemplaza al ser humano; lo potencia para <em>trascender.</em>”</blockquote>
+    <cite>Metodología TIHA · Dra. Mariluz Serrano Ortiz</cite>
+  </section>
+
+  <!-- ===================== 03 · CONFERENCIAS ===================== -->
+  <section class="section talks" id="conferencias">
+    <div class="section-label">03 — CONFERENCIAS</div>
+    <div class="talk-head">
+      <h2>Conversaciones que<br><em>mueven a la acción.</em></h2>
+      <a class="button primary" href="#contacto">Solicitar conferencia ↗</a>
+    </div>
+    <div class="topic-list">
+      <div><span>01</span><h3>IA generativa</h3><b>↗</b></div>
+      <div><span>02</span><h3>TIHA</h3><b>↗</b></div>
+      <div><span>03</span><h3>Neuroeducación</h3><b>↗</b></div>
+      <div><span>04</span><h3>Ética</h3><b>↗</b></div>
+      <div><span>05</span><h3>Educación superior</h3><b>↗</b></div>
+      <div><span>06</span><h3>GovTech</h3><b>↗</b></div>
+    </div>
+  </section>
+
+  <!-- ===================== 04 · LABORATORIO ===================== -->
+  <section class="lab" id="laboratorio">
+    <div class="lab-copy">
+      <div class="section-label light">04 — LABORATORIO TIHA</div>
+      <h2>No solo conozcas el modelo.<br><em>Vívelo.</em></h2>
+      <p>Crea un punto de partida para una experiencia de aprendizaje inspiradora, empática y personalizada.</p>
+      <div class="lab-badge">✦ PROTOTIPO INTERACTIVO</div>
+    </div>
+    <div class="prompt-builder">
+      <div class="builder-top"><span>CONSTRUCTOR DE PROMPT HUMANIZADO</span><i>TIHA LAB · 01</i></div>
+      <label for="lab-publico">¿Para quién diseñamos?</label>
+      <input id="lab-publico" type="text" value="estudiantes universitarios">
+      <label for="lab-proposito">¿Qué queremos lograr?</label>
+      <input id="lab-proposito" type="text" value="comprender un concepto complejo">
+      <label for="lab-tono">¿Cómo debe sentirse?</label>
+      <select id="lab-tono">
+        <option>cercano y esperanzador</option>
+        <option>curioso y creativo</option>
+        <option>claro y tranquilizador</option>
+        <option>retador y reflexivo</option>
+      </select>
+      <div class="prompt-output">
+        <span>TU PROMPT TIHA</span>
+        <p id="lab-salida" aria-live="polite"></p>
+      </div>
+      <button class="copy-button" type="button" id="lab-copiar">Copiar prompt ✦</button>
+    </div>
+  </section>
+
+  <!-- ===================== 05 · CURSOS ===================== -->
+  <section class="section courses" id="cursos">
+    <div class="section-label">05 — CURSOS + EXPERIENCIAS</div>
+    <div class="courses-head">
+      <h2>Aprender haciendo.<br><em>Transformar aprendiendo.</em></h2>
+      <p>Experiencias diseñadas para docentes, equipos y organizaciones que quieren integrar IA con criterio, ética y humanidad.</p>
+    </div>
+    <div class="course-grid">
+      <article><span>01</span><h3>Integración de IA</h3><p>De la intención pedagógica a una experiencia significativa.</p><b>Explorar →</b></article>
+      <article><span>02</span><h3>Prompt Engineering</h3><p>Conversaciones más claras, críticas y responsables con la IA.</p><b>Explorar →</b></article>
+      <article><span>03</span><h3>Canva + IA</h3><p>Comunicación visual accesible que inspira y conecta.</p><b>Explorar →</b></article>
+      <article><span>04</span><h3>Microsoft Copilot</h3><p>Productividad humanizada para equipos y organizaciones.</p><b>Explorar →</b></article>
+      <article><span>05</span><h3>ChatGPT para aprender</h3><p>Uso ético, creativo y reflexivo en contextos educativos.</p><b>Explorar →</b></article>
+      <article><span>06</span><h3>Evaluación con IA</h3><p>Retroalimentación auténtica sin perder el juicio docente.</p><b>Explorar →</b></article>
+    </div>
+  </section>
+
+  <!-- ===================== 06 · BIBLIOTECA ===================== -->
+  <section class="section recursos" id="recursos">
+    <div class="section-label">06 — BIBLIOTECA TIHA</div>
+    <div class="recursos-head">
+      <h2>El modelo, <em>ya en uso.</em></h2>
+      <p>Cada recurso de esta biblioteca se diseñó para una clase, un taller o una capacitación real: simuladores, laboratorios de prompts, rúbricas, bitácoras y análisis de evidencia.</p>
+    </div>
+    <div class="recursos-stats">
+      <div><strong data-total-recursos>116</strong><span>Recursos interactivos<br>publicados</span></div>
+      <div><strong data-total-colecciones>14</strong><span>Colecciones<br>temáticas</span></div>
+      <div><strong>4</strong><span>Contextos: academia,<br>gobierno, empresa, familia</span></div>
+      <div><strong>0</strong><span>Instalaciones:<br>todo corre en el navegador</span></div>
+    </div>
+    <div class="recursos-grid">
+      <a href="recursos.html#modelo"><span>Modelo y neurociencia</span><b>La red nerviosa del aprendizaje</b><small>Mapas de memoria, sinapsis y neurodecisiones que fundamentan el modelo.</small></a>
+      <a href="recursos.html#lab"><span>Laboratorio de prompts</span><b>Arquitecturas de prompt humanizado</b><small>Arquetipos, bancos de prompts y guías de migración entre modelos de IA.</small></a>
+      <a href="recursos.html#gobierno"><span>Gobierno y empresa</span><b>Implementación en el terreno</b><small>Informes, capacitaciones y propuestas para instituciones reales.</small></a>
+    </div>
+    <p style="margin-top:36px"><a class="inline-link" href="recursos.html">Entrar a la biblioteca completa <span>↗</span></a></p>
+  </section>
+
+  <section class="frase-band">
+    <blockquote>“Cuando integramos la inteligencia artificial con intención humanizadora, no solo aprendemos con ella: <em>aprendemos a ser más nosotros mismos.</em>”</blockquote>
+    <cite>TIHA · <span data-anio>2026</span></cite>
+  </section>
+
+  <!-- ===================== 07 · COMUNIDAD ===================== -->
+  <section class="section community" id="comunidad">
+    <div class="section-label">07 — COMUNIDAD</div>
+    <div class="community-grid">
+      <div>
+        <h2>La tecnología también puede crear <em>pertenencia.</em></h2>
+        <p>TIHA convive con proyectos que cultivan amor, reflexión y comunidad. Porque humanizar el aprendizaje también es acompañar la vida.</p>
+      </div>
+      <div class="community-cards">
+        <article><span>01</span><h3>El Amor,<br>un Estilo de Vida</h3><p>Reflexiones para encarnar el amor en lo cotidiano.</p></article>
+        <article><span>02</span><h3>Circuleños<br>y Circuleñas</h3><p>Una comunidad que ora, descubre y camina junta.</p></article>
+        <article><span>03</span><h3>40 días descubriendo los ecos de Cristo</h3><p>Desde el Profeta hasta la Revelación.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonial">
+    <span>VOCES DE LA EXPERIENCIA</span>
+    <blockquote>“Una experiencia de aprendizaje no se recuerda solamente por lo que enseñó, sino por cómo nos hizo sentir capaces.”</blockquote>
+    <div><b>Próximamente</b><small>Testimonios validados de participantes TIHA</small></div>
+  </section>
+
+  <!-- ===================== 08 · CONVERSEMOS ===================== -->
+  <section class="contact" id="contacto">
+    <div>
+      <div class="section-label light">08 — CONVERSEMOS</div>
+      <h2>¿Qué podemos<br><em>transformar juntos?</em></h2>
+      <p>Conferencias · Talleres · Consultoría · Colaboraciones</p>
+      <p style="margin-top:26px">Escríbeme directamente a <a class="correo" href="mailto:mariluz.serrano@upr.edu">mariluz.serrano@upr.edu</a></p>
+    </div>
+    <form id="form-contacto">
+      <label for="c-nombre">Nombre</label>
+      <input id="c-nombre" name="nombre" type="text" placeholder="Tu nombre" required>
+      <label for="c-correo">Correo electrónico</label>
+      <input id="c-correo" name="correo" type="email" placeholder="nombre@organizacion.com" required>
+      <label for="c-interes">Me interesa</label>
+      <select id="c-interes" name="interes">
+        <option>Solicitar una conferencia</option>
+        <option>Diseñar un taller</option>
+        <option>Consultoría TIHA</option>
+        <option>Colaboración académica</option>
+      </select>
+      <label for="c-detalle">Cuéntame un poco</label>
+      <textarea id="c-detalle" name="detalle" placeholder="¿Qué imaginas para tu comunidad u organización?"></textarea>
+      <button class="button gold" type="submit">Enviar solicitud ↗</button>
+      <small class="aviso-envio">Al enviar, se abrirá tu programa de correo con el mensaje ya redactado hacia mariluz.serrano@upr.edu. Así tu solicitud llega directamente, sin intermediarios ni almacenamiento de datos en este sitio.</small>
+    </form>
+  </section>
 
   <footer>
-    <strong>Dra. Mariluz Serrano Ortiz</strong> · Recurso de IA Generativa<br>
-    Capstone CaribeTech · Decisiones, Riesgos y Cronograma con IA Generativa
+    <a class="brand footer-brand" href="#inicio">
+      <img class="brand-logo footer-logo" src="brand/tiha-logo-oficial.png" alt="Logotipo oficial de TIHA" width="64" height="64">
+      <span><b>TIHA®</b><small>Tecnologías para la Inspiración y la Humanización del Aprendizaje</small></span>
+    </a>
+    <p>Desarrollado con intención por <b>Dra. Mariluz Serrano Ortiz</b></p>
+    <div>
+      <a href="#modelo">Modelo</a>
+      <a href="#investigacion">Investigación</a>
+      <a href="recursos.html">Biblioteca</a>
+      <a href="#contacto">Contacto</a>
+    </div>
   </footer>
 
-</div>
+  <section class="frase-band" aria-label="Cierre">
+    <blockquote>“No es usar más tecnología, es usar tecnología para <em>vivir mejor.</em>”</blockquote>
+    <cite>Dra. Mariluz Serrano Ortiz · Modelo TIHA · UPR Río Piedras · mariluz.serrano@upr.edu</cite>
+  </section>
 
-<script>
-// ============================================================
-// LÓGICA DEL SIMULADOR
-// ============================================================
-const BASE = { alcance: 100, tiempo: 18, costo: 250, calidad: 100, recursos: 100, riesgo: 40 };
-const state = { ...BASE };
-const locked = { alcance: false, tiempo: false, costo: false, calidad: false, recursos: false, riesgo: false };
-let prevState = { ...BASE };
+  <!-- ===================== LUMI ===================== -->
+  <button class="lumi-fab" type="button" aria-label="Conversar con Lumi" aria-controls="panel-lumi">
+    <span>✦</span><b>Lumi</b><i></i>
+  </button>
+  <aside class="lumi" id="panel-lumi" aria-live="polite" aria-label="Lumi, asistente de navegación" hidden>
+    <div class="lumi-head">
+      <div><span>✦</span><p><b>Lumi</b><small>Asistente virtual de TIHA</small></p></div>
+      <button type="button" data-lumi-cerrar aria-label="Cerrar">×</button>
+    </div>
+    <div class="lumi-body">
+      <div class="lumi-message">
+        <b>¡Bienvenido a TIHA! 🌿</b>
+        <p data-lumi-mensaje>Puedo ayudarte a descubrir el modelo, explorar recursos o conectar con la Dra. Mariluz. ¿Qué te gustaría conocer hoy?</p>
+      </div>
+      <div class="lumi-options">
+        <button type="button" data-lumi-ruta="modelo">Conocer modelo <span>→</span></button>
+        <button type="button" data-lumi-ruta="investigación">Conocer investigación <span>→</span></button>
+        <button type="button" data-lumi-ruta="recursos">Conocer recursos <span>→</span></button>
+        <button type="button" data-lumi-ruta="contacto">Conocer contacto <span>→</span></button>
+      </div>
+      <small>Lumi ofrece una navegación guiada en este prototipo.</small>
+    </div>
+  </aside>
+</main>
 
-const sliders = {};
-document.querySelectorAll('input[type="range"]').forEach(s => {
-  sliders[s.dataset.var] = s;
-  s.addEventListener('input', e => onSlide(e.target.dataset.var, +e.target.value));
-});
-
-document.querySelectorAll('.lock-toggle').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const k = btn.dataset.lock;
-    locked[k] = !locked[k];
-    btn.textContent = locked[k] ? '🔒 FIJO' : 'LIBRE';
-    document.querySelector(`.var[data-key="${k}"]`).classList.toggle('locked', locked[k]);
-  });
-});
-
-document.querySelectorAll('.scn-btn').forEach(b => {
-  b.addEventListener('click', () => applyScenario(b.dataset.scn));
-});
-
-// --- formatear ---
-function fmt(k, v) {
-  if (k === 'tiempo') return v + ' m';
-  if (k === 'costo') return '$' + (v/100).toFixed(2) + 'M';
-  if (k === 'riesgo') return v < 33 ? 'Bajo' : v < 66 ? 'Medio' : 'Crítico';
-  return v + '%';
-}
-
-// --- núcleo de propagación: cuando cambia una variable, ajusta las demás ---
-function onSlide(changed, newVal) {
-  prevState = { ...state };
-  state[changed] = newVal;
-  propagate(changed);
-  syncUI();
-  evaluate();
-}
-
-function propagate(changed) {
-  // Calculamos delta porcentual del cambio
-  const delta = (state[changed] - prevState[changed]) / prevState[changed];
-
-  // Reglas PMI simplificadas: cómo afecta cada variable a las otras
-  // direcciones: +1 sube, -1 baja, multiplicador suaviza
-  const RULES = {
-    // Si subo ALCANCE: necesito más tiempo, más costo, más recursos, más riesgo, calidad puede bajar
-    alcance:  { tiempo: 0.5, costo: 0.6, calidad: -0.2, recursos: 0.4, riesgo: 0.5 },
-    // Si subo TIEMPO (más meses): costo sube, riesgo baja un poco, calidad puede subir
-    tiempo:   { alcance: 0.1, costo: 0.3, calidad: 0.15, recursos: 0.1, riesgo: -0.4 },
-    // Si subo COSTO: puedo subir alcance, comprimir tiempo, mejorar calidad/recursos
-    costo:    { alcance: 0.2, tiempo: -0.2, calidad: 0.3, recursos: 0.4, riesgo: -0.2 },
-    // Si subo CALIDAD: necesito más tiempo, más costo, más recursos
-    calidad:  { tiempo: 0.3, costo: 0.4, recursos: 0.2, riesgo: -0.2 },
-    // Si subo RECURSOS: tiempo puede bajar, costo sube, riesgo baja
-    recursos: { tiempo: -0.3, costo: 0.5, calidad: 0.15, riesgo: -0.3 },
-    // Si subo RIESGO (acepto más): tiempo y costo pueden estresarse, calidad cae
-    riesgo:   { tiempo: 0.2, costo: 0.2, calidad: -0.3 }
-  };
-
-  const rule = RULES[changed];
-  for (const target in rule) {
-    if (locked[target]) continue;
-    const factor = rule[target];
-    const targetBase = BASE[target];
-    const adjustment = delta * factor;
-    let newTargetVal = state[target] * (1 + adjustment);
-
-    // Limitar al rango del slider
-    const sld = sliders[target];
-    newTargetVal = Math.max(+sld.min, Math.min(+sld.max, newTargetVal));
-    state[target] = Math.round(newTargetVal);
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Dra. Mariluz Serrano Ortiz",
+  "honorificPrefix": "Dra.",
+  "jobTitle": "Catedrática Auxiliar",
+  "email": "mariluz.serrano@upr.edu",
+  "url": "https://profmariluzserranoortiz.com/",
+  "image": "https://profmariluzserranoortiz.com/brand/tiha-logo-oficial.png",
+  "affiliation": {
+    "@type": "CollegeOrUniversity",
+    "name": "Universidad de Puerto Rico, Recinto de Río Piedras"
+  },
+  "knowsAbout": [
+    "Inteligencia artificial generativa en la educación",
+    "Neuroeducación",
+    "Diseño instruccional",
+    "Tecnología del aprendizaje",
+    "Educación superior a distancia"
+  ],
+  "alumniOf": { "@type": "EducationalOrganization", "name": "Doctorado en Currículo y Enseñanza (Ed.D.)" },
+  "worksFor": {
+    "@type": "Organization",
+    "name": "TIHA — Tecnologías para la Inspiración y Humanización del Aprendizaje",
+    "url": "https://profmariluzserranoortiz.com/"
   }
 }
-
-function syncUI() {
-  for (const k in state) {
-    sliders[k].value = state[k];
-    document.getElementById('val-' + k).textContent = fmt(k, state[k]);
-  }
-}
-
-// --- evaluación: salud del proyecto + alertas + CEO quote ---
-function evaluate() {
-  // Score: distancia de cada variable respecto a la base, ponderada
-  let score = 100;
-  const dev = {};
-  for (const k in BASE) {
-    dev[k] = (state[k] - BASE[k]) / BASE[k]; // -0.5 a +0.5 típicamente
-  }
-
-  // Penalizaciones
-  if (state.tiempo < 14) score -= (14 - state.tiempo) * 4;        // mucho menos tiempo del aprobado
-  if (state.tiempo > 22) score -= (state.tiempo - 22) * 2;        // mucho más tiempo
-  if (state.costo > 300) score -= (state.costo - 300) * 0.3;      // sobrecostos
-  if (state.costo < 200) score -= (200 - state.costo) * 0.3;      // recortes peligrosos
-  if (state.calidad < 90) score -= (90 - state.calidad) * 1.2;    // calidad debajo de ISO
-  if (state.riesgo > 60) score -= (state.riesgo - 60) * 0.8;      // riesgo alto
-  if (state.alcance > 110) score -= (state.alcance - 110) * 1.0;  // scope creep
-  if (state.recursos < 85) score -= (85 - state.recursos) * 0.6;  // sub-staffed
-
-  score = Math.max(0, Math.min(100, Math.round(score)));
-
-  // Color y etiqueta de salud
-  const scoreEl = document.getElementById('health-score');
-  const statusEl = document.getElementById('health-status');
-  scoreEl.textContent = score;
-  let color, status;
-  if (score >= 80) { color = '#13B5B1'; status = '✓ Saludable — defendible ante la junta'; }
-  else if (score >= 60) { color = '#F4B860'; status = '⚠ En tensión — requiere mitigación'; }
-  else if (score >= 40) { color = '#EE6C4D'; status = '⚠ Crítico — re-planificar urgente'; }
-  else { color = '#C53030'; status = '✗ No viable — detener y re-evaluar'; }
-  scoreEl.style.color = color;
-  statusEl.style.color = color;
-  statusEl.textContent = status;
-
-  // Alertas inteligentes
-  const alerts = [];
-  if (state.tiempo < 14 && state.alcance >= 95) {
-    alerts.push({ t: 'crit', txt: '<strong>Tiempo comprimido con alcance completo.</strong> Riesgo de incumplir hitos de ISO 13485 y FDA.' });
-  }
-  if (state.costo < 200 && state.calidad >= 95) {
-    alerts.push({ t: 'crit', txt: '<strong>Calidad alta con presupuesto recortado.</strong> Probable sacrificio en automatización o capacitación.' });
-  }
-  if (state.alcance > 110) {
-    alerts.push({ t: 'warn', txt: '<strong>Scope creep detectado.</strong> Documenta cambios y renegocia con sponsor.' });
-  }
-  if (state.recursos < 85 && state.tiempo < 18) {
-    alerts.push({ t: 'crit', txt: '<strong>Subequipo + tiempo apretado.</strong> Burnout casi garantizado del personal técnico.' });
-  }
-  if (state.riesgo > 70) {
-    alerts.push({ t: 'crit', txt: '<strong>Riesgo crítico.</strong> Revisar Risk Register, asignar dueños y plan de contingencia.' });
-  }
-  if (state.calidad < 80) {
-    alerts.push({ t: 'crit', txt: '<strong>Calidad bajo el umbral ISO.</strong> Pone en riesgo contratos con MedDevice, SurgiTech, BioMed.' });
-  }
-  if (state.costo > 320) {
-    alerts.push({ t: 'warn', txt: '<strong>Sobrecosto ≥30%.</strong> CFO Robert Williams pedirá re-baseline.' });
-  }
-  if (alerts.length === 0) {
-    alerts.push({ t: '', txt: 'No se detectan trade-offs críticos en este momento. Sigue probando escenarios.' });
-  }
-
-  document.getElementById('alerts').innerHTML = alerts.map(a =>
-    `<div class="alert ${a.t}">${a.txt}</div>`
-  ).join('');
-
-  // CEO quote dinámica
-  let quote = '';
-  if (score >= 85) quote = 'Este plan luce sólido. Si lo defienden con estos números, voy a poder llevárselo a la junta con confianza.';
-  else if (score >= 70) quote = 'Me gusta la dirección, pero hay tensiones que necesito que mitiguen antes de aprobar la inversión.';
-  else if (score >= 50) quote = 'Ustedes me están vendiendo un proyecto en tensión. Necesito ver un plan B y un plan C.';
-  else if (score >= 30) quote = 'Esto no es defendible ante mi CFO ni ante mis clientes. Vuelvan con otra propuesta.';
-  else quote = 'No voy a aprobar $2.5M para esto. Si se va a hacer, se hace bien o no se hace.';
-
-  // Toques contextuales
-  if (state.tiempo < 12 && state.alcance > 95) quote = 'Entregar en menos de 12 meses con todo el alcance es ambición. ¿Cómo me garantizan calidad?';
-  if (state.costo < 175) quote = 'Recortar el presupuesto a este nivel me preocupa. ¿Qué exactamente NO van a hacer?';
-  if (state.riesgo > 75) quote = 'Este nivel de riesgo es inaceptable para una planta certificada en ISO 13485. Bajen el riesgo o no avanzamos.';
-  if (state.calidad < 75) quote = 'Bajar la calidad pone en riesgo contratos con MedDevice y SurgiTech. Esa NO es una opción.';
-
-  document.getElementById('ceo-text').textContent = quote;
-}
-
-// --- escenarios pre-cargados ---
-function applyScenario(name) {
-  // Desbloquear todo primero
-  for (const k in locked) {
-    locked[k] = false;
-    document.querySelector(`[data-lock="${k}"]`).textContent = 'LIBRE';
-    document.querySelector(`.var[data-key="${k}"]`).classList.remove('locked');
-  }
-
-  const SCENARIOS = {
-    reset: { ...BASE },
-    ceo:      { tiempo: 12, costo: 290, calidad: 95,  alcance: 100, recursos: 115, riesgo: 65 },
-    cfo:      { costo: 175, tiempo: 20, alcance: 80,  calidad: 85,  recursos: 80,  riesgo: 60 },
-    fda:      { calidad: 115, costo: 285, tiempo: 16, alcance: 105, recursos: 110, riesgo: 50 },
-    talento:  { recursos: 70, tiempo: 22, costo: 270, calidad: 85,  alcance: 95,  riesgo: 75 },
-    tarifa:   { costo: 300, tiempo: 22, alcance: 95,  calidad: 100, recursos: 95,  riesgo: 65 }
-  };
-
-  const target = SCENARIOS[name] || SCENARIOS.reset;
-  for (const k in target) state[k] = target[k];
-  prevState = { ...state };
-  syncUI();
-  evaluate();
-
-  // pequeño feedback visual
-  document.getElementById('health-score').animate(
-    [{ transform: 'scale(1.15)' }, { transform: 'scale(1)' }],
-    { duration: 350, easing: 'cubic-bezier(.34,1.56,.64,1)' }
-  );
-}
-
-// init
-syncUI();
-evaluate();
 </script>
+<script src="assets/tiha.js" defer></script>
 </body>
 </html>
