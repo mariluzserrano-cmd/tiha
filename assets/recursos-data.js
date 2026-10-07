@@ -876,14 +876,14 @@ window.TIHA_CATALOGO = {
 "url":"guia_elementos_decorativos_canva.html",
 "titulo":"Guía · Elementos decorativos en Canva",
 "cat":"diseno",
-"kb":6
+"kb":7
 },
 {
 "archivo":"guia_tipografia_colores_brochure.html",
 "url":"guia_tipografia_colores_brochure.html",
 "titulo":"Guía · Tipografía y colores para brochure",
 "cat":"diseno",
-"kb":7
+"kb":8
 }
 ]
 };
