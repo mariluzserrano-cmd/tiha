@@ -26,7 +26,7 @@ main{padding:24px;max-width:1080px;width:100%} .hero,section{background:#fff;bor
 .question{border:1px solid var(--line);border-radius:15px;padding:14px;margin:11px 0} .question h4{margin:0 0 10px} .options{display:grid;gap:7px}
 .option,.btn{border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px 11px;cursor:pointer;font-weight:700} .option{text-align:left} .option.correct{background:#e8f7ef;border-color:#9ed6b8} .option.wrong{background:#ffe9ee;border-color:#e6a6b5}
 .feedback{display:none;margin-top:8px;font-size:.9rem;font-weight:700} .feedback.show{display:block} .tfrow{display:flex;gap:8px;flex-wrap:wrap} .good{background:var(--mint)}
-.sequence{display:grid;gap:8px} .seq{display:flex;gap:9px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:10px} .seq span{flex:1} .seq button{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.sequence{display:grid;gap:8px} .seq{display:flex;gap:9px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:10px} .seq span{flex:1} .seq button{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:#fff;cursor:pointer}.seq button:disabled{opacity:.35;cursor:not-allowed}
 .primary{background:var(--lav2);color:#fff;border-color:transparent} .note{padding:13px;border-left:4px solid var(--lav2);background:#f8f9fc;border-radius:10px;margin:8px 0;line-height:1.5}
 .overall{margin-top:10px;padding:10px;border-radius:12px;background:var(--mint)} .mobile{display:none}
 @media(max-width:850px){.app{grid-template-columns:1fr} aside{position:fixed;left:-310px;z-index:50;width:290px;transition:.25s;box-shadow:0 12px 30px rgba(0,0,0,.15)} aside.open{left:0} main{padding:14px} .cards{grid-template-columns:1fr} .mobile{display:flex;position:sticky;top:0;z-index:40;background:rgba(255,255,255,.96);padding:10px 14px;border-bottom:1px solid var(--line);justify-content:space-between;align-items:center}}
@@ -81,11 +81,35 @@ const unlocked=[1,2,3,4,5,6];
 let current=1;
 let seq=[];
 
-function keyFor(ch){return "tiki_estas_despedida_cap"+ch+"_v2";}
-function defaultState(){return {quiz:{},tf:{},sequence:false,complete:false};}
-function getState(ch){return JSON.parse(localStorage.getItem(keyFor(ch))||JSON.stringify(defaultState()));}
+function keyFor(ch){return "tiki_estas_despedida_cap"+ch+"_v3";}
+function defaultState(){return {quiz:{},tf:{},sequence:false,seqOrder:null,complete:false};}
+function getState(ch){
+  try{
+    const saved=JSON.parse(localStorage.getItem(keyFor(ch))||"null")||{};
+    return Object.assign(defaultState(),saved);
+  }catch(e){return defaultState();}
+}
 function setState(ch,state){localStorage.setItem(keyFor(ch),JSON.stringify(state));updateProgress();}
-function shuffle(a){return [...a].sort(()=>Math.random()-.5);}
+function saveStateQuiet(ch,state){localStorage.setItem(keyFor(ch),JSON.stringify(state));}
+function freshOrder(n){
+  const a=Array.from({length:n},(_,i)=>i);
+  for(let i=n-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  if(n>1 && a.every((v,i)=>v===i)){[a[0],a[1]]=[a[1],a[0]];}
+  return a;
+}
+function validOrder(order,n){
+  return Array.isArray(order)&&order.length===n&&new Set(order).size===n&&order.every(v=>Number.isInteger(v)&&v>=0&&v<n);
+}
+function loadSeq(ch,forceNew=false){
+  const n=chapters[ch].sequence.length;
+  const s=getState(ch);
+  if(forceNew || !validOrder(s.seqOrder,n)){
+    s.seqOrder=freshOrder(n);
+    s.sequence=false;
+    saveStateQuiet(ch,s);
+  }
+  seq=[...s.seqOrder];
+}
 
 function renderMenu(){
  const menu=document.getElementById("chapterMenu"); menu.innerHTML="";
@@ -96,7 +120,7 @@ function renderMenu(){
    btn.disabled=!available;
    const title=available?chapters[i].title:"Próximamente";
    btn.innerHTML=`${available?"":"🔒 "}${i} · ${title}<span>${available?(getState(i).complete?"Completado":"Disponible"):"Próximamente"}</span>`;
-   if(available)btn.onclick=()=>{current=i;seq=shuffle(chapters[i].sequence);renderAll();if(window.innerWidth<851)document.getElementById("side").classList.remove("open");};
+   if(available)btn.onclick=()=>{current=i;loadSeq(i);document.getElementById("seqFb").textContent="";renderAll();if(window.innerWidth<851)document.getElementById("side").classList.remove("open");};
    menu.appendChild(btn);
  }
 }
@@ -137,21 +161,40 @@ function renderTF(){
 
 function renderSeq(){
  const box=document.getElementById("seq");box.innerHTML="";
- seq.forEach((t,i)=>{
+ const items=chapters[current].sequence;
+ seq.forEach((itemIndex,i)=>{
    const r=document.createElement("div");r.className="seq";
-   r.innerHTML=`<b>${i+1}</b><span>${t}</span><button>↑</button><button>↓</button>`;
+   const upDisabled=i===0?"disabled":"";
+   const downDisabled=i===seq.length-1?"disabled":"";
+   r.innerHTML=`<b>${i+1}</b><span>${items[itemIndex]}</span><button type="button" ${upDisabled} aria-label="Mover arriba" title="Mover arriba">↑</button><button type="button" ${downDisabled} aria-label="Mover abajo" title="Mover abajo">↓</button>`;
    const bs=r.querySelectorAll("button");
-   bs[0].onclick=()=>{if(i>0){[seq[i-1],seq[i]]=[seq[i],seq[i-1]];renderSeq();}};
-   bs[1].onclick=()=>{if(i<seq.length-1){[seq[i+1],seq[i]]=[seq[i],seq[i+1]];renderSeq();}};
+   bs[0].onclick=()=>moveSeq(i,-1);
+   bs[1].onclick=()=>moveSeq(i,1);
    box.appendChild(r);
  });
 }
 
+function moveSeq(pos,delta){
+ const target=pos+delta;
+ if(target<0||target>=seq.length)return;
+ [seq[pos],seq[target]]=[seq[target],seq[pos]];
+ const s=getState(current);
+ s.seqOrder=[...seq];
+ s.sequence=false;
+ saveStateQuiet(current,s);
+ document.getElementById("seqFb").textContent="";
+ renderSeq();
+ updateProgress();
+}
+
 document.getElementById("checkSeq").onclick=()=>{
- const correct=chapters[current].sequence;
- const ok=seq.every((x,i)=>x===correct[i]);
- document.getElementById("seqFb").textContent=ok?"✅ ¡Orden correcto!":"💡 Todavía hay algo fuera de lugar. Intenta otra vez.";
- const s=getState(current);s.sequence=ok;setState(current,s);
+ const ok=seq.length===chapters[current].sequence.length && seq.every((itemIndex,i)=>itemIndex===i);
+ const fb=document.getElementById("seqFb");
+ fb.textContent=ok?"✅ ¡Orden correcto!":"💡 Todavía hay algo fuera de lugar. Intenta otra vez.";
+ const s=getState(current);
+ s.seqOrder=[...seq];
+ s.sequence=ok;
+ setState(current,s);
 };
 
 function renderReflection(){
@@ -175,7 +218,7 @@ function updateProgress(){
 }
 
 document.getElementById("complete").onclick=()=>{const s=getState(current);s.complete=true;setState(current,s);alert("🌟 ¡Muy bien! Capítulo "+current+" completado.");};
-document.getElementById("reset").onclick=()=>{if(confirm("¿Quieres reiniciar las respuestas de este capítulo?")){localStorage.removeItem(keyFor(current));seq=shuffle(chapters[current].sequence);renderAll();}};
+document.getElementById("reset").onclick=()=>{if(confirm("¿Quieres reiniciar las respuestas de este capítulo?")){localStorage.removeItem(keyFor(current));loadSeq(current,true);document.getElementById("seqFb").textContent="";renderAll();}};
 document.getElementById("menuBtn").onclick=()=>document.getElementById("side").classList.toggle("open");
 
 function renderAll(){
@@ -185,7 +228,7 @@ function renderAll(){
  renderMenu();renderQuiz();renderTF();renderSeq();renderReflection();updateProgress();
 }
 
-seq=shuffle(chapters[current].sequence);
+loadSeq(current);
 renderAll();
 </script>
 </body>
