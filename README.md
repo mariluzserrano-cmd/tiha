@@ -22,11 +22,13 @@ Ed.D.** — Catedrática Auxiliar, Universidad de Puerto Rico, Recinto de Río P
 | `*.html` (raíz) | Los recursos interactivos: simuladores, laboratorios, rúbricas, bitácoras, recapitulaciones y análisis. |
 | `DESPLIEGUE.md` | **Cómo publicar el sitio y anclar el dominio.** |
 
-## Publicar
+## Dónde está publicado
 
-Es un sitio estático: no requiere compilación ni dependencias. Vea **[DESPLIEGUE.md](DESPLIEGUE.md)**
-para los pasos en Cloudflare Pages o GitHub Pages, y para configurar
-`profmariluzserranoortiz.com`.
+El sitio está publicado en <https://mariluzserrano-cmd.github.io/tiha/> y se
+actualiza solo con cada cambio en `main`.
+
+Vea **[DESPLIEGUE.md](DESPLIEGUE.md)** para la referencia de diseño destinada al
+equipo que montará la versión definitiva, y para anclar un dominio más adelante.
 
 ## Ver el sitio en su computadora
 
