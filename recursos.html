@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biblioteca TIHA — Recursos interactivos | Dra. Mariluz Serrano Ortiz</title>
+<meta name="description" content="Más de cien recursos interactivos de inteligencia artificial generativa diseñados con el modelo TIHA para cursos universitarios, capacitaciones de gobierno, programas empresariales y talleres para familias.">
+<meta name="author" content="Dra. Mariluz Serrano Ortiz">
+<link rel="canonical" href="https://profmariluzserranoortiz.com/recursos.html">
+<meta name="theme-color" content="#3a5672">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_PR">
+<meta property="og:site_name" content="TIHA — Tecnología con humanidad">
+<meta property="og:title" content="Biblioteca TIHA — Recursos interactivos">
+<meta property="og:description" content="Simuladores, laboratorios de prompts, rúbricas, bitácoras y análisis de evidencia del modelo TIHA.">
+<meta property="og:url" content="https://profmariluzserranoortiz.com/recursos.html">
+<meta property="og:image" content="https://profmariluzserranoortiz.com/brand/tiha-logo-oficial.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="brand/tiha-logo-oficial.png">
+<link rel="stylesheet" href="assets/tiha-base.css">
+<link rel="stylesheet" href="assets/tiha-extra.css">
+</head>
+<body>
+<a class="skip-link" href="#catalogo">Saltar al catálogo</a>
+
+<main>
+  <header class="nav-wrap">
+    <a class="brand" href="index.html" aria-label="TIHA, inicio">
+      <img class="brand-logo" src="brand/tiha-logo-oficial.png" alt="Logotipo oficial de TIHA" width="64" height="64">
+      <span><b>TIHA</b><small>Tecnologías para la Inspiración y Humanización del Aprendizaje</small></span>
+    </a>
+    <button class="menu-button" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-principal">☰</button>
+    <nav class="nav" id="nav-principal" aria-label="Navegación principal">
+      <a href="index.html#modelo">El modelo</a>
+      <a href="index.html#investigacion">Investigación</a>
+      <a href="index.html#laboratorio">Laboratorio</a>
+      <a href="index.html#cursos">Cursos</a>
+      <a href="index.html#comunidad">Comunidad</a>
+      <a class="nav-cta" href="index.html#contacto">Conversemos <span>↗</span></a>
+    </nav>
+  </header>
+
+  <section class="biblioteca-hero">
+    <div class="eyebrow"><span></span> Biblioteca TIHA</div>
+    <h1>El modelo, <em>ya en uso.</em></h1>
+    <p>Cada recurso nació para una clase, un taller o una capacitación real. Todos funcionan en el navegador, sin instalar nada y sin cuentas.</p>
+    <a class="biblioteca-volver" href="index.html">← Volver a la portada</a>
+  </section>
+
+  <div class="buscador">
+    <label class="skip-link" for="busqueda">Buscar un recurso</label>
+    <input id="busqueda" type="search" placeholder="Buscar por título, curso o tema… (por ejemplo: prompts, EDU 690, neurociencia)" autocomplete="off">
+    <output id="conteo" for="busqueda"></output>
+  </div>
+
+  <nav class="filtros" id="filtros" aria-label="Filtrar por colección"></nav>
+
+  <section class="catalogo" id="catalogo"></section>
+  <p class="sin-resultados" id="sin-resultados" hidden>No encontré recursos con esa búsqueda. Prueba con otra palabra.</p>
+
+  <section class="frase-band">
+    <blockquote>“Cuando integramos la inteligencia artificial con intención humanizadora, no solo aprendemos con ella: <em>aprendemos a ser más nosotros mismos.</em>”</blockquote>
+    <cite>TIHA · <span data-anio>2026</span></cite>
+  </section>
+
+  <footer>
+    <a class="brand footer-brand" href="index.html">
+      <img class="brand-logo footer-logo" src="brand/tiha-logo-oficial.png" alt="Logotipo oficial de TIHA" width="64" height="64">
+      <span><b>TIHA®</b><small>Tecnologías para la Inspiración y la Humanización del Aprendizaje</small></span>
+    </a>
+    <p>Desarrollado con intención por <b>Dra. Mariluz Serrano Ortiz</b></p>
+    <div>
+      <a href="index.html">Portada</a>
+      <a href="index.html#contacto">Contacto</a>
+    </div>
+  </footer>
+</main>
+
+<script src="assets/recursos-data.js"></script>
+<script src="assets/recursos.js" defer></script>
+<script src="assets/tiha.js" defer></script>
+</body>
+</html>
