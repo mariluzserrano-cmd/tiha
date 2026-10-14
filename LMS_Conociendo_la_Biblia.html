@@ -1,0 +1,1153 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#294c3a">
+  <meta name="description" content="Ruta interactiva de repaso de Educación Cristiana para cuarto grado sobre la Biblia, sus libros, los Evangelios y los Diez Mandamientos.">
+  <title>Conociendo la Biblia | Ruta de repaso</title>
+  <style>
+    :root {
+      --forest: #294c3a;
+      --forest-2: #3f6c53;
+      --forest-3: #183326;
+      --gold: #c59b3c;
+      --gold-soft: #f3dda5;
+      --cream: #fffdf7;
+      --paper: #f7f0df;
+      --paper-2: #efe4c8;
+      --wine: #7b4650;
+      --ink: #253027;
+      --muted: #657068;
+      --white: #ffffff;
+      --shadow: 0 20px 60px rgba(24, 51, 38, 0.13);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      color-scheme: light;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 9% 4%, rgba(197, 155, 60, 0.16), transparent 28rem),
+        radial-gradient(circle at 92% 18%, rgba(63, 108, 83, 0.13), transparent 32rem),
+        linear-gradient(180deg, #f6efde 0%, #fffdf8 38%, #f7f0df 100%);
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.28;
+      background-image:
+        linear-gradient(rgba(41, 76, 58, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(41, 76, 58, 0.025) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(to bottom, black, transparent 78%);
+      z-index: -1;
+    }
+
+    button, input { font: inherit; }
+
+    button {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    a:focus-visible {
+      outline: 4px solid rgba(197, 155, 60, 0.48);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      transform: translateY(-160%);
+      padding: 10px 14px;
+      border-radius: 10px;
+      color: var(--white);
+      background: var(--forest-3);
+    }
+
+    .skip-link:focus { transform: translateY(0); }
+
+    .page-shell {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 250px;
+      align-items: center;
+      gap: 30px;
+      padding: clamp(28px, 6vw, 64px);
+      border: 1px solid rgba(197, 155, 60, 0.34);
+      border-radius: var(--radius-lg);
+      color: var(--white);
+      background:
+        linear-gradient(135deg, rgba(24, 51, 38, 0.96), rgba(41, 76, 58, 0.94)),
+        var(--forest);
+      box-shadow: var(--shadow);
+      isolation: isolate;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(243, 221, 165, 0.15);
+      z-index: -1;
+    }
+
+    .hero::before {
+      width: 420px;
+      height: 420px;
+      right: -190px;
+      top: -220px;
+      box-shadow: 0 0 0 50px rgba(243, 221, 165, 0.035), 0 0 0 110px rgba(243, 221, 165, 0.02);
+    }
+
+    .hero::after {
+      width: 260px;
+      height: 260px;
+      left: -150px;
+      bottom: -180px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--gold-soft);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 0;
+      max-width: 780px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.55rem, 7vw, 5.1rem);
+      font-weight: 700;
+      letter-spacing: -0.045em;
+      line-height: 0.98;
+      text-wrap: balance;
+    }
+
+    .hero-lead {
+      max-width: 720px;
+      margin: 20px 0 0;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      line-height: 1.62;
+    }
+
+    .verse {
+      margin: 22px 0 0;
+      padding-left: 16px;
+      border-left: 3px solid var(--gold);
+      color: var(--gold-soft);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .hero-art {
+      display: grid;
+      place-items: center;
+      min-height: 230px;
+    }
+
+    .hero-art svg {
+      width: min(230px, 100%);
+      height: auto;
+      filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.22));
+    }
+
+    .overview {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .overview-card {
+      padding: 24px;
+      border: 1px solid rgba(41, 76, 58, 0.12);
+      border-radius: var(--radius-md);
+      background: rgba(255, 253, 247, 0.9);
+      box-shadow: 0 10px 32px rgba(24, 51, 38, 0.07);
+      backdrop-filter: blur(8px);
+    }
+
+    .overview-card h2 {
+      margin: 0 0 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.35rem;
+      color: var(--forest-3);
+    }
+
+    .overview-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .topic-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .topic-chip {
+      padding: 7px 11px;
+      border: 1px solid rgba(41, 76, 58, 0.13);
+      border-radius: 999px;
+      color: var(--forest);
+      background: #f8f4e8;
+      font-size: 0.86rem;
+      font-weight: 750;
+    }
+
+    .route {
+      margin-top: 28px;
+      padding: clamp(20px, 4vw, 34px);
+      border: 1px solid rgba(41, 76, 58, 0.12);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: var(--shadow);
+    }
+
+    .progress-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .progress-header h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.55rem, 3vw, 2.15rem);
+      color: var(--forest-3);
+    }
+
+    .progress-count {
+      flex: 0 0 auto;
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: var(--forest);
+      background: var(--paper);
+      font-weight: 800;
+    }
+
+    .progress-track {
+      overflow: hidden;
+      height: 13px;
+      margin-top: 15px;
+      border-radius: 999px;
+      background: #e6eadf;
+      box-shadow: inset 0 1px 2px rgba(24, 51, 38, 0.08);
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--gold), #dfbd69, var(--forest-2));
+      transition: width 500ms cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .step-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .step-tab {
+      min-height: 76px;
+      padding: 11px;
+      border: 1px solid rgba(41, 76, 58, 0.13);
+      border-radius: 14px;
+      color: var(--forest);
+      background: var(--cream);
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+    }
+
+    .step-tab:hover {
+      transform: translateY(-2px);
+      border-color: rgba(197, 155, 60, 0.55);
+    }
+
+    .step-tab[aria-current="step"] {
+      border-color: var(--forest);
+      background: #edf4ee;
+      box-shadow: inset 0 0 0 1px var(--forest);
+    }
+
+    .step-tab.is-complete {
+      color: var(--white);
+      border-color: var(--forest-2);
+      background: var(--forest-2);
+    }
+
+    .step-number {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      margin: 0 auto 6px;
+      border-radius: 50%;
+      color: var(--white);
+      background: var(--forest);
+      font-weight: 900;
+    }
+
+    .step-tab.is-complete .step-number {
+      color: var(--forest-3);
+      background: var(--gold-soft);
+    }
+
+    .step-label {
+      display: block;
+      overflow: hidden;
+      font-size: 0.84rem;
+      font-weight: 800;
+      line-height: 1.25;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .game-card {
+      margin-top: 22px;
+      animation: rise 260ms ease both;
+    }
+
+    .game-card[hidden] { display: none; }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .game-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .game-icon {
+      display: grid;
+      flex: 0 0 auto;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 15px;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--wine), #9d6570);
+      box-shadow: 0 8px 20px rgba(123, 70, 80, 0.2);
+      font-size: 1.3rem;
+      font-weight: 900;
+    }
+
+    .game-kicker {
+      margin: 0 0 3px;
+      color: var(--gold);
+      font-size: 0.77rem;
+      font-weight: 900;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .game-heading h3 {
+      margin: 0;
+      color: var(--forest-3);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.35rem, 3vw, 1.85rem);
+    }
+
+    .game-heading p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .frame-shell {
+      overflow: hidden;
+      padding: 8px;
+      border: 1px solid rgba(41, 76, 58, 0.13);
+      border-radius: 22px;
+      background: var(--paper);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.75);
+    }
+
+    .game-frame {
+      display: block;
+      width: 100%;
+      height: clamp(430px, 57vw, 590px);
+      border: 0;
+      border-radius: 15px;
+      background: var(--white);
+    }
+
+    .game-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .action-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 46px;
+      padding: 11px 17px;
+      border: 0;
+      border-radius: 13px;
+      cursor: pointer;
+      font-weight: 850;
+      text-decoration: none;
+      transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      color: var(--white);
+      background: var(--forest);
+      box-shadow: 0 9px 22px rgba(41, 76, 58, 0.18);
+    }
+
+    .btn-primary:hover { background: var(--forest-3); }
+
+    .btn-gold {
+      color: var(--forest-3);
+      background: var(--gold-soft);
+      box-shadow: 0 9px 22px rgba(197, 155, 60, 0.18);
+    }
+
+    .btn-secondary {
+      color: var(--forest);
+      border: 1px solid rgba(41, 76, 58, 0.18);
+      background: var(--cream);
+    }
+
+    .btn-complete[aria-pressed="true"] {
+      color: var(--forest-3);
+      background: #dcebdc;
+      box-shadow: inset 0 0 0 1px rgba(41, 76, 58, 0.12);
+    }
+
+    .microcopy {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .finish-zone {
+      position: relative;
+      overflow: hidden;
+      margin-top: 28px;
+      padding: clamp(26px, 5vw, 50px);
+      border: 1px solid rgba(197, 155, 60, 0.45);
+      border-radius: var(--radius-lg);
+      text-align: center;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(243, 221, 165, 0.45), transparent 35%),
+        linear-gradient(150deg, #fffdf7, #f4ecd9);
+      box-shadow: var(--shadow);
+    }
+
+    .finish-zone::before {
+      content: "✦";
+      position: absolute;
+      top: 12px;
+      right: 22px;
+      color: rgba(197, 155, 60, 0.42);
+      font-size: 3.5rem;
+      transform: rotate(12deg);
+    }
+
+    .finish-lock-icon,
+    .finish-cross {
+      display: grid;
+      place-items: center;
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 16px;
+      border-radius: 24px;
+      color: var(--white);
+      background: var(--forest);
+      box-shadow: 0 14px 32px rgba(41, 76, 58, 0.2);
+      font-size: 2rem;
+    }
+
+    .finish-zone h2 {
+      margin: 0;
+      color: var(--forest-3);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+    }
+
+    .finish-zone p {
+      max-width: 700px;
+      margin: 12px auto 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.65;
+    }
+
+    .finish-ready,
+    .name-panel,
+    .celebration {
+      animation: rise 360ms ease both;
+    }
+
+    .finish-ready[hidden],
+    .name-panel[hidden],
+    .celebration[hidden],
+    .finish-locked[hidden] {
+      display: none;
+    }
+
+    .finish-ready .btn { margin-top: 20px; }
+
+    .name-panel {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .name-form {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .name-input {
+      min-width: 0;
+      height: 52px;
+      padding: 0 16px;
+      border: 2px solid rgba(41, 76, 58, 0.24);
+      border-radius: 13px;
+      color: var(--ink);
+      background: var(--white);
+    }
+
+    .name-input::placeholder { color: #879087; }
+
+    .privacy-note {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .celebration {
+      position: relative;
+      z-index: 2;
+    }
+
+    .celebration-name {
+      color: var(--wine);
+    }
+
+    .celebration-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .final-blessing {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 8px 13px;
+      border-radius: 999px;
+      color: var(--forest);
+      background: rgba(63, 108, 83, 0.1);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .page-footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 8px 16px;
+      padding: 28px 10px 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.88rem;
+    }
+
+    .footer-cross {
+      color: var(--gold);
+      font-size: 1.2rem;
+    }
+
+    .reset-link {
+      padding: 4px 0;
+      border: 0;
+      border-bottom: 1px solid currentColor;
+      color: var(--forest);
+      background: transparent;
+      cursor: pointer;
+      font-weight: 750;
+    }
+
+    #confetti {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 800px) {
+      .page-shell { width: min(100% - 20px, 1120px); padding-top: 10px; }
+      .hero { grid-template-columns: 1fr; padding: 30px 24px; }
+      .hero-art { display: none; }
+      .overview { grid-template-columns: 1fr; }
+      .step-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .game-frame { height: 480px; }
+      .progress-header { align-items: flex-start; }
+    }
+
+    @media (max-width: 520px) {
+      .route { padding: 16px 12px 20px; }
+      .step-tabs { gap: 7px; }
+      .step-tab { min-height: 70px; padding: 8px 6px; }
+      .step-label { font-size: 0.77rem; }
+      .game-heading { padding: 0 4px; }
+      .game-icon { width: 42px; height: 42px; }
+      .frame-shell { padding: 5px; border-radius: 17px; }
+      .game-frame { min-height: 430px; height: 72vh; border-radius: 12px; }
+      .game-actions, .action-group { width: 100%; }
+      .game-actions .btn, .action-group .btn { flex: 1 1 auto; }
+      .name-form { grid-template-columns: 1fr; }
+      .name-form .btn { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      #confetti { display: none; }
+    }
+
+    @media print {
+      body { background: white; }
+      body::before,
+      .hero,
+      .overview,
+      .route,
+      .finish-locked,
+      .finish-ready,
+      .name-panel,
+      .page-footer,
+      #confetti,
+      .celebration-actions { display: none !important; }
+      .page-shell { width: 100%; padding: 0; }
+      .finish-zone {
+        display: block;
+        min-height: 8.5in;
+        margin: 0;
+        padding: 1in 0.65in;
+        border: 8px double var(--gold);
+        box-shadow: none;
+        background: white;
+      }
+      .celebration { display: block !important; }
+      .celebration h2 { font-size: 34pt; }
+      .celebration p { font-size: 15pt; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#ruta">Ir directamente a los juegos</a>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <main class="page-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Educación Cristiana · Cuarto grado</p>
+        <h1>Conociendo la Biblia</h1>
+        <p class="hero-lead">
+          Una ruta interactiva para recordar cómo está organizada la Biblia, practicar sus libros
+          y descubrir cómo la Palabra de Dios guía nuestras decisiones.
+        </p>
+        <p class="verse">“Tu palabra es una lámpara que guía mis pies y una luz para mi camino.”<br><strong>Salmo 119:105 NTV</strong></p>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 260 230" role="img">
+          <defs>
+            <linearGradient id="pageGlow" x1="0" x2="1">
+              <stop offset="0" stop-color="#f3dda5"/>
+              <stop offset="1" stop-color="#fff9e8"/>
+            </linearGradient>
+          </defs>
+          <circle cx="130" cy="116" r="104" fill="none" stroke="#f3dda5" stroke-opacity=".18" stroke-width="2"/>
+          <path d="M28 72c37-12 70-4 102 22v103c-32-24-66-30-102-16z" fill="url(#pageGlow)" stroke="#c59b3c" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M232 72c-37-12-70-4-102 22v103c32-24 66-30 102-16z" fill="url(#pageGlow)" stroke="#c59b3c" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M130 94v103" fill="none" stroke="#c59b3c" stroke-width="4"/>
+          <path d="M130 28v56M108 48h44" fill="none" stroke="#f3dda5" stroke-width="9" stroke-linecap="round"/>
+          <path d="M49 103c22-6 42-2 61 10M49 127c22-6 42-2 61 10M151 113c18-12 39-16 60-10M151 137c18-12 39-16 60-10" fill="none" stroke="#294c3a" stroke-opacity=".45" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </header>
+
+    <section class="overview" aria-label="Instrucciones y temas">
+      <article class="overview-card">
+        <h2>¿Cómo completar la ruta?</h2>
+        <p>Realiza cada juego y, cuando termines, pulsa <strong>Marcar como completado</strong>. Al completar los cuatro, podrás escribir tu nombre y celebrar tu esfuerzo.</p>
+      </article>
+      <article class="overview-card">
+        <h2>¿Qué vas a practicar?</h2>
+        <div class="topic-chips" aria-label="Temas del repaso">
+          <span class="topic-chip">66 · 39 · 27</span>
+          <span class="topic-chip">Pentateuco</span>
+          <span class="topic-chip">Evangelios</span>
+          <span class="topic-chip">Mandamientos</span>
+          <span class="topic-chip">Libro · capítulo · versículo</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="route" id="ruta" aria-labelledby="route-title">
+      <div class="progress-header">
+        <h2 id="route-title">Mi ruta de repaso</h2>
+        <span class="progress-count" id="progressCount">0 de 4</span>
+      </div>
+      <div class="progress-track" role="progressbar" aria-label="Progreso de la ruta" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" id="progressTrack">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <p class="sr-only" aria-live="polite" id="progressLive">No has completado ningún juego todavía.</p>
+
+      <nav class="step-tabs" aria-label="Navegación entre juegos">
+        <button class="step-tab" type="button" data-tab="0" aria-current="step">
+          <span class="step-number">1</span>
+          <span class="step-label">La Biblia</span>
+        </button>
+        <button class="step-tab" type="button" data-tab="1">
+          <span class="step-number">2</span>
+          <span class="step-label">Completa</span>
+        </button>
+        <button class="step-tab" type="button" data-tab="2">
+          <span class="step-number">3</span>
+          <span class="step-label">Clasifica</span>
+        </button>
+        <button class="step-tab" type="button" data-tab="3">
+          <span class="step-number">4</span>
+          <span class="step-label">Decisiones</span>
+        </button>
+      </nav>
+
+      <article class="game-card" data-game="0">
+        <div class="game-heading">
+          <div class="game-icon" aria-hidden="true">1</div>
+          <div>
+            <p class="game-kicker">Juego 1</p>
+            <h3>Datos importantes de la Biblia</h3>
+            <p>Comprueba cuánto recuerdas sobre sus libros, divisiones y escritores.</p>
+          </div>
+        </div>
+        <div class="frame-shell">
+          <iframe class="game-frame" src="https://wordwall.net/es/embed/4fadb1f2db804f22ace44f8f418807db?themeId=1&amp;templateId=5&amp;fontStackId=0" title="Juego 1 Datos importantes de la Biblia" loading="eager" allowfullscreen></iframe>
+        </div>
+        <div class="game-actions">
+          <p class="microcopy">Termina el juego antes de marcarlo como completado.</p>
+          <div class="action-group">
+            <button class="btn btn-primary btn-complete" type="button" data-complete="0" aria-pressed="false">✓ Marcar como completado</button>
+            <button class="btn btn-secondary" type="button" data-next="1">Siguiente juego →</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="game-card" data-game="1" hidden>
+        <div class="game-heading">
+          <div class="game-icon" aria-hidden="true">2</div>
+          <div>
+            <p class="game-kicker">Juego 2</p>
+            <h3>Completa las ideas</h3>
+            <p>Encuentra las palabras que completan correctamente cada dato.</p>
+          </div>
+        </div>
+        <div class="frame-shell">
+          <iframe class="game-frame" src="https://wordwall.net/es/embed/30e0e953a3724137ad1325829c018b99?themeId=45&amp;templateId=36&amp;fontStackId=0" title="Juego 2 Completa las ideas" loading="lazy" allowfullscreen></iframe>
+        </div>
+        <div class="game-actions">
+          <button class="btn btn-secondary" type="button" data-prev="0">← Juego anterior</button>
+          <div class="action-group">
+            <button class="btn btn-primary btn-complete" type="button" data-complete="1" aria-pressed="false">✓ Marcar como completado</button>
+            <button class="btn btn-secondary" type="button" data-next="2">Siguiente juego →</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="game-card" data-game="2" hidden>
+        <div class="game-heading">
+          <div class="game-icon" aria-hidden="true">3</div>
+          <div>
+            <p class="game-kicker">Juego 3</p>
+            <h3>Organiza lo aprendido</h3>
+            <p>Clasifica cada libro, escritor y dato en el grupo correcto.</p>
+          </div>
+        </div>
+        <div class="frame-shell">
+          <iframe class="game-frame" src="https://wordwall.net/es/embed/462ef89cd0da41be8f18d0607cd5730d?themeId=1&amp;templateId=2&amp;fontStackId=0" title="Juego 3 Organiza lo aprendido" loading="lazy" allowfullscreen></iframe>
+        </div>
+        <div class="game-actions">
+          <button class="btn btn-secondary" type="button" data-prev="1">← Juego anterior</button>
+          <div class="action-group">
+            <button class="btn btn-primary btn-complete" type="button" data-complete="2" aria-pressed="false">✓ Marcar como completado</button>
+            <button class="btn btn-secondary" type="button" data-next="3">Siguiente juego →</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="game-card" data-game="3" hidden>
+        <div class="game-heading">
+          <div class="game-icon" aria-hidden="true">4</div>
+          <div>
+            <p class="game-kicker">Juego 4</p>
+            <h3>Decisiones guiadas por los mandamientos</h3>
+            <p>Piensa cómo los valores cristianos pueden orientar tus decisiones diarias.</p>
+          </div>
+        </div>
+        <div class="frame-shell">
+          <iframe class="game-frame" src="https://wordwall.net/es/embed/acf0f2e5743b4263b4fcad7f2a995089?themeId=42&amp;templateId=70&amp;fontStackId=0" title="Juego 4 Decisiones guiadas por los mandamientos" loading="lazy" allowfullscreen></iframe>
+        </div>
+        <div class="game-actions">
+          <button class="btn btn-secondary" type="button" data-prev="2">← Juego anterior</button>
+          <button class="btn btn-primary btn-complete" type="button" data-complete="3" aria-pressed="false">✓ Marcar como completado</button>
+        </div>
+      </article>
+    </section>
+
+    <section class="finish-zone" id="final" aria-label="Finalización del repaso">
+      <div class="finish-locked" id="finishLocked">
+        <div class="finish-lock-icon" aria-hidden="true">4</div>
+        <h2 id="final-title">Tu celebración te espera</h2>
+        <p>Completa y marca los cuatro juegos. Cuando la barra llegue al final, aparecerá el botón para escribir tu nombre.</p>
+      </div>
+
+      <div class="finish-ready" id="finishReady" hidden>
+        <div class="finish-cross" aria-hidden="true">✦</div>
+        <h2>¡Terminaste los cuatro juegos!</h2>
+        <p>Has dedicado tiempo a conocer la Biblia y a pensar cómo sus enseñanzas guían nuestras decisiones.</p>
+        <button class="btn btn-gold" id="openName" type="button">Escribir mi nombre para finalizar</button>
+      </div>
+
+      <div class="name-panel" id="namePanel" hidden>
+        <div class="finish-cross" aria-hidden="true">✦</div>
+        <h2>¿Cómo te llamas?</h2>
+        <p>Escribe tu nombre para recibir tu felicitación personalizada.</p>
+        <form class="name-form" id="nameForm" autocomplete="off">
+          <label class="sr-only" for="studentName">Nombre del estudiante</label>
+          <input class="name-input" id="studentName" name="studentName" type="text" maxlength="40" required placeholder="Escribe tu nombre">
+          <button class="btn btn-primary" type="submit">Celebrar mi repaso</button>
+        </form>
+        <small class="privacy-note">Tu nombre se usa solamente en esta página y no se envía a ningún lugar.</small>
+      </div>
+
+      <div class="celebration" id="celebration" hidden>
+        <div class="finish-cross" aria-hidden="true">✓</div>
+        <h2>¡Felicidades, <span class="celebration-name" id="celebrationName"></span>!</h2>
+        <p>
+          Completaste tu repaso de <strong>Conociendo la Biblia</strong>. Qué bueno que trabajaste
+          este tema y los valores cristianos con dedicación. La Palabra de Dios puede ayudarte a
+          escoger con sabiduría, amor, respeto y verdad.
+        </p>
+        <p><strong>Vuelve aquí si necesitas seguir repasando. ¡Mucho éxito en tu examen!</strong></p>
+        <span class="final-blessing">Dios bendiga tu esfuerzo y todo lo que aprendiste.</span>
+        <div class="celebration-actions">
+          <button class="btn btn-secondary" id="practiceAgain" type="button">↻ Volver a practicar</button>
+          <button class="btn btn-gold" id="printGreeting" type="button">Imprimir mi felicitación</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      <span class="footer-cross" aria-hidden="true">✦</span>
+      <span>Ruta de repaso de Educación Cristiana · Cuarto grado</span>
+      <button class="reset-link" id="resetProgress" type="button">Borrar mi progreso</button>
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const STORAGE_KEY = "lms-biblia-victoria-v1";
+      const totalGames = 4;
+      const state = loadState();
+      const cards = [...document.querySelectorAll("[data-game]")];
+      const tabs = [...document.querySelectorAll("[data-tab]")];
+      const completeButtons = [...document.querySelectorAll("[data-complete]")];
+      const progressBar = document.getElementById("progressBar");
+      const progressCount = document.getElementById("progressCount");
+      const progressTrack = document.getElementById("progressTrack");
+      const progressLive = document.getElementById("progressLive");
+      const finishLocked = document.getElementById("finishLocked");
+      const finishReady = document.getElementById("finishReady");
+      const namePanel = document.getElementById("namePanel");
+      const celebration = document.getElementById("celebration");
+      const studentName = document.getElementById("studentName");
+      const celebrationName = document.getElementById("celebrationName");
+
+      function loadState() {
+        const fallback = { completed: [false, false, false, false], active: 0 };
+        try {
+          const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY));
+          if (!parsed || !Array.isArray(parsed.completed) || parsed.completed.length !== totalGames) return fallback;
+          return {
+            completed: parsed.completed.map(Boolean),
+            active: Number.isInteger(parsed.active) && parsed.active >= 0 && parsed.active < totalGames ? parsed.active : 0
+          };
+        } catch {
+          return fallback;
+        }
+      }
+
+      function saveState() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch {
+          /* The route remains fully usable when storage is unavailable. */
+        }
+      }
+
+      function showGame(index, shouldScroll = false) {
+        const safeIndex = Math.max(0, Math.min(totalGames - 1, Number(index)));
+        state.active = safeIndex;
+        cards.forEach((card, i) => { card.hidden = i !== safeIndex; });
+        tabs.forEach((tab, i) => {
+          if (i === safeIndex) tab.setAttribute("aria-current", "step");
+          else tab.removeAttribute("aria-current");
+        });
+        saveState();
+        if (shouldScroll) {
+          document.getElementById("route-title").scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+
+      function completedCount() {
+        return state.completed.filter(Boolean).length;
+      }
+
+      function updateUI() {
+        const count = completedCount();
+        const percent = (count / totalGames) * 100;
+        progressBar.style.width = percent + "%";
+        progressCount.textContent = count + " de " + totalGames;
+        progressTrack.setAttribute("aria-valuenow", String(count));
+        progressLive.textContent = count === totalGames
+          ? "Completaste los cuatro juegos. Ya puedes escribir tu nombre."
+          : "Has completado " + count + " de " + totalGames + " juegos.";
+
+        tabs.forEach((tab, i) => {
+          tab.classList.toggle("is-complete", state.completed[i]);
+          const number = tab.querySelector(".step-number");
+          number.textContent = state.completed[i] ? "✓" : String(i + 1);
+        });
+
+        completeButtons.forEach((button, i) => {
+          const done = state.completed[i];
+          button.setAttribute("aria-pressed", String(done));
+          button.textContent = done ? "✓ Juego completado" : "✓ Marcar como completado";
+        });
+
+        const allDone = count === totalGames;
+        finishLocked.hidden = allDone;
+        finishReady.hidden = !allDone || !namePanel.hidden || !celebration.hidden;
+      }
+
+      function markComplete(index) {
+        if (state.completed[index]) return;
+        state.completed[index] = true;
+        saveState();
+        updateUI();
+        if (completedCount() === totalGames) {
+          document.getElementById("final").scrollIntoView({ behavior: "smooth", block: "center" });
+        } else if (index < totalGames - 1) {
+          window.setTimeout(() => showGame(index + 1, true), 350);
+        }
+      }
+
+      function resetRoute() {
+        const confirmed = window.confirm("¿Quieres borrar el progreso de los cuatro juegos y comenzar nuevamente?");
+        if (!confirmed) return;
+        state.completed = [false, false, false, false];
+        state.active = 0;
+        namePanel.hidden = true;
+        celebration.hidden = true;
+        finishReady.hidden = true;
+        saveState();
+        updateUI();
+        showGame(0, true);
+      }
+
+      tabs.forEach(tab => {
+        tab.addEventListener("click", () => showGame(Number(tab.dataset.tab), true));
+      });
+
+      document.querySelectorAll("[data-next]").forEach(button => {
+        button.addEventListener("click", () => showGame(Number(button.dataset.next), true));
+      });
+
+      document.querySelectorAll("[data-prev]").forEach(button => {
+        button.addEventListener("click", () => showGame(Number(button.dataset.prev), true));
+      });
+
+      completeButtons.forEach(button => {
+        button.addEventListener("click", () => markComplete(Number(button.dataset.complete)));
+      });
+
+      document.getElementById("openName").addEventListener("click", () => {
+        finishReady.hidden = true;
+        namePanel.hidden = false;
+        window.setTimeout(() => studentName.focus(), 80);
+      });
+
+      document.getElementById("nameForm").addEventListener("submit", event => {
+        event.preventDefault();
+        const cleanName = studentName.value.trim().replace(/\s+/g, " ").slice(0, 40);
+        if (!cleanName) {
+          studentName.focus();
+          return;
+        }
+        celebrationName.textContent = cleanName;
+        namePanel.hidden = true;
+        celebration.hidden = false;
+        launchConfetti();
+        document.getElementById("final").scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+
+      document.getElementById("practiceAgain").addEventListener("click", () => {
+        celebration.hidden = true;
+        finishReady.hidden = false;
+        showGame(0, true);
+      });
+
+      document.getElementById("printGreeting").addEventListener("click", () => window.print());
+      document.getElementById("resetProgress").addEventListener("click", resetRoute);
+
+      function launchConfetti() {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const canvas = document.getElementById("confetti");
+        const context = canvas.getContext("2d");
+        const colors = ["#294c3a", "#c59b3c", "#f3dda5", "#7b4650", "#5f8c6f", "#ffffff"];
+        const pieces = [];
+        let frame;
+        let start;
+
+        function resize() {
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          canvas.width = Math.floor(window.innerWidth * dpr);
+          canvas.height = Math.floor(window.innerHeight * dpr);
+          canvas.style.width = window.innerWidth + "px";
+          canvas.style.height = window.innerHeight + "px";
+          context.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        resize();
+        for (let i = 0; i < 180; i += 1) {
+          pieces.push({
+            x: Math.random() * window.innerWidth,
+            y: -30 - Math.random() * window.innerHeight * 0.45,
+            width: 6 + Math.random() * 8,
+            height: 8 + Math.random() * 10,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            speed: 2.4 + Math.random() * 4.2,
+            drift: -1.4 + Math.random() * 2.8,
+            spin: Math.random() * Math.PI,
+            spinSpeed: -0.16 + Math.random() * 0.32
+          });
+        }
+
+        function draw(timestamp) {
+          if (!start) start = timestamp;
+          context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+          pieces.forEach(piece => {
+            piece.y += piece.speed;
+            piece.x += piece.drift;
+            piece.spin += piece.spinSpeed;
+            context.save();
+            context.translate(piece.x, piece.y);
+            context.rotate(piece.spin);
+            context.fillStyle = piece.color;
+            context.fillRect(-piece.width / 2, -piece.height / 2, piece.width, piece.height);
+            context.restore();
+          });
+          if (timestamp - start < 5200) {
+            frame = requestAnimationFrame(draw);
+          } else {
+            context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            cancelAnimationFrame(frame);
+          }
+        }
+
+        window.addEventListener("resize", resize, { once: true });
+        requestAnimationFrame(draw);
+      }
+
+      showGame(state.active);
+      updateUI();
+    })();
+  </script>
+</body>
+</html>
+
