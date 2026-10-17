@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ficha TIHA — Investigación con Perplexity</title>
+  <style>
+    :root {
+      --rojo: #d71920;
+      --rojo-oscuro: #a60f16;
+      --gris: #5f6368;
+      --gris-claro: #f4f6f8;
+      --gris-borde: #d9dee5;
+      --negro: #1f2933;
+      --azul-suave: #eef6ff;
+      --tiha: #6b4ce6;
+      --tiha-claro: #f2edff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f7fb;
+      color: var(--negro);
+      padding: 32px 16px;
+    }
+
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 15px 45px rgba(31, 41, 51, 0.10);
+      border: 1px solid #e7ebf0;
+    }
+
+    .top-banner {
+      background: linear-gradient(90deg, #ffffff 0%, #fff5f6 35%, #ffffff 100%);
+      padding: 14px 20px;
+      border-bottom: 4px solid var(--rojo);
+    }
+
+    .top-banner .banner-box {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      background: linear-gradient(90deg, #d71920 0%, #f04b50 22%, #f7f7f7 60%, #f7f7f7 100%);
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .top-banner .banner-title {
+      background: rgba(255,255,255,0.92);
+      color: #1f2933;
+      padding: 12px 26px;
+      border-radius: 999px;
+      font-size: 1.6rem;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    .header {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 22px;
+      align-items: center;
+      padding: 28px 30px 22px 30px;
+      background: #fff;
+    }
+
+    .brand-left h1 {
+      margin: 0 0 8px 0;
+      font-size: 1.9rem;
+      line-height: 1.15;
+      color: var(--negro);
+    }
+
+    .brand-left p {
+      margin: 0;
+      font-size: 1rem;
+      color: var(--gris);
+      line-height: 1.5;
+    }
+
+    .brand-right {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .decep-logo {
+      background: #fff;
+      border: 1px solid var(--gris-borde);
+      border-radius: 18px;
+      padding: 14px;
+      min-width: 240px;
+      text-align: center;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+    }
+
+    .decep-logo img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .tiha-logo {
+      background: linear-gradient(135deg, var(--tiha-claro), #ffffff);
+      border: 1px solid #d8cffd;
+      border-radius: 18px;
+      padding: 16px 18px;
+      min-width: 210px;
+      box-shadow: 0 6px 16px rgba(107, 76, 230, 0.08);
+    }
+
+    .tiha-badge {
+      display: inline-block;
+      background: var(--tiha);
+      color: white;
+      font-weight: 800;
+      letter-spacing: 1px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+    }
+
+    .tiha-logo h2 {
+      margin: 0 0 6px 0;
+      font-size: 1.1rem;
+      color: var(--tiha);
+    }
+
+    .tiha-logo p {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: #4d4d5d;
+    }
+
+    .intro {
+      margin: 0 30px 24px 30px;
+      background: var(--azul-suave);
+      border-left: 6px solid #8cbef2;
+      padding: 16px 18px;
+      border-radius: 14px;
+      color: #30435a;
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
+
+    .sheet {
+      padding: 0 30px 30px 30px;
+    }
+
+    .sheet-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .sheet-title h3 {
+      margin: 0;
+      color: var(--rojo-oscuro);
+      font-size: 1.35rem;
+    }
+
+    .sheet-title .tag {
+      background: #fff1f2;
+      color: var(--rojo-oscuro);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      border: 1px solid #ffd6da;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field label {
+      display: block;
+      font-weight: 700;
+      color: #2e3640;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .line,
+    .box {
+      width: 100%;
+      border: 2px solid var(--gris-borde);
+      background: #fff;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 0.98rem;
+      line-height: 1.55;
+    }
+
+    .line {
+      min-height: 54px;
+    }
+
+    .box {
+      min-height: 110px;
+    }
+
+    .box.large {
+      min-height: 135px;
+    }
+
+    .hint {
+      font-size: 0.88rem;
+      color: #6b7280;
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      background: #fcfcfd;
+      border: 1px dashed #cbd5e1;
+      border-radius: 16px;
+      padding: 16px 18px;
+      color: #475569;
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    .footer-note strong {
+      color: var(--negro);
+    }
+
+    .bottom-strip {
+      background: linear-gradient(90deg, var(--rojo), #f04b50);
+      color: white;
+      padding: 14px 24px;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    @media (max-width: 860px) {
+      .header {
+        grid-template-columns: 1fr;
+      }
+
+      .brand-right {
+        justify-content: flex-start;
+      }
+
+      .top-banner .banner-title {
+        font-size: 1.15rem;
+        padding: 10px 16px;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+
+      .page {
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <div class="top-banner">
+      <div class="banner-box">
+        <div class="banner-title">Gerencia de proyectos con inteligencia artificial</div>
+      </div>
+    </div>
+
+    <div class="header">
+      <div class="brand-left">
+        <h1>FICHA TIHA — INVESTIGACIÓN CON PERPLEXITY</h1>
+        <p>
+          Hoja de trabajo para documentar hallazgos, verificar fuentes y traducir la investigación
+          en decisiones éticas, estratégicas y humanizadas dentro de la gerencia de proyectos.
+        </p>
+      </div>
+
+      <div class="brand-right">
+        <div class="decep-logo">
+          <!-- Sustituye el src por la ruta de tu imagen si la vas a alojar localmente -->
+          <img src="decep_logo_uprrp.png" alt="Logotipo de la División de Educación Continua y Estudios Profesionales UPR-RP" />
+        </div>
+
+        <div class="tiha-logo">
+          <div class="tiha-badge">TIHA</div>
+          <h2>Tecnologías para la Inspiración y la Humanización del Aprendizaje</h2>
+          <p>
+            Modelo orientado a integrar IA generativa con criterio humano, reflexión ética y
+            decisiones contextualizadas.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="intro">
+      <strong>Instrucción:</strong> Luego de investigar con <strong>Perplexity</strong>, completa esta ficha en equipo.
+      El propósito es documentar qué encontraron, qué verificaron, qué validaron con juicio humano
+      y cuál es la decisión profesional recomendada.
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-title">
+        <h3>Registro de hallazgo investigativo</h3>
+        <div class="tag">Capstone · Decisiones, Riesgos y Cronograma con IA Generativa</div>
+      </div>
+
+      <div class="field">
+        <label for="riesgo">Riesgo investigado:</label>
+        <div id="riesgo" class="line"></div>
+      </div>
+
+      <div class="field">
+        <label for="hallazgo">Hallazgo principal:</label>
+        <div id="hallazgo" class="box"></div>
+        <div class="hint">Resume aquí el hallazgo más importante encontrado en Perplexity.</div>
+      </div>
+
+      <div class="field">
+        <label for="fuente">Fuente verificada (APA 7):</label>
+        <div id="fuente" class="box"></div>
+        <div class="hint">Incluye la referencia en formato APA 7ma edición.</div>
+      </div>
+
+      <div class="field">
+        <label for="validacion">Qué validó el equipo:</label>
+        <div id="validacion" class="box large"></div>
+        <div class="hint">Indiquen qué partes confirmaron, contrastaron o ajustaron con criterio humano.</div>
+      </div>
+
+      <div class="field">
+        <label for="decision">Decisión humana recomendada:</label>
+        <div id="decision" class="box large"></div>
+        <div class="hint">Expresen la decisión final recomendada por el equipo y por qué.</div>
+      </div>
+
+      <div class="footer-note">
+        <strong>Recordatorio TIHA:</strong> La IA puede acelerar la búsqueda, sintetizar información y sugerir
+        alternativas, pero la responsabilidad ética, la validación contextual y la toma de decisiones
+        críticas continúan siendo humanas.
+      </div>
+    </div>
+
+    <div class="bottom-strip">
+      Dra. Mariluz Serrano Ortiz · TIHA · División de Educación Continua y Estudios Profesionales · UPR-RP
+    </div>
+  </div>
+</body>
+</html>
+<img src="decep_logo_uprrp.png" alt="Logotipo de la División de Educación Continua y Estudios Profesionales UPR-RP" />
