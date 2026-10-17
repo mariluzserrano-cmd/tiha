@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CaribeTech · Energía que no se detiene · Ejemplo de defensa ante el Comité</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ECEFF1; --surface:#F8FAFB; --surface-2:#E1E6EA; --ink:#17222B; --ink-soft:#4A5863; --line:#C5CED5;
+  --steel:#1F4E6B; --steel-soft:#D6E3EC; --safety:#F2B705; --safety-ink:#17222B;
+  --red:#C2382E; --amber:#D98A0B; --green:#2E7D4F; --red-soft:#F6DAD7; --amber-soft:#FBEACB; --green-soft:#D7EEDF;
+  --shadow:0 1px 0 var(--line);
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121A20; --surface:#19232B; --surface-2:#22303A; --ink:#E7EDF1; --ink-soft:#A3B2BD; --line:#33434F;
+    --steel:#7FB3D5; --steel-soft:#21384A; --safety:#F2B705; --safety-ink:#17222B;
+    --red:#EF6F63; --amber:#F0A93A; --green:#5EC08A; --red-soft:#3A2220; --amber-soft:#3A2E17; --green-soft:#183326;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121A20; --surface:#19232B; --surface-2:#22303A; --ink:#E7EDF1; --ink-soft:#A3B2BD; --line:#33434F;
+  --steel:#7FB3D5; --steel-soft:#21384A; --safety:#F2B705; --safety-ink:#17222B;
+  --red:#EF6F63; --amber:#F0A93A; --green:#5EC08A; --red-soft:#3A2220; --amber-soft:#3A2E17; --green-soft:#183326;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Archivo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-variation-settings:"wdth" 100;font-size:17px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+img,svg{max-width:100%}
+a{color:var(--steel)}
+:focus-visible{outline:3px solid var(--safety);outline-offset:2px;border-radius:4px}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.narrow{max-width:68ch}
+
+/* ribbon + nav */
+.ribbon{background:var(--steel);color:#fff;font-size:14px;padding:8px 0}
+:root[data-theme="dark"] .ribbon{color:#0f1a22}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ribbon{color:#0f1a22}}
+.ribbon .wrap{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:16px;height:56px}
+.brand{font-weight:800;font-variation-settings:"wdth" 118;white-space:nowrap;font-size:15px}
+.brand span{color:var(--ink-soft);font-weight:500;font-variation-settings:"wdth" 100}
+.nav{display:flex;gap:4px;overflow-x:auto;flex:1;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{text-decoration:none;color:var(--ink-soft);font-size:14px;padding:6px 10px;border-radius:6px;white-space:nowrap}
+.nav a:hover,.nav a.on{background:var(--surface-2);color:var(--ink)}
+.btn{border:1px solid var(--ink);background:transparent;padding:8px 14px;border-radius:8px;font-weight:600;font-size:14px}
+.btn.solid{background:var(--ink);color:var(--bg)}
+.btn:hover{background:var(--surface-2)}
+.btn.solid:hover{background:var(--steel);border-color:var(--steel)}
+
+/* sections */
+section{padding:72px 0;border-bottom:1px solid var(--line)}
+.step{display:flex;align-items:baseline;gap:14px;margin:0 0 6px}
+.step b{font-variation-settings:"wdth" 125;font-weight:900;font-size:15px;background:var(--ink);color:var(--bg);padding:2px 9px;border-radius:4px}
+.step span{color:var(--ink-soft);font-size:15px}
+h1,h2,h3{line-height:1.08;margin:0}
+h1{font-size:clamp(38px,6.4vw,76px);font-weight:850;font-variation-settings:"wdth" 112;letter-spacing:-.01em;max-width:16ch}
+h2{font-size:clamp(28px,3.8vw,44px);font-weight:800;font-variation-settings:"wdth" 108;margin-bottom:14px;max-width:24ch}
+h3{font-size:20px;font-weight:700;font-variation-settings:"wdth" 104;margin-bottom:6px}
+.lead{font-size:19px;color:var(--ink-soft);max-width:62ch}
+.note{font-size:14px;color:var(--ink-soft)}
+.supuesto{display:inline-block;font-size:12.5px;font-weight:700;color:var(--amber);border:1px solid var(--amber);border-radius:999px;padding:0 8px;vertical-align:2px;white-space:nowrap}
+.dato{display:inline-block;font-size:12.5px;font-weight:700;color:var(--steel);border:1px solid var(--steel);border-radius:999px;padding:0 8px;vertical-align:2px;white-space:nowrap}
+
+/* hero */
+.hero{padding:64px 0 56px}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:end}
+@media (max-width:860px){.hero-grid{grid-template-columns:1fr}}
+.hero .kicker{font-size:15px;color:var(--ink-soft);margin-bottom:18px}
+.hero p.lead{margin-top:22px}
+.month{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px}
+.month-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.month-head strong{font-variation-settings:"wdth" 110}
+.toggle{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.toggle button{border:0;background:transparent;padding:6px 12px;font-size:14px}
+.toggle button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.days{display:grid;grid-template-columns:repeat(10,1fr);gap:5px}
+.day{aspect-ratio:1;border-radius:4px;background:var(--green-soft);border:1px solid color-mix(in srgb,var(--green) 35%,transparent);display:grid;place-items:center;font-size:11px;color:var(--ink-soft)}
+.day.out{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
+.day.backup{background:var(--safety);border-color:var(--safety);color:var(--safety-ink);font-weight:700}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:13px;color:var(--ink-soft)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.month-msg{margin-top:12px;font-size:15px;min-height:3em}
+.facts{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:28px;font-size:15px;color:var(--ink-soft)}
+.facts b{color:var(--ink);font-variation-settings:"wdth" 115;font-size:20px;display:block}
+
+/* problem */
+.problem{display:grid;grid-template-columns:1fr 220px;gap:40px;align-items:start}
+@media (max-width:760px){.problem{grid-template-columns:1fr}}
+.problem blockquote{margin:0;font-size:clamp(19px,2vw,22px);line-height:1.6;max-width:62ch;border-left:4px solid var(--steel);padding-left:22px}
+.counter{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.counter b{font-size:44px;font-variation-settings:"wdth" 120;display:block;line-height:1}
+.meter{height:8px;border-radius:4px;background:var(--surface-2);margin:10px 0 8px;overflow:hidden}
+.meter span{display:block;height:100%;background:var(--green)}
+
+/* matrix */
+.matrix-grid{display:grid;grid-template-columns:minmax(280px,440px) 1fr;gap:36px;align-items:start;margin-top:28px}
+@media (max-width:860px){.matrix-grid{grid-template-columns:1fr}}
+.matrix{display:grid;grid-template-columns:28px repeat(5,1fr);grid-template-rows:repeat(5,1fr) 28px;gap:4px;aspect-ratio:1}
+.cell{border-radius:4px;position:relative;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:4px;padding:2px}
+.cell.lo{background:var(--green-soft)} .cell.md{background:var(--amber-soft)} .cell.hi{background:var(--red-soft)}
+.axis{font-size:12px;color:var(--ink-soft);display:grid;place-items:center}
+.ylab{writing-mode:vertical-rl;transform:rotate(180deg)}
+.dot{border:2px solid var(--ink);background:var(--surface);border-radius:999px;font-size:12px;font-weight:700;padding:2px 8px;line-height:1.3}
+.dot[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.axis-caption{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-soft);margin-top:6px;padding-left:32px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px}
+.panel dl{display:grid;grid-template-columns:150px 1fr;gap:10px 16px;margin:14px 0 0}
+@media (max-width:520px){.panel dl{grid-template-columns:1fr}.panel dt{margin-top:6px}}
+.panel dt{color:var(--ink-soft);font-size:14px}
+.panel dd{margin:0}
+.score{display:inline-flex;align-items:center;gap:8px;font-weight:700}
+.score i{width:14px;height:14px;border-radius:3px;display:inline-block}
+
+/* decision */
+.tree{margin-top:28px;display:grid;grid-template-columns:240px 1fr;gap:0;align-items:stretch}
+@media (max-width:860px){.tree{grid-template-columns:1fr}}
+.root{background:var(--ink);color:var(--bg);border-radius:12px;padding:20px;align-self:center;font-weight:700;font-variation-settings:"wdth" 106;font-size:18px;line-height:1.3}
+.root small{display:block;font-weight:400;font-size:13px;opacity:.75;margin-top:8px}
+.branches{display:flex;flex-direction:column;gap:12px;padding-left:28px;border-left:2px solid var(--line);margin-left:24px}
+@media (max-width:860px){.branches{margin:16px 0 0 18px}}
+.branch{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.branch::before{content:"";position:absolute;left:-30px;top:50%;width:28px;border-top:2px solid var(--line)}
+.branch.win{border:2px solid var(--steel)}
+.branch.out{opacity:.62;border-style:dashed}
+.branch.out h3{text-decoration:line-through}
+.branch-head{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap}
+.bar{height:10px;background:var(--surface-2);border-radius:5px;overflow:hidden;margin:10px 0 6px}
+.bar span{display:block;height:100%;background:var(--steel);transition:width .35s ease}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.chip{font-size:12.5px;border-radius:999px;padding:1px 9px;background:var(--surface-2);color:var(--ink-soft)}
+.chip.ia{background:var(--steel-soft);color:var(--steel)}
+.weights{margin-top:28px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px}
+.weights-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:12px}
+@media (max-width:760px){.weights-grid{grid-template-columns:1fr 1fr}}
+.weights label{display:block;font-size:14px;font-weight:600}
+.weights input[type=range]{width:100%;accent-color:var(--steel)}
+.weights output{font-size:13px;color:var(--ink-soft)}
+.verdict{margin-top:14px;padding:12px 14px;border-radius:8px;background:var(--steel-soft);font-size:15px}
+table{border-collapse:collapse;width:100%;font-size:15px}
+.tbl{overflow-x:auto;margin-top:16px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:13px;color:var(--ink-soft);font-weight:600}
+tr:last-child td{border-bottom:0}
+.tag{font-size:12.5px;font-weight:700;border-radius:4px;padding:2px 8px;white-space:nowrap}
+.tag.g{background:var(--green-soft);color:var(--green)} .tag.a{background:var(--amber-soft);color:var(--amber)} .tag.r{background:var(--red-soft);color:var(--red)}
+
+/* plan */
+.timeline{margin-top:28px}
+.scale{display:grid;grid-template-columns:repeat(18,1fr);font-size:11.5px;color:var(--ink-soft);margin-bottom:6px}
+.scale span{border-left:1px solid var(--line);padding-left:3px;white-space:nowrap;overflow:hidden}
+.track{display:grid;grid-template-columns:repeat(18,1fr);gap:0;row-gap:8px}
+.phase{border:0;text-align:left;padding:10px 12px;border-radius:8px;background:var(--steel-soft);color:var(--ink);font-size:14px;font-weight:600;line-height:1.25;min-height:54px}
+.phase[aria-expanded="true"]{background:var(--steel);color:var(--bg)}
+.phase small{display:block;font-weight:400;opacity:.8}
+.phase-detail{margin-top:16px}
+.phase-detail dl{display:grid;grid-template-columns:180px 1fr;gap:10px 16px;margin:12px 0 0}
+@media (max-width:620px){.phase-detail dl{grid-template-columns:1fr}.scale{display:none}.track{grid-template-columns:1fr}.phase{grid-column:auto!important}}
+.phase-detail dt{color:var(--ink-soft);font-size:14px}
+.phase-detail dd{margin:0}
+.kpis{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.kpi{border:1px solid var(--line);border-radius:8px;padding:10px 14px;background:var(--surface);font-size:14px}
+.kpi b{display:block;font-size:22px;font-variation-settings:"wdth" 118}
+
+/* stakeholders */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-top:24px}
+.tabs button{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 12px;font-size:14px;text-align:left;line-height:1.2}
+.tabs button small{display:block;color:var(--ink-soft);font-size:12px}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tabs button[aria-selected="true"] small{color:inherit;opacity:.75}
+.stake{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+@media (max-width:860px){.stake{grid-template-columns:1fr}}
+.stake > div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px}
+.stake h3{font-size:16px;color:var(--ink-soft);font-weight:600}
+.stake .say{font-size:18px;font-weight:600;font-variation-settings:"wdth" 104;line-height:1.4}
+
+/* petition */
+.petition{position:relative;background:var(--surface);border-radius:14px;padding:32px;margin-top:24px;border:1px solid var(--line)}
+.petition::before{content:"";position:absolute;inset:0 0 auto 0;height:12px;border-radius:14px 14px 0 0;background:repeating-linear-gradient(135deg,var(--safety) 0 14px,var(--safety-ink) 14px 28px)}
+.petition ol{margin:16px 0 0;padding-left:22px;font-size:19px}
+.petition li{margin-bottom:12px}
+.qs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+@media (max-width:860px){.qs{grid-template-columns:1fr}}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;text-align:left;width:100%;display:flex;flex-direction:column;gap:8px;min-height:150px}
+.q .who{font-size:13px;color:var(--ink-soft)}
+.q .ask{font-weight:700;font-size:16.5px;line-height:1.35}
+.q .ans{display:none;font-size:15px;color:var(--ink);border-top:1px solid var(--line);padding-top:8px}
+.q[aria-expanded="true"] .ans{display:block}
+.q .hint{font-size:13px;color:var(--steel);margin-top:auto}
+.q[aria-expanded="true"] .hint{display:none}
+
+/* ethics */
+.sema{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+@media (max-width:860px){.sema{grid-template-columns:1fr}}
+.light{border-radius:10px;padding:18px;border:1px solid var(--line);background:var(--surface)}
+.light h3::before{content:"";display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:8px;vertical-align:-1px}
+.light.g h3::before{background:var(--green)} .light.a h3::before{background:var(--amber)} .light.r h3::before{background:var(--red)}
+.light ul{margin:8px 0 0;padding-left:18px;font-size:15px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:28px}
+@media (max-width:860px){.cols{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px}
+.card .fill{color:var(--ink-soft);background:var(--surface-2);border-radius:4px;padding:0 4px}
+.card dl{margin:10px 0 0}
+.card dt{font-size:14px;color:var(--ink-soft);margin-top:10px}
+.card dd{margin:2px 0 0}
+.quote{margin:44px 0 0;padding:28px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.quote p{font-size:clamp(22px,2.6vw,30px);font-weight:600;font-variation-settings:"wdth" 96;line-height:1.3;margin:0;max-width:34ch}
+.quote cite{display:block;margin-top:10px;font-style:normal;color:var(--ink-soft);font-size:15px}
+
+/* route */
+.route{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:8px}
+.route label{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer}
+.route input{width:20px;height:20px;margin-top:2px;accent-color:var(--green);flex:none}
+.route b{font-weight:700}
+.route .tool{color:var(--ink-soft);font-size:14px;display:block}
+.route input:checked + span b{text-decoration:line-through;text-decoration-color:var(--green)}
+.progress{display:flex;align-items:center;gap:12px;margin-top:18px;font-size:15px}
+.progress .meter{flex:1;margin:0}
+
+footer{padding:56px 0 72px}
+footer .sig{margin-top:22px;color:var(--ink-soft);font-size:15px}
+
+/* presentation mode */
+.pager{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30;display:none;gap:6px;align-items:center;background:var(--ink);color:var(--bg);border-radius:10px;padding:6px}
+.pager button{border:0;background:transparent;color:inherit;padding:6px 10px;font-size:16px;border-radius:6px}
+.pager button:hover{background:color-mix(in srgb,var(--bg) 18%,transparent)}
+.pager span{font-size:14px;padding:0 6px;min-width:52px;text-align:center}
+html.presenting{scroll-snap-type:y proximity}
+html.presenting section,html.presenting header.hero{min-height:calc(100vh - 56px);scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center}
+html.presenting .pager{display:flex}
+html.presenting .ribbon{display:none}
+</style>
+</head>
+<body>
+
+<div class="ribbon"><div class="wrap">
+  <span>Ejemplo ilustrativo para la defensa del 31 de octubre. Grupo ficticio; las cifras marcadas como supuesto no provienen del caso.</span>
+</div></div>
+
+<div class="topbar"><div class="wrap">
+  <div class="brand">CaribeTech <span>Grupo ejemplo</span></div>
+  <nav class="nav" aria-label="Secciones">
+    <a href="#problema">Problema</a>
+    <a href="#riesgos">Riesgos</a>
+    <a href="#decision">Recomendación</a>
+    <a href="#plan">Plan</a>
+    <a href="#comite">El Comité</a>
+    <a href="#peticion">Petición</a>
+    <a href="#etica">Ética e IA</a>
+    <a href="#ruta">Cómo se construyó</a>
+  </nav>
+  <button class="btn solid" id="presentBtn" type="button">Presentar</button>
+</div></div>
+
+<header class="hero" id="inicio">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="kicker">Propuesta al Comité Ejecutivo de CaribeTech Manufacturing, LLC · Bayamón, Puerto Rico</p>
+      <h1>Energía que no se detiene para una planta que no puede detenerse</h1>
+      <p class="lead">Recomendamos proteger primero las cargas críticas con baterías y luego incorporar energía solar por etapas, sin interrumpir la producción. Hoy pedimos autorización para comenzar el diagnóstico de carga.</p>
+      <div class="facts">
+        <div><b>$2.5 M</b>inversión aprobada</div>
+        <div><b>18 meses</b>dic. 2025 – may. 2027</div>
+        <div><b>2 al mes</b>interrupciones eléctricas</div>
+        <div><b>−40 %</b>meta de consumo energético neto</div>
+      </div>
+    </div>
+    <div class="month" aria-labelledby="monthTitle">
+      <div class="month-head">
+        <strong id="monthTitle">Un mes típico en la planta</strong>
+        <div class="toggle" role="group" aria-label="Escenario">
+          <button type="button" aria-pressed="true" data-scn="hoy">Hoy</button>
+          <button type="button" aria-pressed="false" data-scn="plan">Con el plan</button>
+        </div>
+      </div>
+      <div class="days" id="days" aria-hidden="true"></div>
+      <div class="legend">
+        <span><i style="background:var(--green-soft);border:1px solid var(--green)"></i>Producción normal</span>
+        <span><i style="background:var(--red)"></i>Interrupción eléctrica</span>
+        <span><i style="background:var(--safety)"></i>Respaldo activo</span>
+      </div>
+      <p class="month-msg" id="monthMsg" aria-live="polite"></p>
+    </div>
+  </div>
+</header>
+
+<section id="problema">
+  <div class="wrap">
+    <p class="step"><b>1</b><span>El problema, en un máximo de 100 palabras</span></p>
+    <h2>Sin energía confiable, ninguna otra mejora se sostiene</h2>
+    <div class="problem">
+      <blockquote id="problemText">CaribeTech fabrica componentes metálicos de alta precisión para dispositivos médicos en Bayamón. La planta sufre, en promedio, dos interrupciones eléctricas al mes, con tarifas industriales inestables y al alza, y no tiene monitoreo energético inteligente. Cada interrupción detiene líneas, pone en riesgo la trazabilidad que exigen la FDA y sus clientes, y llega en el peor momento: la demanda creció entre 30 y 35 % y el 80 % de los ingresos depende de clientes en Estados Unidos que piden reducir costos. Si la energía no es confiable, ninguna otra mejora del proyecto se sostiene.</blockquote>
+      <aside class="counter" aria-live="polite">
+        <b id="wordCount">0</b>
+        <span>palabras de 100</span>
+        <div class="meter"><span id="wordMeter" style="width:0"></span></div>
+        <p class="note" style="margin:0">Cada dato viene del caso. Si algo no está en el caso, se marca como supuesto.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="riesgos">
+  <div class="wrap">
+    <p class="step"><b>2</b><span>Riesgos priorizados: IA más criterio profesional</span></p>
+    <h2>Cinco riesgos del caso, ordenados por probabilidad e impacto</h2>
+    <p class="lead">Selecciona un riesgo para ver qué dice el caso, quién responde por él y qué señal nos avisa a tiempo. Las puntuaciones son <span class="supuesto">supuesto ilustrativo</span>: cada grupo debe justificarlas con sus fichas de evidencia.</p>
+    <div class="matrix-grid">
+      <div>
+        <div class="matrix" id="matrix" role="group" aria-label="Matriz de probabilidad e impacto"></div>
+        <div class="axis-caption"><span>Probabilidad baja</span><span>alta</span></div>
+      </div>
+      <div class="panel" id="riskPanel" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section id="decision">
+  <div class="wrap">
+    <p class="step"><b>3</b><span>La recomendación: árbol de decisión híbrido</span></p>
+    <h2>Tres caminos ante las interrupciones eléctricas, evaluados con criterios explícitos</h2>
+    <p class="lead">La IA propuso alternativas; el equipo descartó una, ajustó las puntuaciones con evidencia y decidió. Mueve los pesos de los criterios y observa cómo cambia la recomendación: en la defensa, ustedes deben explicar por qué eligieron esos pesos.</p>
+
+    <div class="tree">
+      <div class="root">¿Cómo protegemos la producción ante las interrupciones eléctricas?<small>Nodo de decisión del riesgo de energía</small></div>
+      <div class="branches" id="branches"></div>
+    </div>
+
+    <div class="weights">
+      <h3>Pesos de los criterios</h3>
+      <p class="note" style="margin:0">Los cinco criterios del prompt de trabajo de la clase. Puntuaciones de 1 a 5 por alternativa: <span class="supuesto">supuesto ilustrativo</span></p>
+      <div class="weights-grid" id="weights"></div>
+      <div class="verdict" id="verdict" aria-live="polite"></div>
+    </div>
+
+    <h3 style="margin-top:36px">Segunda opinión: Claude y ChatGPT, y el equipo decide</h3>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Sugerencia de la IA</th><th>Origen</th><th>Clasificación del equipo</th><th>Por qué</th></tr></thead>
+        <tbody>
+          <tr><td>Priorizar baterías para inspección por visión artificial y trazabilidad digital</td><td>Claude</td><td><span class="tag g">Útil e implementable</span></td><td>Protege lo que exigen la FDA y los clientes; entra al plan como Fase 2.</td></tr>
+          <tr><td>Un costo de instalación solar por vatio, sin fuente</td><td>ChatGPT</td><td><span class="tag a">Requiere verificación</span></td><td>Plausible, pero sin fuente. Queda como dato por validar con un proveedor.</td></tr>
+          <tr><td>Trasladar la producción a otra planta durante la instalación</td><td>ChatGPT</td><td><span class="tag r">Impracticable</span></td><td>El caso describe una sola planta en Bayamón.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="plan">
+  <div class="wrap">
+    <p class="step"><b>4</b><span>El plan: fases, hitos, alertas y contingencias</span></p>
+    <h2>Cuatro fases dentro de los 18 meses, sin detener la planta</h2>
+    <p class="lead">Prueba de calidad de la clase: cada respuesta al riesgo se convierte en un paquete de trabajo con dueño, fecha y señal de alerta. Selecciona una fase.</p>
+    <div class="timeline">
+      <div class="scale" id="scale"></div>
+      <div class="track" id="track"></div>
+      <div class="panel phase-detail" id="phaseDetail" aria-live="polite"></div>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><b>−40 %</b>consumo energético neto <span class="dato">dato del caso</span></div>
+      <div class="kpi"><b>100 %</b>trazabilidad digital de procesos críticos <span class="dato">dato del caso</span></div>
+      <div class="kpi"><b>0</b>paradas de inspección por interrupción eléctrica <span class="supuesto">meta del grupo</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="comite">
+  <div class="wrap">
+    <h2>Convencer al Comité: a cada quien, su argumento</h2>
+    <p class="lead">Un mismo proyecto se defiende distinto ante cada persona. El día de la defensa, el Prof. Leonardo Morales y la Dra. Mariluz Serrano Ortiz asumirán estos roles. Elige a quién le hablas.</p>
+    <div class="tabs" role="tablist" id="tabs" aria-label="Partes interesadas"></div>
+    <div class="stake" id="stake" role="tabpanel"></div>
+  </div>
+</section>
+
+<section id="peticion">
+  <div class="wrap">
+    <p class="step"><b>5</b><span>La petición: qué necesitamos aprobar hoy</span></p>
+    <h2>Tres decisiones para el Comité</h2>
+    <div class="petition">
+      <ol>
+        <li>Autorizar el inicio de la Fase 1, diagnóstico de carga y cargas críticas, con la Ing. Melissa Vega como responsable.</li>
+        <li>Autorizar a Compras, bajo Rafael Méndez, a solicitar cotizaciones de baterías a proveedores locales y domésticos para reducir el riesgo de aranceles y de nacionalización de 10 a 18 semanas.</li>
+        <li>Fijar un punto de decisión del Comité al cierre de la Fase 1, con costos reales cotizados antes de comprometer la inversión solar.</li>
+      </ol>
+      <p class="note" style="margin:14px 0 0">No pedimos aprobar montos que aún no hemos validado. <span class="supuesto">Costo de instalación por cotizar</span></p>
+    </div>
+
+    <h3 style="margin-top:40px">Ensayo: las preguntas difíciles del Comité</h3>
+    <p class="note" style="margin:0">Practiquen en voz alta antes de mirar la pista.</p>
+    <div class="qs" id="qs"></div>
+  </div>
+</section>
+
+<section id="etica">
+  <div class="wrap">
+    <h2>Ética y uso transparente de la IA</h2>
+    <p class="lead">El semáforo de decisiones del gerente de proyectos, aplicado a este riesgo.</p>
+    <div class="sema">
+      <div class="light g"><h3>Verde: la IA asiste</h3><ul><li>Lluvia de ideas de riesgos energéticos</li><li>Formato de la matriz y de las tablas</li><li>Resumen de nuestras propias fichas</li></ul></div>
+      <div class="light a"><h3>Amarillo: la IA propone, nosotros validamos</h3><ul><li>Puntuaciones de probabilidad e impacto</li><li>Alternativas del árbol de decisión</li><li>Cronograma preliminar por fases</li></ul></div>
+      <div class="light r"><h3>Rojo: decisión humana</h3><ul><li>Aprobación del presupuesto</li><li>Cambios de turnos y funciones del personal</li><li>Compromisos con la FDA y con clientes</li></ul></div>
+    </div>
+
+    <div class="cols">
+      <div class="card">
+        <h3>Ficha de evidencia</h3>
+        <p class="note" style="margin:0">Plantilla. Cada grupo la completa con fuentes que abrió y leyó.</p>
+        <dl>
+          <dt>Riesgo</dt><dd>Energía: interrupciones del servicio y tarifas inestables</dd>
+          <dt>Hallazgo principal</dt><dd><span class="fill">[Qué dice la evidencia sobre energía solar con baterías en manufactura]</span></dd>
+          <dt>Fuentes en APA 7</dt><dd><span class="fill">[Fuente 1 verificada]</span><br><span class="fill">[Fuente 2 verificada]</span></dd>
+          <dt>Cómo cambia nuestro estimado</dt><dd><span class="fill">[Antes: P y I. Después: P y I. Por qué.]</span></dd>
+          <dt>Herramientas y verificación</dt><dd><span class="fill">[Perplexity, Connected Papers, SciSpace o AnswerThis, y qué verificamos nosotros]</span></dd>
+        </dl>
+      </div>
+      <div class="card">
+        <h3>Declarativa de uso de IA</h3>
+        <p style="margin-top:10px">Utilizamos Claude (Anthropic) para proponer alternativas del árbol de decisión sobre el riesgo energético de CaribeTech, y ChatGPT como segunda opinión. Claude sugirió tres alternativas; conservamos dos, descartamos una por no tener base en el caso y ajustamos las puntuaciones según nuestras fichas de evidencia. El costo de instalación quedó señalado como supuesto por validar con un proveedor. La recomendación final y la petición al Comité son decisión del equipo.</p>
+        <p class="note">Referencia: Anthropic. (2026). <i>Claude</i> (versión del [fecha de uso]) [Modelo de lenguaje de gran tamaño]. https://claude.ai/</p>
+      </div>
+    </div>
+
+    <figure class="quote">
+      <p>“La inteligencia artificial no reemplaza al ser humano; lo potencia para trascender.”</p>
+      <cite>Metodología TIHA, Dra. Mariluz Serrano Ortiz</cite>
+    </figure>
+  </div>
+</section>
+
+<section id="ruta">
+  <div class="wrap">
+    <h2>Cómo se construyó esta propuesta</h2>
+    <p class="lead">El sitio es lo último. Primero va el andamiaje de investigación y análisis. Marquen cada paso según lo completen.</p>
+    <ol class="route" id="route"></ol>
+    <div class="progress"><span id="routeLabel">0 de 9 pasos</span><div class="meter"><span id="routeMeter" style="width:0"></span></div></div>
+
+    <figure class="quote">
+      <p>“Cuando integramos la inteligencia artificial con intención humanizadora, no solo aprendemos con ella, aprendemos a ser más nosotros mismos.”</p>
+      <cite>TIHA (2026)</cite>
+    </figure>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap narrow">
+    <p class="note">Caso: Modernización Integral de Planta en CaribeTech Manufacturing, LLC. Certificado Profesional en Gerencia de Proyectos con IA, UPR Río Piedras, DECEP. Lesson AI-1 con el Prof. Leonardo Morales.</p>
+    <p style="font-size:20px;font-weight:600;margin:24px 0 0">“No es usar más tecnología, es usar tecnología para vivir mejor.”</p>
+    <p class="sig">Dra. Mariluz Serrano Ortiz, Ed.D.<br>Modelo TIHA · UPR Río Piedras · <a href="mailto:mariluz.serrano@upr.edu">mariluz.serrano@upr.edu</a></p>
+  </div>
+</footer>
+
+<div class="pager" aria-label="Navegación de la presentación">
+  <button type="button" id="prevBtn" aria-label="Sección anterior">‹</button>
+  <span id="pageNum">1 / 9</span>
+  <button type="button" id="nextBtn" aria-label="Sección siguiente">›</button>
+  <button type="button" id="exitBtn" aria-label="Salir del modo presentación">Salir</button>
+</div>
+
+<script>
+(function(){
+  // ---------- Hero month ----------
+  const days=document.getElementById('days'), msg=document.getElementById('monthMsg');
+  const outages=[9,23];
+  for(let d=1;d<=30;d++){const c=document.createElement('div');c.className='day';c.textContent=d;c.dataset.d=d;days.appendChild(c);}
+  function scenario(s){
+    document.querySelectorAll('[data-scn]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.scn===s));
+    days.querySelectorAll('.day').forEach(c=>{
+      c.classList.remove('out','backup');
+      if(outages.includes(+c.dataset.d)) c.classList.add(s==='hoy'?'out':'backup');
+    });
+    msg.textContent = s==='hoy'
+      ? 'Dos días al mes la línea se detiene, la inspección se interrumpe y los registros de trazabilidad quedan incompletos.'
+      : 'Las baterías sostienen las cargas críticas: inspección, trazabilidad y equipos de precisión siguen operando mientras regresa el servicio.';
+  }
+  document.querySelectorAll('[data-scn]').forEach(b=>b.addEventListener('click',()=>scenario(b.dataset.scn)));
+  scenario('hoy');
+
+  // ---------- Word count ----------
+  const words=document.getElementById('problemText').textContent.trim().split(/\s+/).length;
+  document.getElementById('wordCount').textContent=words;
+  const m=document.getElementById('wordMeter');
+  m.style.width=Math.min(100,words)+'%';
+  if(words>100) m.style.background='var(--red)';
+
+  // ---------- Risk matrix ----------
+  const risks=[
+    {id:'energia',name:'Energía',p:5,i:4,caso:'Tarifas eléctricas inestables y al alza; promedio de dos interrupciones al mes con impacto operativo directo; sin monitoreo inteligente.',owner:'Ing. Melissa Vega, Ingeniería de Planta',alert:'Más de una parada de inspección en el mes o un registro de trazabilidad incompleto tras una interrupción.',resp:'Mitigar: baterías para cargas críticas y solar por etapas. Es el riesgo que este grupo eligió para el árbol de decisión.',origen:'La IA propuso la categoría; el equipo subió la probabilidad a 5 con la frecuencia que da el caso.'},
+    {id:'adq',name:'Adquisiciones',p:4,i:4,caso:'Aranceles de 15 a 25 % a maquinaria de Asia y Europa; nacionalización que pasó de 10 a 18 semanas; presión del Buy American Act.',owner:'Rafael Méndez, Compras',alert:'Cotización sin fecha firme de entrega o tiempo de entrega mayor de 18 semanas.',resp:'Mitigar: priorizar proveedores locales y domésticos, y aprovechar los incentivos de Ley 60 a la inversión local.',origen:'Sugerido por la IA y validado contra la sección V del caso.'},
+    {id:'personas',name:'Personas',p:4,i:3,caso:'Resistencia al cambio por temor a la automatización y a perder empleos; brecha generacional entre ingeniería y técnicos de línea.',owner:'Lourdes Barreto, Recursos Humanos',alert:'Baja asistencia a las capacitaciones o quejas recurrentes de supervisores.',resp:'Mitigar: involucrar a técnicos con experiencia como mentores del nuevo sistema y comunicar que la energía protege empleos, no los reemplaza.',origen:'El equipo añadió la estrategia de mentoría; la IA solo listó el riesgo.'},
+    {id:'cumpl',name:'Cumplimiento',p:3,i:5,caso:'Hallazgos de la FDA y de clientes en seguridad y documentación; transición a ISO 45001; nuevas auditorías en 2026.',owner:'Ms. Jennifer Smith, Calidad',alert:'Cualquier desviación de proceso sin registro durante una interrupción eléctrica.',resp:'Mitigar: cada cambio eléctrico pasa por control de cambios y actualización de SOPs.',origen:'El impacto 5 es criterio del equipo: un hallazgo regulatorio puede costar contratos.'},
+    {id:'mercado',name:'Mercado',p:3,i:3,caso:'Competidores en México y Costa Rica con costos laborales menores; clientes que exigen reducir costos para renovar contratos.',owner:'Dra. Ana M. Torres, Sponsor',alert:'Solicitud formal de un cliente para renegociar precios.',resp:'Aceptar y vigilar: la reducción de consumo energético apoya el argumento de costos ante clientes.',origen:'Propuesto por la IA; el equipo lo dejó como riesgo vigilado.'}
+  ];
+  const level=s=>s>=15?'hi':s>=8?'md':'lo';
+  const matrix=document.getElementById('matrix'), panel=document.getElementById('riskPanel');
+  const ylab=document.createElement('div');ylab.className='axis ylab';ylab.style.gridRow='1 / span 5';ylab.textContent='Impacto';matrix.appendChild(ylab);
+  for(let imp=5;imp>=1;imp--){
+    for(let p=1;p<=5;p++){
+      const c=document.createElement('div');c.className='cell '+level(p*imp);
+      c.style.gridRow=(6-imp);c.style.gridColumn=(p+1);
+      risks.filter(r=>r.p===p&&r.i===imp).forEach(r=>{
+        const b=document.createElement('button');b.type='button';b.className='dot';b.textContent=r.name;b.dataset.id=r.id;
+        b.setAttribute('aria-pressed','false');b.setAttribute('aria-label',r.name+': probabilidad '+r.p+', impacto '+r.i);
+        b.addEventListener('click',()=>showRisk(r.id));c.appendChild(b);
+      });
+      matrix.appendChild(c);
+    }
+  }
+  const xl=document.createElement('div');xl.className='axis';xl.style.gridColumn='2 / span 5';xl.style.gridRow='6';xl.textContent='Probabilidad';matrix.appendChild(xl);
+  const colorOf=s=>({hi:'var(--red)',md:'var(--amber)',lo:'var(--green)'})[level(s)];
+  function showRisk(id){
+    const r=risks.find(x=>x.id===id), s=r.p*r.i;
+    matrix.querySelectorAll('.dot').forEach(d=>d.setAttribute('aria-pressed',d.dataset.id===id));
+    panel.innerHTML=`<h3>${r.name}</h3>
+      <span class="score"><i style="background:${colorOf(s)}"></i>Puntuación ${s} de 25 (P ${r.p} × I ${r.i})</span> <span class="supuesto">supuesto ilustrativo</span>
+      <dl>
+        <dt>Lo que dice el caso</dt><dd>${r.caso}</dd>
+        <dt>Dueño</dt><dd>${r.owner}</dd>
+        <dt>Alerta temprana</dt><dd>${r.alert}</dd>
+        <dt>Respuesta</dt><dd>${r.resp}</dd>
+        <dt>IA y criterio</dt><dd>${r.origen}</dd>
+      </dl>`;
+  }
+  showRisk('energia');
+
+  // ---------- Decision tree ----------
+  const criteria=['Costo','Tiempo','Calidad','Equipo','Ética'];
+  const alts=[
+    {id:'A',name:'Baterías para cargas críticas y solar por etapas',s:[3,3,5,4,5],chips:['Propuesta por Claude','Ajustada por el equipo'],why:'Protege la trazabilidad, se alinea con los incentivos de Ley 60 y estatales para solar y baterías, y aporta a la meta de −40 % en consumo neto.'},
+    {id:'B',name:'Generador de respaldo',s:[4,5,3,3,2],chips:['Propuesta por Claude','Se conserva como contingencia'],why:'Rápido de instalar, pero no reduce el consumo ni el costo energético, y añade emisiones y ruido en la planta.'},
+    {id:'C',name:'Aceptar el riesgo y mantener la operación actual',s:[5,5,1,2,2],chips:['Añadida por el equipo como línea base'],why:'No requiere inversión inicial, pero mantiene las paradas y los hallazgos de auditoría.'}
+  ];
+  const discarded={name:'Negociar un acuerdo con la empresa de energía',why:'Descartada por el equipo: sugerida por la IA, sin base en el caso.'};
+  const weights=[20,20,20,20,20];
+  const wbox=document.getElementById('weights');
+  criteria.forEach((c,k)=>{
+    const d=document.createElement('div');
+    d.innerHTML=`<label for="w${k}">${c}</label><input type="range" id="w${k}" min="0" max="50" step="5" value="${weights[k]}"><output id="o${k}"></output>`;
+    wbox.appendChild(d);
+    d.querySelector('input').addEventListener('input',e=>{weights[k]=+e.target.value;renderTree();});
+  });
+  function renderTree(){
+    const total=weights.reduce((a,b)=>a+b,0)||1;
+    criteria.forEach((c,k)=>document.getElementById('o'+k).textContent=Math.round(weights[k]/total*100)+' % del peso');
+    const scored=alts.map(a=>({...a,score:a.s.reduce((acc,v,k)=>acc+v*weights[k],0)/total}));
+    const best=scored.reduce((x,y)=>y.score>x.score?y:x);
+    const br=document.getElementById('branches');
+    br.innerHTML=scored.map(a=>`
+      <div class="branch ${a.id===best.id?'win':''}">
+        <div class="branch-head"><h3>${a.id}. ${a.name}</h3><strong>${a.score.toFixed(2)} / 5</strong></div>
+        <div class="bar"><span style="width:${a.score/5*100}%"></span></div>
+        <p class="note" style="margin:0">${a.why}</p>
+        <div class="chips">${a.chips.map(c=>`<span class="chip ${c.includes('Claude')?'ia':''}">${c}</span>`).join('')}</div>
+      </div>`).join('')+`
+      <div class="branch out"><h3>${discarded.name}</h3><p class="note" style="margin:4px 0 0">${discarded.why}</p></div>`;
+    const v=document.getElementById('verdict');
+    v.textContent = best.id==='A'
+      ? 'Con estos pesos gana la alternativa A. Es la recomendación del grupo, con el generador como contingencia temporal en la Fase 2.'
+      : `Con estos pesos gana la alternativa ${best.id}. Si el Comité solo valora costo y tiempo, A pierde: por eso la defensa debe explicar el peso de la calidad, el equipo y la ética.`;
+  }
+  renderTree();
+
+  // ---------- Plan ----------
+  const months=['dic','ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic','ene','feb','mar','abr','may'];
+  const scale=document.getElementById('scale');
+  months.forEach((mo,k)=>{const s=document.createElement('span');s.textContent=mo+((k===0||k===1||k===13)?(k===0?' 25':' '+(k===1?'26':'27')):'');scale.appendChild(s);});
+  const phases=[
+    {n:'Fase 1',t:'Diagnóstico de carga',from:1,to:3,win:'dic. 2025 – feb. 2026',owner:'Ing. Melissa Vega, Ingeniería de Planta',work:'Medir el consumo por área e identificar las cargas críticas: inspección por visión artificial, trazabilidad y equipos de precisión.',hito:'Mapa de cargas críticas aprobado por el Comité (punto de decisión).',alert:'Datos de consumo incompletos por más de dos semanas.',cont:'Instalar medidores temporales por área.'},
+    {n:'Fase 2',t:'Respaldo de cargas críticas',from:4,to:8,win:'mar. – jul. 2026',owner:'Rafael Méndez, Compras, con Ingeniería de Planta',work:'Cotizar, adquirir e instalar baterías para las cargas críticas, con prioridad a proveedores locales y domésticos.',hito:'Inspección y trazabilidad operan durante una interrupción real o simulada.',alert:'Tiempo de entrega del proveedor mayor de 18 semanas.',cont:'Generador de alquiler temporal (alternativa B) hasta completar la instalación.'},
+    {n:'Fase 3',t:'Solar por etapas',from:9,to:15,win:'ago. 2026 – feb. 2027',owner:'Ing. Luis A. Martínez, COO, con Ingeniería de Planta',work:'Instalar la energía solar por secciones del techo, en ventanas de baja producción, coordinadas con el nuevo layout Lean.',hito:'Primera sección conectada sin detener ninguna línea.',alert:'Atraso en permisos o interconexión mayor de 30 días.',cont:'Resecuenciar las secciones y adelantar el monitoreo de la Fase 4.'},
+    {n:'Fase 4',t:'Monitoreo, capacitación y cierre',from:16,to:18,win:'mar. – may. 2027',owner:'Lourdes Barreto, Recursos Humanos, y Ms. Jennifer Smith, Calidad',work:'Monitoreo energético inteligente, SOPs actualizados y capacitación del personal técnico, con mentores de mayor experiencia.',hito:'Informe de cierre que mide el consumo neto contra la meta de −40 %.',alert:'Menos del 80 % del personal clave capacitado un mes antes del cierre.',cont:'Sesiones adicionales en turnos y guías breves en cada estación.'}
+  ];
+  const track=document.getElementById('track'), detail=document.getElementById('phaseDetail');
+  phases.forEach((p,k)=>{
+    const b=document.createElement('button');b.type='button';b.className='phase';
+    b.style.gridColumn=p.from+' / '+(p.to+1);
+    b.innerHTML=`${p.n}: ${p.t}<small>${p.win}</small>`;
+    b.setAttribute('aria-expanded','false');b.setAttribute('aria-controls','phaseDetail');
+    b.addEventListener('click',()=>showPhase(k));track.appendChild(b);
+  });
+  function showPhase(k){
+    const p=phases[k];
+    track.querySelectorAll('.phase').forEach((b,j)=>b.setAttribute('aria-expanded',j===k));
+    detail.innerHTML=`<h3>${p.n}: ${p.t}</h3><span class="note">${p.win}</span> <span class="supuesto">fechas propuestas por el grupo</span>
+      <dl><dt>Paquete de trabajo</dt><dd>${p.work}</dd><dt>Dueño</dt><dd>${p.owner}</dd><dt>Hito</dt><dd>${p.hito}</dd><dt>Alerta temprana</dt><dd>${p.alert}</dd><dt>Contingencia</dt><dd>${p.cont}</dd></dl>`;
+  }
+  showPhase(0);
+
+  // ---------- Stakeholders ----------
+  const people=[
+    {who:'Dra. Ana M. Torres',role:'Project Sponsor',worry:'Que el proyecto cumpla la promesa a la Junta: crecimiento sostenible y preparación para las auditorías de 2026.',show:'El vínculo directo entre energía confiable, trazabilidad y las auditorías. Sin respaldo eléctrico, la trazabilidad digital no llega al 100 %.',say:'“Esta fase protege la meta que usted firmó ante la Junta.”'},
+    {who:'Mr. Robert Williams',role:'CFO',worry:'Gastar sin retorno claro y comprometer el presupuesto de $2.5 M antes de tener costos reales.',show:'Una petición por fases con punto de decisión, cotizaciones reales antes de la inversión solar y los incentivos de Ley 60 y estatales como fuente de apoyo.',say:'“No le pedimos un cheque en blanco; le pedimos datos para decidir.”'},
+    {who:'Ing. Luis A. Martínez',role:'COO',worry:'Detener líneas de producción durante la instalación, con una demanda que creció entre 30 y 35 %.',show:'Instalación por secciones en ventanas de baja producción y respaldo de cargas críticas antes de tocar el sistema eléctrico principal.',say:'“La planta no se detiene para modernizarse; se moderniza para no detenerse.”'},
+    {who:'Ms. Jennifer Smith',role:'Calidad',worry:'Que un cambio eléctrico afecte procesos validados ante la FDA y la certificación ISO 13485.',show:'Control de cambios en cada fase, SOPs actualizados y un registro de trazabilidad que no se pierde durante las interrupciones.',say:'“Cada cambio pasa primero por su control de calidad.”'},
+    {who:'Lourdes Barreto y el personal',role:'Recursos Humanos y operadores',worry:'Temor a la automatización y a perder empleos; desconfianza por cambios anteriores.',show:'Técnicos con experiencia como mentores del sistema nuevo, capacitación cofinanciada por el DTRH y un mensaje claro: la energía estable protege los turnos.',say:'“Su experiencia es la que hace funcionar el sistema nuevo.”'}
+  ];
+  const tabs=document.getElementById('tabs'), stake=document.getElementById('stake');
+  people.forEach((p,k)=>{
+    const b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.id='tab'+k;
+    b.innerHTML=`${p.who}<small>${p.role}</small>`;b.addEventListener('click',()=>showPerson(k));
+    b.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();const n=(k+(e.key==='ArrowRight'?1:-1)+people.length)%people.length;showPerson(n);document.getElementById('tab'+n).focus();}});
+    tabs.appendChild(b);
+  });
+  function showPerson(k){
+    const p=people[k];
+    tabs.querySelectorAll('[role=tab]').forEach((b,j)=>{b.setAttribute('aria-selected',j===k);b.tabIndex=j===k?0:-1;});
+    stake.setAttribute('aria-labelledby','tab'+k);
+    stake.innerHTML=`<div><h3>Le preocupa</h3><p>${p.worry}</p></div><div><h3>Le mostramos</h3><p>${p.show}</p></div><div><h3>Frase para la defensa</h3><p class="say">${p.say}</p></div>`;
+  }
+  showPerson(0);
+
+  // ---------- Committee questions ----------
+  const qs=[
+    {who:'CFO',ask:'¿Qué pasa si los incentivos de Ley 60 no llegan a tiempo?',ans:'La Fase 1 no depende de incentivos. El punto de decisión al cierre de la Fase 1 permite ajustar el alcance solar con costos reales antes de comprometer fondos.'},
+    {who:'COO',ask:'¿Cómo instalan sin detener la producción?',ans:'Por secciones, en ventanas de baja producción, y después de que las baterías ya protegen las cargas críticas.'},
+    {who:'Sponsor',ask:'¿Por qué no simplemente compramos un generador?',ans:'El generador resuelve la interrupción, pero no el costo ni la meta de −40 % en consumo neto. Lo conservamos como contingencia temporal.'},
+    {who:'Calidad',ask:'¿Cómo afecta esto la validación de procesos ante la FDA?',ans:'Cada cambio pasa por control de cambios y actualización de SOPs; el respaldo evita que la trazabilidad quede incompleta.'},
+    {who:'Recursos Humanos',ask:'¿Quién va a operar y mantener el sistema?',ans:'El personal actual, capacitado con apoyo del DTRH, con técnicos de experiencia como mentores.'},
+    {who:'Dra. Serrano Ortiz',ask:'¿Qué decidió la IA y qué decidieron ustedes?',ans:'La IA propuso alternativas y un primer estimado. El equipo verificó fuentes, descartó una alternativa, ajustó puntuaciones y tomó la decisión. Todo está en la declarativa.'}
+  ];
+  const qbox=document.getElementById('qs');
+  qs.forEach(q=>{
+    const b=document.createElement('button');b.type='button';b.className='q';b.setAttribute('aria-expanded','false');
+    b.innerHTML=`<span class="who">${q.who}</span><span class="ask">${q.ask}</span><span class="ans">${q.ans}</span><span class="hint">Ver una pista de respuesta</span>`;
+    b.addEventListener('click',()=>b.setAttribute('aria-expanded',b.getAttribute('aria-expanded')!=='true'));
+    qbox.appendChild(b);
+  });
+
+  // ---------- Route checklist ----------
+  const steps=[
+    ['Elegir un riesgo','De la tabla de la clase o del Risk Register de la Tarea 4.'],
+    ['Explorar en Perplexity','Guardar dos o tres fuentes y abrir cada una para verificarla.'],
+    ['Mapear en Connected Papers','Desde un artículo semilla, ubicar dos trabajos relacionados.'],
+    ['Sintetizar con SciSpace o AnswerThis','Qué sí aplica a CaribeTech; completar la ficha de evidencia.'],
+    ['Crear el Proyecto en Claude','Cargar el caso, el Risk Register y las fichas; usar el prompt de cinco partes.'],
+    ['Pedir la segunda opinión en ChatGPT','Clasificar cada sugerencia: útil, requiere verificación o impracticable.'],
+    ['Reflexión ética con el bot TIHA','Ubicar las tareas en el semáforo y escribir la declarativa de uso de IA.'],
+    ['Construir el sitio o la presentación','En Claude, ChatGPT o GPT Sites, siguiendo las cinco partes de la defensa.'],
+    ['Ensayar ante el Comité','Responder en voz alta las preguntas difíciles, con datos del caso.']
+  ];
+  const route=document.getElementById('route');
+  let saved=[];try{saved=JSON.parse(localStorage.getItem('ct-route')||'[]');}catch(e){saved=[];}
+  steps.forEach((s,k)=>{
+    const li=document.createElement('li');
+    li.innerHTML=`<label><input type="checkbox" data-k="${k}" ${saved.includes(k)?'checked':''}><span><b>${s[0]}</b><span class="tool">${s[1]}</span></span></label>`;
+    route.appendChild(li);
+  });
+  function updRoute(){
+    const done=[...route.querySelectorAll('input:checked')].map(i=>+i.dataset.k);
+    try{localStorage.setItem('ct-route',JSON.stringify(done));}catch(e){}
+    document.getElementById('routeLabel').textContent=done.length+' de '+steps.length+' pasos';
+    document.getElementById('routeMeter').style.width=(done.length/steps.length*100)+'%';
+  }
+  route.addEventListener('change',updRoute);updRoute();
+
+  // ---------- Nav + presentation mode ----------
+  const sections=[document.getElementById('inicio'),...document.querySelectorAll('section')];
+  const links=document.querySelectorAll('.nav a');
+  const pageNum=document.getElementById('pageNum');
+  let current=0;
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{if(e.isIntersecting){current=sections.indexOf(e.target);pageNum.textContent=(current+1)+' / '+sections.length;
+      links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id));}});
+  },{rootMargin:'-45% 0px -50% 0px'});
+  sections.forEach(s=>io.observe(s));
+  const go=d=>{const n=Math.max(0,Math.min(sections.length-1,current+d));sections[n].scrollIntoView({block:'start'});};
+  const root=document.documentElement, pbtn=document.getElementById('presentBtn');
+  function setPresent(on){
+    root.classList.toggle('presenting',on);pbtn.textContent=on?'Salir':'Presentar';
+    if(on){try{root.requestFullscreen&&root.requestFullscreen().catch(()=>{});}catch(e){}}
+    else if(document.fullscreenElement){try{document.exitFullscreen();}catch(e){}}
+  }
+  pbtn.addEventListener('click',()=>setPresent(!root.classList.contains('presenting')));
+  document.getElementById('exitBtn').addEventListener('click',()=>setPresent(false));
+  document.getElementById('prevBtn').addEventListener('click',()=>go(-1));
+  document.getElementById('nextBtn').addEventListener('click',()=>go(1));
+  document.addEventListener('keydown',e=>{
+    if(!root.classList.contains('presenting'))return;
+    if(['INPUT','TEXTAREA'].includes(e.target.tagName))return;
+    if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' '){e.preventDefault();go(1);}
+    if(e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();go(-1);}
+    if(e.key==='Escape')setPresent(false);
+  });
+})();
+</script>
+</body>
+</html>
