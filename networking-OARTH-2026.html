@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Evaluación · Networking en la era digital · Dra. Mariluz Serrano Ortiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fundamento:#3A5672; --empatia:#C0DBE5; --acero:#59788F; --inspiracion:#F8D359; --bienestar:#DAA623; --crema:#F9EFE4; --blanco:#F4F4F4;
+  --bg:#FFFFFF; --surface:#F9EFE4; --ink:#3A5672; --ink-soft:#59788F; --line:#C0DBE5; --accent:#DAA623; --dot:#59788F; --dot-alt:#DAA623; --ring1:#F9EFE4; --ring2:#E6F0F4; --ring3:#C0DBE5;
+  --hero-bg:#3A5672; --hero-ink:#F4F4F4; --hero-soft:#C0DBE5;
+  color-scheme: light;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16222F; --surface:#1F3044; --ink:#F4F4F4; --ink-soft:#C0DBE5; --line:#34506B; --accent:#F8D359; --dot:#C0DBE5; --dot-alt:#F8D359; --ring1:#1F3044; --ring2:#26394F; --ring3:#2E4760;
+    --hero-bg:#1F3044; --hero-ink:#F4F4F4; --hero-soft:#C0DBE5; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16222F; --surface:#1F3044; --ink:#F4F4F4; --ink-soft:#C0DBE5; --line:#34506B; --accent:#F8D359; --dot:#C0DBE5; --dot-alt:#F8D359; --ring1:#1F3044; --ring2:#26394F; --ring3:#2E4760;
+  --hero-bg:#1F3044; --hero-ink:#F4F4F4; --hero-soft:#C0DBE5; color-scheme: dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Open Sans","Segoe UI",Helvetica,Arial,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+h1,h2,h3{line-height:1.2;margin:0}
+h2{font-size:clamp(1.5rem,3vw,2rem);font-weight:700;margin-bottom:.4em}
+.lede{color:var(--ink-soft);max-width:62ch;margin:0 0 2rem}
+section{padding:72px 0}
+section+section{border-top:1px solid var(--line)}
+
+/* Hero */
+.hero{background:var(--hero-bg);color:var(--hero-ink);padding:56px 0 64px}
+.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center}
+.hero small{display:block;color:var(--hero-soft);font-size:.95rem;margin-bottom:18px}
+.hero h1{font-size:clamp(2.1rem,5vw,3.4rem);font-weight:800;letter-spacing:-.01em;margin-bottom:22px}
+.hero p{color:var(--hero-soft);max-width:44ch;margin:0 0 28px;font-size:1.05rem}
+.facts{display:flex;flex-wrap:wrap;gap:28px 40px;margin:0;padding:0;list-style:none}
+.facts b{display:block;font-size:2.2rem;font-weight:800;color:var(--inspiracion);line-height:1.1}
+.facts span{font-size:.92rem;color:var(--hero-soft)}
+.map{width:100%;max-width:470px;justify-self:center;aspect-ratio:1}
+.map svg{width:100%;height:100%;overflow:visible}
+.map .p{cursor:pointer;transition:r .15s}
+.map .p:hover,.map .p:focus{r:8}
+.tip{min-height:1.6em;text-align:center;color:var(--hero-soft);font-size:.92rem;margin-top:8px}
+
+/* Criteria */
+.crit{display:grid;gap:22px;margin-top:8px}
+.row{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,2fr) 4.2rem;gap:20px;align-items:center}
+.row .q{font-weight:600}
+.row .q em{display:block;font-style:normal;font-weight:400;font-size:.88rem;color:var(--ink-soft)}
+.bar{height:16px;border-radius:999px;background:var(--line);overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+.bar .e{background:var(--fundamento)}
+.bar .b{background:var(--bienestar)}
+:root[data-theme="dark"] .bar .e{background:var(--empatia)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .bar .e{background:var(--empatia)}}
+.score{font-weight:800;font-size:1.25rem;text-align:right;font-variant-numeric:tabular-nums}
+.legend{display:flex;gap:22px;font-size:.88rem;color:var(--ink-soft);margin-top:22px;flex-wrap:wrap}
+.legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:7px;vertical-align:-1px;background:var(--c)}
+.note{margin-top:28px;background:var(--surface);border-radius:14px;padding:20px 24px;max-width:70ch}
+.note p{margin:0}
+
+/* Voices */
+.voices{columns:3 260px;column-gap:22px}
+blockquote{break-inside:avoid;margin:0 0 22px;padding:22px 24px 18px;background:var(--surface);border-radius:18px 18px 18px 4px}
+blockquote p{margin:0 0 10px;font-size:1.08rem;font-style:italic}
+blockquote cite{font-style:normal;font-size:.86rem;color:var(--ink-soft)}
+blockquote.big{background:var(--inspiracion);color:#3A5672}
+blockquote.big p{font-size:1.45rem;font-weight:700;font-style:normal}
+blockquote.big cite{color:#3A5672}
+
+/* Requests */
+.req{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.req div{border:2px solid var(--line);border-radius:16px;padding:20px 22px}
+.req b{display:block;font-size:2rem;font-weight:800;color:var(--accent);line-height:1}
+.req h3{font-size:1.05rem;margin:8px 0 6px}
+.req p{margin:0;font-size:.9rem;color:var(--ink-soft)}
+
+/* Agencies */
+.ag{display:flex;flex-wrap:wrap;gap:10px;margin:0;padding:0;list-style:none}
+.ag li{background:var(--surface);border-radius:999px;padding:7px 16px;font-size:.92rem}
+.ag li b{color:var(--accent);margin-left:6px}
+
+footer{background:var(--hero-bg);color:var(--hero-ink);padding:56px 0}
+footer q{display:block;font-size:clamp(1.3rem,3vw,1.9rem);font-weight:700;max-width:30ch;quotes:"“" "”"}
+footer p{color:var(--hero-soft);margin:14px 0 0}
+:focus-visible{outline:3px solid var(--inspiracion);outline-offset:3px}
+@media (max-width:780px){
+  .hero .wrap{grid-template-columns:1fr}
+  .row{grid-template-columns:1fr 3.6rem;gap:8px 14px}
+  .row .q{grid-column:1/-1}
+  section{padding:56px 0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.bar{transform-origin:left;animation:grow 1.1s cubic-bezier(.2,.7,.2,1) both}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <small>Simposio de Recursos Humanos 2026 · OATRH · 21 de octubre de 2026</small>
+      <h1>Ayer conectaste con 72 personas de 22 agencias</h1>
+      <p>Resultados de la evaluación de “La importancia del networking y la era digital en un contexto multigeneracional y fortalecimiento de las relaciones laborales”.</p>
+      <ul class="facts">
+        <li><b>3.99</b><span>promedio de 4</span></li>
+        <li><b>98.8 %</b><span>de las calificaciones, Excelente</span></li>
+        <li><b>72 de 72</b><span>dicen que les ayudará en su trabajo</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="map" role="img" aria-label="Mapa de la red: 72 participantes alrededor de la Dra. Serrano Ortiz, agrupados por agencia"><svg id="net" viewBox="-250 -250 500 500"></svg></div>
+      <div class="tip" id="tip" aria-live="polite">Pasa el cursor sobre un punto para ver la agencia</div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section>
+  <div class="wrap">
+    <h2>Cómo te evaluaron</h2>
+    <p class="lede">Seis criterios, en una escala de 1 a 4. Tres de ellos recibieron la calificación máxima de las 72 personas.</p>
+    <div class="crit" id="crit"></div>
+    <div class="legend"><span style="--c:var(--fundamento)">Excelente (4)</span><span style="--c:var(--bienestar)">Bueno (3)</span><span style="--c:var(--line)">Regular o Deficiente: ninguna</span></div>
+    <div class="note"><p>Las cinco calificaciones de “Bueno” en toda la evaluación vinieron de solo tres personas. Dos de ellas se refieren al salón y las facilidades, que no dependen de ti.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Lo que dijeron</h2>
+    <p class="lede">Comentarios escritos por las personas participantes.</p>
+    <div class="voices">
+      <blockquote class="big"><p>“A conectar con personas.”</p><cite>Junta de Planificación, sobre lo que aprendió</cite></blockquote>
+      <blockquote><p>“Excelente comunicadora!!”</p><cite>Corporación del Centro Cardiovascular de PR</cite></blockquote>
+      <blockquote><p>“Ella me parece excelente. Dinámica y súper atenta.”</p><cite>ACAA</cite></blockquote>
+      <blockquote><p>“Actividad bien dinámica. Excelente presentación y de mucha actualidad.”</p><cite>ACAA</cite></blockquote>
+      <blockquote><p>“Y en el plano personal, también.”</p><cite>OATRH, sobre si le ayudará en su trabajo</cite></blockquote>
+      <blockquote><p>“El tema amplifica mis conocimientos en relaciones sociales en mi entorno laboral.”</p><cite>ACAA</cite></blockquote>
+      <blockquote><p>“Excelente. Aprendí lo que es Networking.”</p><cite>Comisión de Juegos</cite></blockquote>
+      <blockquote><p>“Me gustó que fue un tema dinámico e interactuó con los participantes.”</p><cite>ACAA</cite></blockquote>
+      <blockquote><p>“Motivar a usar la tecnología todos los días.”</p><cite>OATRH</cite></blockquote>
+      <blockquote><p>“Todos, con la misma instructora.”</p><cite>OATRH, sobre qué otros cursos quisiera tomar</cite></blockquote>
+      <blockquote><p>“Excelente ponencia.”</p><cite>ACAA</cite></blockquote>
+      <blockquote><p>“Excelente taller.”</p><cite>OATRH</cite></blockquote>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Lo que quieren aprender ahora</h2>
+    <p class="lede">Respuestas a “¿Qué otros cursos le gustaría tomar a través de la Alianza?”. Una ruta natural para tus próximos talleres.</p>
+    <div class="req">
+      <div><b>3</b><h3>Relaciones e integración generacional</h3><p>Relaciones interpersonales, integración generacional en el trabajo y “del mismo tema”.</p></div>
+      <div><b>3</b><h3>Cualquier curso contigo</h3><p>“Todos”, “Los que sean” y “Todos, con la misma instructora”.</p></div>
+      <div><b>2</b><h3>Inteligencia artificial</h3><p>Incluida “cómo aplicarla en el trabajo”.</p></div>
+      <div><b>2</b><h3>Redes sociales y plataformas</h3><p>Manejo de plataformas y actualización de redes cuando eres profesional.</p></div>
+      <div><b>2</b><h3>Recursos humanos</h3><p>Todo lo relacionado a RR. HH. y temas de ayuda personal.</p></div>
+      <div><b>3</b><h3>Otros intereses</h3><p>Innovación, atención plena y lenguaje de señas intermedio.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Quiénes estuvieron</h2>
+    <p class="lede">22 agencias, municipios y corporaciones públicas respondieron la evaluación.</p>
+    <ul class="ag" id="ag"></ul>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <q>No es usar más tecnología, es usar tecnología para vivir mejor.</q>
+    <p>Dra. Mariluz Serrano Ortiz, Ed.D. · Modelo TIHA</p>
+  </div>
+</footer>
+
+<script>
+const DATA = [{"a": "ACAA", "s": [4, 4, 4, 4, 4, 4]}, {"a": "ACAA", "s": [4, 4, 4, 4, 4, 4]}, {"a": "ACAA", "s": [4, 4, 4, 4, 4, 4]}, {"a": "ACAA", "s": [4, 4, 4, 4, 4, 4]}, {"a": "ACAA", "s": [4, 4, 4, 4, 4, 4]}, {"a": "ACAA", "s": [4, 4, 4, 4, 4, 4]}, {"a": "ACT", "s": [4, 4, 4, 4, 4, 4]}, {"a": "ACT", "s": [4, 4, 4, 4, 4, 4]}, {"a": "ADEA", "s": [4, 4, 4, 4, 4, 4]}, {"a": "AFV", "s": [4, 4, 4, 4, 4, 4]}, {"a": "AFV", "s": [4, 4, 4, 4, 4, 4]}, {"a": "AFV", "s": [4, 4, 4, 4, 4, 4]}, {"a": "AFV", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Administración Seguros de Salud", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Autoridad de Carreteras y Transportación", "s": [4, 4, 4, 4, 4, 4]}, {"a": "COSPR", "s": [4, 4, 3, 4, 4, 4]}, {"a": "COSPR", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Centro Cardiovascular de PR y el Caribe", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Centro Cardiovascular de PR y el Caribe", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Centro Cardiovascular de PR y el Caribe", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Centro Cardiovascular de PR y el Caribe", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Comisión Industrial de PR", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Comisión Industrial de PR", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Comisión Industrial de PR", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Comisión de Juegos", "s": [4, 4, 4, 4, 4, 4]}, {"a": "DTOP", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Departamento de Agricultura", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Departamento de Estado", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Departamento de Estado", "s": [3, 4, 3, 4, 4, 3]}, {"a": "Departamento de Estado", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Departamento de Estado", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Departamento de Estado", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Departamento de Estado", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Departamento de Estado", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Departamento de la Vivienda", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Departamento de la Vivienda", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Departamento de la Vivienda", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Departamento de la Vivienda", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Junta de Planificación", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Junta de Planificación", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Junta de Planificación", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Municipio de Guaynabo", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Municipio de Guaynabo", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Municipio de Guaynabo", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Municipio de Trujillo Alto", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Municipio de Trujillo Alto", "s": [4, 4, 4, 4, 4, 4]}, {"a": "OATRH", "s": [4, 4, 4, 4, 4, 4]}, {"a": "OATRH", "s": [4, 4, 4, 4, 4, 4]}, {"a": "OATRH", "s": [4, 4, 4, 4, 4, 4]}, {"a": "OATRH", "s": [4, 4, 4, 4, 4, 4]}, {"a": "OATRH", "s": [4, 4, 4, 4, 4, 4]}, {"a": "OATRH", "s": [4, 4, 4, 4, 4, 4]}, {"a": "OATRH", "s": [4, 4, 4, 4, 4, 3]}, {"a": "OATRH", "s": [4, 4, 4, 4, 4, 4]}, {"a": "OATRH", "s": [4, 4, 4, 4, 4, 4]}, {"a": "OATRH", "s": [4, 4, 4, 4, 4, 4]}, {"a": "OATRH", "s": [4, 4, 4, 4, 4, 4]}, {"a": "OATRH", "s": [4, 4, 4, 4, 4, 4]}, {"a": "OATRH", "s": [4, 4, 4, 4, 4, 4]}, {"a": "OATRH", "s": [4, 4, 4, 4, 4, 4]}, {"a": "OATRH", "s": [4, 4, 4, 4, 4, 4]}, {"a": "OATRH", "s": [4, 4, 4, 4, 4, 4]}, {"a": "OATRH", "s": [4, 4, 4, 4, 4, 4]}, {"a": "ODSEC", "s": [4, 4, 4, 4, 4, 4]}, {"a": "OGP", "s": [4, 4, 4, 4, 4, 4]}, {"a": "OGP", "s": [4, 4, 4, 4, 4, 4]}, {"a": "OGP", "s": [4, 4, 4, 4, 4, 4]}, {"a": "OGP", "s": [4, 4, 4, 4, 4, 4]}, {"a": "Oficina del Comisionado de Instituciones Financieras", "s": [4, 4, 4, 4, 4, 4]}, {"a": "UPR", "s": [4, 4, 4, 4, 4, 4]}, {"a": "UPR", "s": [4, 4, 4, 4, 4, 4]}, {"a": "UPR", "s": [4, 4, 4, 4, 4, 4]}];
+const CRIT = [
+  ["Cumplió con los objetivos del curso", ""],
+  ["Domina la materia", ""],
+  ["Usó materiales y estrategias variadas y motivantes", ""],
+  ["Presentó la información de forma clara y organizada", ""],
+  ["Mostró disposición para aclarar dudas", ""],
+  ["Salón y facilidades adecuadas", "Criterio del lugar, no de la facilitadora"]
+];
+const n = DATA.length;
+const crit = document.getElementById("crit");
+CRIT.forEach(([q, sub], j) => {
+  const ex = DATA.filter(d => d.s[j] === 4).length, bu = n - ex;
+  const avg = DATA.reduce((a, d) => a + d.s[j], 0) / n;
+  const row = document.createElement("div"); row.className = "row";
+  row.innerHTML = `<div class="q">${q}${sub ? `<em>${sub}</em>` : `<em>${ex} de ${n} lo calificaron Excelente</em>`}</div>
+    <div class="bar" style="animation-delay:${j * 90}ms" aria-label="${ex} Excelente, ${bu} Bueno"><i class="e" style="width:${ex / n * 100}%"></i><i class="b" style="width:${bu / n * 100}%"></i></div>
+    <div class="score">${avg.toFixed(2)}</div>`;
+  crit.appendChild(row);
+});
+
+// Agencies
+const counts = {};
+DATA.forEach(d => counts[d.a] = (counts[d.a] || 0) + 1);
+const ag = document.getElementById("ag");
+Object.entries(counts).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "es")).forEach(([a, c]) => {
+  const li = document.createElement("li"); li.innerHTML = `${a}<b>${c}</b>`; ag.appendChild(li);
+});
+
+// Network map
+const svg = document.getElementById("net"), NS = "http://www.w3.org/2000/svg", tip = document.getElementById("tip");
+const el = (t, a) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); return e; };
+[[230, "var(--ring3)"], [175, "var(--ring2)"], [120, "var(--ring1)"]].forEach(([r, f]) =>
+  svg.appendChild(el("circle", { cx: 0, cy: 0, r, fill: f, opacity: .22 })));
+const lines = el("g", { stroke: "var(--hero-soft)", "stroke-width": .6, opacity: .35 }); svg.appendChild(lines);
+const dots = el("g", {}); svg.appendChild(dots);
+DATA.forEach((d, i) => {
+  const ang = (i / n) * Math.PI * 2 - Math.PI / 2;
+  const r = [205, 175, 145][i % 3];
+  const x = Math.cos(ang) * r, y = Math.sin(ang) * r;
+  lines.appendChild(el("line", { x1: 0, y1: 0, x2: x.toFixed(1), y2: y.toFixed(1) }));
+  const perfect = d.s.every(v => v === 4);
+  const c = el("circle", { cx: x.toFixed(1), cy: y.toFixed(1), r: 6, class: "p", tabindex: 0,
+    fill: perfect ? "#F8D359" : "#C0DBE5", "aria-label": d.a });
+  const show = () => tip.textContent = `${d.a}${perfect ? " · Excelente en todo" : ""}`;
+  c.addEventListener("mouseenter", show); c.addEventListener("focus", show);
+  dots.appendChild(c);
+});
+svg.appendChild(el("circle", { cx: 0, cy: 0, r: 58, fill: "#F9EFE4" }));
+const t1 = el("text", { x: 0, y: -4, "text-anchor": "middle", fill: "#3A5672", "font-size": 19, "font-weight": 800, "font-family": "Open Sans, sans-serif" }); t1.textContent = "Mariluz";
+const t2 = el("text", { x: 0, y: 18, "text-anchor": "middle", fill: "#59788F", "font-size": 12, "font-family": "Open Sans, sans-serif" }); t2.textContent = "y su red";
+svg.appendChild(t1); svg.appendChild(t2);
+</script>
+</body>
+</html>
